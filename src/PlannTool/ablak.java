@@ -44,6 +44,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import static java.time.Instant.now;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -83,6 +84,10 @@ public class ablak extends javax.swing.JFrame {
     public JTable jtable4 = new JTable();
     public Date datum;
     public Stat stat = new Stat();
+//szamoljuk a kereses inditasat
+    public int wgcounter;
+    LocalDateTime elso = LocalDateTime.now();
+    String pref;
 
     public ablak() {
 
@@ -2668,6 +2673,10 @@ public class ablak extends javax.swing.JFrame {
 
         stat.beir(System.getProperty("user.name"), jTabbedPane1.getTitleAt(jTabbedPane1.getSelectedIndex()));
 
+        warning wg = new warning();
+
+        wg.keszlet(this);
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
 
@@ -2937,6 +2946,11 @@ public class ablak extends javax.swing.JFrame {
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
             }
+
+        } else if (i == 1) {
+            
+            wgcounter = 0;
+            elso = LocalDateTime.now();
 
         }
 
@@ -3407,7 +3421,7 @@ public class ablak extends javax.swing.JFrame {
             infobox info = new infobox();
             info.infoBox("Nem adtál meg darabszámot!", "Hiba!");
         }
-        
+
         stat.beir(System.getProperty("user.name"), jTabbedPane1.getTitleAt(jTabbedPane1.getSelectedIndex()));
 
     }//GEN-LAST:event_jButton16ActionPerformed
@@ -3620,7 +3634,7 @@ public class ablak extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField17;
     private javax.swing.JTextField jTextField18;
     private javax.swing.JTextField jTextField19;
-    private javax.swing.JTextField jTextField2;
+    public javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField5;

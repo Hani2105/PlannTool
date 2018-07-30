@@ -92,11 +92,13 @@ public class szal extends Thread {
         lista.add("Qty");
         lista.add("Unit_Status");
         int killkounter = 0;
+        int finishcounter = 0;
 
         rowdata = (Object[][]) xxx.xmlfeldolg(url, nodelist, lista);
 
         for (int i = 0; i < s.selejtmodel.getRowCount(); i++) {
             killkounter = 0;
+            finishcounter = 0;
 
             for (int n = 0; n < rowdata.length; n++) {
 
@@ -105,7 +107,9 @@ public class szal extends Thread {
                     s.selejtmodel.setValueAt(killkounter, i, 3);
                 }
                 if (s.selejtmodel.getValueAt(i, 2).toString().equals(rowdata[n][0].toString()) && rowdata[n][4].toString().equals("Finished")) {
-                    s.selejtmodel.setValueAt(rowdata[n][3], i, 4);
+                    finishcounter = finishcounter + Integer.parseInt(rowdata[n][3].toString());
+                    s.selejtmodel.setValueAt(finishcounter, i, 4);
+                    
                 }
             }
         }

@@ -37,7 +37,7 @@ public class warning {
             if (diff < 2 && a.jTextField2.getText().substring(1, 4).equals(a.pref)) {
 
                 infobox info = new infobox();
-                info.infoBox("Egy percen belül keresel ugyan arra a prefixre többször! \n Kedves " + keresztnev + " , a te és a rendszer érdekében keress  prefixre ,  majd használd a kereső funkciót!", "Jótanács!");
+                info.infoBox("Egy percen belül keresel ugyan arra a termékcsaládra többször! \n Kedves " + keresztnev + " , a te és a rendszer érdekében kérdezz le prefixre (PL: LFHB), \n  majd használd a kereső funkciót!  (bal - alsó)", "Jótanács!");
 
             }
 

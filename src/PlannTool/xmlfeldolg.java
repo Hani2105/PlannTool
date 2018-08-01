@@ -81,6 +81,7 @@ public class xmlfeldolg {
                     RowData[temp][i] = new String(eElement
                             .getElementsByTagName(lista.get(i)).item(0)
                             .getTextContent());
+                    //System.out.println("d");
 
                 }
 

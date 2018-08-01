@@ -2422,7 +2422,7 @@ public class ablak extends javax.swing.JFrame {
             lista.add("Serial_Number");
             lista.add("Shop_Order_Number");
             lista.add("Part_Number");
-            lista.add("Unit_Status");
+            lista.add("unit_status");
             lista.add("last_complete_dateTime");
 
             rowdata = (Object[][]) xxx.xmlfeldolg(url, nodelist, lista);

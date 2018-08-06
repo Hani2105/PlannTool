@@ -1995,12 +1995,27 @@ public class ablak extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Partnumber", "QTY"
+                "Partnumber", "QTY", "P"
             }
-        ));
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Object.class, java.lang.Object.class, java.lang.Boolean.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        jTable9.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable9MouseClicked(evt);
+            }
+        });
         jScrollPane10.setViewportView(jTable9);
         if (jTable9.getColumnModel().getColumnCount() > 0) {
             jTable9.getColumnModel().getColumn(1).setPreferredWidth(5);
+            jTable9.getColumnModel().getColumn(2).setMinWidth(20);
+            jTable9.getColumnModel().getColumn(2).setMaxWidth(20);
         }
 
         jLabel27.setText("Summa:");
@@ -3479,6 +3494,40 @@ public class ablak extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_jButton17ActionPerformed
+
+    private void jTable9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable9MouseClicked
+        // TODO add your handling code here:
+
+        String pn = jTable9.getValueAt(jTable9.getSelectedRow(), 0).toString();
+
+        for (int i = 0; i < jTable7.getRowCount(); i++) {
+
+            if (jTable7.getValueAt(i, 0).toString().equals(pn) && (Boolean) jTable9.getValueAt(jTable9.getSelectedRow(), 2) == true) {
+
+                if ((Boolean) jTable7.getValueAt(i, 4) == true) {
+                    jTable7.setValueAt(false, i, 4);
+                } else {
+
+                    jTable7.setValueAt(true, i, 4);
+                }
+
+            }
+
+            if (jTable7.getValueAt(i, 0).toString().equals(pn) && (Boolean) jTable9.getValueAt(jTable9.getSelectedRow(), 2) == false) {
+
+                if ((Boolean) jTable7.getValueAt(i, 4) == true) {
+                    jTable7.setValueAt(false, i, 4);
+                } else {
+
+                    jTable7.setValueAt(true, i, 4);
+                }
+
+            }
+
+        }
+
+
+    }//GEN-LAST:event_jTable9MouseClicked
 
     private void filter(String query) {
 

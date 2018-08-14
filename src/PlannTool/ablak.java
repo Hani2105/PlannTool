@@ -1,62 +1,27 @@
 package PlannTool;
 
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.HeadlessException;
-import java.awt.Image;
-import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.File;
-import java.io.FileFilter;
 import javax.swing.RowFilter;
 
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.DocumentBuilder;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.NodeList;
-import org.w3c.dom.Node;
-import org.w3c.dom.Element;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.Reader;
-import java.math.BigDecimal;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLConnection;
-import java.sql.Array;
-import java.sql.Blob;
-import java.sql.Clob;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.NClob;
-import java.sql.Ref;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.RowId;
 import java.sql.SQLException;
-import java.sql.SQLWarning;
-import java.sql.SQLXML;
-import java.sql.Statement;
-import java.sql.Time;
-import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import static java.time.Instant.now;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.application.Application;
-import javax.imageio.ImageIO;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
@@ -66,13 +31,10 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
-import javax.xml.parsers.ParserConfigurationException;
-import org.xml.sax.SAXException;
 import javax.swing.table.TableRowSorter;
-import javax.swing.JOptionPane;
+import javax.swing.table.TableCellRenderer;
+
 
 public class ablak extends javax.swing.JFrame {
 
@@ -256,6 +218,32 @@ public class ablak extends javax.swing.JFrame {
         jTable13 = new javax.swing.JTable();
         jPanel9 = new javax.swing.JPanel();
         jLabel34 = new javax.swing.JLabel();
+        jPanel10 = new javax.swing.JPanel();
+        jScrollPane15 = new javax.swing.JScrollPane();
+        jList1 = new javax.swing.JList<>();
+        jLabel35 = new javax.swing.JLabel();
+        jDateChooser5 = new com.toedter.calendar.JDateChooser();
+        jLabel36 = new javax.swing.JLabel();
+        jScrollPane16 = new javax.swing.JScrollPane();
+        jTable14 = new javax.swing.JTable(){
+            @Override
+            public Component prepareRenderer(TableCellRenderer renderer, int row, int col) {
+                Component comp = super.prepareRenderer(renderer, row, col);
+                Object value = getModel().getValueAt(row, col);
+                if (value.equals("Nem létezik SFDC-ben!")) {
+                    comp.setBackground(Color.red);
+                }
+                else if (value.equals("Minden elindult!")) {
+                    comp.setBackground(Color.green);
+                }
+                else {
+                    comp.setBackground(Color.white);
+                }
+                return comp;
+            }
+        }
+        ;
+        jButton18 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("PlannTool");
@@ -612,24 +600,24 @@ public class ablak extends javax.swing.JFrame {
                     .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel22)
                     .addComponent(jTextField17, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(2675, Short.MAX_VALUE))
+                .addContainerGap(2699, Short.MAX_VALUE))
             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel2Layout.createSequentialGroup()
                     .addGap(645, 645, 645)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel19)
                         .addComponent(jTextField14, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addContainerGap(2517, Short.MAX_VALUE)))
+                    .addContainerGap(2539, Short.MAX_VALUE)))
             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel2Layout.createSequentialGroup()
                     .addGap(645, 645, 645)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel20)
                         .addComponent(jTextField15, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addContainerGap(2517, Short.MAX_VALUE)))
+                    .addContainerGap(2539, Short.MAX_VALUE)))
             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                    .addContainerGap(2526, Short.MAX_VALUE)
+                    .addContainerGap(2548, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel21)
                         .addComponent(jTextField16, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -1734,7 +1722,7 @@ public class ablak extends javax.swing.JFrame {
                         .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 2696, Short.MAX_VALUE))
+                .addGap(0, 2718, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("SN infó", jPanel3);
@@ -1815,7 +1803,7 @@ public class ablak extends javax.swing.JFrame {
                         .addComponent(jLabel17)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jTextField12, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(2681, Short.MAX_VALUE))
+                .addContainerGap(2703, Short.MAX_VALUE))
         );
 
         jLabel11.getAccessibleContext().setAccessibleDescription("");
@@ -1895,7 +1883,7 @@ public class ablak extends javax.swing.JFrame {
                         .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(2675, Short.MAX_VALUE))
+                .addContainerGap(2697, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Harman PCB Infó ", jPanel5);
@@ -2186,7 +2174,7 @@ public class ablak extends javax.swing.JFrame {
                     .addComponent(jButton14, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton13, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton15, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(2670, Short.MAX_VALUE))
+                .addContainerGap(2692, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("OH Query!", jPanel7);
@@ -2316,7 +2304,7 @@ public class ablak extends javax.swing.JFrame {
                     .addComponent(jLabel33))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane14, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(2666, Short.MAX_VALUE))
+                .addContainerGap(2688, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Daraboló", jPanel8);
@@ -2340,10 +2328,77 @@ public class ablak extends javax.swing.JFrame {
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel34)
-                .addContainerGap(2692, Short.MAX_VALUE))
+                .addContainerGap(2714, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("BeTervező", jPanel9);
+
+        jList1.setToolTipText("Válaszd ki az állomásaidat!\nA CTR+ klikkel több állomás is kiválasztahtó!");
+        jScrollPane15.setViewportView(jList1);
+
+        jLabel35.setText("Sor/Cella");
+
+        jLabel36.setText("Lekérdezés futtatása ettől a dátumtól:");
+
+        jTable14.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Sor/Cella", "Partnumber", "JOB", "Startdate", "Skeleton/TP15"
+            }
+        ));
+        jScrollPane16.setViewportView(jTable14);
+        if (jTable14.getColumnModel().getColumnCount() > 0) {
+            jTable14.getColumnModel().getColumn(0).setMinWidth(150);
+            jTable14.getColumnModel().getColumn(0).setMaxWidth(200);
+        }
+
+        jButton18.setText("Lekérdez");
+        jButton18.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton18ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
+        jPanel10.setLayout(jPanel10Layout);
+        jPanel10Layout.setHorizontalGroup(
+            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel10Layout.createSequentialGroup()
+                .addComponent(jScrollPane15, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane16, javax.swing.GroupLayout.PREFERRED_SIZE, 929, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 9037, Short.MAX_VALUE))
+            .addGroup(jPanel10Layout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addComponent(jLabel35, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(49, 49, 49)
+                .addComponent(jLabel36)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jDateChooser5, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30)
+                .addComponent(jButton18, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel10Layout.setVerticalGroup(
+            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel10Layout.createSequentialGroup()
+                .addGap(16, 16, 16)
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel35, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel36))
+                    .addComponent(jDateChooser5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton18))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane16, javax.swing.GroupLayout.DEFAULT_SIZE, 461, Short.MAX_VALUE)
+                    .addComponent(jScrollPane15))
+                .addContainerGap(2704, Short.MAX_VALUE))
+        );
+
+        jTabbedPane1.addTab("JOB figyelő", jPanel10);
 
         jScrollPane7.setViewportView(jTabbedPane1);
 
@@ -2355,21 +2410,963 @@ public class ablak extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    public void gombenged() {
+    private void jTabbedPane1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabbedPane1StateChanged
 
-        try {
-            jButton12.setEnabled(true);
-            jButton11.setEnabled(true);
-            jButton13.setEnabled(true);
-            jButton15.setEnabled(true);
+        int i = jTabbedPane1.getSelectedIndex();
 
-        } catch (Exception e) {
+        if (i == 5) {
 
-            System.err.println(e.getStackTrace());
+            jButton12.setEnabled(false);
+            jButton11.setEnabled(false);
+            jButton13.setEnabled(false);
+            jButton15.setEnabled(false);
+            bejelentkezes a = new bejelentkezes(this);
+            a.setVisible(true);
+            String query = "SELECT ig FROM planningdb.oh_querymain order by ig desc limit 1";
+            String prefquery = "SELECT distinct prefix FROM planningdb.oh_prefixes;";
+            String kivetelquery = "SELECT distinct partnumber FROM planningdb.oh_kivetelek;";
+            datum = new java.util.Date();
+            jDateChooser4.setDate(datum);
+            DefaultTableModel model = new DefaultTableModel();
+            model = (DefaultTableModel) jTable7.getModel();
+            model.setRowCount(0);
+            jTable7.setModel(model);
+            model = (DefaultTableModel) jTable9.getModel();
+            model.setRowCount(0);
+            jTable9.setModel(model);
+
+            planconnect pc = new planconnect();
+
+            try {
+
+                ResultSet rs = (ResultSet) pc.planconnect(query);
+
+                if (rs.next()) {
+                    datum = rs.getDate(1);
+                    jDateChooser2.setDate(datum);
+                }
+
+            } catch (SQLException ex) {
+                Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            try {
+                i = 0;
+
+                ResultSet rs = (ResultSet) pc.planconnect(prefquery);
+                while (rs.next()) {
+
+                    jTable8.setValueAt(rs.getString(1), i, 0);
+                    i++;
+
+                }
+
+            } catch (SQLException ex) {
+                Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            try {
+                ResultSet rs = (ResultSet) pc.planconnect(kivetelquery);
+                i = 0;
+                while (rs.next()) {
+
+                    jTable10.setValueAt(rs.getString(1), i, 0);
+                    i++;
+
+                }
+
+            } catch (SQLException ex) {
+                Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        } else if (i == 1) {
+
+            wgcounter = 0;
+            elso = LocalDateTime.now();
 
         }
 
-    }
+        if (i == 7) {
+
+            bejelentkezesTervezo a = new bejelentkezesTervezo(this);
+            a.setVisible(true);
+
+        }
+
+        if (i == 8) {
+
+            DefaultListModel lm = new DefaultListModel();
+
+            String Query = "select distinct stations.name from stations left join terv on terv.stationid = stations.id where terv.active = 1 and terv.startdate >= '2018-01-01 06:00:00' order by stations.name asc";
+            planconnect pc = new planconnect();
+            try {
+                pc.planconnect(Query);
+
+            } catch (SQLException ex) {
+                Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            try {
+                while (pc.rs.next()) {
+
+                    lm.addElement(pc.rs.getString(1));
+
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            Query = "SELECT distinct Beterv.sht from Beterv where Beterv.startdate >= '2018-01-01 06:00:00' and Beterv.active = 2 order by Beterv.sht asc";
+
+            try {
+                pc.planconnect(Query);
+            } catch (SQLException ex) {
+                Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            try {
+                while (pc.rs.next()) {
+
+                    lm.addElement(pc.rs.getString(1));
+
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            jList1.setModel(lm);
+
+        }
+
+    }//GEN-LAST:event_jTabbedPane1StateChanged
+
+    private void jButton18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton18ActionPerformed
+
+        //kiszedjuk a kijelolt elemeket
+        List<String> allomasok = new ArrayList<String>();
+        allomasok = jList1.getSelectedValuesList();
+
+        //feldolgozzuk stringge
+        String allomasokquerybe = "";
+        for (int i = 0; i < allomasok.size(); i++) {
+
+            allomasokquerybe += "'" + allomasok.get(i) + "',";
+
+        }
+
+        allomasokquerybe = allomasokquerybe.substring(0, allomasokquerybe.length() - 1);
+
+        //kiszedjuk a datumot
+        Date tol = jDateChooser5.getDate();
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd 06:00:00");
+        String stol = df.format(tol);
+
+        //smt lekérdezés sor , job , pn  a megadott dátumtól
+        String Query = "select distinct stations.name , terv.partnumber , terv.job , terv.startdate from stations left join terv on terv.stationid = stations.id where terv.active = 1 and terv.startdate >= '" + stol + "' and stations.name in (" + allomasokquerybe + ") group by terv.job order by stations.name asc , terv.startdate asc";
+        //vegrehajtjuk
+
+        planconnect pc = new planconnect();
+        try {
+            pc.planconnect(Query);
+        } catch (SQLException ex) {
+            Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        //betesszuk a tablaba a meglevo adatokat
+        DefaultTableModel model = new DefaultTableModel();
+        model = (DefaultTableModel) jTable14.getModel();
+        model.setRowCount(0);
+
+        try {
+            while (pc.rs.next()) {
+
+                model.addRow(new Object[]{pc.rs.getString(1), pc.rs.getString(2), pc.rs.getString(3), pc.rs.getString(4)});
+
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        //lekerdezzuk a backendet is
+        Query = "SELECT distinct Beterv.sht , Beterv.pn , Beterv.job , Beterv.startdate from Beterv where Beterv.startdate >= '" + stol + "' and Beterv.active = 2 and Beterv.sht in (" + allomasokquerybe + ") group by Beterv.job order by Beterv.sht asc , Beterv.startdate asc";
+
+        try {
+            pc.planconnect(Query);
+        } catch (SQLException ex) {
+            Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        try {
+            while (pc.rs.next()) {
+
+                model.addRow(new Object[]{pc.rs.getString(1), pc.rs.getString(2), pc.rs.getString(3), pc.rs.getString(4)});
+
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        jTable14.setModel(model);
+
+        //kiszedjuk a tablabol az adatokat es lekerdezzuk
+        String jobszamok = "";
+        for (int i = 0; i < jTable14.getRowCount(); i++) {
+
+            jobszamok += jTable14.getValueAt(i, 2).toString() + ";";
+
+        }
+
+        jobszamok = jobszamok.substring(0, jobszamok.length() - 1);
+
+        xmlfeldolg xxx = new xmlfeldolg();
+        Object rowdata[][] = null;
+        URL url = null;
+        try {
+            url = new URL("http://143.116.140.120/rest/request.php?page=planning_shop_order&shoporder=" + jobszamok + "&format=xml");
+            ArrayList<String> lista = new ArrayList();
+
+            String nodelist = "planning_shop_order";
+            lista.add("Shop_Order_Number");
+            lista.add("Part_Number");
+            lista.add("Workstation");
+            lista.add("Qty");
+            lista.add("Unit_Status");
+            rowdata = (Object[][]) xxx.xmlfeldolg(url, nodelist, lista);
+
+        } catch (Exception e) {
+        }
+
+        //betesszuk a tablaba
+        model = (DefaultTableModel) jTable14.getModel();
+
+        for (int i = 0; i < jTable14.getRowCount(); i++) {
+
+            for (int n = 0; n < rowdata.length; n++) {
+
+                if (jTable14.getValueAt(i, 2).toString().equals(rowdata[n][0]) && (rowdata[n][4].equals("Traveler Printed") || rowdata[n][4].equals("Unit Skeleton"))) {
+
+                    model.setValueAt(rowdata[n][3], i, 4);
+
+                } else if (jTable14.getValueAt(i, 2).toString().equals(rowdata[n][0])) {
+
+                    model.setValueAt("Minden elindult!", i, 4);
+
+                }
+
+            }
+
+            if (model.getValueAt(i, 4) == null) {
+
+                model.setValueAt("Nem létezik SFDC-ben!", i, 4);
+
+            }
+
+        }
+
+        jTable14.setModel(model);
+    }//GEN-LAST:event_jButton18ActionPerformed
+
+    private void jButton16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton16ActionPerformed
+        // TODO add your handling code here:
+
+        try {
+
+            int valai = Integer.parseInt(jTextField19.getText());
+            String value;
+            String query = "SELECT cycletime_prog.ID as cpID, oraclepn ,smtprogname, smtline as sline, sequence , boardnumber ,(SELECT value FROM cycletime_data WHERE cycletime_prog_id = cpID AND priority = 1 AND cycletime_data.active = 1 ORDER BY ID DESC LIMIT 1) as mertido,(SELECT value FROM cycletime_data WHERE cycletime_prog_id = cpID AND priority = 2 AND cycletime_data.active = 1 ORDER BY ID DESC LIMIT 1) as gyorsmeres,(SELECT value FROM cycletime_data WHERE cycletime_prog_id = cpID AND priority = 3 AND cycletime_data.active = 1 ORDER BY ID DESC LIMIT 1) as kalkulalt,IFNULL(expectedeffbyprog,COALESCE((SELECT expectedeff FROM cycletime_config WHERE smtline = sline),(SELECT expectedeff FROM cycletime_config WHERE smtline = 'ALL'))) as eff FROM `cycletime_prog` WHERE cycletime_prog.active=1 and oraclepn like '%" + jTextField18.getText().trim() + "%'ORDER BY smtprogname;";
+            Integer i = 0;
+            Object valami = null;
+            DefaultTableModel model = new DefaultTableModel();
+            model = (DefaultTableModel) jTable12.getModel();
+            model.setRowCount(0);
+            try {
+                szaifconn con = new szaifconn("com.mysql.jdbc.driver", "jdbc:mysql://143.116.140.113/plrdb", "cpi", "cpi602");
+
+                ResultSet rs = (ResultSet) con.lekerdez(query);
+
+                while (rs.next()) {
+
+                    model.addRow(new Object[]{rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getString(10)});
+
+                    if (rs.getString(7) != null) {
+
+                        jTable12.setValueAt(((((Double.parseDouble(rs.getString(7)) / Double.parseDouble(rs.getString(6)))) / ((Double.parseDouble(rs.getString(10))) / 100)) * Integer.parseInt(jTextField19.getText())) / 3600, i, 9);
+
+                    } else if (rs.getString(8) != null) {
+
+                        jTable12.setValueAt(((((Double.parseDouble(rs.getString(8)) / Double.parseDouble(rs.getString(6)))) / ((Double.parseDouble(rs.getString(10))) / 100)) * Integer.parseInt(jTextField19.getText())) / 3600, i, 9);
+
+                    } else if (rs.getString(9) != null) {
+
+                        jTable12.setValueAt(((((Double.parseDouble(rs.getString(9)) / Double.parseDouble(rs.getString(6)))) / ((Double.parseDouble(rs.getString(10))) / 100)) * Integer.parseInt(jTextField19.getText())) / 3600, i, 9);
+
+                    }
+
+                    i++;
+                }
+
+            } catch (ClassNotFoundException | SQLException ex) {
+                Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (Exception e) {
+            }
+
+            jTable12.setModel(model);
+
+            model1 = (DefaultTableModel) jTable13.getModel();
+            model1.setRowCount(0);
+
+            planconnect pc = new planconnect();
+            query = "SELECT distinct beciklusidok.WS , beciklusidok.PN , beciklusidok.CELL, beciklusidok.DBPO FROM planningdb.beciklusidok where active = 1 and PN like ('%" + jTextField18.getText().trim() + "%') order by beciklusidok.ID";
+
+            try {
+                ResultSet rs = (ResultSet) pc.planconnect(query);
+                while (rs.next()) {
+
+                    model1.addRow(new Object[]{rs.getString(2), rs.getString(1), rs.getString(2), rs.getString(4), (Integer.parseInt(jTextField19.getText())) / Double.parseDouble(rs.getString(4))});
+
+                }
+
+            } catch (SQLException ex) {
+                Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            jTable13.setModel(model1);
+
+        } catch (Exception e) {
+            infobox info = new infobox();
+            info.infoBox("Nem adtál meg darabszámot!", "Hiba!");
+        }
+
+        stat.beir(System.getProperty("user.name"), jTabbedPane1.getTitleAt(jTabbedPane1.getSelectedIndex()));
+    }//GEN-LAST:event_jButton16ActionPerformed
+
+    private void jButton17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton17ActionPerformed
+        // TODO add your handling code here:++
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setAcceptAllFileFilterUsed(true);
+        fileChooser.setDialogTitle("Specify a file to save");
+
+        int userSelection = fileChooser.showSaveDialog(this);
+
+        if (userSelection == JFileChooser.APPROVE_OPTION) {
+
+            File fileToSave = fileChooser.getSelectedFile();
+            ExcelExporter exp = new ExcelExporter();
+            exp.fillData(jTable7, new File(fileToSave.getAbsolutePath() + ".xls"));
+        }
+    }//GEN-LAST:event_jButton17ActionPerformed
+
+    private void jButton15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton15ActionPerformed
+        // TODO add your handling code here:
+        String query = "TRUNCATE TABLE oh_kivetelek";
+
+        planconnect pc = new planconnect();
+        pc.feltolt(query);
+        query = "INSERT INTO oh_kivetelek(partnumber) VALUES ()";
+
+        String prefixlist = "";
+
+        for (int i = 0; i < jTable10.getRowCount(); i++) {
+
+            if (jTable10.getValueAt(i, 0) != null) {
+
+                prefixlist += jTable10.getValueAt(i, 0).toString().trim() + "'),('";
+
+            }
+
+        }
+
+        prefixlist = prefixlist.substring(0, prefixlist.length() - 4);
+        query = "INSERT INTO oh_kivetelek(partnumber) VALUES ('" + prefixlist + ")";
+
+        pc.feltolt(query);
+
+        infobox inf = new infobox();
+        inf.infoBox("A mentés sikeres!", "Üzenet!");
+    }//GEN-LAST:event_jButton15ActionPerformed
+
+    private void jCheckBox1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCheckBox1ItemStateChanged
+        // TODO add your handling code here:
+        if (jCheckBox1.isSelected()) {
+
+            for (int i = 0; i < jTable7.getRowCount(); i++) {
+                jTable7.getModel().setValueAt(true, i, 4);
+            }
+
+        } else {
+
+            for (int i = 0; i < jTable7.getRowCount(); i++) {
+                jTable7.getModel().setValueAt(false, i, 4);
+            }
+        }
+
+    }//GEN-LAST:event_jCheckBox1ItemStateChanged
+
+    private void jTable9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable9MouseClicked
+        // TODO add your handling code here:
+
+        String pn = jTable9.getValueAt(jTable9.getSelectedRow(), 0).toString();
+
+        for (int i = 0; i < jTable7.getRowCount(); i++) {
+
+            if (jTable7.getValueAt(i, 0).toString().equals(pn) && (Boolean) jTable9.getValueAt(jTable9.getSelectedRow(), 2) == true) {
+
+                if ((Boolean) jTable7.getValueAt(i, 4) == true) {
+                    jTable7.setValueAt(false, i, 4);
+                } else {
+
+                    jTable7.setValueAt(true, i, 4);
+                }
+
+            }
+
+            if (jTable7.getValueAt(i, 0).toString().equals(pn) && (Boolean) jTable9.getValueAt(jTable9.getSelectedRow(), 2) == false) {
+
+                if ((Boolean) jTable7.getValueAt(i, 4) == true) {
+                    jTable7.setValueAt(false, i, 4);
+                } else {
+
+                    jTable7.setValueAt(true, i, 4);
+                }
+
+            }
+
+        }
+
+    }//GEN-LAST:event_jTable9MouseClicked
+
+    private void jButton14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton14ActionPerformed
+        // TODO add your handling code here:
+
+        DefaultTableModel oh_main = new DefaultTableModel();
+        oh_main = (DefaultTableModel) jTable7.getModel();
+        oh_main.setRowCount(0);
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String tol = dateFormat.format(jDateChooser2.getDate());
+        String ig = dateFormat.format(jDateChooser4.getDate());
+
+        String query = "select * from oh_querymain where oh_querymain.tol >='" + tol + "' and oh_querymain.ig <= '" + ig + "'";
+
+        planconnect pc = new planconnect();
+
+        try {
+            ResultSet rs = (ResultSet) pc.planconnect(query);
+            int sor = 0;
+
+            while (rs.next()) {
+
+                oh_main.addRow(new Object[]{rs.getString(3), rs.getString(2), rs.getString(4), rs.getString(5)/*, rs.getString(6)*/});
+
+                if (rs.getString(6).equals("Y")) {
+
+                    oh_main.setValueAt(true, sor, 4);
+
+                }
+
+                sor++;
+
+            }
+
+            jTable7.setModel(oh_main);
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        //kitoltjuk a summa táblát
+        String pn = "";
+        int pndarab = 0;
+        int k = 0;
+        boolean vanemar = false;
+        DefaultTableModel sumtabla = new DefaultTableModel();
+        sumtabla = (DefaultTableModel) jTable9.getModel();
+        sumtabla.setRowCount(0);
+
+        for (int i = 0; i < jTable7.getRowCount(); i++) {
+
+            pn = jTable7.getValueAt(i, 0).toString();
+            vanemar = false;
+            pndarab = 0;
+
+            for (int m = 0; m < sumtabla.getRowCount(); m++) {
+                if (pn.equals(sumtabla.getValueAt(m, 0).toString())) {
+                    vanemar = true;
+
+                }
+            }
+
+            if (vanemar == false) {
+                for (int n = i; n < jTable7.getRowCount(); n++) {
+
+                    if (pn.equals(jTable7.getValueAt(n, 0).toString())) {
+                        pndarab++;
+                    }
+
+                }
+
+                try {
+
+                    sumtabla.addRow(new Object[]{pn, pndarab});
+
+                } catch (Exception e) {
+                    System.out.println("nem jott ossze");
+                }
+
+            }
+
+        }
+
+        jTable9.setModel(sumtabla);
+    }//GEN-LAST:event_jButton14ActionPerformed
+
+    private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
+        // TODO add your handling code here:
+
+        String query = "TRUNCATE TABLE oh_prefixes";
+
+        planconnect pc = new planconnect();
+        pc.feltolt(query);
+        query = "INSERT INTO oh_prefixes(prefix) VALUES ()";
+
+        String prefixlist = "";
+
+        for (int i = 0; i < jTable8.getRowCount(); i++) {
+
+            if (jTable8.getValueAt(i, 0) != null) {
+
+                prefixlist += jTable8.getValueAt(i, 0).toString() + "'),('";
+
+            }
+
+        }
+
+        prefixlist = prefixlist.substring(0, prefixlist.length() - 4);
+        query = "INSERT INTO oh_prefixes(prefix) VALUES ('" + prefixlist + ")";
+
+        pc.feltolt(query);
+
+        infobox inf = new infobox();
+        inf.infoBox("A mentés sikeres!", "Üzenet!");
+    }//GEN-LAST:event_jButton13ActionPerformed
+
+    private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
+        // TODO add your handling code here:
+        xmlfeldolg xmlfeldolg_lekerdez_button = new xmlfeldolg();
+        SimpleDateFormat api_date_format = new SimpleDateFormat("yyyy-MM-dd");
+
+        Date dt = new Date();
+
+        Calendar c = Calendar.getInstance();
+        c.setTime(jDateChooser4.getDate());
+        c.add(Calendar.DATE, 1);
+        dt = c.getTime();
+        String pn_string = "";
+
+        String api_string = "http://143.116.140.120/rest/request.php?page=planning_activity&starttime=" + api_date_format.format(jDateChooser2.getDate()) + "&endtime="
+        + api_date_format.format(dt);
+
+        for (int x = 0; x < jTable8.getRowCount(); x++) {
+
+            pn_string += "&pn" + Integer.toString(x + 1) + "=%" + jTable8.getValueAt(x, 0) + "%";
+
+        }
+
+        pn_string += "&format=xml";
+        api_string += pn_string;
+        ArrayList<String> api_lista = new ArrayList();
+        api_lista.add("part_number");
+        api_lista.add("serial_number");
+        Object api_array[][] = null;
+
+        try {
+            URL api_url = new URL(api_string);
+            api_array = (Object[][]) xmlfeldolg_lekerdez_button.xmlfeldolg(api_url, "planning_activity", api_lista);
+        } catch (MalformedURLException ex) {
+            Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
+
+        } catch (Exception e) {
+
+            infobox inf = new infobox();
+            inf.infoBox("Valószínűleg nem megy a planning_activity API , értesítsd a System csapatot!", "Valami nincs rendben!");
+        }
+
+        if (api_array.length != 0) {
+
+            planconnect planconnection_temp = new planconnect();
+            String serials = "";
+            ResultSet rss = null;
+            ArrayList<String> sn_list = new ArrayList<String>();
+
+            for (int x = 0; x < api_array.length; x++) {
+                serials = serials + "'" + api_array[x][1].toString() + "',";
+            }
+
+            serials = serials.substring(0, serials.length() - 1);
+
+            try {
+                rss = (ResultSet) planconnection_temp.planconnect("SELECT serial FROM planningdb.oh_querymain where megcsinalva = 'Y';");
+                while (rss.next()) {
+                    sn_list.add(rss.getString(1));
+
+                }
+
+            } catch (SQLException ex) {
+                Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            for (int x = 0; x < api_array.length; x++) {
+
+                for (int y = 0; y < sn_list.size(); y++) {
+                    try {
+                        if (api_array[x][1].toString().equals(sn_list.get(y).toString())) {
+                            api_array[x][0] = null;
+                            api_array[x][1] = null;
+                        }
+                    } catch (Exception e) {
+
+                    }
+                }
+
+            }
+
+            // a kivételes pn ek kivétele
+            sn_list.clear();
+
+            for (int i = 0; i < jTable10.getRowCount(); i++) {
+
+                if (jTable10.getValueAt(i, 0) != null) {
+
+                    sn_list.add(jTable10.getValueAt(i, 0).toString());
+                }
+
+            }
+
+            for (int x = 0; x < api_array.length; x++) {
+
+                for (int y = 0; y < sn_list.size(); y++) {
+                    try {
+                        if (api_array[x][0].toString().equals(sn_list.get(y).toString())) {
+                            api_array[x][0] = null;
+                            api_array[x][1] = null;
+                        }
+                    } catch (Exception e) {
+
+                    }
+                }
+
+            }
+
+            DefaultTableModel maintable = new DefaultTableModel();
+            maintable = (DefaultTableModel) jTable7.getModel();
+            maintable.setRowCount(0);
+            Object a = api_date_format.format(jDateChooser4.getDate());
+            Object b = api_date_format.format(jDateChooser2.getDate());
+
+            for (int i = 0; i < api_array.length; i++) {
+
+                if (api_array[i][0] != null) {
+
+                    maintable.addRow(new Object[]{api_array[i][0], api_array[i][1], b, a});
+
+                }
+
+            }
+
+            jTable7.setModel(maintable);
+
+            //osszesites
+            String pn = "";
+            int pndarab = 0;
+            int k = 0;
+            boolean vanemar = false;
+            DefaultTableModel sumtabla = new DefaultTableModel();
+            sumtabla = (DefaultTableModel) jTable9.getModel();
+            sumtabla.setRowCount(0);
+
+            for (int i = 0; i < jTable7.getRowCount(); i++) {
+
+                pn = jTable7.getValueAt(i, 0).toString();
+                vanemar = false;
+                pndarab = 0;
+
+                for (int m = 0; m < sumtabla.getRowCount(); m++) {
+                    if (pn.equals(sumtabla.getValueAt(m, 0).toString())) {
+                        vanemar = true;
+
+                    }
+                }
+
+                if (vanemar == false) {
+                    for (int n = i; n < jTable7.getRowCount(); n++) {
+
+                        if (pn.equals(jTable7.getValueAt(n, 0).toString())) {
+                            pndarab++;
+                        }
+
+                    }
+
+                    try {
+
+                        sumtabla.addRow(new Object[]{pn, pndarab});
+
+                    } catch (Exception e) {
+                        System.out.println("nem jott ossze");
+                    }
+
+                }
+
+            }
+
+            jTable9.setModel(sumtabla);
+
+        } else {
+            infobox infobox_api = new infobox();
+            infobox_api.infoBox("A megadott paraméterekkel nem volt találat!", "Info");
+
+        }
+
+        stat.beir(System.getProperty("user.name"), jTabbedPane1.getTitleAt(jTabbedPane1.getSelectedIndex()));
+    }//GEN-LAST:event_jButton12ActionPerformed
+
+    private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
+        // TODO add your handling code here:
+
+        String adatok = "";
+        String mentve = "";
+        for (int i = 0; i < jTable7.getRowCount(); i++) {
+
+            //System.out.println(jTable7.getValueAt(i, 4));
+            try {
+                if (jTable7.getValueAt(i, 4).equals(true)) {
+
+                    mentve = "Y";
+
+                } else {
+                    mentve = "N";
+                }
+            } catch (Exception e) {
+
+                mentve = "N";
+            }
+
+            adatok += "('" + jTable7.getValueAt(i, 1) + "','" + jTable7.getValueAt(i, 0) + "','" + jTable7.getValueAt(i, 2) + "','" + jTable7.getValueAt(i, 3) + "','" + mentve + "'),";
+
+        }
+
+        adatok = adatok.substring(0, adatok.length() - 1);
+
+        String query = "insert into oh_querymain (serial,partnumber,tol,ig,megcsinalva) values" + adatok + "on duplicate key update megcsinalva = values (megcsinalva)";
+
+        planconnect pc = new planconnect();
+
+        try {
+            pc.feltolt(query);
+
+            infobox inf = new infobox();
+            inf.infoBox("A feltöltés sikeres!", "Feltöltés!");
+        } catch (Exception e) {
+
+            infobox inf = new infobox();
+            inf.infoBox("A feltöltés sikertelen!", "Feltöltés!");
+
+        }
+    }//GEN-LAST:event_jButton11ActionPerformed
+
+    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
+        // TODO add your handling code here:
+
+        String pn = jTextField10.getText().trim();
+        String pcb = jTextField11.getText().trim();
+
+        if ((pn.equals("") && pcb.equals("")) || (pn.length() > 0 && pcb.length() > 0)) {
+
+            infobox.infoBox("Vagy Partnumbert vagy PCB számot adj meg!", "Hiba!");
+
+        } else {
+
+            pcbtabla = (DefaultTableModel) jTable6.getModel();
+
+            if (pn.length() > 0) {
+
+                String query = "SELECT  harman_tipusok.PCB as Board_PN  FROM planningdb.harman_tipusok where harman_tipusok.PN_SMD_Mainboard_PCBA like '" + jTextField10.getText().trim() + "'";
+                planconnect pc = new planconnect();
+
+                ResultSet rs;
+
+                try {
+                    rs = (ResultSet) pc.planconnect(query);
+
+                    pcbtabla.setValueAt(pn, 0, 0);
+                    pcbtabla = (DefaultTableModel) pc.resultSetToTableModel(rs, pcbtabla, 1);
+                    // jTable6.setModel(pcbtabla);
+
+                } catch (SQLException ex) {
+                    Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+                query = "SELECT ifnull(sum(oracle_backup_subinv.quantity),0) as qty from oracle_backup_subinv where oracle_backup_subinv.item ='" + pcbtabla.getValueAt(0, 1).toString().trim() + "'";
+
+                connect con = new connect(query);
+
+                try {
+                    if (con.rs.next()) {
+                        pcbtabla.setValueAt(con.rs.getString("qty"), 0, 2);
+                    }
+                    jTable6.setModel(pcbtabla);
+                } catch (SQLException ex) {
+                    Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+            }
+
+            if (pcb.length() > 0) {
+
+                String query = "SELECT  harman_tipusok.PN_SMD_Mainboard_PCBA as Part  FROM planningdb.harman_tipusok where harman_tipusok.PCB like '" + jTextField11.getText().trim() + "'";
+                planconnect con = new planconnect();
+                try {
+                    ResultSet rs = (ResultSet) con.planconnect(query);
+                    pcbtabla.setValueAt(jTextField11.getText(), 0, 1);
+                    if (rs.next()) {
+                        pcbtabla.setValueAt(rs.getString("Part"), 0, 0);
+                    }
+
+                    //jTable6.setModel(pcbtabla);
+                } catch (SQLException ex) {
+                    Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+                query = "SELECT ifnull(sum(oracle_backup_subinv.quantity),0) as qty from oracle_backup_subinv where oracle_backup_subinv.item ='" + pcbtabla.getValueAt(0, 1).toString().trim() + "'";
+
+                connect con1 = new connect(query);
+
+                try {
+                    if (con1.rs.next()) {
+                        pcbtabla.setValueAt(con1.rs.getString("qty"), 0, 2);
+                    }
+                    jTable6.setModel(pcbtabla);
+                } catch (SQLException ex) {
+                    Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+            }
+
+        }
+
+        stat.beir(System.getProperty("user.name"), jTabbedPane1.getTitleAt(jTabbedPane1.getSelectedIndex()));
+    }//GEN-LAST:event_jButton10ActionPerformed
+
+    private void jTextField11KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField11KeyPressed
+        // TODO add your handling code here:
+        if (jTextField11.getText().length() > 0) {
+            jTextField10.setEnabled(false);
+        } else {
+
+            jTextField10.setEnabled(true);
+        }
+    }//GEN-LAST:event_jTextField11KeyPressed
+
+    private void jTextField10KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField10KeyPressed
+        // TODO add your handling code here:
+
+        if (jTextField10.getText().length() > 0) {
+            jTextField11.setEnabled(false);
+        } else {
+
+            jTextField11.setEnabled(true);
+        }
+    }//GEN-LAST:event_jTextField10KeyPressed
+
+    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+        // TODO add your handling code here:
+
+        jobstatus = (DefaultTableModel) jTable5.getModel();
+
+        URL url = null;
+
+        jobstatus.setRowCount(0);
+
+        xmlfeldolg xxx = new xmlfeldolg();
+        Object rowdata[][] = null;
+
+        try {
+
+            String urlstring = "http://143.116.140.120/rest/request.php?page=planning_shop_order&shoporder=" + jTextField7.getText().trim() + "&format=xml";
+            urlstring = urlstring.trim();
+            url = new URL(urlstring);
+            ArrayList<String> lista = new ArrayList();
+
+            String nodelist = "planning_shop_order";
+            lista.add("Shop_Order_Number");
+            lista.add("Part_Number");
+            lista.add("Workstation");
+            lista.add("Qty");
+            lista.add("Unit_Status");
+
+            rowdata = (Object[][]) xxx.xmlfeldolg(url, nodelist, lista);
+
+        } catch (MalformedURLException ex) {
+            Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        jobstatus = (DefaultTableModel) xxx.totable(jobstatus, rowdata);
+
+        jTable5.setModel(jobstatus);
+
+        int qty = 0;
+
+        for (int i = 0; i < jobstatus.getRowCount(); i++) {
+
+            qty += Integer.parseInt(jobstatus.getValueAt(i, 3).toString());
+
+        }
+
+        jLabel12.setText("JOB total QTY: " + qty);
+
+        stat.beir(System.getProperty("user.name"), jTabbedPane1.getTitleAt(jTabbedPane1.getSelectedIndex()));
+
+    }//GEN-LAST:event_jButton9ActionPerformed
+
+    private void jTextField7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField7ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField7ActionPerformed
+
+    private void jTable5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable5MouseClicked
+
+        Integer osszeg = 0;
+        int[] selectedrows = jTable5.getSelectedRows();
+
+        for (int i = 0; i < selectedrows.length; i++) {
+
+            osszeg += Integer.parseInt(jTable5.getValueAt(selectedrows[i], 3).toString());
+
+        }
+
+        jTextField12.setText(osszeg.toString());
+    }//GEN-LAST:event_jTable5MouseClicked
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
         // TODO add your handling code here:
@@ -2398,7 +3395,6 @@ public class ablak extends javax.swing.JFrame {
         }
         sele.setDefaultCloseOperation(sele.DISPOSE_ON_CLOSE);
         sele.setVisible(true);
-
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
@@ -2537,6 +3533,10 @@ public class ablak extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton4ActionPerformed
 
+    private void jTextField5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField5ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField5ActionPerformed
+
     private void jTextField4KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField4KeyReleased
         // TODO add your handling code here:
         String query = jTextField4.getText().trim();
@@ -2557,7 +3557,6 @@ public class ablak extends javax.swing.JFrame {
         }
 
         jTextField17.setText(osszeg.toString());
-
     }//GEN-LAST:event_jTable3MouseClicked
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -2623,6 +3622,10 @@ public class ablak extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 
+    private void jTextField6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField6ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField6ActionPerformed
+
     private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyReleased
         // TODO add your handling code here:
         String query = jTextField1.getText().toUpperCase().trim();
@@ -2642,7 +3645,6 @@ public class ablak extends javax.swing.JFrame {
         }
 
         jTextField13.setText(osszeg.toString());
-
     }//GEN-LAST:event_jTable2MouseClicked
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
@@ -2660,112 +3662,30 @@ public class ablak extends javax.swing.JFrame {
 
         jTextField13.setText(osszeg.toString());
 
-
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
 
-        
-        
-
-                model = (DefaultTableModel) jTable1.getModel();
-
-                URL url = null;
-
-                model.setRowCount(0);
-                model1.setRowCount(0);
-
-                xmlfeldolg xxx = new xmlfeldolg();
-                Object rowdata[][] = null;
-
-                try {
-
-                    url = new URL("http://143.116.140.120/rest/request.php?page=planning_shipment_plan_process_all&product=" + jTextField2.getText().trim() + "&format=xml");
-                    ArrayList<String> lista = new ArrayList();
-
-                    String nodelist = "planning_shipment_plan_process_all";
-                    lista.add("Part_Number");
-                    lista.add("SFDC_Location_Name");
-                    lista.add("Serial_Number");
-
-                    rowdata = (Object[][]) xxx.xmlfeldolg(url, nodelist, lista);
-
-                } catch (MalformedURLException ex) {
-                    Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
-                }
-
-                model = (DefaultTableModel) xxx.totable(model, rowdata);
-
-                jTable1.setModel(model);
-
-                // OH tábla
-                String mitkeres = jTextField2.getText().trim();
-
-                String query = "SELECT oracle_backup_subinv.item as partnumber , oracle_backup_subinv.subinv , oracle_backup_subinv.locator , oracle_backup_subinv.quantity FROM trax_mon.oracle_backup_subinv where item like '%" + mitkeres + "%'";
-                connect onhend = new connect((query));
-
-                model1 = (DefaultTableModel) jTable2.getModel();
-                model1.setRowCount(0);
-
-                try {
-                    while (onhend.rs.next()) {
-
-                        String pn = onhend.rs.getString(1);
-                        String subinv = onhend.rs.getString(2);
-                        String locator = onhend.rs.getString(3);
-                        String qty = onhend.rs.getString(4);
-                        model1.addRow(new Object[]{pn, subinv, locator, qty});
-
-                    }
-                } catch (SQLException ex) {
-                    Logger.getLogger(ablak.class
-                            .getName()).log(Level.SEVERE, null, ex);
-                }
-
-                jTable2.setModel(model1);
-
-                stat.beir(System.getProperty("user.name"), jTabbedPane1.getTitleAt(jTabbedPane1.getSelectedIndex()));
-
-                try {
-                    warning wg = new warning();
-                    wg.keszlet(this);
-                } catch (Exception e) {
-                }
-
-
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-
-    private void jTextField7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField7ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField7ActionPerformed
-
-    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
-        // TODO add your handling code here:
-
-        jobstatus = (DefaultTableModel) jTable5.getModel();
+        model = (DefaultTableModel) jTable1.getModel();
 
         URL url = null;
 
-        jobstatus.setRowCount(0);
+        model.setRowCount(0);
+        model1.setRowCount(0);
 
         xmlfeldolg xxx = new xmlfeldolg();
         Object rowdata[][] = null;
 
         try {
 
-            String urlstring = "http://143.116.140.120/rest/request.php?page=planning_shop_order&shoporder=" + jTextField7.getText().trim() + "&format=xml";
-            urlstring = urlstring.trim();
-            url = new URL(urlstring);
+            url = new URL("http://143.116.140.120/rest/request.php?page=planning_shipment_plan_process_all&product=" + jTextField2.getText().trim() + "&format=xml");
             ArrayList<String> lista = new ArrayList();
 
-            String nodelist = "planning_shop_order";
-            lista.add("Shop_Order_Number");
+            String nodelist = "planning_shipment_plan_process_all";
             lista.add("Part_Number");
-            lista.add("Workstation");
-            lista.add("Qty");
-            lista.add("Unit_Status");
+            lista.add("SFDC_Location_Name");
+            lista.add("Serial_Number");
 
             rowdata = (Object[][]) xxx.xmlfeldolg(url, nodelist, lista);
 
@@ -2773,875 +3693,168 @@ public class ablak extends javax.swing.JFrame {
             Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        jobstatus = (DefaultTableModel) xxx.totable(jobstatus, rowdata);
+        model = (DefaultTableModel) xxx.totable(model, rowdata);
 
-        jTable5.setModel(jobstatus);
+        jTable1.setModel(model);
 
-        int qty = 0;
+        // OH tábla
+        String mitkeres = jTextField2.getText().trim();
 
-        for (int i = 0; i < jobstatus.getRowCount(); i++) {
+        String query = "SELECT oracle_backup_subinv.item as partnumber , oracle_backup_subinv.subinv , oracle_backup_subinv.locator , oracle_backup_subinv.quantity FROM trax_mon.oracle_backup_subinv where item like '%" + mitkeres + "%'";
+        connect onhend = new connect((query));
 
-            qty += Integer.parseInt(jobstatus.getValueAt(i, 3).toString());
-
-        }
-
-        jLabel12.setText("JOB total QTY: " + qty);
-
-        stat.beir(System.getProperty("user.name"), jTabbedPane1.getTitleAt(jTabbedPane1.getSelectedIndex()));
-
-
-    }//GEN-LAST:event_jButton9ActionPerformed
-
-    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
-        // TODO add your handling code here:
-
-        String pn = jTextField10.getText().trim();
-        String pcb = jTextField11.getText().trim();
-
-        if ((pn.equals("") && pcb.equals("")) || (pn.length() > 0 && pcb.length() > 0)) {
-
-            infobox.infoBox("Vagy Partnumbert vagy PCB számot adj meg!", "Hiba!");
-
-        } else {
-
-            pcbtabla = (DefaultTableModel) jTable6.getModel();
-
-            if (pn.length() > 0) {
-
-                String query = "SELECT  harman_tipusok.PCB as Board_PN  FROM planningdb.harman_tipusok where harman_tipusok.PN_SMD_Mainboard_PCBA like '" + jTextField10.getText().trim() + "'";
-                planconnect pc = new planconnect();
-
-                ResultSet rs;
-
-                try {
-                    rs = (ResultSet) pc.planconnect(query);
-
-                    pcbtabla.setValueAt(pn, 0, 0);
-                    pcbtabla = (DefaultTableModel) pc.resultSetToTableModel(rs, pcbtabla, 1);
-                    // jTable6.setModel(pcbtabla);
-
-                } catch (SQLException ex) {
-                    Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (ClassNotFoundException ex) {
-                    Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
-                }
-
-                query = "SELECT ifnull(sum(oracle_backup_subinv.quantity),0) as qty from oracle_backup_subinv where oracle_backup_subinv.item ='" + pcbtabla.getValueAt(0, 1).toString().trim() + "'";
-
-                connect con = new connect(query);
-
-                try {
-                    if (con.rs.next()) {
-                        pcbtabla.setValueAt(con.rs.getString("qty"), 0, 2);
-                    }
-                    jTable6.setModel(pcbtabla);
-                } catch (SQLException ex) {
-                    Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
-                }
-
-            }
-
-            if (pcb.length() > 0) {
-
-                String query = "SELECT  harman_tipusok.PN_SMD_Mainboard_PCBA as Part  FROM planningdb.harman_tipusok where harman_tipusok.PCB like '" + jTextField11.getText().trim() + "'";
-                planconnect con = new planconnect();
-                try {
-                    ResultSet rs = (ResultSet) con.planconnect(query);
-                    pcbtabla.setValueAt(jTextField11.getText(), 0, 1);
-                    if (rs.next()) {
-                        pcbtabla.setValueAt(rs.getString("Part"), 0, 0);
-                    }
-
-                    //jTable6.setModel(pcbtabla);
-                } catch (SQLException ex) {
-                    Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (ClassNotFoundException ex) {
-                    Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
-                }
-
-                query = "SELECT ifnull(sum(oracle_backup_subinv.quantity),0) as qty from oracle_backup_subinv where oracle_backup_subinv.item ='" + pcbtabla.getValueAt(0, 1).toString().trim() + "'";
-
-                connect con1 = new connect(query);
-
-                try {
-                    if (con1.rs.next()) {
-                        pcbtabla.setValueAt(con1.rs.getString("qty"), 0, 2);
-                    }
-                    jTable6.setModel(pcbtabla);
-                } catch (SQLException ex) {
-                    Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
-                }
-
-            }
-
-        }
-
-        stat.beir(System.getProperty("user.name"), jTabbedPane1.getTitleAt(jTabbedPane1.getSelectedIndex()));
-    }//GEN-LAST:event_jButton10ActionPerformed
-
-    private void jTextField10KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField10KeyPressed
-        // TODO add your handling code here:
-
-        if (jTextField10.getText().length() > 0) {
-            jTextField11.setEnabled(false);
-        } else {
-
-            jTextField11.setEnabled(true);
-        }
-
-    }//GEN-LAST:event_jTextField10KeyPressed
-
-    private void jTextField11KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField11KeyPressed
-        // TODO add your handling code here:
-        if (jTextField11.getText().length() > 0) {
-            jTextField10.setEnabled(false);
-        } else {
-
-            jTextField10.setEnabled(true);
-        }
-
-    }//GEN-LAST:event_jTextField11KeyPressed
-
-    private void jTextField6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField6ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField6ActionPerformed
-
-    private void jTextField5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField5ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField5ActionPerformed
-
-    private void jTable5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable5MouseClicked
-
-        Integer osszeg = 0;
-        int[] selectedrows = jTable5.getSelectedRows();
-
-        for (int i = 0; i < selectedrows.length; i++) {
-
-            osszeg += Integer.parseInt(jTable5.getValueAt(selectedrows[i], 3).toString());
-
-        }
-
-        jTextField12.setText(osszeg.toString());
-
-    }//GEN-LAST:event_jTable5MouseClicked
-
-    private void jTabbedPane1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabbedPane1StateChanged
-
-        int i = jTabbedPane1.getSelectedIndex();
-
-        if (i == 5) {
-
-            jButton12.setEnabled(false);
-            jButton11.setEnabled(false);
-            jButton13.setEnabled(false);
-            jButton15.setEnabled(false);
-            bejelentkezes a = new bejelentkezes(this);
-            a.setVisible(true);
-            String query = "SELECT ig FROM planningdb.oh_querymain order by ig desc limit 1";
-            String prefquery = "SELECT distinct prefix FROM planningdb.oh_prefixes;";
-            String kivetelquery = "SELECT distinct partnumber FROM planningdb.oh_kivetelek;";
-            datum = new java.util.Date();
-            jDateChooser4.setDate(datum);
-            DefaultTableModel model = new DefaultTableModel();
-            model = (DefaultTableModel) jTable7.getModel();
-            model.setRowCount(0);
-            jTable7.setModel(model);
-            model = (DefaultTableModel) jTable9.getModel();
-            model.setRowCount(0);
-            jTable9.setModel(model);
-
-            planconnect pc = new planconnect();
-
-            try {
-
-                ResultSet rs = (ResultSet) pc.planconnect(query);
-
-                if (rs.next()) {
-                    datum = rs.getDate(1);
-                    jDateChooser2.setDate(datum);
-                }
-
-            } catch (SQLException ex) {
-                Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
-            try {
-                i = 0;
-
-                ResultSet rs = (ResultSet) pc.planconnect(prefquery);
-                while (rs.next()) {
-
-                    jTable8.setValueAt(rs.getString(1), i, 0);
-                    i++;
-
-                }
-
-            } catch (SQLException ex) {
-                Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
-            try {
-                ResultSet rs = (ResultSet) pc.planconnect(kivetelquery);
-                i = 0;
-                while (rs.next()) {
-
-                    jTable10.setValueAt(rs.getString(1), i, 0);
-                    i++;
-
-                }
-
-            } catch (SQLException ex) {
-                Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
-        } else if (i == 1) {
-
-            wgcounter = 0;
-            elso = LocalDateTime.now();
-
-        }
-
-        if (i == 7) {
-
-            bejelentkezesTervezo a = new bejelentkezesTervezo(this);
-            a.setVisible(true);
-
-        }
-
-    }//GEN-LAST:event_jTabbedPane1StateChanged
-
-    private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
-        // TODO add your handling code here:
-
-        String query = "TRUNCATE TABLE oh_prefixes";
-
-        planconnect pc = new planconnect();
-        pc.feltolt(query);
-        query = "INSERT INTO oh_prefixes(prefix) VALUES ()";
-
-        String prefixlist = "";
-
-        for (int i = 0; i < jTable8.getRowCount(); i++) {
-
-            if (jTable8.getValueAt(i, 0) != null) {
-
-                prefixlist += jTable8.getValueAt(i, 0).toString() + "'),('";
-
-            }
-
-        }
-
-        prefixlist = prefixlist.substring(0, prefixlist.length() - 4);
-        query = "INSERT INTO oh_prefixes(prefix) VALUES ('" + prefixlist + ")";
-
-        pc.feltolt(query);
-
-        infobox inf = new infobox();
-        inf.infoBox("A mentés sikeres!", "Üzenet!");
-
-    }//GEN-LAST:event_jButton13ActionPerformed
-
-    private void jButton14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton14ActionPerformed
-        // TODO add your handling code here:
-
-        DefaultTableModel oh_main = new DefaultTableModel();
-        oh_main = (DefaultTableModel) jTable7.getModel();
-        oh_main.setRowCount(0);
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        String tol = dateFormat.format(jDateChooser2.getDate());
-        String ig = dateFormat.format(jDateChooser4.getDate());
-
-        String query = "select * from oh_querymain where oh_querymain.tol >='" + tol + "' and oh_querymain.ig <= '" + ig + "'";
-
-        planconnect pc = new planconnect();
+        model1 = (DefaultTableModel) jTable2.getModel();
+        model1.setRowCount(0);
 
         try {
-            ResultSet rs = (ResultSet) pc.planconnect(query);
-            int sor = 0;
+            while (onhend.rs.next()) {
 
-            while (rs.next()) {
-
-                oh_main.addRow(new Object[]{rs.getString(3), rs.getString(2), rs.getString(4), rs.getString(5)/*, rs.getString(6)*/});
-
-                if (rs.getString(6).equals("Y")) {
-
-                    oh_main.setValueAt(true, sor, 4);
-
-                }
-
-                sor++;
+                String pn = onhend.rs.getString(1);
+                String subinv = onhend.rs.getString(2);
+                String locator = onhend.rs.getString(3);
+                String qty = onhend.rs.getString(4);
+                model1.addRow(new Object[]{pn, subinv, locator, qty});
 
             }
-
-            jTable7.setModel(oh_main);
-
         } catch (SQLException ex) {
-            Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ablak.class
+                .getName()).log(Level.SEVERE, null, ex);
         }
 
-        //kitoltjuk a summa táblát
-        String pn = "";
-        int pndarab = 0;
-        int k = 0;
-        boolean vanemar = false;
-        DefaultTableModel sumtabla = new DefaultTableModel();
-        sumtabla = (DefaultTableModel) jTable9.getModel();
-        sumtabla.setRowCount(0);
-
-        for (int i = 0; i < jTable7.getRowCount(); i++) {
-
-            pn = jTable7.getValueAt(i, 0).toString();
-            vanemar = false;
-            pndarab = 0;
-
-            for (int m = 0; m < sumtabla.getRowCount(); m++) {
-                if (pn.equals(sumtabla.getValueAt(m, 0).toString())) {
-                    vanemar = true;
-
-                }
-            }
-
-            if (vanemar == false) {
-                for (int n = i; n < jTable7.getRowCount(); n++) {
-
-                    if (pn.equals(jTable7.getValueAt(n, 0).toString())) {
-                        pndarab++;
-                    }
-
-                }
-
-                try {
-
-                    sumtabla.addRow(new Object[]{pn, pndarab});
-
-                } catch (Exception e) {
-                    System.out.println("nem jott ossze");
-                }
-
-            }
-
-        }
-
-        jTable9.setModel(sumtabla);
-
-    }//GEN-LAST:event_jButton14ActionPerformed
-
-    private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
-        // TODO add your handling code here:
-
-        String adatok = "";
-        String mentve = "";
-        for (int i = 0; i < jTable7.getRowCount(); i++) {
-
-            //System.out.println(jTable7.getValueAt(i, 4));
-            try {
-                if (jTable7.getValueAt(i, 4).equals(true)) {
-
-                    mentve = "Y";
-
-                } else {
-                    mentve = "N";
-                }
-            } catch (Exception e) {
-
-                mentve = "N";
-            }
-
-            adatok += "('" + jTable7.getValueAt(i, 1) + "','" + jTable7.getValueAt(i, 0) + "','" + jTable7.getValueAt(i, 2) + "','" + jTable7.getValueAt(i, 3) + "','" + mentve + "'),";
-
-        }
-
-        adatok = adatok.substring(0, adatok.length() - 1);
-
-        String query = "insert into oh_querymain (serial,partnumber,tol,ig,megcsinalva) values" + adatok + "on duplicate key update megcsinalva = values (megcsinalva)";
-
-        planconnect pc = new planconnect();
-
-        try {
-            pc.feltolt(query);
-
-            infobox inf = new infobox();
-            inf.infoBox("A feltöltés sikeres!", "Feltöltés!");
-        } catch (Exception e) {
-
-            infobox inf = new infobox();
-            inf.infoBox("A feltöltés sikertelen!", "Feltöltés!");
-
-        }
-
-    }//GEN-LAST:event_jButton11ActionPerformed
-
-    private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
-        // TODO add your handling code here:
-        xmlfeldolg xmlfeldolg_lekerdez_button = new xmlfeldolg();
-        SimpleDateFormat api_date_format = new SimpleDateFormat("yyyy-MM-dd");
-
-        Date dt = new Date();
-
-        Calendar c = Calendar.getInstance();
-        c.setTime(jDateChooser4.getDate());
-        c.add(Calendar.DATE, 1);
-        dt = c.getTime();
-        String pn_string = "";
-
-        String api_string = "http://143.116.140.120/rest/request.php?page=planning_activity&starttime=" + api_date_format.format(jDateChooser2.getDate()) + "&endtime="
-                + api_date_format.format(dt);
-
-        for (int x = 0; x < jTable8.getRowCount(); x++) {
-
-            pn_string += "&pn" + Integer.toString(x + 1) + "=%" + jTable8.getValueAt(x, 0) + "%";
-
-        }
-
-        pn_string += "&format=xml";
-        api_string += pn_string;
-        ArrayList<String> api_lista = new ArrayList();
-        api_lista.add("part_number");
-        api_lista.add("serial_number");
-        Object api_array[][] = null;
-
-        try {
-            URL api_url = new URL(api_string);
-            api_array = (Object[][]) xmlfeldolg_lekerdez_button.xmlfeldolg(api_url, "planning_activity", api_lista);
-        } catch (MalformedURLException ex) {
-            Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
-
-        } catch (Exception e) {
-
-            infobox inf = new infobox();
-            inf.infoBox("Valószínűleg nem megy a planning_activity API , értesítsd a System csapatot!", "Valami nincs rendben!");
-        }
-
-        if (api_array.length != 0) {
-
-            planconnect planconnection_temp = new planconnect();
-            String serials = "";
-            ResultSet rss = null;
-            ArrayList<String> sn_list = new ArrayList<String>();
-
-            for (int x = 0; x < api_array.length; x++) {
-                serials = serials + "'" + api_array[x][1].toString() + "',";
-            }
-
-            serials = serials.substring(0, serials.length() - 1);
-
-            try {
-                rss = (ResultSet) planconnection_temp.planconnect("SELECT serial FROM planningdb.oh_querymain where megcsinalva = 'Y';");
-                while (rss.next()) {
-                    sn_list.add(rss.getString(1));
-
-                }
-
-            } catch (SQLException ex) {
-                Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
-            for (int x = 0; x < api_array.length; x++) {
-
-                for (int y = 0; y < sn_list.size(); y++) {
-                    try {
-                        if (api_array[x][1].toString().equals(sn_list.get(y).toString())) {
-                            api_array[x][0] = null;
-                            api_array[x][1] = null;
-                        }
-                    } catch (Exception e) {
-
-                    }
-                }
-
-            }
-
-// a kivételes pn ek kivétele
-            sn_list.clear();
-
-            for (int i = 0; i < jTable10.getRowCount(); i++) {
-
-                if (jTable10.getValueAt(i, 0) != null) {
-
-                    sn_list.add(jTable10.getValueAt(i, 0).toString());
-                }
-
-            }
-
-            for (int x = 0; x < api_array.length; x++) {
-
-                for (int y = 0; y < sn_list.size(); y++) {
-                    try {
-                        if (api_array[x][0].toString().equals(sn_list.get(y).toString())) {
-                            api_array[x][0] = null;
-                            api_array[x][1] = null;
-                        }
-                    } catch (Exception e) {
-
-                    }
-                }
-
-            }
-
-            DefaultTableModel maintable = new DefaultTableModel();
-            maintable = (DefaultTableModel) jTable7.getModel();
-            maintable.setRowCount(0);
-            Object a = api_date_format.format(jDateChooser4.getDate());
-            Object b = api_date_format.format(jDateChooser2.getDate());
-
-            for (int i = 0; i < api_array.length; i++) {
-
-                if (api_array[i][0] != null) {
-
-                    maintable.addRow(new Object[]{api_array[i][0], api_array[i][1], b, a});
-
-                }
-
-            }
-
-            jTable7.setModel(maintable);
-
-            //osszesites
-            String pn = "";
-            int pndarab = 0;
-            int k = 0;
-            boolean vanemar = false;
-            DefaultTableModel sumtabla = new DefaultTableModel();
-            sumtabla = (DefaultTableModel) jTable9.getModel();
-            sumtabla.setRowCount(0);
-
-            for (int i = 0; i < jTable7.getRowCount(); i++) {
-
-                pn = jTable7.getValueAt(i, 0).toString();
-                vanemar = false;
-                pndarab = 0;
-
-                for (int m = 0; m < sumtabla.getRowCount(); m++) {
-                    if (pn.equals(sumtabla.getValueAt(m, 0).toString())) {
-                        vanemar = true;
-
-                    }
-                }
-
-                if (vanemar == false) {
-                    for (int n = i; n < jTable7.getRowCount(); n++) {
-
-                        if (pn.equals(jTable7.getValueAt(n, 0).toString())) {
-                            pndarab++;
-                        }
-
-                    }
-
-                    try {
-
-                        sumtabla.addRow(new Object[]{pn, pndarab});
-
-                    } catch (Exception e) {
-                        System.out.println("nem jott ossze");
-                    }
-
-                }
-
-            }
-
-            jTable9.setModel(sumtabla);
-
-        } else {
-            infobox infobox_api = new infobox();
-            infobox_api.infoBox("A megadott paraméterekkel nem volt találat!", "Info");
-
-        }
+        jTable2.setModel(model1);
 
         stat.beir(System.getProperty("user.name"), jTabbedPane1.getTitleAt(jTabbedPane1.getSelectedIndex()));
 
-    }//GEN-LAST:event_jButton12ActionPerformed
-
-    private void jCheckBox1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCheckBox1ItemStateChanged
-        // TODO add your handling code here:
-        if (jCheckBox1.isSelected()) {
-
-            for (int i = 0; i < jTable7.getRowCount(); i++) {
-                jTable7.getModel().setValueAt(true, i, 4);
-            }
-
-        } else {
-
-            for (int i = 0; i < jTable7.getRowCount(); i++) {
-                jTable7.getModel().setValueAt(false, i, 4);
-            }
+        try {
+            warning wg = new warning();
+            wg.keszlet(this);
+        } catch (Exception e) {
         }
 
+    }//GEN-LAST:event_jButton1ActionPerformed
 
-    }//GEN-LAST:event_jCheckBox1ItemStateChanged
-
-    private void jButton15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton15ActionPerformed
-        // TODO add your handling code here:
-        String query = "TRUNCATE TABLE oh_kivetelek";
-
-        planconnect pc = new planconnect();
-        pc.feltolt(query);
-        query = "INSERT INTO oh_kivetelek(partnumber) VALUES ()";
-
-        String prefixlist = "";
-
-        for (int i = 0; i < jTable10.getRowCount(); i++) {
-
-            if (jTable10.getValueAt(i, 0) != null) {
-
-                prefixlist += jTable10.getValueAt(i, 0).toString().trim() + "'),('";
-
-            }
-
-        }
-
-        prefixlist = prefixlist.substring(0, prefixlist.length() - 4);
-        query = "INSERT INTO oh_kivetelek(partnumber) VALUES ('" + prefixlist + ")";
-
-        pc.feltolt(query);
-
-        infobox inf = new infobox();
-        inf.infoBox("A mentés sikeres!", "Üzenet!");
-
-    }//GEN-LAST:event_jButton15ActionPerformed
-
-    private void jButton16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton16ActionPerformed
-        // TODO add your handling code here:
+    public void gombenged() {
 
         try {
-
-            int valai = Integer.parseInt(jTextField19.getText());
-            String value;
-            String query = "SELECT cycletime_prog.ID as cpID, oraclepn ,smtprogname, smtline as sline, sequence , boardnumber ,(SELECT value FROM cycletime_data WHERE cycletime_prog_id = cpID AND priority = 1 AND cycletime_data.active = 1 ORDER BY ID DESC LIMIT 1) as mertido,(SELECT value FROM cycletime_data WHERE cycletime_prog_id = cpID AND priority = 2 AND cycletime_data.active = 1 ORDER BY ID DESC LIMIT 1) as gyorsmeres,(SELECT value FROM cycletime_data WHERE cycletime_prog_id = cpID AND priority = 3 AND cycletime_data.active = 1 ORDER BY ID DESC LIMIT 1) as kalkulalt,IFNULL(expectedeffbyprog,COALESCE((SELECT expectedeff FROM cycletime_config WHERE smtline = sline),(SELECT expectedeff FROM cycletime_config WHERE smtline = 'ALL'))) as eff FROM `cycletime_prog` WHERE cycletime_prog.active=1 and oraclepn like '%" + jTextField18.getText().trim() + "%'ORDER BY smtprogname;";
-            Integer i = 0;
-            Object valami = null;
-            DefaultTableModel model = new DefaultTableModel();
-            model = (DefaultTableModel) jTable12.getModel();
-            model.setRowCount(0);
-            try {
-                szaifconn con = new szaifconn("com.mysql.jdbc.driver", "jdbc:mysql://143.116.140.113/plrdb", "cpi", "cpi602");
-
-                ResultSet rs = (ResultSet) con.lekerdez(query);
-
-                while (rs.next()) {
-
-                    model.addRow(new Object[]{rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getString(10)});
-
-                    if (rs.getString(7) != null) {
-
-                        jTable12.setValueAt(((((Double.parseDouble(rs.getString(7)) / Double.parseDouble(rs.getString(6)))) / ((Double.parseDouble(rs.getString(10))) / 100)) * Integer.parseInt(jTextField19.getText())) / 3600, i, 9);
-
-                    } else if (rs.getString(8) != null) {
-
-                        jTable12.setValueAt(((((Double.parseDouble(rs.getString(8)) / Double.parseDouble(rs.getString(6)))) / ((Double.parseDouble(rs.getString(10))) / 100)) * Integer.parseInt(jTextField19.getText())) / 3600, i, 9);
-
-                    } else if (rs.getString(9) != null) {
-
-                        jTable12.setValueAt(((((Double.parseDouble(rs.getString(9)) / Double.parseDouble(rs.getString(6)))) / ((Double.parseDouble(rs.getString(10))) / 100)) * Integer.parseInt(jTextField19.getText())) / 3600, i, 9);
-
-                    }
-
-                    i++;
-                }
-
-            } catch (ClassNotFoundException | SQLException ex) {
-                Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (Exception e) {
-            }
-
-            jTable12.setModel(model);
-
-            model1 = (DefaultTableModel) jTable13.getModel();
-            model1.setRowCount(0);
-
-            planconnect pc = new planconnect();
-            query = "SELECT distinct beciklusidok.WS , beciklusidok.PN , beciklusidok.CELL, beciklusidok.DBPO FROM planningdb.beciklusidok where active = 1 and PN like ('%" + jTextField18.getText().trim() + "%') order by beciklusidok.ID";
-
-            try {
-                ResultSet rs = (ResultSet) pc.planconnect(query);
-                while (rs.next()) {
-
-                    model1.addRow(new Object[]{rs.getString(2), rs.getString(1), rs.getString(2), rs.getString(4), (Integer.parseInt(jTextField19.getText())) / Double.parseDouble(rs.getString(4))});
-
-                }
-
-            } catch (SQLException ex) {
-                Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
-            jTable13.setModel(model1);
+            jButton12.setEnabled(true);
+            jButton11.setEnabled(true);
+            jButton13.setEnabled(true);
+            jButton15.setEnabled(true);
 
         } catch (Exception e) {
-            infobox info = new infobox();
-            info.infoBox("Nem adtál meg darabszámot!", "Hiba!");
-        }
 
-        stat.beir(System.getProperty("user.name"), jTabbedPane1.getTitleAt(jTabbedPane1.getSelectedIndex()));
-
-    }//GEN-LAST:event_jButton16ActionPerformed
-
-    private void jButton17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton17ActionPerformed
-        // TODO add your handling code here:++
-        JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setAcceptAllFileFilterUsed(true);
-        fileChooser.setDialogTitle("Specify a file to save");
-
-        int userSelection = fileChooser.showSaveDialog(this);
-
-        if (userSelection == JFileChooser.APPROVE_OPTION) {
-
-            File fileToSave = fileChooser.getSelectedFile();
-            ExcelExporter exp = new ExcelExporter();
-            exp.fillData(jTable7, new File(fileToSave.getAbsolutePath() + ".xls"));
-        }
-
-    }//GEN-LAST:event_jButton17ActionPerformed
-
-    private void jTable9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable9MouseClicked
-        // TODO add your handling code here:
-
-        String pn = jTable9.getValueAt(jTable9.getSelectedRow(), 0).toString();
-
-        for (int i = 0; i < jTable7.getRowCount(); i++) {
-
-            if (jTable7.getValueAt(i, 0).toString().equals(pn) && (Boolean) jTable9.getValueAt(jTable9.getSelectedRow(), 2) == true) {
-
-                if ((Boolean) jTable7.getValueAt(i, 4) == true) {
-                    jTable7.setValueAt(false, i, 4);
-                } else {
-
-                    jTable7.setValueAt(true, i, 4);
-                }
-
-            }
-
-            if (jTable7.getValueAt(i, 0).toString().equals(pn) && (Boolean) jTable9.getValueAt(jTable9.getSelectedRow(), 2) == false) {
-
-                if ((Boolean) jTable7.getValueAt(i, 4) == true) {
-                    jTable7.setValueAt(false, i, 4);
-                } else {
-
-                    jTable7.setValueAt(true, i, 4);
-                }
-
-            }
+            System.err.println(e.getStackTrace());
 
         }
 
+    }
 
-    }//GEN-LAST:event_jTable9MouseClicked
 
-          private void filter(String query) {
+    private void filter(String query) {
 
-              TableRowSorter<DefaultTableModel> tr = new TableRowSorter<DefaultTableModel>(model);
-              TableRowSorter<DefaultTableModel> tr1 = new TableRowSorter<DefaultTableModel>(model1);
-              jTable1.setRowSorter(tr);
-              jTable2.setRowSorter(tr1);
-              tr.setRowFilter(RowFilter.regexFilter(query));
-              tr1.setRowFilter(RowFilter.regexFilter(query));
+        TableRowSorter<DefaultTableModel> tr = new TableRowSorter<DefaultTableModel>(model);
+        TableRowSorter<DefaultTableModel> tr1 = new TableRowSorter<DefaultTableModel>(model1);
+        jTable1.setRowSorter(tr);
+        jTable2.setRowSorter(tr1);
+        tr.setRowFilter(RowFilter.regexFilter(query));
+        tr1.setRowFilter(RowFilter.regexFilter(query));
 
-              int total = 0;
+        int total = 0;
 
-              for (int i = 0; i < jTable1.getRowCount(); i++) {
-                  String value = (String) jTable1.getValueAt(i, 2);
-                  total += Integer.parseInt(value);
-              }
+        for (int i = 0; i < jTable1.getRowCount(); i++) {
+            String value = (String) jTable1.getValueAt(i, 2);
+            total += Integer.parseInt(value);
+        }
 
-              jTextField6.setText(Integer.toString(total));
+        jTextField6.setText(Integer.toString(total));
 
-          }
+    }
 
-          public ablak(JButton jButton1, JButton jButton2, JLabel jLabel1, JLabel jLabel2, JLabel jLabel3, JLabel jLabel4, JLabel jLabel5, JLabel jLabel6, JLabel jLabel7, JLabel jLabel8, JLabel jLabel9, JMenuItem jMenuItem1, JPanel jPanel1, JPanel jPanel2, JScrollPane jScrollPane1, JScrollPane jScrollPane2, JScrollPane jScrollPane3, JTabbedPane jTabbedPane1, JTable jTable1, JTable jTable2, JTable jTable3, JTextField jTextField1, JTextField jTextField2, JTextField jTextField3, JTextField jTextField5) throws HeadlessException {
+    public ablak(JButton jButton1, JButton jButton2, JLabel jLabel1, JLabel jLabel2, JLabel jLabel3, JLabel jLabel4, JLabel jLabel5, JLabel jLabel6, JLabel jLabel7, JLabel jLabel8, JLabel jLabel9, JMenuItem jMenuItem1, JPanel jPanel1, JPanel jPanel2, JScrollPane jScrollPane1, JScrollPane jScrollPane2, JScrollPane jScrollPane3, JTabbedPane jTabbedPane1, JTable jTable1, JTable jTable2, JTable jTable3, JTextField jTextField1, JTextField jTextField2, JTextField jTextField3, JTextField jTextField5) throws HeadlessException {
 
-              this.jButton1 = jButton1;
-              this.jButton2 = jButton2;
-              this.jLabel1 = jLabel1;
-              this.jLabel2 = jLabel2;
-              this.jLabel3 = jLabel3;
-              this.jLabel4 = jLabel4;
-              this.jLabel5 = jLabel5;
-              this.jLabel6 = jLabel6;
-              this.jLabel7 = jLabel7;
-              this.jLabel8 = jLabel8;
-              this.jLabel9 = jLabel9;
-              this.jPanel1 = jPanel1;
-              this.jPanel2 = jPanel2;
-              this.jScrollPane1 = jScrollPane1;
-              this.jScrollPane2 = jScrollPane2;
-              this.jScrollPane3 = jScrollPane3;
-              this.jTabbedPane1 = jTabbedPane1;
-              this.jTable1 = jTable1;
-              this.jTable2 = jTable2;
-              this.jTable3 = jTable3;
-              this.jTextField1 = jTextField1;
-              this.jTextField2 = jTextField2;
-              this.jTextField3 = jTextField3;
-              this.jTextField5 = jTextField5;
-          }
+        this.jButton1 = jButton1;
+        this.jButton2 = jButton2;
+        this.jLabel1 = jLabel1;
+        this.jLabel2 = jLabel2;
+        this.jLabel3 = jLabel3;
+        this.jLabel4 = jLabel4;
+        this.jLabel5 = jLabel5;
+        this.jLabel6 = jLabel6;
+        this.jLabel7 = jLabel7;
+        this.jLabel8 = jLabel8;
+        this.jLabel9 = jLabel9;
+        this.jPanel1 = jPanel1;
+        this.jPanel2 = jPanel2;
+        this.jScrollPane1 = jScrollPane1;
+        this.jScrollPane2 = jScrollPane2;
+        this.jScrollPane3 = jScrollPane3;
+        this.jTabbedPane1 = jTabbedPane1;
+        this.jTable1 = jTable1;
+        this.jTable2 = jTable2;
+        this.jTable3 = jTable3;
+        this.jTextField1 = jTextField1;
+        this.jTextField2 = jTextField2;
+        this.jTextField3 = jTextField3;
+        this.jTextField5 = jTextField5;
+    }
 
-          private void filter1(String query) {
+    private void filter1(String query) {
 
-              TableRowSorter<DefaultTableModel> tr = new TableRowSorter<DefaultTableModel>(modelacti);
-              tr = new TableRowSorter<DefaultTableModel>(modelacti);
-              jTable3.setRowSorter(tr);
-              tr.setRowFilter(RowFilter.regexFilter(query));
+        TableRowSorter<DefaultTableModel> tr = new TableRowSorter<DefaultTableModel>(modelacti);
+        tr = new TableRowSorter<DefaultTableModel>(modelacti);
+        jTable3.setRowSorter(tr);
+        tr.setRowFilter(RowFilter.regexFilter(query));
 
-              int total = 0;
+        int total = 0;
 
-              for (int i = 0; i < jTable3.getRowCount(); i++) {
-                  String value = (String) jTable3.getValueAt(i, 4);
-                  total += Integer.parseInt(value);
-              }
+        for (int i = 0; i < jTable3.getRowCount(); i++) {
+            String value = (String) jTable3.getValueAt(i, 4);
+            total += Integer.parseInt(value);
+        }
 
-              jTextField5.setText(Integer.toString(total));
+        jTextField5.setText(Integer.toString(total));
 
-          }
+    }
 
-          public static void main(String args[]) {
-              /* Set the Nimbus look and feel */
-              //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-              /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-               */
-              try {
-                  for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                      if ("Nimbus".equals(info.getName())) {
-                          javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                          break;
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
 
-                      }
-                  }
-              } catch (ClassNotFoundException ex) {
-                  java.util.logging.Logger.getLogger(ablak.class
-                          .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(ablak.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
-              } catch (InstantiationException ex) {
-                  java.util.logging.Logger.getLogger(ablak.class
-                          .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(ablak.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
-              } catch (IllegalAccessException ex) {
-                  java.util.logging.Logger.getLogger(ablak.class
-                          .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(ablak.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
-              } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-                  java.util.logging.Logger.getLogger(ablak.class
-                          .getName()).log(java.util.logging.Level.SEVERE, null, ex);
-              }
-              //</editor-fold>
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(ablak.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
 
-              /* Create and display the form */
-              java.awt.EventQueue.invokeLater(new Runnable() {
-                  public void run() {
-                      new ablak().setVisible(true);
-                  }
-              });
-          }
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new ablak().setVisible(true);
+            }
+        });
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
@@ -3653,6 +3866,7 @@ public class ablak extends javax.swing.JFrame {
     private javax.swing.JButton jButton15;
     private javax.swing.JButton jButton16;
     private javax.swing.JButton jButton17;
+    private javax.swing.JButton jButton18;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
@@ -3666,6 +3880,7 @@ public class ablak extends javax.swing.JFrame {
     private com.toedter.calendar.JDateChooser jDateChooser2;
     private com.toedter.calendar.JDateChooser jDateChooser3;
     private com.toedter.calendar.JDateChooser jDateChooser4;
+    private com.toedter.calendar.JDateChooser jDateChooser5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -3694,13 +3909,17 @@ public class ablak extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel34;
+    private javax.swing.JLabel jLabel35;
+    private javax.swing.JLabel jLabel36;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JList<String> jList1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
@@ -3715,6 +3934,8 @@ public class ablak extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane12;
     private javax.swing.JScrollPane jScrollPane13;
     private javax.swing.JScrollPane jScrollPane14;
+    private javax.swing.JScrollPane jScrollPane15;
+    private javax.swing.JScrollPane jScrollPane16;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
@@ -3729,6 +3950,7 @@ public class ablak extends javax.swing.JFrame {
     private javax.swing.JTable jTable11;
     private javax.swing.JTable jTable12;
     private javax.swing.JTable jTable13;
+    private javax.swing.JTable jTable14;
     private javax.swing.JTable jTable2;
     private javax.swing.JTable jTable3;
     private javax.swing.JTable jTable4;
@@ -3748,7 +3970,7 @@ public class ablak extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField17;
     private javax.swing.JTextField jTextField18;
     private javax.swing.JTextField jTextField19;
-    public javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField5;

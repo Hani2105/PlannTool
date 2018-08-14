@@ -56,6 +56,7 @@ import javafx.application.Application;
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
@@ -2664,67 +2665,74 @@ public class ablak extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        model = (DefaultTableModel) jTable1.getModel();
 
-        URL url = null;
+        
+        
 
-        model.setRowCount(0);
-        model1.setRowCount(0);
+                model = (DefaultTableModel) jTable1.getModel();
 
-        xmlfeldolg xxx = new xmlfeldolg();
-        Object rowdata[][] = null;
+                URL url = null;
 
-        try {
+                model.setRowCount(0);
+                model1.setRowCount(0);
 
-            url = new URL("http://143.116.140.120/rest/request.php?page=planning_shipment_plan_process_all&product=" + jTextField2.getText().trim() + "&format=xml");
-            ArrayList<String> lista = new ArrayList();
+                xmlfeldolg xxx = new xmlfeldolg();
+                Object rowdata[][] = null;
 
-            String nodelist = "planning_shipment_plan_process_all";
-            lista.add("Part_Number");
-            lista.add("SFDC_Location_Name");
-            lista.add("Serial_Number");
+                try {
 
-            rowdata = (Object[][]) xxx.xmlfeldolg(url, nodelist, lista);
+                    url = new URL("http://143.116.140.120/rest/request.php?page=planning_shipment_plan_process_all&product=" + jTextField2.getText().trim() + "&format=xml");
+                    ArrayList<String> lista = new ArrayList();
 
-        } catch (MalformedURLException ex) {
-            Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
-        }
+                    String nodelist = "planning_shipment_plan_process_all";
+                    lista.add("Part_Number");
+                    lista.add("SFDC_Location_Name");
+                    lista.add("Serial_Number");
 
-        model = (DefaultTableModel) xxx.totable(model, rowdata);
+                    rowdata = (Object[][]) xxx.xmlfeldolg(url, nodelist, lista);
 
-        jTable1.setModel(model);
+                } catch (MalformedURLException ex) {
+                    Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
+                }
 
-        // OH tábla
-        String mitkeres = jTextField2.getText().trim();
+                model = (DefaultTableModel) xxx.totable(model, rowdata);
 
-        String query = "SELECT oracle_backup_subinv.item as partnumber , oracle_backup_subinv.subinv , oracle_backup_subinv.locator , oracle_backup_subinv.quantity FROM trax_mon.oracle_backup_subinv where item like '%" + mitkeres + "%'";
-        connect onhend = new connect((query));
+                jTable1.setModel(model);
 
-        model1 = (DefaultTableModel) jTable2.getModel();
-        model1.setRowCount(0);
+                // OH tábla
+                String mitkeres = jTextField2.getText().trim();
 
-        try {
-            while (onhend.rs.next()) {
+                String query = "SELECT oracle_backup_subinv.item as partnumber , oracle_backup_subinv.subinv , oracle_backup_subinv.locator , oracle_backup_subinv.quantity FROM trax_mon.oracle_backup_subinv where item like '%" + mitkeres + "%'";
+                connect onhend = new connect((query));
 
-                String pn = onhend.rs.getString(1);
-                String subinv = onhend.rs.getString(2);
-                String locator = onhend.rs.getString(3);
-                String qty = onhend.rs.getString(4);
-                model1.addRow(new Object[]{pn, subinv, locator, qty});
+                model1 = (DefaultTableModel) jTable2.getModel();
+                model1.setRowCount(0);
 
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(ablak.class
-                    .getName()).log(Level.SEVERE, null, ex);
-        }
+                try {
+                    while (onhend.rs.next()) {
 
-        jTable2.setModel(model1);
+                        String pn = onhend.rs.getString(1);
+                        String subinv = onhend.rs.getString(2);
+                        String locator = onhend.rs.getString(3);
+                        String qty = onhend.rs.getString(4);
+                        model1.addRow(new Object[]{pn, subinv, locator, qty});
 
-        stat.beir(System.getProperty("user.name"), jTabbedPane1.getTitleAt(jTabbedPane1.getSelectedIndex()));
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(ablak.class
+                            .getName()).log(Level.SEVERE, null, ex);
+                }
 
-        warning wg = new warning();
+                jTable2.setModel(model1);
 
-        wg.keszlet(this);
+                stat.beir(System.getProperty("user.name"), jTabbedPane1.getTitleAt(jTabbedPane1.getSelectedIndex()));
+
+                try {
+                    warning wg = new warning();
+                    wg.keszlet(this);
+                } catch (Exception e) {
+                }
+
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -3529,111 +3537,111 @@ public class ablak extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jTable9MouseClicked
 
-    private void filter(String query) {
+          private void filter(String query) {
 
-        TableRowSorter<DefaultTableModel> tr = new TableRowSorter<DefaultTableModel>(model);
-        TableRowSorter<DefaultTableModel> tr1 = new TableRowSorter<DefaultTableModel>(model1);
-        jTable1.setRowSorter(tr);
-        jTable2.setRowSorter(tr1);
-        tr.setRowFilter(RowFilter.regexFilter(query));
-        tr1.setRowFilter(RowFilter.regexFilter(query));
+              TableRowSorter<DefaultTableModel> tr = new TableRowSorter<DefaultTableModel>(model);
+              TableRowSorter<DefaultTableModel> tr1 = new TableRowSorter<DefaultTableModel>(model1);
+              jTable1.setRowSorter(tr);
+              jTable2.setRowSorter(tr1);
+              tr.setRowFilter(RowFilter.regexFilter(query));
+              tr1.setRowFilter(RowFilter.regexFilter(query));
 
-        int total = 0;
+              int total = 0;
 
-        for (int i = 0; i < jTable1.getRowCount(); i++) {
-            String value = (String) jTable1.getValueAt(i, 2);
-            total += Integer.parseInt(value);
-        }
+              for (int i = 0; i < jTable1.getRowCount(); i++) {
+                  String value = (String) jTable1.getValueAt(i, 2);
+                  total += Integer.parseInt(value);
+              }
 
-        jTextField6.setText(Integer.toString(total));
+              jTextField6.setText(Integer.toString(total));
 
-    }
+          }
 
-    public ablak(JButton jButton1, JButton jButton2, JLabel jLabel1, JLabel jLabel2, JLabel jLabel3, JLabel jLabel4, JLabel jLabel5, JLabel jLabel6, JLabel jLabel7, JLabel jLabel8, JLabel jLabel9, JMenuItem jMenuItem1, JPanel jPanel1, JPanel jPanel2, JScrollPane jScrollPane1, JScrollPane jScrollPane2, JScrollPane jScrollPane3, JTabbedPane jTabbedPane1, JTable jTable1, JTable jTable2, JTable jTable3, JTextField jTextField1, JTextField jTextField2, JTextField jTextField3, JTextField jTextField5) throws HeadlessException {
+          public ablak(JButton jButton1, JButton jButton2, JLabel jLabel1, JLabel jLabel2, JLabel jLabel3, JLabel jLabel4, JLabel jLabel5, JLabel jLabel6, JLabel jLabel7, JLabel jLabel8, JLabel jLabel9, JMenuItem jMenuItem1, JPanel jPanel1, JPanel jPanel2, JScrollPane jScrollPane1, JScrollPane jScrollPane2, JScrollPane jScrollPane3, JTabbedPane jTabbedPane1, JTable jTable1, JTable jTable2, JTable jTable3, JTextField jTextField1, JTextField jTextField2, JTextField jTextField3, JTextField jTextField5) throws HeadlessException {
 
-        this.jButton1 = jButton1;
-        this.jButton2 = jButton2;
-        this.jLabel1 = jLabel1;
-        this.jLabel2 = jLabel2;
-        this.jLabel3 = jLabel3;
-        this.jLabel4 = jLabel4;
-        this.jLabel5 = jLabel5;
-        this.jLabel6 = jLabel6;
-        this.jLabel7 = jLabel7;
-        this.jLabel8 = jLabel8;
-        this.jLabel9 = jLabel9;
-        this.jPanel1 = jPanel1;
-        this.jPanel2 = jPanel2;
-        this.jScrollPane1 = jScrollPane1;
-        this.jScrollPane2 = jScrollPane2;
-        this.jScrollPane3 = jScrollPane3;
-        this.jTabbedPane1 = jTabbedPane1;
-        this.jTable1 = jTable1;
-        this.jTable2 = jTable2;
-        this.jTable3 = jTable3;
-        this.jTextField1 = jTextField1;
-        this.jTextField2 = jTextField2;
-        this.jTextField3 = jTextField3;
-        this.jTextField5 = jTextField5;
-    }
+              this.jButton1 = jButton1;
+              this.jButton2 = jButton2;
+              this.jLabel1 = jLabel1;
+              this.jLabel2 = jLabel2;
+              this.jLabel3 = jLabel3;
+              this.jLabel4 = jLabel4;
+              this.jLabel5 = jLabel5;
+              this.jLabel6 = jLabel6;
+              this.jLabel7 = jLabel7;
+              this.jLabel8 = jLabel8;
+              this.jLabel9 = jLabel9;
+              this.jPanel1 = jPanel1;
+              this.jPanel2 = jPanel2;
+              this.jScrollPane1 = jScrollPane1;
+              this.jScrollPane2 = jScrollPane2;
+              this.jScrollPane3 = jScrollPane3;
+              this.jTabbedPane1 = jTabbedPane1;
+              this.jTable1 = jTable1;
+              this.jTable2 = jTable2;
+              this.jTable3 = jTable3;
+              this.jTextField1 = jTextField1;
+              this.jTextField2 = jTextField2;
+              this.jTextField3 = jTextField3;
+              this.jTextField5 = jTextField5;
+          }
 
-    private void filter1(String query) {
+          private void filter1(String query) {
 
-        TableRowSorter<DefaultTableModel> tr = new TableRowSorter<DefaultTableModel>(modelacti);
-        tr = new TableRowSorter<DefaultTableModel>(modelacti);
-        jTable3.setRowSorter(tr);
-        tr.setRowFilter(RowFilter.regexFilter(query));
+              TableRowSorter<DefaultTableModel> tr = new TableRowSorter<DefaultTableModel>(modelacti);
+              tr = new TableRowSorter<DefaultTableModel>(modelacti);
+              jTable3.setRowSorter(tr);
+              tr.setRowFilter(RowFilter.regexFilter(query));
 
-        int total = 0;
+              int total = 0;
 
-        for (int i = 0; i < jTable3.getRowCount(); i++) {
-            String value = (String) jTable3.getValueAt(i, 4);
-            total += Integer.parseInt(value);
-        }
+              for (int i = 0; i < jTable3.getRowCount(); i++) {
+                  String value = (String) jTable3.getValueAt(i, 4);
+                  total += Integer.parseInt(value);
+              }
 
-        jTextField5.setText(Integer.toString(total));
+              jTextField5.setText(Integer.toString(total));
 
-    }
+          }
 
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+          public static void main(String args[]) {
+              /* Set the Nimbus look and feel */
+              //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+              /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
+               */
+              try {
+                  for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                      if ("Nimbus".equals(info.getName())) {
+                          javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                          break;
 
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ablak.class
-                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+                      }
+                  }
+              } catch (ClassNotFoundException ex) {
+                  java.util.logging.Logger.getLogger(ablak.class
+                          .getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ablak.class
-                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+              } catch (InstantiationException ex) {
+                  java.util.logging.Logger.getLogger(ablak.class
+                          .getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ablak.class
-                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+              } catch (IllegalAccessException ex) {
+                  java.util.logging.Logger.getLogger(ablak.class
+                          .getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ablak.class
-                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+              } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+                  java.util.logging.Logger.getLogger(ablak.class
+                          .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+              }
+              //</editor-fold>
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new ablak().setVisible(true);
-            }
-        });
-    }
+              /* Create and display the form */
+              java.awt.EventQueue.invokeLater(new Runnable() {
+                  public void run() {
+                      new ablak().setVisible(true);
+                  }
+              });
+          }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

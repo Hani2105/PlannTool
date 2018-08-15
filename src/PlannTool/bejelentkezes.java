@@ -155,6 +155,8 @@ public class bejelentkezes extends javax.swing.JFrame {
                     az.gombenged();
                     this.setVisible(false);
                     
+                    nincskeszoh n = new nincskeszoh();
+                    n.setVisible(true);
                     
 
                 }

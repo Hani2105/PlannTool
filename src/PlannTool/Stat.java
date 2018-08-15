@@ -21,7 +21,7 @@ import javax.mail.internet.MimeMessage;
  */
 public class Stat {
 
-    public void beir(String Username, String Tabname) {
+    public void beir(String Username, String Tabname, String szoveg, String cimzett) {
 
         
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");  
@@ -31,7 +31,7 @@ public class Stat {
         conn.feltolt(Query);
         
         
-        String to = "gabor.hanacsek@sanmina.com";//change accordingly  
+        String to = cimzett;//change accordingly  
         String from = "PlannTool@sanmina.com"; //change accordingly  
         String host = "mailhub.sanmina.com";//or IP address  
 
@@ -40,13 +40,13 @@ public class Stat {
         properties.setProperty("mail.smtp.host", host);
         Session session = Session.getDefaultInstance(properties);
 
-        //compose the message  
+        //compose the message
         try {
             MimeMessage message = new MimeMessage(session);
             message.setFrom(new InternetAddress(from));
-            message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
+            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
             message.setSubject("PlannTool használat!" + dtf.format(now));
-            message.setText(Username +"   " +Tabname + "  " + dtf.format(now));
+            message.setText(Username +"   " +Tabname + "  " + dtf.format(now) + szoveg);
 
             // Send message  
             Transport.send(message);

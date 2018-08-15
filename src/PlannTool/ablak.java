@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import static java.time.Instant.now;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -34,7 +35,8 @@ import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 import javax.swing.table.TableCellRenderer;
-
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class ablak extends javax.swing.JFrame {
 
@@ -2547,6 +2549,9 @@ public class ablak extends javax.swing.JFrame {
             jList1.setModel(lm);
 
         }
+        
+        
+        
 
     }//GEN-LAST:event_jTabbedPane1StateChanged
 
@@ -2753,7 +2758,7 @@ public class ablak extends javax.swing.JFrame {
             info.infoBox("Nem adtál meg darabszámot!", "Hiba!");
         }
 
-        stat.beir(System.getProperty("user.name"), jTabbedPane1.getTitleAt(jTabbedPane1.getSelectedIndex()));
+        stat.beir(System.getProperty("user.name"), jTabbedPane1.getTitleAt(jTabbedPane1.getSelectedIndex()), "", "gabor.hanacsek@sanmina.com");
     }//GEN-LAST:event_jButton16ActionPerformed
 
     private void jButton17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton17ActionPerformed
@@ -2981,7 +2986,7 @@ public class ablak extends javax.swing.JFrame {
         String pn_string = "";
 
         String api_string = "http://143.116.140.120/rest/request.php?page=planning_activity&starttime=" + api_date_format.format(jDateChooser2.getDate()) + "&endtime="
-        + api_date_format.format(dt);
+                + api_date_format.format(dt);
 
         for (int x = 0; x < jTable8.getRowCount(); x++) {
 
@@ -3145,14 +3150,13 @@ public class ablak extends javax.swing.JFrame {
 
         }
 
-        stat.beir(System.getProperty("user.name"), jTabbedPane1.getTitleAt(jTabbedPane1.getSelectedIndex()));
-    }//GEN-LAST:event_jButton12ActionPerformed
-
-    private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
-        // TODO add your handling code here:
-
+//feltoltjuk a lekerdezett adatokat
         String adatok = "";
         String mentve = "";
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        LocalDateTime now = LocalDateTime.now();
+        String user = System.getProperty("user.name");
+        String levelbe = " \n Figyelem! \n Query húzás történt ekkor: " + dtf.format(now) + "\n" + "Ezen az időközön: " + api_date_format.format(jDateChooser2.getDate()) + " - " + api_date_format.format(dt) + "\n A következő találatokkal: \n";
         for (int i = 0; i < jTable7.getRowCount(); i++) {
 
             //System.out.println(jTable7.getValueAt(i, 4));
@@ -3169,13 +3173,71 @@ public class ablak extends javax.swing.JFrame {
                 mentve = "N";
             }
 
-            adatok += "('" + jTable7.getValueAt(i, 1) + "','" + jTable7.getValueAt(i, 0) + "','" + jTable7.getValueAt(i, 2) + "','" + jTable7.getValueAt(i, 3) + "','" + mentve + "'),";
+            adatok += "('" + jTable7.getValueAt(i, 1) + "','" + jTable7.getValueAt(i, 0) + "','" + jTable7.getValueAt(i, 2) + "','" + jTable7.getValueAt(i, 3) + "','" + mentve + "','" + user + "'),";
+            levelbe += jTable7.getValueAt(i, 0).toString() + "   " + jTable7.getValueAt(i, 1).toString() + "\n";
+        }
+
+        levelbe += " \n Összesen: \n";
+
+        for (int i = 0; i < jTable9.getRowCount(); i++) {
+
+            levelbe += jTable9.getValueAt(i, 0).toString() + "  " + jTable9.getValueAt(i, 1).toString() + " DB\n";
+
+        }
+
+        levelbe += "Az adatokat automatikusan feltöltöttük az adatbázisba!";
+
+        adatok = adatok.substring(0, adatok.length() - 1);
+
+        String query = "insert into oh_querymain (serial,partnumber,tol,ig,megcsinalva,felhasznalo) values" + adatok + "on duplicate key update megcsinalva = values (megcsinalva), felhasznalo = values (felhasznalo)";
+
+        planconnect pc = new planconnect();
+
+        try {
+            pc.feltolt(query);
+
+//            infobox inf = new infobox();
+//            inf.infoBox("A feltöltés sikeres!", "Feltöltés!");
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+//            infobox inf = new infobox();
+//            inf.infoBox("A feltöltés sikertelen!", "Feltöltés!");
+        }
+
+        stat.beir(user, jTabbedPane1.getTitleAt(jTabbedPane1.getSelectedIndex()), levelbe, "gabor.hanacsek@sanmina.com,roland.bognar@sanmina.com,gina.gerecz@sanmina.com,eva.inczedi@sanmina.com");
+    }//GEN-LAST:event_jButton12ActionPerformed
+
+    private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
+        // TODO add your handling code here:
+
+        String adatok = "";
+        String mentve = "";
+        String user = System.getProperty("user.name");
+        for (int i = 0; i < jTable7.getRowCount(); i++) {
+
+            //System.out.println(jTable7.getValueAt(i, 4));
+            try {
+                if (jTable7.getValueAt(i, 4).equals(true)) {
+
+                    mentve = "Y";
+
+                } else {
+                    mentve = "N";
+                }
+            } catch (Exception e) {
+
+                mentve = "N";
+            }
+
+            adatok += "('" + jTable7.getValueAt(i, 1) + "','" + jTable7.getValueAt(i, 0) + "','" + jTable7.getValueAt(i, 2) + "','" + jTable7.getValueAt(i, 3) + "','" + mentve + "','" + user + "'),";
 
         }
 
         adatok = adatok.substring(0, adatok.length() - 1);
 
-        String query = "insert into oh_querymain (serial,partnumber,tol,ig,megcsinalva) values" + adatok + "on duplicate key update megcsinalva = values (megcsinalva)";
+        String query = "insert into oh_querymain (serial,partnumber,tol,ig,megcsinalva,felhasznalo) values" + adatok + "on duplicate key update megcsinalva = values (megcsinalva) , felhasznalo = values (felhasznalo)";
 
         planconnect pc = new planconnect();
 
@@ -3190,6 +3252,24 @@ public class ablak extends javax.swing.JFrame {
             inf.infoBox("A feltöltés sikertelen!", "Feltöltés!");
 
         }
+
+        String levelbe = " \n Figyelem! \n Feltöltés történt az OH query adatbázisba a következő tételekkel: \n";
+        String yn = "";
+        for (int i = 0; i < jTable7.getRowCount(); i++) {
+
+            if ((Boolean)jTable7.getValueAt(i, 4) == null ||(Boolean) jTable7.getValueAt(i, 4) == false) {
+
+                yn = "Nincs megcsinálva!";
+            } else {
+                yn = "Elkészült az OH!";
+            }
+
+            levelbe += jTable7.getValueAt(i, 0).toString() + "  " + jTable7.getValueAt(i, 1).toString() + "  " + jTable7.getValueAt(i, 2) + "  " + jTable7.getValueAt(i, 3) + "  " + yn + "\n";
+
+        }
+        
+        stat.beir(System.getProperty("user.name"), jTabbedPane1.getTitleAt(jTabbedPane1.getSelectedIndex()), levelbe, "gabor.hanacsek@sanmina.com,roland.bognar@sanmina.com,gina.gerecz@sanmina.com,eva.inczedi@sanmina.com");
+
     }//GEN-LAST:event_jButton11ActionPerformed
 
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
@@ -3276,7 +3356,7 @@ public class ablak extends javax.swing.JFrame {
 
         }
 
-        stat.beir(System.getProperty("user.name"), jTabbedPane1.getTitleAt(jTabbedPane1.getSelectedIndex()));
+        stat.beir(System.getProperty("user.name"), jTabbedPane1.getTitleAt(jTabbedPane1.getSelectedIndex()), "", "gabor.hanacsek@sanmina.com");
     }//GEN-LAST:event_jButton10ActionPerformed
 
     private void jTextField11KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField11KeyPressed
@@ -3346,7 +3426,7 @@ public class ablak extends javax.swing.JFrame {
 
         jLabel12.setText("JOB total QTY: " + qty);
 
-        stat.beir(System.getProperty("user.name"), jTabbedPane1.getTitleAt(jTabbedPane1.getSelectedIndex()));
+        stat.beir(System.getProperty("user.name"), jTabbedPane1.getTitleAt(jTabbedPane1.getSelectedIndex()), "", "gabor.hanacsek@sanmina.com");
 
     }//GEN-LAST:event_jButton9ActionPerformed
 
@@ -3514,7 +3594,7 @@ public class ablak extends javax.swing.JFrame {
 
         jTable11.setModel(sumtabla);
 
-        stat.beir(System.getProperty("user.name"), jTabbedPane1.getTitleAt(jTabbedPane1.getSelectedIndex()));
+        stat.beir(System.getProperty("user.name"), jTabbedPane1.getTitleAt(jTabbedPane1.getSelectedIndex()), "", "gabor.hanacsek@sanmina.com");
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
@@ -3602,7 +3682,7 @@ public class ablak extends javax.swing.JFrame {
 
         jTable3.setModel(modelacti);
 
-        stat.beir(System.getProperty("user.name"), jTabbedPane1.getTitleAt(jTabbedPane1.getSelectedIndex()));
+        stat.beir(System.getProperty("user.name"), jTabbedPane1.getTitleAt(jTabbedPane1.getSelectedIndex()), "", "gabor.hanacsek@sanmina.com");
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -3679,7 +3759,7 @@ public class ablak extends javax.swing.JFrame {
 
         try {
 
-            url = new URL("http://143.116.140.120/rest/request.php?page=planning_shipment_plan_process_all&product=" + jTextField2.getText().trim() + "&format=xml");
+            url = new URL("http://143.116.140.120/rest/request.php?page=planning_shipment_plan_process_all&product=" + jTextField2.getText().trim().toUpperCase() + "&format=xml");
             ArrayList<String> lista = new ArrayList();
 
             String nodelist = "planning_shipment_plan_process_all";
@@ -3718,12 +3798,12 @@ public class ablak extends javax.swing.JFrame {
             }
         } catch (SQLException ex) {
             Logger.getLogger(ablak.class
-                .getName()).log(Level.SEVERE, null, ex);
+                    .getName()).log(Level.SEVERE, null, ex);
         }
 
         jTable2.setModel(model1);
 
-        stat.beir(System.getProperty("user.name"), jTabbedPane1.getTitleAt(jTabbedPane1.getSelectedIndex()));
+        stat.beir(System.getProperty("user.name"), jTabbedPane1.getTitleAt(jTabbedPane1.getSelectedIndex()), "", "gabor.hanacsek@sanmina.com");
 
         try {
             warning wg = new warning();
@@ -3748,7 +3828,6 @@ public class ablak extends javax.swing.JFrame {
         }
 
     }
-
 
     private void filter(String query) {
 

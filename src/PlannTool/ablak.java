@@ -2549,9 +2549,7 @@ public class ablak extends javax.swing.JFrame {
             jList1.setModel(lm);
 
         }
-        
-        
-        
+
 
     }//GEN-LAST:event_jTabbedPane1StateChanged
 
@@ -2683,7 +2681,7 @@ public class ablak extends javax.swing.JFrame {
         }
 
         jTable14.setModel(model);
-        
+
         stat.beir(System.getProperty("user.name"), jTabbedPane1.getTitleAt(jTabbedPane1.getSelectedIndex()), "", "gabor.hanacsek@sanmina.com");
     }//GEN-LAST:event_jButton18ActionPerformed
 
@@ -2832,27 +2830,29 @@ public class ablak extends javax.swing.JFrame {
 
         for (int i = 0; i < jTable7.getRowCount(); i++) {
 
-            if (jTable7.getValueAt(i, 0).toString().equals(pn) && (Boolean) jTable9.getValueAt(jTable9.getSelectedRow(), 2) == true) {
+            
+                if (jTable7.getValueAt(i, 0).toString().equals(pn) && (Boolean) jTable9.getValueAt(jTable9.getSelectedRow(), 2) == true) {
 
-                if ((Boolean) jTable7.getValueAt(i, 4) == true) {
-                    jTable7.setValueAt(false, i, 4);
-                } else {
+                    if ((Boolean) jTable7.getValueAt(i, 4) == true) {
+                        jTable7.setValueAt(false, i, 4);
+                    } else {
 
-                    jTable7.setValueAt(true, i, 4);
+                        jTable7.setValueAt(true, i, 4);
+                    }
+
                 }
 
-            }
+                if (jTable7.getValueAt(i, 0).toString().equals(pn) && (Boolean) jTable9.getValueAt(jTable9.getSelectedRow(), 2) == false) {
 
-            if (jTable7.getValueAt(i, 0).toString().equals(pn) && (Boolean) jTable9.getValueAt(jTable9.getSelectedRow(), 2) == false) {
+                    if ((Boolean) jTable7.getValueAt(i, 4) == true) {
+                        jTable7.setValueAt(false, i, 4);
+                    } else {
 
-                if ((Boolean) jTable7.getValueAt(i, 4) == true) {
-                    jTable7.setValueAt(false, i, 4);
-                } else {
+                        jTable7.setValueAt(true, i, 4);
+                    }
 
-                    jTable7.setValueAt(true, i, 4);
                 }
-
-            }
+            
 
         }
 
@@ -3093,7 +3093,7 @@ public class ablak extends javax.swing.JFrame {
 
                 if (api_array[i][0] != null) {
 
-                    maintable.addRow(new Object[]{api_array[i][0], api_array[i][1], b, a});
+                    maintable.addRow(new Object[]{api_array[i][0], api_array[i][1], b, a, false});
 
                 }
 
@@ -3134,7 +3134,7 @@ public class ablak extends javax.swing.JFrame {
 
                     try {
 
-                        sumtabla.addRow(new Object[]{pn, pndarab});
+                        sumtabla.addRow(new Object[]{pn, pndarab,false});
 
                     } catch (Exception e) {
                         System.out.println("nem jott ossze");
@@ -3259,7 +3259,7 @@ public class ablak extends javax.swing.JFrame {
         String yn = "";
         for (int i = 0; i < jTable7.getRowCount(); i++) {
 
-            if ((Boolean)jTable7.getValueAt(i, 4) == null ||(Boolean) jTable7.getValueAt(i, 4) == false) {
+            if ((Boolean) jTable7.getValueAt(i, 4) == null || (Boolean) jTable7.getValueAt(i, 4) == false) {
 
                 yn = "Nincs megcsinálva!";
             } else {
@@ -3269,7 +3269,7 @@ public class ablak extends javax.swing.JFrame {
             levelbe += jTable7.getValueAt(i, 0).toString() + "  " + jTable7.getValueAt(i, 1).toString() + "  " + jTable7.getValueAt(i, 2) + "  " + jTable7.getValueAt(i, 3) + "  " + yn + "\n";
 
         }
-        
+
         stat.beir(System.getProperty("user.name"), jTabbedPane1.getTitleAt(jTabbedPane1.getSelectedIndex()), levelbe, "gabor.hanacsek@sanmina.com,roland.bognar@sanmina.com,gina.gerecz@sanmina.com,eva.inczedi@sanmina.com");
 
     }//GEN-LAST:event_jButton11ActionPerformed

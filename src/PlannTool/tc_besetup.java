@@ -7,6 +7,10 @@ package PlannTool;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JLabel;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -22,10 +26,15 @@ public class tc_besetup extends javax.swing.JFrame {
     /**
      * Creates new form tc_besetup
      */
+    public List<String> defaultadat1 = new ArrayList<String>();
+    public List<String> defaultadat2 = new ArrayList<String>();
+    public List<String> defaultadat3 = new ArrayList<String>();
+
     public tc_besetup() throws SQLException, ClassNotFoundException {
 
         initComponents();
 
+        //tabla tesszuk a meglevo setup beallitasokat
         DefaultTableModel model = new DefaultTableModel();
         model = (DefaultTableModel) jTable1.getModel();
         model.setRowCount(0);
@@ -37,7 +46,7 @@ public class tc_besetup extends javax.swing.JFrame {
 
         while (rs.next()) {
 
-            model.addRow(new Object[]{rs.getString(1), rs.getString(2), rs.getString(3), rs.getShort(4)});
+            model.addRow(new Object[]{rs.getString(1), rs.getString(2), rs.getString(3), rs.getDouble(4)});
 
         }
 
@@ -47,9 +56,9 @@ public class tc_besetup extends javax.swing.JFrame {
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(JLabel.CENTER);
         jTable1.setDefaultRenderer(Object.class, centerRenderer);
-
         jTable1.setModel(model);
 
+        //pn feltoltese a jlistbe
         query = "SELECT * FROM planningdb.tc_bepns";
         rs = (ResultSet) pc.planconnect(query);
         DefaultListModel lm2 = new DefaultListModel();
@@ -57,11 +66,13 @@ public class tc_besetup extends javax.swing.JFrame {
         while (rs.next()) {
 
             lm2.addElement(rs.getString(2));
+            defaultadat1.add(rs.getString(2));
 
         }
 
         jList2.setModel(lm2);
 
+        //cella feltoltese
         query = "SELECT * FROM planningdb.tc_becells;";
         rs = (ResultSet) pc.planconnect(query);
         DefaultListModel lm1 = new DefaultListModel();
@@ -69,11 +80,13 @@ public class tc_besetup extends javax.swing.JFrame {
         while (rs.next()) {
 
             lm1.addElement(rs.getString(2));
+            defaultadat2.add(rs.getString(2));
 
         }
 
         jList1.setModel(lm1);
-
+        
+        //workstation feltoltese
         query = "SELECT * FROM planningdb.tc_bestations;";
         rs = (ResultSet) pc.planconnect(query);
         DefaultListModel lm3 = new DefaultListModel();
@@ -81,6 +94,7 @@ public class tc_besetup extends javax.swing.JFrame {
         while (rs.next()) {
 
             lm3.addElement(rs.getString(2));
+            defaultadat3.add(rs.getString(2));
 
         }
 
@@ -117,9 +131,18 @@ public class tc_besetup extends javax.swing.JFrame {
         jList4 = new javax.swing.JList<>();
         jLabel1 = new javax.swing.JLabel();
         jTextField2 = new javax.swing.JTextField();
-        jButton4 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jTextField3 = new javax.swing.JTextField();
+        jTextField4 = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jTextField7 = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        jTextField8 = new javax.swing.JTextField();
+        jButton4 = new javax.swing.JButton();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Setup!");
@@ -133,12 +156,6 @@ public class tc_besetup extends javax.swing.JFrame {
             }
         ));
         jScrollPane1.setViewportView(jTable1);
-
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
-            }
-        });
 
         jButton1.setText("Pn mentése");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -158,7 +175,7 @@ public class tc_besetup extends javax.swing.JFrame {
             }
         });
 
-        jLabel7.setText("Cella felvétele");
+        jLabel7.setText("WorkStation felvétele");
 
         jButton3.setText("WorkS mentése");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -184,15 +201,50 @@ public class tc_besetup extends javax.swing.JFrame {
             }
         });
 
-        jButton4.setText("Ment");
-
-        jLabel2.setText("Kereső");
+        jLabel2.setText("Keresés a táblázatban!");
 
         jTextField3.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 jTextField3KeyReleased(evt);
             }
         });
+
+        jTextField4.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextField4KeyPressed(evt);
+            }
+        });
+
+        jLabel3.setText("Keresés");
+
+        jLabel4.setText("Keresés");
+
+        jTextField7.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextField7KeyPressed(evt);
+            }
+        });
+
+        jLabel8.setText("Keresés");
+
+        jTextField8.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextField8KeyPressed(evt);
+            }
+        });
+
+        jButton4.setText("Ment");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
+        jLabel9.setText("Partnumber");
+
+        jLabel10.setText("Cella");
+
+        jLabel11.setText("WorkStation");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -209,30 +261,60 @@ public class tc_besetup extends javax.swing.JFrame {
                     .addComponent(jLabel6)
                     .addComponent(jLabel5)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jLabel2)
-                        .addComponent(jButton3)))
+                    .addComponent(jButton3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(17, 17, 17)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 67, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(46, 46, 46)
+                                .addComponent(jLabel9)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(68, 68, 68)
+                                .addComponent(jLabel10)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jButton4)
+                                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
+                                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(38, 38, 38))))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(48, 48, 48)
+                                .addComponent(jLabel11)
+                                .addGap(80, 80, 80)
                                 .addComponent(jLabel1)
-                                .addGap(77, 77, 77))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jButton4))
-                                .addGap(64, 64, 64))))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel2)
+                                .addGap(80, 80, 80))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(51, 51, 51)
+                        .addComponent(jLabel3)
+                        .addGap(119, 119, 119)
+                        .addComponent(jLabel4)
+                        .addGap(116, 116, 116)
+                        .addComponent(jLabel8)
+                        .addContainerGap())
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -254,40 +336,60 @@ public class tc_besetup extends javax.swing.JFrame {
                         .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(57, 57, 57)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton3)
-                        .addGap(39, 39, 39)))
+                        .addComponent(jButton3)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(1, 1, 1)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                        .addContainerGap())
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(17, 17, 17)
+                        .addComponent(jButton4))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addGap(18, 18, 18)
-                                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(3, 3, 3)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel9)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel11)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton4)))
-                        .addGap(0, 8, Short.MAX_VALUE))))
+                                .addGap(1, 1, 1)
+                                .addComponent(jLabel10)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(16, 16, 16))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -309,13 +411,33 @@ public class tc_besetup extends javax.swing.JFrame {
             infobox info = new infobox();
             info.infoBox("A feltöltés sikertelen!!", "Mentés infó!");
         }
+        
+       //frissitjuk a pnjlistet
+       ResultSet rs = null;
+       
+       query = "SELECT * FROM planningdb.tc_bepns";
+        try {
+            rs = (ResultSet) pc.planconnect(query);
+        } catch (SQLException ex) {
+            Logger.getLogger(tc_besetup.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(tc_besetup.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        DefaultListModel lm2 = new DefaultListModel();
+        lm2.removeAllElements();
+        try {
+            while (rs.next()) {
+                
+                lm2.addElement(rs.getString(2));
+                defaultadat1.add(rs.getString(2));
+                
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(tc_besetup.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
-
+        jList2.setModel(lm2);
     }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
@@ -329,6 +451,32 @@ public class tc_besetup extends javax.swing.JFrame {
             infobox info = new infobox();
             info.infoBox("A feltöltés sikertelen!!", "Mentés infó!");
         }
+        
+        //frissitjuk a cellalistat
+        query = "SELECT * FROM planningdb.tc_becells;";
+        ResultSet rs = null;
+        try {
+            rs = (ResultSet) pc.planconnect(query);
+        } catch (SQLException ex) {
+            Logger.getLogger(tc_besetup.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(tc_besetup.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        DefaultListModel lm1 = new DefaultListModel();
+
+        try {
+            while (rs.next()) {
+                
+                lm1.addElement(rs.getString(2));
+                defaultadat2.add(rs.getString(2));
+                
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(tc_besetup.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        jList1.setModel(lm1);
+        
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -343,6 +491,32 @@ public class tc_besetup extends javax.swing.JFrame {
             infobox info = new infobox();
             info.infoBox("A feltöltés sikertelen!!", "Mentés infó!");
         }
+        
+        //frissitjuk a station listet
+        
+        query = "SELECT * FROM planningdb.tc_bestations;";
+        ResultSet rs = null;
+        try {
+            rs = (ResultSet) pc.planconnect(query);
+        } catch (SQLException ex) {
+            Logger.getLogger(tc_besetup.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(tc_besetup.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        DefaultListModel lm3 = new DefaultListModel();
+
+        try {
+            while (rs.next()) {
+                
+                lm3.addElement(rs.getString(2));
+                defaultadat3.add(rs.getString(2));
+                
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(tc_besetup.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        jList4.setModel(lm3);
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
@@ -356,7 +530,153 @@ public class tc_besetup extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         tablesorter tr = new tablesorter();
         tr.filter(query, model, jTable1);
+
     }//GEN-LAST:event_jTextField3KeyReleased
+
+    private void jTextField4KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField4KeyPressed
+
+        String filter = jTextField4.getText();
+        jlistfilterfromtestbox fili = new jlistfilterfromtestbox();
+        jList2.setModel(fili.filterModel((DefaultListModel<String>) jList2.getModel(), filter, (ArrayList<String>) defaultadat1));
+
+
+    }//GEN-LAST:event_jTextField4KeyPressed
+
+    private void jTextField7KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField7KeyPressed
+        // TODO add your handling code here:
+        String filter = jTextField7.getText();
+        jlistfilterfromtestbox fili = new jlistfilterfromtestbox();
+        jList1.setModel(fili.filterModel((DefaultListModel<String>) jList1.getModel(), filter, (ArrayList<String>) defaultadat2));
+    }//GEN-LAST:event_jTextField7KeyPressed
+
+    private void jTextField8KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField8KeyPressed
+        // TODO add your handling code here:
+        String filter = jTextField8.getText();
+        jlistfilterfromtestbox fili = new jlistfilterfromtestbox();
+        jList4.setModel(fili.filterModel((DefaultListModel<String>) jList4.getModel(), filter, (ArrayList<String>) defaultadat3));
+
+    }//GEN-LAST:event_jTextField8KeyPressed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        //lekérdezzük a pn id-t
+        planconnect pc = new planconnect();
+        String pnid = "";
+        String cellid = "";
+        String wsid = "";
+        String query = "select tc_bepns.idtc_bepns from tc_bepns where tc_bepns.partnumber = '" + jList2.getSelectedValue() + "'";
+        try {
+            pc.planconnect(query);
+            while (pc.rs.next()) {
+                pnid = pc.rs.getString(1);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(tc_besetup.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(tc_besetup.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        //lekérdezzük a cella id-t
+        query = "select tc_becells.idtc_cells from tc_becells where tc_becells.cellname ='" + jList1.getSelectedValue() + "'";
+        try {
+            pc.planconnect(query);
+            while (pc.rs.next()) {
+                cellid = pc.rs.getString(1);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(tc_besetup.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(tc_besetup.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        //lekerdezzuk a ws id-t
+        query = "select tc_bestations.idtc_bestations from tc_bestations where tc_bestations.workstation = '" + jList4.getSelectedValue() + "'";
+        try {
+            pc.planconnect(query);
+            while (pc.rs.next()) {
+                wsid = pc.rs.getString(1);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(tc_besetup.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(tc_besetup.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        //lekerdezzuk , hogy van e ismetlodes
+        query = "SELECT tc_prodmatrix.idtc_prodmatrix as id from tc_prodmatrix where (tc_prodmatrix.id_tc_bepns = '" + pnid + "' and tc_prodmatrix.id_tc_becells = '" + cellid + "' and tc_prodmatrix.id_tc_bestations = '" + wsid + "')";
+        try {
+            if (jTextField2.getText().equals("") || jList2.isSelectionEmpty() || jList1.isSelectionEmpty() || jList4.isSelectionEmpty()) {
+
+                infobox inf = new infobox();
+                inf.infoBox("Nem adtál meg valamilyen szükséges adatot!", "Hiba!");
+
+            }
+            pc.planconnect(query);
+            //ha van mar adat frissitjuk
+            if (pc.rs.next()) {
+
+                query = "update tc_prodmatrix set tc_prodmatrix.ciklusido = " + Double.parseDouble(jTextField2.getText()) + " where (tc_prodmatrix.id_tc_bepns = '"+pnid+"' and tc_prodmatrix.id_tc_becells = '"+cellid+"' and tc_prodmatrix.id_tc_bestations = '"+wsid+"')";
+                pc.feltolt(query);
+                infobox inf = new infobox();
+                inf.infoBox("Az adatot frissítettük!", "Frissítés történt!");
+
+            }
+            //ha nincs meg bent az adat beirjuk
+            else{
+            
+                query = "insert into tc_prodmatrix (tc_prodmatrix.id_tc_bepns,tc_prodmatrix.id_tc_becells,tc_prodmatrix.id_tc_bestations,tc_prodmatrix.ciklusido) values ("+pnid+","+cellid+","+wsid+","+Double.parseDouble(jTextField2.getText())+")";
+                pc.feltolt(query);
+                infobox inf = new infobox();
+                inf.infoBox("Az adatot rögzítettük", "Új adat érkezett!");
+                
+            
+            }
+            
+            
+
+        } catch (SQLException ex) {
+
+            Logger.getLogger(tc_besetup.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(tc_besetup.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        //frissitjuk a tablat
+        
+        DefaultTableModel model = new DefaultTableModel();
+        model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0);
+        query = "select tc_bepns.partnumber , tc_becells.cellname , tc_bestations.workstation , tc_prodmatrix.ciklusido from tc_prodmatrix left join tc_bepns on tc_prodmatrix.id_tc_bepns = tc_bepns.idtc_bepns  left join tc_becells on tc_becells.idtc_cells = tc_prodmatrix.id_tc_becells left join tc_bestations on tc_bestations.idtc_bestations = tc_prodmatrix.id_tc_bestations";
+        
+        pc = new planconnect();
+
+        ResultSet rs = null;
+        try {
+            rs = (ResultSet) pc.planconnect(query);
+        } catch (SQLException ex) {
+            Logger.getLogger(tc_besetup.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(tc_besetup.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        try {
+            while (rs.next()) {
+                
+                model.addRow(new Object[]{rs.getString(1), rs.getString(2), rs.getString(3), rs.getDouble(4)});
+                
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(tc_besetup.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        TableCellRenderer rendererFromHeader = jTable1.getTableHeader().getDefaultRenderer();
+        JLabel headerLabel = (JLabel) rendererFromHeader;
+        headerLabel.setHorizontalAlignment(JLabel.CENTER);
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+        jTable1.setDefaultRenderer(Object.class, centerRenderer);
+        jTable1.setModel(model);
+
+
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -399,10 +719,16 @@ public class tc_besetup extends javax.swing.JFrame {
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JList<String> jList1;
     private javax.swing.JList<String> jList2;
     private javax.swing.JList<String> jList4;
@@ -415,7 +741,10 @@ public class tc_besetup extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
+    private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField5;
     private javax.swing.JTextField jTextField6;
+    private javax.swing.JTextField jTextField7;
+    private javax.swing.JTextField jTextField8;
     // End of variables declaration//GEN-END:variables
 }

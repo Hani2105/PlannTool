@@ -234,12 +234,15 @@ public class ablak extends javax.swing.JFrame {
                 Object value = getModel().getValueAt(row, col);
                 if (value.equals("Nem létezik SFDC-ben!")) {
                     comp.setBackground(Color.red);
+                    comp.setForeground(Color.BLACK);
                 }
                 else if (value.equals("Minden elindult!")) {
                     comp.setBackground(Color.green);
+                    comp.setForeground(Color.BLACK);
                 }
                 else {
                     comp.setBackground(Color.white);
+                    comp.setForeground(Color.BLACK);
                 }
                 return comp;
             }

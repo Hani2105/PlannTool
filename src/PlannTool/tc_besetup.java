@@ -38,7 +38,7 @@ public class tc_besetup extends javax.swing.JFrame {
         DefaultTableModel model = new DefaultTableModel();
         model = (DefaultTableModel) jTable1.getModel();
         model.setRowCount(0);
-        String query = "select tc_bepns.partnumber , tc_becells.cellname , tc_bestations.workstation , tc_prodmatrix.ciklusido from tc_prodmatrix left join tc_bepns on tc_prodmatrix.id_tc_bepns = tc_bepns.idtc_bepns  left join tc_becells on tc_becells.idtc_cells = tc_prodmatrix.id_tc_becells left join tc_bestations on tc_bestations.idtc_bestations = tc_prodmatrix.id_tc_bestations";
+        String query = "select  tc_prodmatrix.idtc_prodmatrix , tc_bepns.partnumber , tc_becells.cellname , tc_bestations.workstation , tc_prodmatrix.ciklusido from tc_prodmatrix left join tc_bepns on tc_prodmatrix.id_tc_bepns = tc_bepns.idtc_bepns  left join tc_becells on tc_becells.idtc_cells = tc_prodmatrix.id_tc_becells left join tc_bestations on tc_bestations.idtc_bestations = tc_prodmatrix.id_tc_bestations";
         planconnect pc;
         pc = new planconnect();
 
@@ -46,7 +46,7 @@ public class tc_besetup extends javax.swing.JFrame {
 
         while (rs.next()) {
 
-            model.addRow(new Object[]{rs.getString(1), rs.getString(2), rs.getString(3), rs.getDouble(4)});
+            model.addRow(new Object[]{rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getDouble(5)});
 
         }
 
@@ -85,7 +85,7 @@ public class tc_besetup extends javax.swing.JFrame {
         }
 
         jList1.setModel(lm1);
-        
+
         //workstation feltoltese
         query = "SELECT * FROM planningdb.tc_bestations;";
         rs = (ResultSet) pc.planconnect(query);
@@ -143,6 +143,7 @@ public class tc_besetup extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
+        jToggleButton1 = new javax.swing.JToggleButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Setup!");
@@ -152,10 +153,22 @@ public class tc_besetup extends javax.swing.JFrame {
 
             },
             new String [] {
-                "PartNumber", "Cella", "Workstation", "DB/Óra"
+                "ID", "PartNumber", "Cella", "Workstation", "DB/Óra"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, true, true, true, true
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
+        if (jTable1.getColumnModel().getColumnCount() > 0) {
+            jTable1.getColumnModel().getColumn(0).setMinWidth(20);
+            jTable1.getColumnModel().getColumn(0).setMaxWidth(30);
+        }
 
         jButton1.setText("Pn mentése");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -246,6 +259,13 @@ public class tc_besetup extends javax.swing.JFrame {
 
         jLabel11.setText("WorkStation");
 
+        jToggleButton1.setText("Töröl");
+        jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -286,12 +306,13 @@ public class tc_besetup extends javax.swing.JFrame {
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(jButton4)
-                                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
-                                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(38, 38, 38))))
+                                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(38, 38, 38))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(48, 48, 48)
                                 .addComponent(jLabel11)
@@ -352,8 +373,14 @@ public class tc_besetup extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(17, 17, 17)
-                        .addComponent(jButton4))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(17, 17, 17)
+                                .addComponent(jButton4))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
+                        .addGap(17, 17, 17))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -381,8 +408,8 @@ public class tc_besetup extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(16, 16, 16))
+                            .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(16, 16, 16))))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -411,11 +438,11 @@ public class tc_besetup extends javax.swing.JFrame {
             infobox info = new infobox();
             info.infoBox("A feltöltés sikertelen!!", "Mentés infó!");
         }
-        
-       //frissitjuk a pnjlistet
-       ResultSet rs = null;
-       
-       query = "SELECT * FROM planningdb.tc_bepns";
+
+        //frissitjuk a pnjlistet
+        ResultSet rs = null;
+
+        query = "SELECT * FROM planningdb.tc_bepns";
         try {
             rs = (ResultSet) pc.planconnect(query);
         } catch (SQLException ex) {
@@ -427,10 +454,10 @@ public class tc_besetup extends javax.swing.JFrame {
         lm2.removeAllElements();
         try {
             while (rs.next()) {
-                
+
                 lm2.addElement(rs.getString(2));
                 defaultadat1.add(rs.getString(2));
-                
+
             }
         } catch (SQLException ex) {
             Logger.getLogger(tc_besetup.class.getName()).log(Level.SEVERE, null, ex);
@@ -451,7 +478,7 @@ public class tc_besetup extends javax.swing.JFrame {
             infobox info = new infobox();
             info.infoBox("A feltöltés sikertelen!!", "Mentés infó!");
         }
-        
+
         //frissitjuk a cellalistat
         query = "SELECT * FROM planningdb.tc_becells;";
         ResultSet rs = null;
@@ -466,17 +493,17 @@ public class tc_besetup extends javax.swing.JFrame {
 
         try {
             while (rs.next()) {
-                
+
                 lm1.addElement(rs.getString(2));
                 defaultadat2.add(rs.getString(2));
-                
+
             }
         } catch (SQLException ex) {
             Logger.getLogger(tc_besetup.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         jList1.setModel(lm1);
-        
+
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -491,9 +518,8 @@ public class tc_besetup extends javax.swing.JFrame {
             infobox info = new infobox();
             info.infoBox("A feltöltés sikertelen!!", "Mentés infó!");
         }
-        
+
         //frissitjuk a station listet
-        
         query = "SELECT * FROM planningdb.tc_bestations;";
         ResultSet rs = null;
         try {
@@ -507,10 +533,10 @@ public class tc_besetup extends javax.swing.JFrame {
 
         try {
             while (rs.next()) {
-                
+
                 lm3.addElement(rs.getString(2));
                 defaultadat3.add(rs.getString(2));
-                
+
             }
         } catch (SQLException ex) {
             Logger.getLogger(tc_besetup.class.getName()).log(Level.SEVERE, null, ex);
@@ -614,24 +640,20 @@ public class tc_besetup extends javax.swing.JFrame {
             //ha van mar adat frissitjuk
             if (pc.rs.next()) {
 
-                query = "update tc_prodmatrix set tc_prodmatrix.ciklusido = " + Double.parseDouble(jTextField2.getText()) + " where (tc_prodmatrix.id_tc_bepns = '"+pnid+"' and tc_prodmatrix.id_tc_becells = '"+cellid+"' and tc_prodmatrix.id_tc_bestations = '"+wsid+"')";
+                query = "update tc_prodmatrix set tc_prodmatrix.ciklusido = " + Double.parseDouble(jTextField2.getText()) + " where (tc_prodmatrix.id_tc_bepns = '" + pnid + "' and tc_prodmatrix.id_tc_becells = '" + cellid + "' and tc_prodmatrix.id_tc_bestations = '" + wsid + "')";
                 pc.feltolt(query);
                 infobox inf = new infobox();
                 inf.infoBox("Az adatot frissítettük!", "Frissítés történt!");
 
-            }
-            //ha nincs meg bent az adat beirjuk
-            else{
-            
-                query = "insert into tc_prodmatrix (tc_prodmatrix.id_tc_bepns,tc_prodmatrix.id_tc_becells,tc_prodmatrix.id_tc_bestations,tc_prodmatrix.ciklusido) values ("+pnid+","+cellid+","+wsid+","+Double.parseDouble(jTextField2.getText())+")";
+            } //ha nincs meg bent az adat beirjuk
+            else {
+
+                query = "insert into tc_prodmatrix (tc_prodmatrix.id_tc_bepns,tc_prodmatrix.id_tc_becells,tc_prodmatrix.id_tc_bestations,tc_prodmatrix.ciklusido) values (" + pnid + "," + cellid + "," + wsid + "," + Double.parseDouble(jTextField2.getText()) + ")";
                 pc.feltolt(query);
                 infobox inf = new infobox();
                 inf.infoBox("Az adatot rögzítettük", "Új adat érkezett!");
-                
-            
+
             }
-            
-            
 
         } catch (SQLException ex) {
 
@@ -640,12 +662,12 @@ public class tc_besetup extends javax.swing.JFrame {
             Logger.getLogger(tc_besetup.class.getName()).log(Level.SEVERE, null, ex);
         }
         //frissitjuk a tablat
-        
+
         DefaultTableModel model = new DefaultTableModel();
         model = (DefaultTableModel) jTable1.getModel();
         model.setRowCount(0);
-        query = "select tc_bepns.partnumber , tc_becells.cellname , tc_bestations.workstation , tc_prodmatrix.ciklusido from tc_prodmatrix left join tc_bepns on tc_prodmatrix.id_tc_bepns = tc_bepns.idtc_bepns  left join tc_becells on tc_becells.idtc_cells = tc_prodmatrix.id_tc_becells left join tc_bestations on tc_bestations.idtc_bestations = tc_prodmatrix.id_tc_bestations";
-        
+        query = "select tc_prodmatrix.idtc_prodmatrix , tc_bepns.partnumber , tc_becells.cellname , tc_bestations.workstation , tc_prodmatrix.ciklusido from tc_prodmatrix left join tc_bepns on tc_prodmatrix.id_tc_bepns = tc_bepns.idtc_bepns  left join tc_becells on tc_becells.idtc_cells = tc_prodmatrix.id_tc_becells left join tc_bestations on tc_bestations.idtc_bestations = tc_prodmatrix.id_tc_bestations";
+
         pc = new planconnect();
 
         ResultSet rs = null;
@@ -659,9 +681,9 @@ public class tc_besetup extends javax.swing.JFrame {
 
         try {
             while (rs.next()) {
-                
-                model.addRow(new Object[]{rs.getString(1), rs.getString(2), rs.getString(3), rs.getDouble(4)});
-                
+
+                model.addRow(new Object[]{rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getDouble(5)});
+
             }
         } catch (SQLException ex) {
             Logger.getLogger(tc_besetup.class.getName()).log(Level.SEVERE, null, ex);
@@ -677,6 +699,70 @@ public class tc_besetup extends javax.swing.JFrame {
 
 
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
+        // TODO add your handling code here:
+        int[] selectedrows = jTable1.getSelectedRows();
+
+        String querybe = "";
+
+        for (int i = 0; i < selectedrows.length; i++) {
+
+            querybe += "'" + jTable1.getValueAt(selectedrows[i], 0).toString() + "',";
+        }
+
+        querybe = querybe.substring(0, querybe.length() - 1);
+        String query = "DELETE from tc_prodmatrix where tc_prodmatrix.idtc_prodmatrix in (" + querybe + ")";
+        planconnect pc = new planconnect();
+        try {
+            pc.feltolt(query);
+            infobox info = new infobox();
+            info.infoBox("Az adatokat sikeresen töröltük!", "Törlés történt!");
+
+        } catch (Exception e) {
+
+            infobox inf = new infobox();
+            inf.infoBox("A törlés nem valósult meg!", "Hiba a törlés során!");
+
+        }
+
+        //frissítjük a táblát!
+        DefaultTableModel model = new DefaultTableModel();
+        model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0);
+        query = "select tc_prodmatrix.idtc_prodmatrix , tc_bepns.partnumber , tc_becells.cellname , tc_bestations.workstation , tc_prodmatrix.ciklusido from tc_prodmatrix left join tc_bepns on tc_prodmatrix.id_tc_bepns = tc_bepns.idtc_bepns  left join tc_becells on tc_becells.idtc_cells = tc_prodmatrix.id_tc_becells left join tc_bestations on tc_bestations.idtc_bestations = tc_prodmatrix.id_tc_bestations";
+
+        pc = new planconnect();
+
+        ResultSet rs = null;
+        try {
+            rs = (ResultSet) pc.planconnect(query);
+        } catch (SQLException ex) {
+            Logger.getLogger(tc_besetup.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(tc_besetup.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        try {
+            while (rs.next()) {
+
+                model.addRow(new Object[]{rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getDouble(5)});
+
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(tc_besetup.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        TableCellRenderer rendererFromHeader = jTable1.getTableHeader().getDefaultRenderer();
+        JLabel headerLabel = (JLabel) rendererFromHeader;
+        headerLabel.setHorizontalAlignment(JLabel.CENTER);
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+        jTable1.setDefaultRenderer(Object.class, centerRenderer);
+        jTable1.setModel(model);
+
+
+    }//GEN-LAST:event_jToggleButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -746,5 +832,6 @@ public class tc_besetup extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField6;
     private javax.swing.JTextField jTextField7;
     private javax.swing.JTextField jTextField8;
+    private javax.swing.JToggleButton jToggleButton1;
     // End of variables declaration//GEN-END:variables
 }

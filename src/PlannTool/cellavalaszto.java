@@ -102,6 +102,11 @@ public class cellavalaszto extends javax.swing.JFrame {
         });
 
         jButton3.setText("Lekér");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("Felhasználó:");
 
@@ -233,7 +238,7 @@ public class cellavalaszto extends javax.swing.JFrame {
         }
         querybe = querybe.substring(0, querybe.length() - 1);
         //lekerdezzuk az idjukat
-        String query = "select tc_becells.idtc_cells from tc_becells where tc_becells.cellname in ("+querybe+")";
+        String query = "select tc_becells.idtc_cells from tc_becells where tc_becells.cellname in (" + querybe + ")";
 
         planconnect pc = new planconnect();
         try {
@@ -328,6 +333,24 @@ public class cellavalaszto extends javax.swing.JFrame {
 
 
     }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+
+        //lekérjük a sheeteket
+        
+        for (int i = 0; i < jList2.getModel().getSize(); i++) {
+
+            Besheet sheet = new Besheet();
+            bt.jTabbedPane1.addTab(jList2.getModel().getElementAt(i), sheet);
+            
+
+        }
+        
+        this.setVisible(false);
+        
+
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments

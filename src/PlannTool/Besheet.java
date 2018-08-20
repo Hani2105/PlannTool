@@ -5,6 +5,12 @@
  */
 package PlannTool;
 
+
+import javax.swing.DefaultCellEditor;
+import javax.swing.JComboBox;
+import javax.swing.JScrollPane;
+import javax.swing.table.TableColumn;
+
 /**
  *
  * @author gabor_hanacsek
@@ -16,6 +22,9 @@ public class Besheet extends javax.swing.JPanel {
      */
     public Besheet() {
         initComponents();
+       
+        
+
     }
 
     /**
@@ -34,28 +43,34 @@ public class Besheet extends javax.swing.JPanel {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "PartNumber", "JOB", "WorkStation"
             }
         ));
         jScrollPane2.setViewportView(jTable1);
+        if (jTable1.getColumnModel().getColumnCount() > 0) {
+            jTable1.getColumnModel().getColumn(0).setMinWidth(120);
+            jTable1.getColumnModel().getColumn(0).setPreferredWidth(120);
+            jTable1.getColumnModel().getColumn(0).setMaxWidth(130);
+            jTable1.getColumnModel().getColumn(1).setMinWidth(120);
+            jTable1.getColumnModel().getColumn(1).setPreferredWidth(120);
+            jTable1.getColumnModel().getColumn(1).setMaxWidth(130);
+            jTable1.getColumnModel().getColumn(2).setMinWidth(120);
+            jTable1.getColumnModel().getColumn(2).setPreferredWidth(120);
+            jTable1.getColumnModel().getColumn(2).setMaxWidth(130);
+        }
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(95, 95, 95)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 762, Short.MAX_VALUE))
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 1251, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 533, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 701, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 

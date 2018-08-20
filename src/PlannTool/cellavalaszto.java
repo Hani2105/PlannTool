@@ -44,18 +44,14 @@ public class cellavalaszto extends javax.swing.JFrame {
         // lekerdezzuk a felhasznalokat es betesszuk a comboboxba
         query = "select * from tc_users";
         pc.planconnect(query);
-        
+
         while (pc.rs.next()) {
-            
+
             jComboBox1.addItem(pc.rs.getString(2));
-            
+
         }
-        
+
         jComboBox1.setSelectedIndex(-1);
-        
-        
-        
-        
 
 //        Besheet sheet = new Besheet();
 //        bt.jTabbedPane1.add("valami", sheet);
@@ -81,15 +77,11 @@ public class cellavalaszto extends javax.swing.JFrame {
         jComboBox1 = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
         jButton4 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cella választó");
 
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
         jScrollPane1.setViewportView(jList1);
 
         jList2.setToolTipText("");
@@ -111,17 +103,6 @@ public class cellavalaszto extends javax.swing.JFrame {
 
         jButton3.setText("Lekér");
 
-        jComboBox1.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                jComboBox1ItemStateChanged(evt);
-            }
-        });
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
-            }
-        });
-
         jLabel1.setText("Felhasználó:");
 
         jButton4.setText("Mentés");
@@ -131,34 +112,44 @@ public class cellavalaszto extends javax.swing.JFrame {
             }
         });
 
+        jButton5.setText("Lekér");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(31, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(18, 18, Short.MAX_VALUE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton5)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton4))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap(31, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton2)
-                            .addComponent(jButton1))
-                        .addGap(18, 18, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(18, 18, Short.MAX_VALUE)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jButton2)
+                                    .addComponent(jButton1))
+                                .addGap(18, 18, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButton3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(42, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton4)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -174,7 +165,8 @@ public class cellavalaszto extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton4))
+                    .addComponent(jButton4)
+                    .addComponent(jButton5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -228,43 +220,114 @@ public class cellavalaszto extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
-
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton4ActionPerformed
 
-    private void jComboBox1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox1ItemStateChanged
-        // TODO add your handling code here:
-        
-        String query =  "select tc_users.cellaids from tc_users where tc_users.username = '"+jComboBox1.getSelectedItem().toString()+"'";
-        
+        String querybe = "";
+        DefaultListModel lm2 = new DefaultListModel();
+        lm2 = (DefaultListModel) jList2.getModel();
+        //osszerakjuk hogy milyen allomasok vannak a jlistben
+        for (int i = 0; i < lm2.size(); i++) {
+
+            querybe += "'" + lm2.getElementAt(i) + "',";
+
+        }
+        querybe = querybe.substring(0, querybe.length() - 1);
+        //lekerdezzuk az idjukat
+        String query = "select tc_becells.idtc_cells from tc_becells where tc_becells.cellname in ("+querybe+")";
+
         planconnect pc = new planconnect();
         try {
             pc.planconnect(query);
-            pc.rs.last();
-            int rownumber = pc.rs.getRow();
-            
-            String cellak = "";
-            
-            while(pc.rs.next()){
-            
-              cellak=pc.rs.getString(1);
-                
+            //felhasznalato formava alakitjuk az update queryhez
+            querybe = "";
+            while (pc.rs.next()) {
+
+                querybe += pc.rs.getString(1) + ",";
+
             }
-            
+
+            querybe = querybe.substring(0, querybe.length() - 1);
+
+            //updatelunk
+            query = "update tc_users set tc_users.cellaids = '" + querybe + "' where tc_users.username = '" + jComboBox1.getSelectedItem().toString() + "'";
+            try {
+                pc.feltolt(query);
+                infobox inf = new infobox();
+                inf.infoBox("Sikeres mentés!", "Mentés");
+            } catch (Exception e) {
+                infobox inf = new infobox();
+                inf.infoBox("Sikertelen mentés!", "Mentés");
+            }
         } catch (SQLException ex) {
             Logger.getLogger(cellavalaszto.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(cellavalaszto.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        
-        query = "SELECT tc_becells.cellname from tc_becells where tc_becells.idtc_cells in ('1','3')";
-        
-    }//GEN-LAST:event_jComboBox1ItemStateChanged
+
+
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+
+        if (jComboBox1.getSelectedIndex() != -1) {
+            String query = "select tc_users.cellaids from tc_users where tc_users.username = '" + jComboBox1.getSelectedItem().toString() + "'";
+            //System.out.println(query);
+
+            String cellak = "";
+            planconnect pc = new planconnect();
+            try {
+                pc.planconnect(query);
+
+                while (pc.rs.next()) {
+
+                    cellak = pc.rs.getString(1);
+                    //System.out.println(cellak);
+
+                }
+
+            } catch (SQLException ex) {
+                Logger.getLogger(cellavalaszto.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(cellavalaszto.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            //feldaraboljuk az rs eredmenyet
+            String[] cellaktomb = cellak.split(",");
+
+            //atalakitjuk hasznalhato formava a queryhez
+            String querybe = "";
+
+            for (int i = 0; i < cellaktomb.length; i++) {
+
+                querybe += "'" + cellaktomb[i].toString() + "',";
+
+            }
+            querybe = querybe.substring(0, querybe.length() - 1);
+
+            //osszeqallitjuk a queryt
+            query = "SELECT tc_becells.cellname from tc_becells where tc_becells.idtc_cells in (" + querybe + ")";
+            DefaultListModel lm2 = new DefaultListModel();
+
+            try {
+                //lekerdezzuk
+
+                pc.planconnect(query);
+                while (pc.rs.next()) {
+                    lm2.addElement(pc.rs.getString(1));
+                }
+
+                jList2.setModel(lm2);
+
+            } catch (SQLException ex) {
+                Logger.getLogger(cellavalaszto.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(cellavalaszto.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
+
+
+    }//GEN-LAST:event_jButton5ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -306,6 +369,7 @@ public class cellavalaszto extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JList<String> jList1;

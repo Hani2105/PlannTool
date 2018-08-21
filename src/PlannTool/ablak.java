@@ -2998,7 +2998,7 @@ public class ablak extends javax.swing.JFrame {
         String api_string = "http://143.116.140.120/rest/request.php?page=planning_activity&starttime=" + api_date_format.format(jDateChooser2.getDate()) + "&endtime="
                 + api_date_format.format(dt);
 
-        for (int x = 0; x < jTable8.getRowCount(); x++) {
+        for (int x = 0; x < jTable8.getModel().getRowCount(); x++) {
 
             pn_string += "&pn" + Integer.toString(x + 1) + "=%" + jTable8.getValueAt(x, 0) + "%";
 
@@ -3067,7 +3067,7 @@ public class ablak extends javax.swing.JFrame {
             // a kivételes pn ek kivétele
             sn_list.clear();
 
-            for (int i = 0; i < jTable10.getRowCount(); i++) {
+            for (int i = 0; i < jTable10.getModel().getRowCount(); i++) {
 
                 if (jTable10.getValueAt(i, 0) != null) {
 

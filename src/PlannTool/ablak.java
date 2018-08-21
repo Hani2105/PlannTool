@@ -2008,8 +2008,8 @@ public class ablak extends javax.swing.JFrame {
         jScrollPane10.setViewportView(jTable9);
         if (jTable9.getColumnModel().getColumnCount() > 0) {
             jTable9.getColumnModel().getColumn(1).setPreferredWidth(5);
-            jTable9.getColumnModel().getColumn(2).setMinWidth(20);
-            jTable9.getColumnModel().getColumn(2).setMaxWidth(20);
+            jTable9.getColumnModel().getColumn(2).setMinWidth(30);
+            jTable9.getColumnModel().getColumn(2).setMaxWidth(30);
         }
 
         jLabel27.setText("Summa:");
@@ -2661,7 +2661,7 @@ public class ablak extends javax.swing.JFrame {
         model = (DefaultTableModel) jTable14.getModel();
 
         for (int i = 0; i < jTable14.getRowCount(); i++) {
-            
+
             irtunke = false;
 
             for (int n = 0; n < rowdata.length; n++) {
@@ -2670,7 +2670,6 @@ public class ablak extends javax.swing.JFrame {
 
                     model.setValueAt(rowdata[n][3], i, 4);
                     irtunke = true;
-                    
 
                 } else if (jTable14.getValueAt(i, 2).toString().equals(rowdata[n][0]) && irtunke == false) {
 
@@ -2838,29 +2837,17 @@ public class ablak extends javax.swing.JFrame {
 
         for (int i = 0; i < jTable7.getRowCount(); i++) {
 
-            
-                if (jTable7.getValueAt(i, 0).toString().equals(pn) && (Boolean) jTable9.getValueAt(jTable9.getSelectedRow(), 2) == true) {
+            if (jTable7.getValueAt(i, 0).toString().equals(pn) && (Boolean) jTable9.getValueAt(jTable9.getSelectedRow(), 2) == true) {
 
-                    if ((Boolean) jTable7.getValueAt(i, 4) == true) {
-                        jTable7.setValueAt(false, i, 4);
-                    } else {
+                jTable7.setValueAt(true, i, 4);
 
-                        jTable7.setValueAt(true, i, 4);
-                    }
+            }
 
-                }
+            if (jTable7.getValueAt(i, 0).toString().equals(pn) && (Boolean) jTable9.getValueAt(jTable9.getSelectedRow(), 2) == false) {
 
-                if (jTable7.getValueAt(i, 0).toString().equals(pn) && (Boolean) jTable9.getValueAt(jTable9.getSelectedRow(), 2) == false) {
+                jTable7.setValueAt(false, i, 4);
 
-                    if ((Boolean) jTable7.getValueAt(i, 4) == true) {
-                        jTable7.setValueAt(false, i, 4);
-                    } else {
-
-                        jTable7.setValueAt(true, i, 4);
-                    }
-
-                }
-            
+            }
 
         }
 
@@ -2892,6 +2879,8 @@ public class ablak extends javax.swing.JFrame {
 
                     oh_main.setValueAt(true, sor, 4);
 
+                } else {
+                    oh_main.setValueAt(false, sor, 4);
                 }
 
                 sor++;
@@ -2939,7 +2928,7 @@ public class ablak extends javax.swing.JFrame {
 
                 try {
 
-                    sumtabla.addRow(new Object[]{pn, pndarab});
+                    sumtabla.addRow(new Object[]{pn, pndarab, false});
 
                 } catch (Exception e) {
                     System.out.println("nem jott ossze");
@@ -3142,7 +3131,7 @@ public class ablak extends javax.swing.JFrame {
 
                     try {
 
-                        sumtabla.addRow(new Object[]{pn, pndarab,false});
+                        sumtabla.addRow(new Object[]{pn, pndarab, false});
 
                     } catch (Exception e) {
                         System.out.println("nem jott ossze");

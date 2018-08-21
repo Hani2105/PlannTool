@@ -2561,6 +2561,7 @@ public class ablak extends javax.swing.JFrame {
         //kiszedjuk a kijelolt elemeket
         List<String> allomasok = new ArrayList<String>();
         allomasok = jList1.getSelectedValuesList();
+        boolean irtunke;
 
         //feldolgozzuk stringge
         String allomasokquerybe = "";
@@ -2660,14 +2661,18 @@ public class ablak extends javax.swing.JFrame {
         model = (DefaultTableModel) jTable14.getModel();
 
         for (int i = 0; i < jTable14.getRowCount(); i++) {
+            
+            irtunke = false;
 
             for (int n = 0; n < rowdata.length; n++) {
 
                 if (jTable14.getValueAt(i, 2).toString().equals(rowdata[n][0]) && (rowdata[n][4].equals("Traveler Printed") || rowdata[n][4].equals("Unit Skeleton"))) {
 
                     model.setValueAt(rowdata[n][3], i, 4);
+                    irtunke = true;
+                    
 
-                } else if (jTable14.getValueAt(i, 2).toString().equals(rowdata[n][0])) {
+                } else if (jTable14.getValueAt(i, 2).toString().equals(rowdata[n][0]) && irtunke == false) {
 
                     model.setValueAt("Minden elindult!", i, 4);
 

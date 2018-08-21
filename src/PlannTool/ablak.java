@@ -2863,7 +2863,7 @@ public class ablak extends javax.swing.JFrame {
         String tol = dateFormat.format(jDateChooser2.getDate());
         String ig = dateFormat.format(jDateChooser4.getDate());
 
-        String query = "select * from oh_querymain where oh_querymain.tol >='" + tol + "' and oh_querymain.ig <= '" + ig + "'";
+        String query = "select * from oh_querymain where oh_querymain.lekerdezesidopont between '"+tol+" 00:00:00' and '"+ig+" 23:59:59'";
 
         planconnect pc = new planconnect();
 

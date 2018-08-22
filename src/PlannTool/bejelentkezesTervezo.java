@@ -149,8 +149,9 @@ public class bejelentkezesTervezo extends javax.swing.JFrame {
                 char[] correctpass = pass.toCharArray();
 
                 if (Arrays.equals(password, correctpass) && (Integer.parseInt(poz) == 1 || Integer.parseInt(poz) == 2 || Integer.parseInt(poz) == 4)) {
-
-                    Betervezo b = new Betervezo();
+                    
+                    Besheet s = new Besheet();
+                    Betervezo b = new Betervezo(s);
                     b.setVisible(true);
 
                 }

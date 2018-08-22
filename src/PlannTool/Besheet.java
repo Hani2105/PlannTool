@@ -5,10 +5,10 @@
  */
 package PlannTool;
 
-
 import javax.swing.DefaultCellEditor;
 import javax.swing.JComboBox;
 import javax.swing.JScrollPane;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 
 /**
@@ -17,13 +17,25 @@ import javax.swing.table.TableColumn;
  */
 public class Besheet extends javax.swing.JPanel {
 
-    /**
-     * Creates new form Besheet
-     */
+  
+    Betervezo b;
+    
     public Besheet() {
         initComponents();
-       
+        this.b = b;
+
+    }
+
+    public void mukodj() {
+
+        int i = b.jTabbedPane1.getSelectedIndex();
+        String name = b.jTabbedPane1.getTitleAt(i);
         
+        if(name.equals(this.getName())){
+        DefaultTableModel model = new DefaultTableModel();
+        model = (DefaultTableModel) jTable1.getModel();
+        model.addRow(new Object[]{"valami"});
+        jTable1.setModel(model);}
 
     }
 
@@ -77,6 +89,6 @@ public class Besheet extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
+    public javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 }

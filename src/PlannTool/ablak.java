@@ -2863,7 +2863,7 @@ public class ablak extends javax.swing.JFrame {
         String tol = dateFormat.format(jDateChooser2.getDate());
         String ig = dateFormat.format(jDateChooser4.getDate());
 
-        String query = "select * from oh_querymain where oh_querymain.lekerdezesidopont between '"+tol+" 00:00:00' and '"+ig+" 23:59:59'";
+        String query = "select * from oh_querymain where oh_querymain.lekerdezesidopont between '" + tol + " 00:00:00' and '" + ig + " 23:59:59'";
 
         planconnect pc = new planconnect();
 
@@ -3186,11 +3186,19 @@ public class ablak extends javax.swing.JFrame {
 
         levelbe += "Az adatokat automatikusan feltöltöttük az adatbázisba!";
 
-        adatok = adatok.substring(0, adatok.length() - 1);
-
-        String query = "insert into oh_querymain (serial,partnumber,tol,ig,megcsinalva,felhasznalo) values" + adatok + "on duplicate key update megcsinalva = values (megcsinalva), felhasznalo = values (felhasznalo)";
-
         planconnect pc = new planconnect();
+        String query="";
+        if (adatok.length() > 0) {
+            adatok = adatok.substring(0, adatok.length() - 1);
+
+            query = "insert into oh_querymain (serial,partnumber,tol,ig,megcsinalva,felhasznalo) values" + adatok + "on duplicate key update megcsinalva = values (megcsinalva), felhasznalo = values (felhasznalo)";
+
+        } else {
+
+            infobox info = new infobox();
+            info.infoBox("A query nem hozott olyan eredményt amire OH-t kéne adni \n a kivételek és prefixek alapján!", "Query húzás!");
+
+        }
 
         try {
             pc.feltolt(query);

@@ -9,13 +9,21 @@ import java.sql.SQLException;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.Map;
+import java.util.TreeMap;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
+import org.joda.time.DateTime;
 
+import org.joda.time.Days;
 import org.joda.time.LocalDate;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 /**
  *
@@ -28,16 +36,14 @@ public class Betervezo extends javax.swing.JFrame {
      *
      *
      */
-    
     public String[][] pns;
-    Besheet se;
+
+    public static Map<String, Besheet> Besheets = new TreeMap();
 
     public Betervezo(Besheet s) {
 
         initComponents();
         setExtendedState(MAXIMIZED_BOTH);
-        se = s;
-        
 
     }
 
@@ -61,6 +67,8 @@ public class Betervezo extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox<>();
+        jTextField1 = new javax.swing.JTextField();
+        jButton4 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -93,6 +101,13 @@ public class Betervezo extends javax.swing.JFrame {
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "12 órás", "8 órás" }));
 
+        jButton4.setText("+");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -109,13 +124,20 @@ public class Betervezo extends javax.swing.JFrame {
                     .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(22, 22, 22)
                         .addComponent(jLabel3))
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 949, Short.MAX_VALUE)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addContainerGap()
+                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jButton4)
+                            .addGap(12, 12, 12))
+                        .addComponent(jButton3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 956, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -137,7 +159,11 @@ public class Betervezo extends javax.swing.JFrame {
                 .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 252, Short.MAX_VALUE)
+                .addGap(28, 28, 28)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 205, Short.MAX_VALUE)
                 .addComponent(jButton2)
                 .addGap(50, 50, 50))
             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -197,13 +223,12 @@ public class Betervezo extends javax.swing.JFrame {
         SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd");
         String first = "";
         String second = "";
-        if (!first.equals("") && !second.equals("")) {
-            try {
-                first = df.format(jDateChooser1.getDate());
-                second = df.format(jDateChooser2.getDate());
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+
+        try {
+            first = df.format(jDateChooser1.getDate());
+            second = df.format(jDateChooser2.getDate());
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
         Date one = null;
@@ -228,25 +253,94 @@ public class Betervezo extends javax.swing.JFrame {
 
         //System.out.println(napok);
         //hozzaadjuk a napok es a muszakhossznak megfelelo oszlopok szamat a tablahoz
-        DefaultTableModel tervmodel = new DefaultTableModel();
-        String valami = "";
-        try {
-           
-            
-            se.mukodj();
-         
-         
-           
-        } catch (Exception e) {
-            
+        int n = jTabbedPane1.getSelectedIndex();
+        String neve = jTabbedPane1.getTitleAt(n);
+
+        //kitiriljuk az oszlopokat
+        DefaultTableModel model = (DefaultTableModel) Besheets.get(neve).jTable2.getModel();
+        model.setColumnCount(0);
+
+        //oszlopok neve a datumbol
+        Calendar c = Calendar.getInstance();
+        c.setTime(jDateChooser1.getDate());
+        Date dt = new Date();
+        dt = c.getTime();
+        DateTimeFormatter fmt = DateTimeFormat.forPattern("yyyy-MM-dd");
+
+        DateTime dtOrg = new DateTime(dt);
+        String columneve = "";
+        String szak = "";
+        TableColumn column = null;
+
+        //napok szamaszor futtatjuk
+        for (int i = 0; i < napok; i++) {
+
+            //ha 12 órás a műszakrend 2 szer
+            if (jComboBox1.getSelectedIndex() == 0) {
+                for (int k = 0; k < 2; k++) {
+
+                    szak = (k == 0) ? " DE" : " DU";
+                    columneve = fmt.print(dtOrg.plusDays(i)) + szak;
+                    model.addColumn(columneve);
+
+                }
+            }
+
+            //ha 8 órás 3 szor
+            if (jComboBox1.getSelectedIndex() == 1) {
+                for (int k = 0; k < 3; k++) {
+
+                    if (k == 0) {
+
+                        szak = " DE";
+
+                    } else if (k == 1) {
+
+                        szak = " DU";
+                    } else {
+
+                        szak = " ÉJJ";
+
+                    }
+                    columneve = fmt.print(dtOrg.plusDays(i)) + szak;
+                    model.addColumn(columneve);
+
+                }
+            }
+
+        }
+        //col szelesseg allitas
+
+        for (int i = 0; i < Besheets.get(neve).jTable2.getModel().getColumnCount(); i++) {
+
+            column = Besheets.get(neve).jTable2.getColumnModel().getColumn(i);
+            column.setPreferredWidth(150);
+
         }
 
-        System.out.print(valami);
-        if (jComboBox1.getSelectedIndex() == 1) {
+        Besheets.get(neve).jTable2.setModel(model);
 
-        }
 
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        //aktuális sheet
+        int n = jTabbedPane1.getSelectedIndex();
+        String neve = jTabbedPane1.getTitleAt(n);
+        //hozzaadjuk a sorokat
+        DefaultTableModel t1 = new DefaultTableModel();
+        t1 = (DefaultTableModel) Besheets.get(neve).jTable1.getModel();
+        DefaultTableModel t2 = new DefaultTableModel();
+        t2 = (DefaultTableModel) Besheets.get(neve).jTable2.getModel();
+
+        for (int i = 0; i < Integer.parseInt(jTextField1.getText()); i++) {
+            t1.addRow(new Object[]{});
+            t2.addRow(new Object[]{});
+        }
+
+
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -262,16 +356,24 @@ public class Betervezo extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Betervezo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Betervezo.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Betervezo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Betervezo.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Betervezo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Betervezo.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Betervezo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Betervezo.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -287,6 +389,7 @@ public class Betervezo extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JComboBox<String> jComboBox1;
     private com.toedter.calendar.JDateChooser jDateChooser1;
     private com.toedter.calendar.JDateChooser jDateChooser2;
@@ -295,5 +398,6 @@ public class Betervezo extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     public javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }

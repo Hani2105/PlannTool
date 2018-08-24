@@ -53,6 +53,7 @@ public class ablak extends javax.swing.JFrame {
     public int wgcounter;
     LocalDateTime elso = LocalDateTime.now();
     String pref;
+    public static List <String[][]> lista = new ArrayList<>();   //az rtv tabla oh keszletenek listaja
 
     public ablak() {
 
@@ -101,6 +102,8 @@ public class ablak extends javax.swing.JFrame {
         });
 
         ExcelAdapter ea = new ExcelAdapter(jTable4);
+        
+        jTable11.getColumnModel().getColumn(0).setCellRenderer(new Tooltiprenderer());
 
     }
 
@@ -3187,7 +3190,7 @@ public class ablak extends javax.swing.JFrame {
         levelbe += "Az adatokat automatikusan feltöltöttük az adatbázisba!";
 
         planconnect pc = new planconnect();
-        String query="";
+        String query = "";
         if (adatok.length() > 0) {
             adatok = adatok.substring(0, adatok.length() - 1);
 
@@ -3600,7 +3603,56 @@ public class ablak extends javax.swing.JFrame {
         }
 
         jTable11.setModel(sumtabla);
+        //berakjuk az adatokat a sum táblából
+        
+        String adatok = "";
 
+        for (int i = 0; i < jTable11.getRowCount(); i++){
+        
+        adatok += "'" + jTable11.getValueAt(i, 0).toString() + "',";
+        
+        }
+        
+        adatok = adatok.substring(0, adatok.length()-1);
+        
+        String Query = "SELECT oracle_backup_subinv.item , oracle_backup_subinv.subinv , oracle_backup_subinv.quantity FROM trax_mon.oracle_backup_subinv where oracle_backup_subinv.item in ("+adatok+")";
+
+        connect con = new connect(Query);
+        
+        
+        // betesszuk tombbe
+        
+        try {
+            
+            int utsosor;
+            con.rs.last();
+            utsosor = con.rs.getRow();
+            con.rs.first();
+            String[][]listaelem = new String[utsosor][3];
+            int i = 0;
+            while(con.rs.next()){
+            
+            listaelem[i][0]=con.rs.getString(1);
+            listaelem[i][1]=con.rs.getString(2);
+            listaelem[i][2]=con.rs.getString(3);
+            
+            i++;
+            
+            }
+            
+            //betesszuk a tombot a listbe
+            
+            
+            lista.add(listaelem);
+            
+            
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+       
+        
         stat.beir(System.getProperty("user.name"), jTabbedPane1.getTitleAt(jTabbedPane1.getSelectedIndex()), "", "gabor.hanacsek@sanmina.com");
     }//GEN-LAST:event_jButton5ActionPerformed
 
@@ -3809,6 +3861,13 @@ public class ablak extends javax.swing.JFrame {
         }
 
         jTable2.setModel(model1);
+
+        if (System.getProperty("user.name").equals("eva_istenes")) {
+
+            ugyivagy u = new ugyivagy();
+            u.setVisible(true);
+
+        }
 
         stat.beir(System.getProperty("user.name"), jTabbedPane1.getTitleAt(jTabbedPane1.getSelectedIndex()), "", "gabor.hanacsek@sanmina.com");
 

@@ -1,6 +1,5 @@
 package PlannTool;
 
-
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -51,8 +50,6 @@ public class ExcelAdapter implements ActionListener {
     public void setJTable(JTable jTable1) {
         this.jTable1 = jTable1;
     }
-    
-   
 
 /// ** 
 //* This method is activated on the Keystrokes we are listening to in this 
@@ -112,7 +109,7 @@ public class ExcelAdapter implements ActionListener {
                                     + j);
                         }
                         //System.out.println("Putting" + value + "at row ="
-                                //+ startRow + i + "column =" + startCol + j);
+                        //+ startRow + i + "column =" + startCol + j);
                     }
                 }
             } catch (Exception ex) {

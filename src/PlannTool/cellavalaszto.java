@@ -338,11 +338,12 @@ public class cellavalaszto extends javax.swing.JFrame {
         // TODO add your handling code here:
 
         //lekérjük a sheeteket
-        
+        Betervezo.Besheets.clear();
         for (int i = 0; i < jList2.getModel().getSize(); i++) {
 
             Besheet sheet = new Besheet();
             bt.jTabbedPane1.addTab(jList2.getModel().getElementAt(i), sheet);
+            Betervezo.Besheets.put(jList2.getModel().getElementAt(i), sheet);
             
 
         }

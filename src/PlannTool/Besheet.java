@@ -8,6 +8,7 @@ package PlannTool;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JComboBox;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 
@@ -17,25 +18,12 @@ import javax.swing.table.TableColumn;
  */
 public class Besheet extends javax.swing.JPanel {
 
-  
-    Betervezo b;
-    
     public Besheet() {
         initComponents();
-        this.b = b;
-
-    }
-
-    public void mukodj() {
-
-        int i = b.jTabbedPane1.getSelectedIndex();
-        String name = b.jTabbedPane1.getTitleAt(i);
-        
-        if(name.equals(this.getName())){
-        DefaultTableModel model = new DefaultTableModel();
-        model = (DefaultTableModel) jTable1.getModel();
-        model.addRow(new Object[]{"valami"});
-        jTable1.setModel(model);}
+        //jTable1.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        jTable2.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        ExcelAdapter ea = new ExcelAdapter(jTable1);
+        ExcelAdapter eb = new ExcelAdapter(jTable2);
 
     }
 
@@ -48,9 +36,32 @@ public class Besheet extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPopupMenu1 = new javax.swing.JPopupMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jPopupMenu2 = new javax.swing.JPopupMenu();
+        jMenuItem2 = new javax.swing.JMenuItem();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable2 = new javax.swing.JTable();
 
+        jMenuItem1.setText("Delete");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jPopupMenu1.add(jMenuItem1);
+
+        jMenuItem2.setText("Delete Row");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        jPopupMenu2.add(jMenuItem2);
+
+        setComponentPopupMenu(jPopupMenu1);
         setPreferredSize(new java.awt.Dimension(1800, 700));
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -61,34 +72,93 @@ public class Besheet extends javax.swing.JPanel {
                 "PartNumber", "JOB", "WorkStation"
             }
         ));
+        jTable1.setComponentPopupMenu(jPopupMenu2);
         jScrollPane2.setViewportView(jTable1);
         if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setMinWidth(120);
-            jTable1.getColumnModel().getColumn(0).setPreferredWidth(120);
+            jTable1.getColumnModel().getColumn(0).setMinWidth(130);
+            jTable1.getColumnModel().getColumn(0).setPreferredWidth(130);
             jTable1.getColumnModel().getColumn(0).setMaxWidth(130);
             jTable1.getColumnModel().getColumn(1).setMinWidth(120);
             jTable1.getColumnModel().getColumn(1).setPreferredWidth(120);
-            jTable1.getColumnModel().getColumn(1).setMaxWidth(130);
+            jTable1.getColumnModel().getColumn(1).setMaxWidth(120);
             jTable1.getColumnModel().getColumn(2).setMinWidth(120);
             jTable1.getColumnModel().getColumn(2).setPreferredWidth(120);
-            jTable1.getColumnModel().getColumn(2).setMaxWidth(130);
+            jTable1.getColumnModel().getColumn(2).setMaxWidth(120);
         }
+
+        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
+        jTable2.setCellSelectionEnabled(true);
+        jTable2.setComponentPopupMenu(jPopupMenu1);
+        jTable2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable2MouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jTable2);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 1251, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 371, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1506, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 701, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 700, Short.MAX_VALUE)
+            .addComponent(jScrollPane1)
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jTable2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable2MouseClicked
+        // TODO add your handling code here:
+
+
+    }//GEN-LAST:event_jTable2MouseClicked
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        int row = jTable2.getSelectedRow();
+        int col = jTable2.getSelectedColumn();
+        DefaultTableModel model = new DefaultTableModel();
+        model = (DefaultTableModel) jTable2.getModel();
+        model.setValueAt("", row, col);
+        jTable2.setModel(model);
+
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        // TODO add your handling code here:
+       int row = jTable1.getSelectedRow();
+        DefaultTableModel model1 = new DefaultTableModel();
+        model1 = (DefaultTableModel) jTable1.getModel();
+        DefaultTableModel model2 = new DefaultTableModel();
+        model2 = (DefaultTableModel) jTable2.getModel();
+        
+        model1.removeRow(row);
+        model2.removeRow(row);
+        
+        jTable1.setModel(model1);
+        jTable2.setModel(model2);
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JPopupMenu jPopupMenu1;
+    private javax.swing.JPopupMenu jPopupMenu2;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     public javax.swing.JTable jTable1;
+    public javax.swing.JTable jTable2;
     // End of variables declaration//GEN-END:variables
 }

@@ -3,6 +3,8 @@ package PlannTool;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.HeadlessException;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.io.File;
 import javax.swing.RowFilter;
 
@@ -37,6 +39,7 @@ import javax.swing.table.TableRowSorter;
 import javax.swing.table.TableCellRenderer;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.awt.Toolkit;
 
 public class ablak extends javax.swing.JFrame {
 
@@ -53,11 +56,15 @@ public class ablak extends javax.swing.JFrame {
     public int wgcounter;
     LocalDateTime elso = LocalDateTime.now();
     String pref;
-    public static List <String[][]> lista = new ArrayList<>();   //az rtv tabla oh keszletenek listaja
+    public static List<String[][]> lista = new ArrayList<>();   //az rtv tabla oh keszletenek listaja
 
     public ablak() {
 
+       Toolkit.getDefaultToolkit().getImage(ablak.class.getResource("kepek/1.png"));
+
         initComponents();
+        
+        seticon();
 
         jTextField4.getDocument().addDocumentListener(new DocumentListener() {
             @Override
@@ -102,9 +109,15 @@ public class ablak extends javax.swing.JFrame {
         });
 
         ExcelAdapter ea = new ExcelAdapter(jTable4);
-        
+
         jTable11.getColumnModel().getColumn(0).setCellRenderer(new Tooltiprenderer());
 
+    }
+    
+    private void seticon(){
+    
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("kepek/1.png")));
+    
     }
 
     @SuppressWarnings("unchecked")
@@ -3604,55 +3617,47 @@ public class ablak extends javax.swing.JFrame {
 
         jTable11.setModel(sumtabla);
         //berakjuk az adatokat a sum táblából
-        
+
         String adatok = "";
 
-        for (int i = 0; i < jTable11.getRowCount(); i++){
-        
-        adatok += "'" + jTable11.getValueAt(i, 0).toString() + "',";
-        
+        for (int i = 0; i < jTable11.getRowCount(); i++) {
+
+            adatok += "'" + jTable11.getValueAt(i, 0).toString() + "',";
+
         }
-        
-        adatok = adatok.substring(0, adatok.length()-1);
-        
-        String Query = "SELECT oracle_backup_subinv.item , oracle_backup_subinv.subinv , oracle_backup_subinv.quantity FROM trax_mon.oracle_backup_subinv where oracle_backup_subinv.item in ("+adatok+")";
+
+        adatok = adatok.substring(0, adatok.length() - 1);
+
+        String Query = "SELECT oracle_backup_subinv.item , oracle_backup_subinv.subinv , oracle_backup_subinv.quantity FROM trax_mon.oracle_backup_subinv where oracle_backup_subinv.item in (" + adatok + ")";
 
         connect con = new connect(Query);
-        
-        
+
         // betesszuk tombbe
-        
         try {
-            
+
             int utsosor;
             con.rs.last();
             utsosor = con.rs.getRow();
             con.rs.first();
-            String[][]listaelem = new String[utsosor][3];
+            String[][] listaelem = new String[utsosor][3];
             int i = 0;
-            while(con.rs.next()){
-            
-            listaelem[i][0]=con.rs.getString(1);
-            listaelem[i][1]=con.rs.getString(2);
-            listaelem[i][2]=con.rs.getString(3);
-            
-            i++;
-            
+            while (con.rs.next()) {
+
+                listaelem[i][0] = con.rs.getString(1);
+                listaelem[i][1] = con.rs.getString(2);
+                listaelem[i][2] = con.rs.getString(3);
+
+                i++;
+
             }
-            
+
             //betesszuk a tombot a listbe
-            
-            
             lista.add(listaelem);
-            
-            
-            
+
         } catch (SQLException ex) {
             Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-       
-        
+
         stat.beir(System.getProperty("user.name"), jTabbedPane1.getTitleAt(jTabbedPane1.getSelectedIndex()), "", "gabor.hanacsek@sanmina.com");
     }//GEN-LAST:event_jButton5ActionPerformed
 

@@ -16,6 +16,7 @@ import java.util.TreeMap;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JPopupMenu;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import org.joda.time.DateTime;
@@ -137,8 +138,7 @@ public class Betervezo extends javax.swing.JFrame {
                             .addGap(12, 12, 12))
                         .addComponent(jButton3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 956, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 968, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -168,8 +168,7 @@ public class Betervezo extends javax.swing.JFrame {
                 .addGap(50, 50, 50))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabbedPane1)
-                .addContainerGap())
+                .addComponent(jTabbedPane1))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -256,9 +255,9 @@ public class Betervezo extends javax.swing.JFrame {
         int n = jTabbedPane1.getSelectedIndex();
         String neve = jTabbedPane1.getTitleAt(n);
 
-        //kitiriljuk az oszlopokat
+        //kitoroljuk az oszlopokat
         DefaultTableModel model = (DefaultTableModel) Besheets.get(neve).jTable2.getModel();
-        model.setColumnCount(0);
+        model.setColumnCount(4);
 
         //oszlopok neve a datumbol
         Calendar c = Calendar.getInstance();
@@ -266,10 +265,12 @@ public class Betervezo extends javax.swing.JFrame {
         Date dt = new Date();
         dt = c.getTime();
         DateTimeFormatter fmt = DateTimeFormat.forPattern("yyyy-MM-dd");
+        DateTimeFormatter fmtnap = DateTimeFormat.forPattern("E");
 
         DateTime dtOrg = new DateTime(dt);
         String columneve = "";
         String szak = "";
+        String napneve = "";
         TableColumn column = null;
 
         //napok szamaszor futtatjuk
@@ -281,7 +282,10 @@ public class Betervezo extends javax.swing.JFrame {
 
                     szak = (k == 0) ? " DE" : " DU";
                     columneve = fmt.print(dtOrg.plusDays(i)) + szak;
-                    model.addColumn(columneve);
+
+                    napneve = fmtnap.print(dtOrg.plusDays(i));
+
+                    model.addColumn(columneve + " " + napneve);
 
                 }
             }
@@ -303,7 +307,8 @@ public class Betervezo extends javax.swing.JFrame {
 
                     }
                     columneve = fmt.print(dtOrg.plusDays(i)) + szak;
-                    model.addColumn(columneve);
+                    napneve = fmtnap.print(dtOrg.plusDays(i));
+                    model.addColumn(columneve + " " + napneve);
 
                 }
             }
@@ -313,12 +318,16 @@ public class Betervezo extends javax.swing.JFrame {
 
         for (int i = 0; i < Besheets.get(neve).jTable2.getModel().getColumnCount(); i++) {
 
-            column = Besheets.get(neve).jTable2.getColumnModel().getColumn(i);
-            column.setPreferredWidth(150);
+            if (i != 3) {
+                column = Besheets.get(neve).jTable2.getColumnModel().getColumn(i);
+                column.setPreferredWidth(150);
+            }
 
         }
 
         Besheets.get(neve).jTable2.setModel(model);
+        //new FixedColumnTable(3, Besheets.get(neve).jScrollPane1);
+        //Besheets.get(neve).jTable2.getTableHeader().setDefaultRenderer(new TervTablaRenderer());
 
 
     }//GEN-LAST:event_jButton3ActionPerformed
@@ -329,14 +338,21 @@ public class Betervezo extends javax.swing.JFrame {
         int n = jTabbedPane1.getSelectedIndex();
         String neve = jTabbedPane1.getTitleAt(n);
         //hozzaadjuk a sorokat
-        DefaultTableModel t1 = new DefaultTableModel();
-        t1 = (DefaultTableModel) Besheets.get(neve).jTable1.getModel();
         DefaultTableModel t2 = new DefaultTableModel();
         t2 = (DefaultTableModel) Besheets.get(neve).jTable2.getModel();
 
         for (int i = 0; i < Integer.parseInt(jTextField1.getText()); i++) {
-            t1.addRow(new Object[]{});
+
             t2.addRow(new Object[]{});
+            if (i % 2 == 0 || i == 0) {
+
+                t2.setValueAt("Terv", i, 3);
+
+            } else {
+
+                t2.setValueAt("Tény", i, 3);
+            }
+
         }
 
 

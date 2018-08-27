@@ -60,10 +60,10 @@ public class ablak extends javax.swing.JFrame {
 
     public ablak() {
 
-       Toolkit.getDefaultToolkit().getImage(ablak.class.getResource("kepek/1.png"));
+        Toolkit.getDefaultToolkit().getImage(ablak.class.getResource("kepek/1.png"));
 
         initComponents();
-        
+
         seticon();
 
         jTextField4.getDocument().addDocumentListener(new DocumentListener() {
@@ -108,16 +108,15 @@ public class ablak extends javax.swing.JFrame {
             }
         });
 
-        ExcelAdapter ea = new ExcelAdapter(jTable4);
-
+        new ExcelAdapter(jTable4);
         jTable11.getColumnModel().getColumn(0).setCellRenderer(new Tooltiprenderer());
 
     }
-    
-    private void seticon(){
-    
+
+    private void seticon() {
+
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("kepek/1.png")));
-    
+
     }
 
     @SuppressWarnings("unchecked")

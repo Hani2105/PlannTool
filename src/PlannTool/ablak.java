@@ -3637,7 +3637,7 @@ public class ablak extends javax.swing.JFrame {
             int utsosor;
             con.rs.last();
             utsosor = con.rs.getRow();
-            con.rs.first();
+            con.rs.beforeFirst();
             String[][] listaelem = new String[utsosor][3];
             int i = 0;
             while (con.rs.next()) {

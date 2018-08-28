@@ -84,8 +84,7 @@ public class Besheet extends javax.swing.JPanel {
         jScrollPane1.setViewportView(jTable2);
         if (jTable2.getColumnModel().getColumnCount() > 0) {
             jTable2.getColumnModel().getColumn(0).setPreferredWidth(150);
-            jTable2.getColumnModel().getColumn(1).setResizable(false);
-            jTable2.getColumnModel().getColumn(1).setPreferredWidth(150);
+            jTable2.getColumnModel().getColumn(1).setPreferredWidth(130);
             jTable2.getColumnModel().getColumn(2).setPreferredWidth(150);
             jTable2.getColumnModel().getColumn(3).setPreferredWidth(70);
         }
@@ -131,7 +130,18 @@ public class Besheet extends javax.swing.JPanel {
 
         for (int i = 0; i < rows.length; i++) {
 
-            model.removeRow(rows[i]);
+            if (rows[i] % 2 == 0) {
+
+                model.removeRow(rows[i]);
+                model.removeRow(rows[i]);
+
+            } else {
+
+                model.removeRow(rows[i]);
+                model.removeRow(rows[i] - 1);
+
+            }
+
         }
 
         jTable2.setModel(model);

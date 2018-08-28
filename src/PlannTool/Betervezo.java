@@ -9,8 +9,10 @@ import java.sql.SQLException;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -70,6 +72,7 @@ public class Betervezo extends javax.swing.JFrame {
         jComboBox1 = new javax.swing.JComboBox<>();
         jTextField1 = new javax.swing.JTextField();
         jButton4 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -109,6 +112,13 @@ public class Betervezo extends javax.swing.JFrame {
             }
         });
 
+        jButton5.setText("Ment");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -129,14 +139,12 @@ public class Betervezo extends javax.swing.JFrame {
                         .addGap(22, 22, 22)
                         .addComponent(jLabel3))
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addContainerGap()
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jButton4)
-                            .addGap(12, 12, 12))
-                        .addComponent(jButton3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton4))
+                    .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 968, Short.MAX_VALUE))
         );
@@ -159,11 +167,13 @@ public class Betervezo extends javax.swing.JFrame {
                 .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton3)
-                .addGap(28, 28, 28)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton5)
+                .addGap(36, 36, 36)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 205, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 161, Short.MAX_VALUE)
                 .addComponent(jButton2)
                 .addGap(50, 50, 50))
             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -197,7 +207,6 @@ public class Betervezo extends javax.swing.JFrame {
             Logger.getLogger(Betervezo.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -212,7 +221,6 @@ public class Betervezo extends javax.swing.JFrame {
             Logger.getLogger(Betervezo.class.getName()).log(Level.SEVERE, null, ex);
         }
         c.setVisible(true);
-
 
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -320,7 +328,7 @@ public class Betervezo extends javax.swing.JFrame {
 
             if (i != 3) {
                 column = Besheets.get(neve).jTable2.getColumnModel().getColumn(i);
-                column.setPreferredWidth(150);
+                column.setPreferredWidth(125);
             }
 
         }
@@ -328,7 +336,6 @@ public class Betervezo extends javax.swing.JFrame {
         Besheets.get(neve).jTable2.setModel(model);
         //new FixedColumnTable(3, Besheets.get(neve).jScrollPane1);
         //Besheets.get(neve).jTable2.getTableHeader().setDefaultRenderer(new TervTablaRenderer());
-
 
     }//GEN-LAST:event_jButton3ActionPerformed
 
@@ -340,23 +347,268 @@ public class Betervezo extends javax.swing.JFrame {
         //hozzaadjuk a sorokat
         DefaultTableModel t2 = new DefaultTableModel();
         t2 = (DefaultTableModel) Besheets.get(neve).jTable2.getModel();
+        int rownumber = t2.getRowCount();
 
         for (int i = 0; i < Integer.parseInt(jTextField1.getText()); i++) {
 
             t2.addRow(new Object[]{});
-            if (i % 2 == 0 || i == 0) {
 
-                t2.setValueAt("Terv", i, 3);
+            if (rownumber + i % 2 == 0 || i == 0) {
+
+                t2.setValueAt("Terv", rownumber + i, 3);
 
             } else {
 
-                t2.setValueAt("Tény", i, 3);
+                t2.setValueAt("Tény", rownumber + i, 3);
             }
 
         }
 
-
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        //lekerjuk az infokat (pn , cell , ws , és a tervet )
+        //cellak
+        String query = "select * from tc_becells";
+        planconnect pc = new planconnect();
+        List<String[][]> gyujto = new ArrayList<String[][]>();
+
+        try {
+            int i = 0;
+            pc.planconnect(query);
+            pc.rs.last();
+            int last = pc.rs.getRow();
+            pc.rs.beforeFirst();
+            String[][] cellist = new String[last][2];
+
+            while (pc.rs.next()) {
+
+                cellist[i][0] = pc.rs.getString(1);
+                cellist[i][1] = pc.rs.getString(2);
+
+                i++;
+
+            }
+
+            gyujto.add(cellist);
+
+        } catch (SQLException ex) {
+            Logger.getLogger(Betervezo.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Betervezo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        //wsek
+        query = "select * from tc_bestations";
+
+        try {
+            int i = 0;
+            pc.planconnect(query);
+            pc.rs.last();
+            int last = pc.rs.getRow();
+            pc.rs.beforeFirst();
+            String[][] wslist = new String[last][2];
+
+            while (pc.rs.next()) {
+
+                wslist[i][0] = pc.rs.getString(1);
+                wslist[i][1] = pc.rs.getString(2);
+
+                i++;
+
+            }
+
+            gyujto.add(wslist);
+
+        } catch (SQLException ex) {
+            Logger.getLogger(Betervezo.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Betervezo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        //pnek
+        query = "select * from tc_bepns";
+
+        try {
+            int i = 0;
+            pc.planconnect(query);
+            pc.rs.last();
+            int last = pc.rs.getRow();
+            pc.rs.beforeFirst();
+            String[][] pnlist = new String[last][2];
+
+            while (pc.rs.next()) {
+
+                pnlist[i][0] = pc.rs.getString(1);
+                pnlist[i][1] = pc.rs.getString(2);
+
+                i++;
+
+            }
+
+            gyujto.add(pnlist);
+
+        } catch (SQLException ex) {
+            Logger.getLogger(Betervezo.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Betervezo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        //kitalaljuk a sheet nevet
+        int n = jTabbedPane1.getSelectedIndex();
+        String neve = jTabbedPane1.getTitleAt(n);
+        String tol = Besheets.get(neve).jTable2.getColumnName(4).substring(0, 10) + " 06:00:00";
+        String ig = "";
+
+        //tol ig intervallum a sheeten
+        if (Besheets.get(neve).jTable2.getColumnName(Besheets.get(neve).jTable2.getColumnCount() - 1).substring(11, 12).equals("É")) {
+
+            ig += Besheets.get(neve).jTable2.getColumnName(Besheets.get(neve).jTable2.getColumnCount() - 1).substring(0, 10) + " 22:00:00";
+
+        } else {
+
+            ig += Besheets.get(neve).jTable2.getColumnName(Besheets.get(neve).jTable2.getColumnCount() - 1).substring(0, 10) + " 18:00:00";
+
+        }
+
+        //megkeressuk az id -kat es vegigmegyunk a tablan , oszlop , sor
+        DefaultTableModel t2 = new DefaultTableModel();
+        t2 = (DefaultTableModel) Besheets.get(neve).jTable2.getModel();
+        int oszlopszam = t2.getColumnCount();  //t2 a tervtabla 
+        int sorszam = t2.getRowCount();
+
+        String pn = "";
+        String ws = "";
+        String cell = "";
+        String job = "";
+        String pnid = "";
+        String wsid = "";
+        String cellid = "";
+        String feltoltadat = "";
+        // elinditjuk a nagy ciklust ()
+        for (int i = 0; i < oszlopszam; i++) {
+            for (int r = 0; r < sorszam; r++) {
+
+                pnid = "";
+                wsid = "";
+                job = "";
+
+                if (t2.getValueAt(r, 0) != null) {
+                    pn = t2.getValueAt(r, 0).toString();
+                }
+                if (t2.getValueAt(r, 1) != null) {
+                    job = t2.getValueAt(r, 1).toString();
+                }
+                if (t2.getValueAt(r, 2) != null) {
+                    ws = t2.getValueAt(r, 2).toString();
+                }
+                cell = neve;
+
+                // megallapitjuk az id -kat (pn,cella,ws) a lekerdezeshez
+                //pnid  
+                for (int k = 0; k < gyujto.get(2).length; k++) {
+
+                    if (pn.equals(gyujto.get(2)[k][1])) {
+
+                        pnid = gyujto.get(2)[k][0];
+                        break;
+
+                    }
+
+                }
+
+                //wsid
+                for (int k = 0; k < gyujto.get(1).length; k++) {
+
+                    if (ws.equals(gyujto.get(1)[k][1])) {
+
+                        wsid = gyujto.get(1)[k][0];
+                        break;
+
+                    }
+
+                }
+
+                //cellid
+                for (int k = 0; k < gyujto.get(0).length; k++) {
+
+                    if (cell.equals(gyujto.get(0)[k][1])) {
+
+                        cellid = gyujto.get(0)[k][0];
+                        break;
+
+                    }
+
+                }
+
+                //megkeressuk a datumot
+                //12 vagy 8 órás a terv?
+                String beosztas = "";
+                if (t2.getColumnName(t2.getColumnCount() - 1).substring(11, 12).equals("É")) {
+
+                    beosztas = "8";
+
+                } else {
+
+                    beosztas = "12";
+
+                }
+
+                String datum = "";
+                String ora = "";
+
+                if (i > 3) {
+
+                    if (t2.getColumnName(i).substring(11, 13).equals("DE")) {
+
+                        ora = " 06:00:00";
+                    }
+
+                    if (t2.getColumnName(i).substring(11, 13).equals("DU") && beosztas.equals("12")) {
+
+                        ora = " 18:00:00";
+                    }
+
+                    if (t2.getColumnName(i).substring(11, 13).equals("DU") && beosztas.equals("8")) {
+
+                        ora = " 14:00:00";
+                    }
+
+                    if (t2.getColumnName(i).substring(11, 13).equals("ÉJ")) {
+
+                        ora = " 22:00:00";
+                    }
+
+                    if (t2.getValueAt(r, i) != null) {
+                        if (Integer.parseInt(t2.getValueAt(r, i).toString()) > 0) {
+
+                            datum = t2.getColumnName(i).substring(0, 10) + ora;
+                            int qty = Integer.parseInt(t2.getValueAt(r, i).toString());
+
+                            feltoltadat += cellid + " " + wsid + " " + pnid + " " + job + " " + datum + " " + qty + " \n";
+
+                            cellid = "";
+                            wsid = "";
+                            pnid = "";
+                            datum = "";
+                            job = "";
+
+                        }
+                    }
+                }
+
+            }
+        }
+        
+        String feltoltquery = "insert into tc_terv (tc_terv.idtc_becells , tc_terv.idtc_bestations , tc_terv.idtc_bepns , tc_terv.job , tc_terv.date , tc_terv.qty , tc_terv.wtf , tc_terv.tt) values (1,3,5,'vsdfb','2018-08-20 06:00:00', 500 , 1 , 0),(1,2,8,'','2018-08-20 06:00:00', 500 , 1 , 0)";
+
+        System.out.println(feltoltquery);
+
+        //active -1
+//        query = "update tc_terv set tc_terv.active = 0 where tc_terv.active = 1 and tc_terv.idtc_becells = " + cellid + " and tc_terv.date between '" + tol + "' and '" + ig + "'";
+//        pc.feltolt(query);
+//        query = "update tc_terv set tc_terv.active = 1 where tc_terv.active = 2 and tc_terv.idtc_becells = " + cellid + " and tc_terv.date between '" + tol + "' and '" + ig + "'";
+//        pc.feltolt(query);
+    }//GEN-LAST:event_jButton5ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -406,6 +658,7 @@ public class Betervezo extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
     private javax.swing.JComboBox<String> jComboBox1;
     private com.toedter.calendar.JDateChooser jDateChooser1;
     private com.toedter.calendar.JDateChooser jDateChooser2;

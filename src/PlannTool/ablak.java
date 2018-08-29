@@ -3651,6 +3651,7 @@ public class ablak extends javax.swing.JFrame {
             }
 
             //betesszuk a tombot a listbe
+            lista.clear();
             lista.add(listaelem);
 
         } catch (SQLException ex) {

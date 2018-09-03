@@ -28,7 +28,7 @@ public class Stat {
         LocalDateTime now = LocalDateTime.now(); 
         String Query = "insert into planningdb.plannstat (username , tabname) values ('"+Username+"','"+Tabname+"')";
         planconnect conn = new planconnect();
-        conn.feltolt(Query);
+        conn.feltolt(Query , false);
         
         
         String to = cimzett;//change accordingly  

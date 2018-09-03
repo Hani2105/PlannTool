@@ -60,7 +60,7 @@ public class ablak extends javax.swing.JFrame {
 
     public ablak() {
 
-        Toolkit.getDefaultToolkit().getImage(ablak.class.getResource("kepek/1.png"));
+        
 
         initComponents();
 
@@ -2648,7 +2648,7 @@ public class ablak extends javax.swing.JFrame {
         String jobszamok = "";
         for (int i = 0; i < jTable14.getRowCount(); i++) {
 
-            jobszamok += jTable14.getValueAt(i, 2).toString() + ";";
+            jobszamok += jTable14.getValueAt(i, 2).toString().trim()+ ";";
 
         }
 

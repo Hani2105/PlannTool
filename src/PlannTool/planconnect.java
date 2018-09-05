@@ -60,7 +60,7 @@ public class planconnect {
         }
     }
 
-    public void feltolt(String query) {
+    public void feltolt(String query, boolean infobox) {
         Connection conn = null;
         Statement stmt = null;
         try {
@@ -74,12 +74,24 @@ public class planconnect {
             stmt = conn.createStatement();
             stmt.executeUpdate(query);
 
+            if (infobox == true) {
+                infobox info = new infobox();
+                info.infoBox("Sikeres feltöltés!", "Mentés!");
+            }
+
         } catch (SQLException se) {
             //Handle errors for JDBC
             se.printStackTrace();
+
+            infobox info = new infobox();
+            info.infoBox("Sikertelen feltöltés!", "Hiba!");
+
         } catch (Exception e) {
             //Handle errors for Class.forName
             e.printStackTrace();
+            infobox info = new infobox();
+            info.infoBox("Sikertelen feltöltés!", "Hiba!");
+
         } finally {
             //finally block used to close resources
             try {

@@ -7,6 +7,9 @@ package PlannTool;
 
 import static PlannTool.Betervezo.Besheets;
 import java.awt.Color;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JComboBox;
 import javax.swing.JScrollPane;
@@ -21,12 +24,17 @@ import javax.swing.table.TableColumn;
  */
 public class Besheet extends javax.swing.JPanel {
 
-    public Besheet() {
+    public List<String> partnumbers = new ArrayList<String>();
+    public List<String> workstations = new ArrayList<String>();
+    Betervezo bt;
+
+    public Besheet(Betervezo b) throws SQLException, ClassNotFoundException {
         initComponents();
         jTable2.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         new ExcelAdapter(jTable2);
         jTable2.getTableHeader().setDefaultRenderer(new TervTablaRenderer());
-        jTable2.setDefaultRenderer(Object.class, new TervTooltipRenderer());
+        jTable2.setDefaultRenderer(Object.class, new TervTooltipRenderer(this));
+        bt = b;
 
     }
 
@@ -42,6 +50,7 @@ public class Besheet extends javax.swing.JPanel {
         JPopupMenu1 = new javax.swing.JPopupMenu();
         DeleteRow = new javax.swing.JMenuItem();
         DeleteArea = new javax.swing.JMenuItem();
+        CellaAdatok = new javax.swing.JMenuItem();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
@@ -62,6 +71,14 @@ public class Besheet extends javax.swing.JPanel {
             }
         });
         JPopupMenu1.add(DeleteArea);
+
+        CellaAdatok.setText("CellaAdatok");
+        CellaAdatok.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CellaAdatokActionPerformed(evt);
+            }
+        });
+        JPopupMenu1.add(CellaAdatok);
 
         setComponentPopupMenu(JPopupMenu1);
         setPreferredSize(new java.awt.Dimension(1800, 700));
@@ -122,6 +139,41 @@ public class Besheet extends javax.swing.JPanel {
 
     }//GEN-LAST:event_jTable2MouseClicked
 
+    public void parts() throws SQLException, ClassNotFoundException {
+
+        planconnect pc = new planconnect();
+        String query = "SELECT tc_bepns.partnumber from tc_bepns where tc_bepns.idtc_bepns in \n"
+                + "(select distinct tc_prodmatrix.id_tc_bepns from tc_prodmatrix where tc_prodmatrix.id_tc_becells  = \n"
+                + "(SELECT tc_becells.idtc_cells FROM planningdb.tc_becells where tc_becells.cellname = '" + cellavalaszto.neve + "'))";
+
+        pc.planconnect(query);
+
+        while (pc.rs.next()) {
+
+            partnumbers.add(pc.rs.getString(1));
+
+        }
+
+    }
+
+    public void workstations() throws SQLException, ClassNotFoundException {
+
+        planconnect pc = new planconnect();
+        String query = "SELECT tc_bestations.workstation from tc_bestations where tc_bestations.idtc_bestations in \n"
+                + "(select distinct tc_prodmatrix.id_tc_bestations from tc_prodmatrix where tc_prodmatrix.id_tc_becells  = \n"
+                + "(SELECT tc_becells.idtc_cells FROM planningdb.tc_becells where tc_becells.cellname = '" + cellavalaszto.neve + "'))";
+
+        pc.planconnect(query);
+
+        while (pc.rs.next()) {
+
+            workstations.add(pc.rs.getString(1));
+
+        }
+
+    }
+
+
     private void DeleteRowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteRowActionPerformed
 
         int[] rows = jTable2.getSelectedRows();
@@ -167,8 +219,16 @@ public class Besheet extends javax.swing.JPanel {
 
     }//GEN-LAST:event_DeleteAreaActionPerformed
 
+    private void CellaAdatokActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CellaAdatokActionPerformed
+
+        PartsOfCells p = new PartsOfCells(this);
+        p.setVisible(true);
+
+    }//GEN-LAST:event_CellaAdatokActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem CellaAdatok;
     private javax.swing.JMenuItem DeleteArea;
     private javax.swing.JMenuItem DeleteRow;
     public javax.swing.JPopupMenu JPopupMenu1;

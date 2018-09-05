@@ -5,12 +5,15 @@
  */
 package PlannTool;
 
+import java.awt.Toolkit;
+import java.sql.Array;
 import java.sql.SQLException;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import static java.util.Collections.list;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -35,18 +38,17 @@ import org.joda.time.format.DateTimeFormatter;
 public class Betervezo extends javax.swing.JFrame {
 
     /**
-     * Creates new form Betervezo
-     *
-     *
      */
     public String[][] pns;
-
+    public static List<String> partn = new ArrayList<String>();
+    public static List<String> workstations = new ArrayList<String>();
     public static Map<String, Besheet> Besheets = new TreeMap();
 
-    public Betervezo(Besheet s) {
+    public Betervezo() throws SQLException, ClassNotFoundException {
 
         initComponents();
         setExtendedState(MAXIMIZED_BOTH);
+        seticon();
 
     }
 
@@ -112,7 +114,7 @@ public class Betervezo extends javax.swing.JFrame {
             }
         });
 
-        jButton5.setText("Ment");
+        jButton5.setText("Terv mentése");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton5ActionPerformed(evt);
@@ -196,6 +198,14 @@ public class Betervezo extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void seticon() {
+
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("kepek/2.jpg")));
+
+    }
+
+    //globalis valtozoban letaroljuk a setupban levo partnumbereket hogy le tudjuk ellenorizni a rendererben a letezesuket
+
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
         try {
@@ -226,6 +236,15 @@ public class Betervezo extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
+
+        Besheets.clear();
+        for (int i = 0; i < jTabbedPane1.getTabCount(); i++) {
+
+            String name = jTabbedPane1.getTitleAt(i);
+
+            Besheets.put(name, (Besheet) jTabbedPane1.getComponentAt(i));
+
+        }
 
         SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd");
         String first = "";
@@ -486,7 +505,7 @@ public class Betervezo extends javax.swing.JFrame {
         String feltoltadat = "";
         // elinditjuk a nagy ciklust ()
         for (int i = 0; i < oszlopszam; i++) {
-            for (int r = 0; r < sorszam; r++) {
+            for (int r = 0; r < sorszam; r = r + 2) {
 
                 pnid = "";
                 wsid = "";
@@ -578,36 +597,42 @@ public class Betervezo extends javax.swing.JFrame {
                         ora = " 22:00:00";
                     }
 
-                    if (t2.getValueAt(r, i) != null) {
-                        if (Integer.parseInt(t2.getValueAt(r, i).toString()) > 0) {
+                    if (t2.getValueAt(r, i) != null && !t2.getValueAt(r, i).toString().equals("")) {
 
-                            datum = t2.getColumnName(i).substring(0, 10) + ora;
-                            int qty = Integer.parseInt(t2.getValueAt(r, i).toString());
+                        datum = t2.getColumnName(i).substring(0, 10) + ora;
+                        String qty = t2.getValueAt(r, i).toString();
+                        String qtyteny = (String) t2.getValueAt(r + 1, i);
+                        try {
+                            if (qtyteny == null) {
+                                qtyteny = "0";
+                            }
+                        } catch (Exception e) {
+                        };
 
-                            feltoltadat += cellid + " " + wsid + " " + pnid + " " + job + " " + datum + " " + qty + " \n";
+                        feltoltadat += "('" + cellid + "','" + wsid + "','" + pnid + "','" + job + "','" + datum + "','" + qty + "','" + i * r + "'," + "'0'," + "'" + System.getProperty("user.name") + "'),";
+                        feltoltadat += "('" + cellid + "','" + wsid + "','" + pnid + "','" + job + "','" + datum + "','" + qtyteny + "','" + (i * r + 1) + "'," + "'1'," + "'" + System.getProperty("user.name") + "'),";
 
-                            cellid = "";
-                            wsid = "";
-                            pnid = "";
-                            datum = "";
-                            job = "";
-
-                        }
                     }
                 }
 
             }
         }
-        
-        String feltoltquery = "insert into tc_terv (tc_terv.idtc_becells , tc_terv.idtc_bestations , tc_terv.idtc_bepns , tc_terv.job , tc_terv.date , tc_terv.qty , tc_terv.wtf , tc_terv.tt) values (1,3,5,'vsdfb','2018-08-20 06:00:00', 500 , 1 , 0),(1,2,8,'','2018-08-20 06:00:00', 500 , 1 , 0)";
 
-        System.out.println(feltoltquery);
+        feltoltadat = feltoltadat.substring(0, feltoltadat.length() - 1);
 
-        //active -1
-//        query = "update tc_terv set tc_terv.active = 0 where tc_terv.active = 1 and tc_terv.idtc_becells = " + cellid + " and tc_terv.date between '" + tol + "' and '" + ig + "'";
-//        pc.feltolt(query);
-//        query = "update tc_terv set tc_terv.active = 1 where tc_terv.active = 2 and tc_terv.idtc_becells = " + cellid + " and tc_terv.date between '" + tol + "' and '" + ig + "'";
-//        pc.feltolt(query);
+        //delet query
+        String deletequery = "delete from tc_terv where tc_terv.active = 0 and tc_terv.idtc_becells = '" + cellid + "'";
+        pc.feltolt(deletequery, false);
+
+        //update 2-->1-->0
+        String updatequery = "update tc_terv set active = CASE when tc_terv.active = 2 then 1 when tc_terv.active = 1 then 0 end where tc_terv.active in (2,1) and tc_terv.date between '" + tol + "' and '" + ig + "' and tc_terv.idtc_becells = '" + cellid + "'";
+        pc.feltolt(updatequery, false);
+
+        //feltoltjuk az adatokat
+        String feltoltquery = "insert ignore tc_terv (tc_terv.idtc_becells , tc_terv.idtc_bestations , tc_terv.idtc_bepns , tc_terv.job , tc_terv.date , tc_terv.qty , tc_terv.wtf , tc_terv.tt , tc_terv.user) values" + feltoltadat;
+        pc.feltolt(feltoltquery, true);
+
+
     }//GEN-LAST:event_jButton5ActionPerformed
 
     /**

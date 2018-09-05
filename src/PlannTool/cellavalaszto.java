@@ -18,6 +18,7 @@ import javax.swing.DefaultListModel;
 public class cellavalaszto extends javax.swing.JFrame {
 
     Betervezo bt;
+    public static String neve;
 
     public cellavalaszto(Betervezo b) throws SQLException, ClassNotFoundException {
         initComponents();
@@ -256,7 +257,7 @@ public class cellavalaszto extends javax.swing.JFrame {
             //updatelunk
             query = "update tc_users set tc_users.cellaids = '" + querybe + "' where tc_users.username = '" + jComboBox1.getSelectedItem().toString() + "'";
             try {
-                pc.feltolt(query);
+                pc.feltolt(query, true);
                 infobox inf = new infobox();
                 inf.infoBox("Sikeres mentés!", "Mentés");
             } catch (Exception e) {
@@ -341,15 +342,44 @@ public class cellavalaszto extends javax.swing.JFrame {
         Betervezo.Besheets.clear();
         for (int i = 0; i < jList2.getModel().getSize(); i++) {
 
-            Besheet sheet = new Besheet();
+            Besheet sheet = null;
+            try {
+                sheet = new Besheet(bt);
+            } catch (SQLException ex) {
+                Logger.getLogger(cellavalaszto.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(cellavalaszto.class.getName()).log(Level.SEVERE, null, ex);
+            }
             bt.jTabbedPane1.addTab(jList2.getModel().getElementAt(i), sheet);
+            neve = jList2.getModel().getElementAt(i);
             Betervezo.Besheets.put(jList2.getModel().getElementAt(i), sheet);
-            
+            try {
+                sheet.parts();
+                sheet.workstations();
+            } catch (SQLException ex) {
+                Logger.getLogger(cellavalaszto.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(cellavalaszto.class.getName()).log(Level.SEVERE, null, ex);
+            }
 
         }
-        
+
+        //lefuttatjuk minden sheeten a vizsgalatot hogy milyen pn ek mehetnek itt
+//        for (int i = 0; i < Betervezo.Besheets.size(); i++) {
+//
+//            String name = bt.jTabbedPane1.getTitleAt(i);
+//
+//            try {
+//                Betervezo.Besheets.get(name).parts();
+//            } catch (SQLException ex) {
+//                Logger.getLogger(cellavalaszto.class.getName()).log(Level.SEVERE, null, ex);
+//            } catch (ClassNotFoundException ex) {
+//                Logger.getLogger(cellavalaszto.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//
+//        }
         this.setVisible(false);
-        
+
 
     }//GEN-LAST:event_jButton3ActionPerformed
 

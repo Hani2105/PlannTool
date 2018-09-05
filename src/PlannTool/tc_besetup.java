@@ -431,9 +431,8 @@ public class tc_besetup extends javax.swing.JFrame {
         planconnect pc = new planconnect();
         String query = "Insert ignore tc_bepns (partnumber) values ('" + jTextField1.getText().trim() + "');";
         try {
-            pc.feltolt(query);
-            infobox info = new infobox();
-            info.infoBox("Sikeres feltöltés!", "Mentés infó!");
+            pc.feltolt(query, true);
+
         } catch (Exception e) {
             infobox info = new infobox();
             info.infoBox("A feltöltés sikertelen!!", "Mentés infó!");
@@ -464,6 +463,10 @@ public class tc_besetup extends javax.swing.JFrame {
         }
 
         jList2.setModel(lm2);
+
+       
+        
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -471,9 +474,8 @@ public class tc_besetup extends javax.swing.JFrame {
         planconnect pc = new planconnect();
         String query = "Insert ignore tc_becells (cellname) values ('" + jTextField5.getText().trim() + "');";
         try {
-            pc.feltolt(query);
-            infobox info = new infobox();
-            info.infoBox("Sikeres feltöltés!", "Mentés infó!");
+            pc.feltolt(query, true);
+
         } catch (Exception e) {
             infobox info = new infobox();
             info.infoBox("A feltöltés sikertelen!!", "Mentés infó!");
@@ -511,9 +513,8 @@ public class tc_besetup extends javax.swing.JFrame {
         planconnect pc = new planconnect();
         String query = "Insert ignore tc_bestations (workstation) values ('" + jTextField6.getText().trim() + "');";
         try {
-            pc.feltolt(query);
-            infobox info = new infobox();
-            info.infoBox("Sikeres feltöltés!", "Mentés infó!");
+            pc.feltolt(query, true);
+
         } catch (Exception e) {
             infobox info = new infobox();
             info.infoBox("A feltöltés sikertelen!!", "Mentés infó!");
@@ -543,6 +544,7 @@ public class tc_besetup extends javax.swing.JFrame {
         }
 
         jList4.setModel(lm3);
+       
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
@@ -641,7 +643,7 @@ public class tc_besetup extends javax.swing.JFrame {
             if (pc.rs.next()) {
 
                 query = "update tc_prodmatrix set tc_prodmatrix.ciklusido = " + Double.parseDouble(jTextField2.getText()) + " where (tc_prodmatrix.id_tc_bepns = '" + pnid + "' and tc_prodmatrix.id_tc_becells = '" + cellid + "' and tc_prodmatrix.id_tc_bestations = '" + wsid + "')";
-                pc.feltolt(query);
+                pc.feltolt(query, true);
                 infobox inf = new infobox();
                 inf.infoBox("Az adatot frissítettük!", "Frissítés történt!");
 
@@ -649,7 +651,7 @@ public class tc_besetup extends javax.swing.JFrame {
             else {
 
                 query = "insert into tc_prodmatrix (tc_prodmatrix.id_tc_bepns,tc_prodmatrix.id_tc_becells,tc_prodmatrix.id_tc_bestations,tc_prodmatrix.ciklusido) values (" + pnid + "," + cellid + "," + wsid + "," + Double.parseDouble(jTextField2.getText()) + ")";
-                pc.feltolt(query);
+                pc.feltolt(query, true);
                 infobox inf = new infobox();
                 inf.infoBox("Az adatot rögzítettük", "Új adat érkezett!");
 
@@ -715,7 +717,7 @@ public class tc_besetup extends javax.swing.JFrame {
         String query = "DELETE from tc_prodmatrix where tc_prodmatrix.idtc_prodmatrix in (" + querybe + ")";
         planconnect pc = new planconnect();
         try {
-            pc.feltolt(query);
+            pc.feltolt(query, true);
             infobox info = new infobox();
             info.infoBox("Az adatokat sikeresen töröltük!", "Törlés történt!");
 

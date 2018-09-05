@@ -2614,7 +2614,7 @@ public class ablak extends javax.swing.JFrame {
         try {
             while (pc.rs.next()) {
 
-                model.addRow(new Object[]{pc.rs.getString(1), pc.rs.getString(2), pc.rs.getString(3), pc.rs.getString(4)});
+                model.addRow(new Object[]{pc.rs.getString(1), pc.rs.getString(2), pc.rs.getString(3).trim(), pc.rs.getString(4)});
 
             }
         } catch (SQLException ex) {
@@ -2804,7 +2804,7 @@ public class ablak extends javax.swing.JFrame {
         String query = "TRUNCATE TABLE oh_kivetelek";
 
         planconnect pc = new planconnect();
-        pc.feltolt(query);
+        pc.feltolt(query , true);
         query = "INSERT INTO oh_kivetelek(partnumber) VALUES ()";
 
         String prefixlist = "";
@@ -2822,7 +2822,7 @@ public class ablak extends javax.swing.JFrame {
         prefixlist = prefixlist.substring(0, prefixlist.length() - 4);
         query = "INSERT INTO oh_kivetelek(partnumber) VALUES ('" + prefixlist + ")";
 
-        pc.feltolt(query);
+        pc.feltolt(query , true);
 
         infobox inf = new infobox();
         inf.infoBox("A mentés sikeres!", "Üzenet!");
@@ -2962,7 +2962,7 @@ public class ablak extends javax.swing.JFrame {
         String query = "TRUNCATE TABLE oh_prefixes";
 
         planconnect pc = new planconnect();
-        pc.feltolt(query);
+        pc.feltolt(query , true);
         query = "INSERT INTO oh_prefixes(prefix) VALUES ()";
 
         String prefixlist = "";
@@ -2980,7 +2980,7 @@ public class ablak extends javax.swing.JFrame {
         prefixlist = prefixlist.substring(0, prefixlist.length() - 4);
         query = "INSERT INTO oh_prefixes(prefix) VALUES ('" + prefixlist + ")";
 
-        pc.feltolt(query);
+        pc.feltolt(query ,true);
 
         infobox inf = new infobox();
         inf.infoBox("A mentés sikeres!", "Üzenet!");
@@ -3216,7 +3216,7 @@ public class ablak extends javax.swing.JFrame {
         }
 
         try {
-            pc.feltolt(query);
+            pc.feltolt(query ,true);
 
 //            infobox inf = new infobox();
 //            inf.infoBox("A feltöltés sikeres!", "Feltöltés!");
@@ -3264,7 +3264,7 @@ public class ablak extends javax.swing.JFrame {
         planconnect pc = new planconnect();
 
         try {
-            pc.feltolt(query);
+            pc.feltolt(query , true);
 
             infobox inf = new infobox();
             inf.infoBox("A feltöltés sikeres!", "Feltöltés!");

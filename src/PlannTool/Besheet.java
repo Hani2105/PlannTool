@@ -7,16 +7,19 @@ package PlannTool;
 
 import static PlannTool.Betervezo.Besheets;
 import java.awt.Color;
+import static java.awt.Frame.MAXIMIZED_BOTH;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JComboBox;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -26,16 +29,44 @@ public class Besheet extends javax.swing.JPanel {
 
     public List<String> partnumbers = new ArrayList<String>();
     public List<String> workstations = new ArrayList<String>();
+    public List<String[][]> ciklusidok = new ArrayList<String[][]>();
+
     Betervezo bt;
 
     public Besheet(Betervezo b) throws SQLException, ClassNotFoundException {
         initComponents();
+        
         jTable2.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         new ExcelAdapter(jTable2);
         jTable2.getTableHeader().setDefaultRenderer(new TervTablaRenderer());
         jTable2.setDefaultRenderer(Object.class, new TervTooltipRenderer(this));
         bt = b;
 
+        //lekerdezzuk a ciklusidoket
+        String query = "select tc_becells.cellname , tc_bepns.partnumber , tc_bestations.workstation , tc_prodmatrix.ciklusido from tc_prodmatrix \n"
+                + "left join tc_becells on tc_becells.idtc_cells = tc_prodmatrix.id_tc_becells \n"
+                + "left join tc_bepns on tc_bepns.idtc_bepns = tc_prodmatrix.id_tc_bepns\n"
+                + "left join tc_bestations on tc_bestations.idtc_bestations = tc_prodmatrix.id_tc_bestations";
+        planconnect pc = new planconnect();
+        pc.planconnect(query);
+
+        pc.rs.last();
+        int utsosor = pc.rs.getRow();
+        pc.rs.beforeFirst();
+
+        String[][] ciklusidok = new String[utsosor][4];
+        int i = 0;
+        while (pc.rs.next()) {
+
+            ciklusidok[i][0] = pc.rs.getString(1);
+            ciklusidok[i][1] = pc.rs.getString(2);
+            ciklusidok[i][2] = pc.rs.getString(3);
+            ciklusidok[i][3] = pc.rs.getString(4);
+
+            i++;
+        }
+
+        this.ciklusidok.add(ciklusidok);
     }
 
     /**
@@ -48,31 +79,17 @@ public class Besheet extends javax.swing.JPanel {
     private void initComponents() {
 
         JPopupMenu1 = new javax.swing.JPopupMenu();
-        DeleteRow = new javax.swing.JMenuItem();
-        DeleteArea = new javax.swing.JMenuItem();
         CellaAdatok = new javax.swing.JMenuItem();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        DeleteArea = new javax.swing.JMenuItem();
+        MuveletekSorokkal = new javax.swing.JMenu();
+        InsertRow = new javax.swing.JMenuItem();
+        DeleteRow = new javax.swing.JMenuItem();
+        jButton1 = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
-        jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        jButton2 = new javax.swing.JButton();
 
-        DeleteRow.setText("Delete Row(s)");
-        DeleteRow.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                DeleteRowActionPerformed(evt);
-            }
-        });
-        JPopupMenu1.add(DeleteRow);
-
-        DeleteArea.setText("Delete Area");
-        DeleteArea.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                DeleteAreaActionPerformed(evt);
-            }
-        });
-        JPopupMenu1.add(DeleteArea);
-
-        CellaAdatok.setText("CellaAdatok");
+        CellaAdatok.setText("Elérhető PN / WS");
         CellaAdatok.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 CellaAdatokActionPerformed(evt);
@@ -80,8 +97,56 @@ public class Besheet extends javax.swing.JPanel {
         });
         JPopupMenu1.add(CellaAdatok);
 
+        DeleteArea.setText("Terület törlése");
+        DeleteArea.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DeleteAreaActionPerformed(evt);
+            }
+        });
+        JPopupMenu1.add(DeleteArea);
+
+        MuveletekSorokkal.setText("Sor +/-");
+        MuveletekSorokkal.setActionCommand("Sor + / -");
+        MuveletekSorokkal.setAutoscrolls(true);
+
+        InsertRow.setText("Sor beszúrása fölé");
+        InsertRow.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                InsertRowActionPerformed(evt);
+            }
+        });
+        MuveletekSorokkal.add(InsertRow);
+
+        DeleteRow.setText("Sorok törlése");
+        DeleteRow.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DeleteRowActionPerformed(evt);
+            }
+        });
+        MuveletekSorokkal.add(DeleteRow);
+
+        JPopupMenu1.add(MuveletekSorokkal);
+
         setComponentPopupMenu(JPopupMenu1);
         setPreferredSize(new java.awt.Dimension(1800, 700));
+
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/paint1.png"))); // NOI18N
+        jButton1.setToolTipText("Ter/Tény színezése");
+        jButton1.setBorderPainted(false);
+        jButton1.setContentAreaFilled(false);
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jButton1MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jButton1MouseExited(evt);
+            }
+        });
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -93,12 +158,12 @@ public class Besheet extends javax.swing.JPanel {
         ));
         jTable2.setCellSelectionEnabled(true);
         jTable2.setComponentPopupMenu(JPopupMenu1);
-        jTable2.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTable2MouseClicked(evt);
+        jTable2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTable2KeyReleased(evt);
             }
         });
-        jScrollPane1.setViewportView(jTable2);
+        jScrollPane2.setViewportView(jTable2);
         if (jTable2.getColumnModel().getColumnCount() > 0) {
             jTable2.getColumnModel().getColumn(0).setPreferredWidth(150);
             jTable2.getColumnModel().getColumn(1).setPreferredWidth(130);
@@ -106,43 +171,52 @@ public class Besheet extends javax.swing.JPanel {
             jTable2.getColumnModel().getColumn(3).setPreferredWidth(70);
         }
 
-        jLabel1.setText("jLabel1");
-
-        jTextField1.setText("jTextField1");
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/pull1.png"))); // NOI18N
+        jButton2.setToolTipText("Behúzós");
+        jButton2.setBorderPainted(false);
+        jButton2.setContentAreaFilled(false);
+        jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jButton2MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jButton2MouseExited(evt);
+            }
+        });
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1800, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addGap(130, 130, 130)
-                .addComponent(jLabel1)
-                .addGap(45, 45, 45)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap()
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 1729, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
-                .addGap(36, 36, 36)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 645, Short.MAX_VALUE))
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 751, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jTable2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable2MouseClicked
-        // TODO add your handling code here:
-
-
-    }//GEN-LAST:event_jTable2MouseClicked
 
     public void parts() throws SQLException, ClassNotFoundException {
 
         planconnect pc = new planconnect();
-        String query = "SELECT tc_bepns.partnumber from tc_bepns where tc_bepns.idtc_bepns in \n"
+        String query = "SELECT tc_bepns.partnumber  from tc_bepns where tc_bepns.idtc_bepns in \n"
                 + "(select distinct tc_prodmatrix.id_tc_bepns from tc_prodmatrix where tc_prodmatrix.id_tc_becells  = \n"
                 + "(SELECT tc_becells.idtc_cells FROM planningdb.tc_becells where tc_becells.cellname = '" + cellavalaszto.neve + "'))";
 
@@ -159,7 +233,7 @@ public class Besheet extends javax.swing.JPanel {
     public void workstations() throws SQLException, ClassNotFoundException {
 
         planconnect pc = new planconnect();
-        String query = "SELECT tc_bestations.workstation from tc_bestations where tc_bestations.idtc_bestations in \n"
+        String query = "SELECT tc_bestations.workstation  from tc_bestations where tc_bestations.idtc_bestations in \n"
                 + "(select distinct tc_prodmatrix.id_tc_bestations from tc_prodmatrix where tc_prodmatrix.id_tc_becells  = \n"
                 + "(SELECT tc_becells.idtc_cells FROM planningdb.tc_becells where tc_becells.cellname = '" + cellavalaszto.neve + "'))";
 
@@ -180,23 +254,35 @@ public class Besheet extends javax.swing.JPanel {
         DefaultTableModel model = new DefaultTableModel();
         model = (DefaultTableModel) jTable2.getModel();
 
-        for (int i = 0; i < rows.length; i++) {
+        if (jTable2.getSelectedRowCount() == 1) {
 
-            if (rows[i] % 2 == 0) {
+            for (int i = 0; i < rows.length; i++) {
 
-                model.removeRow(rows[i]);
-                model.removeRow(rows[i]);
+                if (rows[i] % 2 == 0) {
 
-            } else {
+                    model.removeRow(rows[i]);
+                    model.removeRow(rows[i]);
+                    i = i + 2;
 
-                model.removeRow(rows[i]);
-                model.removeRow(rows[i] - 1);
+                } else {
+
+                    model.removeRow(rows[i]);
+                    model.removeRow(rows[i] - 1);
+                    i = i + 2;
+
+                }
 
             }
+        } else {
+
+            infobox info = new infobox();
+            info.infoBox("Csak egy sort jelölj ki!", "Figyelem!");
 
         }
 
         jTable2.setModel(model);
+
+        Calculator calc = new Calculator(this, bt);
 
 
     }//GEN-LAST:event_DeleteRowActionPerformed
@@ -226,15 +312,82 @@ public class Besheet extends javax.swing.JPanel {
 
     }//GEN-LAST:event_CellaAdatokActionPerformed
 
+    private void InsertRowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_InsertRowActionPerformed
+        DefaultTableModel model = new DefaultTableModel();
+        model = (DefaultTableModel) jTable2.getModel();
+
+        if (jTable2.getValueAt(jTable2.getSelectedRow(), 3).equals("Terv")) {
+
+            int i = jTable2.getSelectedRow();
+            model.insertRow(i, new Object[]{null, null, null, "Tény"});
+            model.insertRow(i, new Object[]{null, null, null, "Terv"});
+
+        } else if (jTable2.getValueAt(jTable2.getSelectedRow(), 3).equals("Tény")) {
+
+            int i = jTable2.getSelectedRow();
+            model.insertRow(i - 1, new Object[]{null, null, null, "Tény"});
+            model.insertRow(i - 1, new Object[]{null, null, null, "Terv"});
+
+        }
+
+        jTable2.setModel(model);
+        Calculator calc = new Calculator(this, bt);
+
+    }//GEN-LAST:event_InsertRowActionPerformed
+
+    private void jTable2KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTable2KeyReleased
+
+        if (!jTable2.isEditing()) {
+            Calculator calc = new Calculator(this, bt);
+        }
+
+    }//GEN-LAST:event_jTable2KeyReleased
+
+    private void jButton1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseEntered
+        // TODO add your handling code here:
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/paint2.png")));
+    }//GEN-LAST:event_jButton1MouseEntered
+
+    private void jButton1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseExited
+        // TODO add your handling code here:
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/paint1.png")));
+    }//GEN-LAST:event_jButton1MouseExited
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+
+        Tc_szinvalaszto sz = new Tc_szinvalaszto(this);
+        sz.setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseEntered
+        // TODO add your handling code here:
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/pull2.png")));
+    }//GEN-LAST:event_jButton2MouseEntered
+
+    private void jButton2MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseExited
+        // TODO add your handling code here:
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/pull1.png")));
+    }//GEN-LAST:event_jButton2MouseExited
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        
+        Tc_behuzos bh = new Tc_behuzos();
+        bh.setVisible(true);
+    }//GEN-LAST:event_jButton2ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem CellaAdatok;
     private javax.swing.JMenuItem DeleteArea;
     private javax.swing.JMenuItem DeleteRow;
+    private javax.swing.JMenuItem InsertRow;
     public javax.swing.JPopupMenu JPopupMenu1;
-    private javax.swing.JLabel jLabel1;
-    public javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JMenu MuveletekSorokkal;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JScrollPane jScrollPane2;
     public javax.swing.JTable jTable2;
-    private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }

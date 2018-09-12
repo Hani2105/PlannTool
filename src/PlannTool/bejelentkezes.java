@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.awt.event.KeyEvent;
 
 /**
  *
@@ -27,8 +28,6 @@ public class bejelentkezes extends javax.swing.JFrame {
         this.az = a;
         initComponents();
     }
-
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -58,6 +57,12 @@ public class bejelentkezes extends javax.swing.JFrame {
         });
 
         jLabel1.setText("Dolgozói szám:");
+
+        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextField1KeyPressed(evt);
+            }
+        });
 
         jLabel2.setText("Jelszó:");
 
@@ -154,10 +159,9 @@ public class bejelentkezes extends javax.swing.JFrame {
 
                     az.gombenged();
                     this.setVisible(false);
-                    
+
                     nincskeszoh n = new nincskeszoh();
                     n.setVisible(true);
-                    
 
                 }
             }
@@ -175,19 +179,27 @@ public class bejelentkezes extends javax.swing.JFrame {
 
     private void formWindowDeactivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowDeactivated
         // TODO add your handling code here:
-        
+
         this.setVisible(false);
-        
+
     }//GEN-LAST:event_formWindowDeactivated
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
-        
+
     }//GEN-LAST:event_jButton2ActionPerformed
 
-  
-   
+    private void jTextField1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyPressed
+
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+
+            jPasswordField1.requestFocusInWindow();
+
+        }
+
+    }//GEN-LAST:event_jTextField1KeyPressed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

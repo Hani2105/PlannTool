@@ -5,11 +5,13 @@
  */
 package PlannTool;
 
+import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
+import javax.swing.JLabel;
 
 /**
  *
@@ -33,6 +35,7 @@ public class cellavalaszto extends javax.swing.JFrame {
         lm2.removeAllElements();
         jList1.setModel(lm1);
         jList2.setModel(lm2);
+        jComboBox1.requestFocus();
 
         while (rs.next()) {
 
@@ -108,6 +111,22 @@ public class cellavalaszto extends javax.swing.JFrame {
                 jButton3ActionPerformed(evt);
             }
         });
+        jButton3.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jButton3KeyPressed(evt);
+            }
+        });
+
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
+        jComboBox1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jComboBox1KeyPressed(evt);
+            }
+        });
 
         jLabel1.setText("Felhasználó:");
 
@@ -122,6 +141,11 @@ public class cellavalaszto extends javax.swing.JFrame {
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton5ActionPerformed(evt);
+            }
+        });
+        jButton5.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jButton5KeyPressed(evt);
             }
         });
 
@@ -332,6 +356,8 @@ public class cellavalaszto extends javax.swing.JFrame {
 
         }
 
+        jButton3.requestFocus();
+
 
     }//GEN-LAST:event_jButton5ActionPerformed
 
@@ -363,25 +389,197 @@ public class cellavalaszto extends javax.swing.JFrame {
             }
 
         }
-
-        //lefuttatjuk minden sheeten a vizsgalatot hogy milyen pn ek mehetnek itt
-//        for (int i = 0; i < Betervezo.Besheets.size(); i++) {
-//
-//            String name = bt.jTabbedPane1.getTitleAt(i);
-//
-//            try {
-//                Betervezo.Besheets.get(name).parts();
-//            } catch (SQLException ex) {
-//                Logger.getLogger(cellavalaszto.class.getName()).log(Level.SEVERE, null, ex);
-//            } catch (ClassNotFoundException ex) {
-//                Logger.getLogger(cellavalaszto.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//
-//        }
+        
+        bt.jButton1.setFocusable(false);
+        bt.jButton3.requestFocus();
+        
         this.setVisible(false);
-
+        
 
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jComboBox1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jComboBox1KeyPressed
+
+        jButton5.requestFocus();
+
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+
+            if (jComboBox1.getSelectedIndex() != -1) {
+                String query = "select tc_users.cellaids from tc_users where tc_users.username = '" + jComboBox1.getSelectedItem().toString() + "'";
+                //System.out.println(query);
+
+                String cellak = "";
+                planconnect pc = new planconnect();
+                try {
+                    pc.planconnect(query);
+
+                    while (pc.rs.next()) {
+
+                        cellak = pc.rs.getString(1);
+                        //System.out.println(cellak);
+
+                    }
+
+                } catch (SQLException ex) {
+                    Logger.getLogger(cellavalaszto.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(cellavalaszto.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+                //feldaraboljuk az rs eredmenyet
+                String[] cellaktomb = cellak.split(",");
+
+                //atalakitjuk hasznalhato formava a queryhez
+                String querybe = "";
+
+                for (int i = 0; i < cellaktomb.length; i++) {
+
+                    querybe += "'" + cellaktomb[i].toString() + "',";
+
+                }
+                querybe = querybe.substring(0, querybe.length() - 1);
+
+                //osszeqallitjuk a queryt
+                query = "SELECT tc_becells.cellname from tc_becells where tc_becells.idtc_cells in (" + querybe + ")";
+                DefaultListModel lm2 = new DefaultListModel();
+
+                try {
+                    //lekerdezzuk
+
+                    pc.planconnect(query);
+                    while (pc.rs.next()) {
+                        lm2.addElement(pc.rs.getString(1));
+                    }
+
+                    jList2.setModel(lm2);
+
+                } catch (SQLException ex) {
+                    Logger.getLogger(cellavalaszto.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(cellavalaszto.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+            }
+
+            jButton3.requestFocus();
+
+        }
+
+
+    }//GEN-LAST:event_jComboBox1KeyPressed
+
+    private void jButton3KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jButton3KeyPressed
+        // TODO add your handling code here:
+        
+         // TODO add your handling code here:
+
+        //lekérjük a sheeteket
+        Betervezo.Besheets.clear();
+        for (int i = 0; i < jList2.getModel().getSize(); i++) {
+
+            Besheet sheet = null;
+            try {
+                sheet = new Besheet(bt);
+            } catch (SQLException ex) {
+                Logger.getLogger(cellavalaszto.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(cellavalaszto.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            bt.jTabbedPane1.addTab(jList2.getModel().getElementAt(i), sheet);
+            neve = jList2.getModel().getElementAt(i);
+            Betervezo.Besheets.put(jList2.getModel().getElementAt(i), sheet);
+            try {
+                sheet.parts();
+                sheet.workstations();
+            } catch (SQLException ex) {
+                Logger.getLogger(cellavalaszto.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(cellavalaszto.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
+        
+        bt.jButton1.setFocusable(false);
+        bt.jButton3.requestFocus();
+        
+        this.setVisible(false);
+        
+     
+    }//GEN-LAST:event_jButton3KeyPressed
+
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+
+        
+        jButton5.requestFocus();
+
+    }//GEN-LAST:event_jComboBox1ActionPerformed
+
+    private void jButton5KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jButton5KeyPressed
+
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+
+            if (jComboBox1.getSelectedIndex() != -1) {
+                String query = "select tc_users.cellaids from tc_users where tc_users.username = '" + jComboBox1.getSelectedItem().toString() + "'";
+                //System.out.println(query);
+
+                String cellak = "";
+                planconnect pc = new planconnect();
+                try {
+                    pc.planconnect(query);
+
+                    while (pc.rs.next()) {
+
+                        cellak = pc.rs.getString(1);
+                        //System.out.println(cellak);
+
+                    }
+
+                } catch (SQLException ex) {
+                    Logger.getLogger(cellavalaszto.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(cellavalaszto.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+                //feldaraboljuk az rs eredmenyet
+                String[] cellaktomb = cellak.split(",");
+
+                //atalakitjuk hasznalhato formava a queryhez
+                String querybe = "";
+
+                for (int i = 0; i < cellaktomb.length; i++) {
+
+                    querybe += "'" + cellaktomb[i].toString() + "',";
+
+                }
+                querybe = querybe.substring(0, querybe.length() - 1);
+
+                //osszeqallitjuk a queryt
+                query = "SELECT tc_becells.cellname from tc_becells where tc_becells.idtc_cells in (" + querybe + ")";
+                DefaultListModel lm2 = new DefaultListModel();
+
+                try {
+                    //lekerdezzuk
+
+                    pc.planconnect(query);
+                    while (pc.rs.next()) {
+                        lm2.addElement(pc.rs.getString(1));
+                    }
+
+                    jList2.setModel(lm2);
+
+                } catch (SQLException ex) {
+                    Logger.getLogger(cellavalaszto.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(cellavalaszto.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+            }
+
+            jButton3.requestFocus();
+
+        }
+
+    }//GEN-LAST:event_jButton5KeyPressed
 
     /**
      * @param args the command line arguments

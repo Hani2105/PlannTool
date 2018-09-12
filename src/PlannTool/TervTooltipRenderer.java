@@ -19,10 +19,12 @@ import javax.swing.table.DefaultTableCellRenderer;
 public class TervTooltipRenderer extends DefaultTableCellRenderer {
 
     Besheet b;
+    Tc_szinvalaszto sz;
 
     public TervTooltipRenderer(Besheet b) {
 
         this.b = b;
+        this.sz = sz;
     }
 
     ;
@@ -34,10 +36,13 @@ public class TervTooltipRenderer extends DefaultTableCellRenderer {
 
         String tooltiptext = "";
 
-        if (column > 3 && (table.getValueAt(row, 0) != null && table.getValueAt(row, 1) != null && table.getValueAt(row, 2) != null) && table.getValueAt(row, column) != null) {
+        //tooltip beállítása
+        if (column > 3 && (table.getValueAt(row, 0) != null && table.getValueAt(row, 2) != null) && table.getValueAt(row, column) != null) {
 
-            tooltiptext = (table.getValueAt(row, 3).toString() + " " + table.getValueAt(row, 0).toString() + " " + table.getValueAt(row, 1).toString() + " " + table.getValueAt(row, 2).toString());
-
+            try {
+                tooltiptext = ("<html>" + "Terv/Tény: " + table.getValueAt(row, 3).toString() + "<br>" + "PN: " + table.getValueAt(row, 0).toString() + "<br>" + "JOB: " + table.getValueAt(row, 1).toString() + "<br>" + "WS: " + table.getValueAt(row, 2).toString());
+            } catch (Exception e) {
+            };
         } else {
 
             tooltiptext = null;
@@ -63,6 +68,8 @@ public class TervTooltipRenderer extends DefaultTableCellRenderer {
                 if (piros == true) {
 
                     c.setBackground(Color.red);
+                } else {
+                    c.setBackground(null);
                 }
 
             } //ws szinezes , piros ha nincs az adatbazisban
@@ -85,13 +92,29 @@ public class TervTooltipRenderer extends DefaultTableCellRenderer {
                     c.setBackground(Color.red);
                 }
 
+            } //infó sorok színezése
+            else if (table.getValueAt(row, 3).toString().equals("Infó") && (column == 3 || column == 2)) {
+
+                c.setBackground(Color.YELLOW);
+
+                //terv sorok szinezése
+            } else if (table.getValueAt(row, 3).toString().equals("Terv") && column > 3) {
+
+                c.setBackground(new Color(Betervezo.slide1, Betervezo.slide2, Betervezo.slide3));
+
+            } //teny sorok szinezese
+            else if (table.getValueAt(row, 3).toString().equals("Tény") && column > 3) {
+
+                c.setBackground(new Color(Betervezo.slide4, Betervezo.slide5, Betervezo.slide6));
+
+                //a tervezo oszlopok szine
             } else {
 
                 c.setBackground(null);
 
             }
         } catch (Exception e) {
-        };
+        }
 
         if (isSelected) {
 
@@ -101,6 +124,7 @@ public class TervTooltipRenderer extends DefaultTableCellRenderer {
         c.setBorder(BorderFactory.createEtchedBorder(1));
         c.setToolTipText(tooltiptext);
         c.setHorizontalAlignment(CENTER);
+
         return c;
 
     }

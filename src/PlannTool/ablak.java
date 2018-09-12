@@ -3216,7 +3216,7 @@ public class ablak extends javax.swing.JFrame {
         }
 
         try {
-            pc.feltolt(query ,true);
+            pc.feltolt(query ,false);
 
 //            infobox inf = new infobox();
 //            inf.infoBox("A feltöltés sikeres!", "Feltöltés!");

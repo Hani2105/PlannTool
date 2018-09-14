@@ -28,6 +28,7 @@ public class Tc_behuzos extends javax.swing.JFrame {
     public Tc_behuzos() {
         initComponents();
         seticon();
+        jTable1.setDefaultRenderer(Object.class, new Tc_behuzosrenderer());
     }
 
     /**
@@ -194,37 +195,39 @@ public class Tc_behuzos extends javax.swing.JFrame {
             while (pc.rs.next()) {
 
                 boolean irtunke = false;
+                if (Integer.parseInt(pc.rs.getString(4)) > 0) {
 
-                //boolean pipa vagy nem
-                if (pc.rs.getString(9).equals("0")) {
+                    //boolean pipa vagy nem
+                    if (pc.rs.getString(9).equals("0")) {
 
-                    tarazva = false;
-                } else {
+                        tarazva = false;
+                    } else {
 
-                    tarazva = true;
+                        tarazva = true;
 
-                }
-                //bejárjuk a táblát job ért és pn ért és startdateért
-                for (int i = 0; i < jTable1.getRowCount(); i++) {
-                    String tervezni = "";
-                    //ha már van a táblában ez a pn
-                    if (pc.rs.getString(1).equals(model.getValueAt(i, 0).toString()) && pc.rs.getString(2).equals(model.getValueAt(i, 1).toString()) && pc.rs.getString(3).equals(model.getValueAt(i, 2).toString() + ":00.0")) {
+                    }
+                    //bejárjuk a táblát job ért és pn ért és startdateért
+                    for (int i = 0; i < jTable1.getRowCount(); i++) {
+                        String tervezni = "";
+                        //ha már van a táblában ez a pn
+                        if (pc.rs.getString(1).equals(model.getValueAt(i, 0).toString()) && pc.rs.getString(2).equals(model.getValueAt(i, 1).toString()) && pc.rs.getString(3).equals(model.getValueAt(i, 2).toString() + ":00.0")) {
 
-                        try {
-                            tervezni += model.getValueAt(i, 6).toString() + pc.rs.getString(7) + " " + pc.rs.getString(8) + " ";
-                        } catch (Exception e) {
+                            try {
+                                tervezni += model.getValueAt(i, 6).toString() + pc.rs.getString(7) + " " + pc.rs.getString(8) + " ";
+                            } catch (Exception e) {
 
+                            }
+                            model.setValueAt(tervezni, i, 6);
+                            irtunke = true;
                         }
-                        model.setValueAt(tervezni, i, 6);
-                        irtunke = true;
+
                     }
 
-                }
+                    if (irtunke == false) {
 
-                if (irtunke == false) {
+                        model.addRow(new Object[]{pc.rs.getString(1), pc.rs.getString(2), pc.rs.getString(3).substring(0, pc.rs.getString(3).length() - 5), pc.rs.getString(4), pc.rs.getString(5), pc.rs.getString(6), pc.rs.getString(7) + " " + pc.rs.getString(8)+ " ", tarazva, pc.rs.getString(10)});
 
-                    model.addRow(new Object[]{pc.rs.getString(1), pc.rs.getString(2), pc.rs.getString(3).substring(0, pc.rs.getString(3).length() - 5), pc.rs.getString(4), pc.rs.getString(5), pc.rs.getString(6), pc.rs.getString(7) + " " + pc.rs.getString(8), tarazva, pc.rs.getString(10)});
-
+                    }
                 }
 
             }
@@ -274,7 +277,7 @@ public class Tc_behuzos extends javax.swing.JFrame {
 
     private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyReleased
         // TODO add your handling code here:
-        
+
         String query = jTextField1.getText().toUpperCase().trim();
         filter(query);
     }//GEN-LAST:event_jTextField1KeyReleased
@@ -288,7 +291,7 @@ public class Tc_behuzos extends javax.swing.JFrame {
     private void filter(String query) {
         DefaultTableModel model = new DefaultTableModel();
         model = (DefaultTableModel) jTable1.getModel();
-        
+
         TableRowSorter<DefaultTableModel> tr = new TableRowSorter<DefaultTableModel>(model);
         jTable1.setRowSorter(tr);
         tr.setRowFilter(RowFilter.regexFilter(query));

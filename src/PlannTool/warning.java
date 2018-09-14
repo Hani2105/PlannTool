@@ -17,7 +17,7 @@ import java.util.ArrayList;
  */
 public class warning {
 
-    LocalDateTime masodik = LocalDateTime.now();
+    static LocalDateTime masodik = LocalDateTime.now();
     int counter = 0;
     ablak a;
 

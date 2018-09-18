@@ -17,7 +17,7 @@ import org.joda.time.LocalDate;
  *
  * @author gabor_hanacsek
  */
-public class napszamolo {
+public class Tc_Napszamolo {
 
     public int daysBetweenUsingJoda(Date d1, Date d2){
     return Days.daysBetween(

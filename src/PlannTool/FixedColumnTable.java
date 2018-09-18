@@ -49,7 +49,7 @@ public class FixedColumnTable implements ChangeListener, PropertyChangeListener 
         fixed.setSelectionModel(main.getSelectionModel());
         fixed.setFocusable(false);
         fixed.setCellSelectionEnabled(true);
-        fixed.getTableHeader().setDefaultRenderer(new TervTablaRenderer());
+        fixed.getTableHeader().setDefaultRenderer(new Tc_TervTablaRenderer());
         new ExcelAdapter(fixed);
         
         

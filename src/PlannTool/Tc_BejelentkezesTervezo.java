@@ -17,14 +17,14 @@ import java.util.logging.Logger;
  *
  * @author gabor_hanacsek
  */
-public class bejelentkezesTervezo extends javax.swing.JFrame {
+public class Tc_BejelentkezesTervezo extends javax.swing.JFrame {
 
     private ablak az;
 
     /**
      * Creates new form bejelentkezes
      */
-    public bejelentkezesTervezo(ablak a) {
+    public Tc_BejelentkezesTervezo(ablak a) {
         this.az = a;
         initComponents();
     }
@@ -151,9 +151,19 @@ public class bejelentkezesTervezo extends javax.swing.JFrame {
 
                 if (Arrays.equals(password, correctpass) && (Integer.parseInt(poz) == 1 || Integer.parseInt(poz) == 2 || Integer.parseInt(poz) == 4)) {
 
-                    Betervezo b = new Betervezo();
+                    Tc_Betervezo b = new Tc_Betervezo();
                     b.setVisible(true);
+                    ablak.planner = true;
 
+                }
+                
+                else{
+                
+                    Tc_Betervezo b = new Tc_Betervezo();
+                    
+                    b.setVisible(true);
+                
+                
                 }
             }
 

@@ -18,8 +18,8 @@ import javax.swing.JTabbedPane;
  *
  * @author gabor_hanacsek
  */
-public class JTabbedPaneWithCloseIcons extends JTabbedPane implements MouseListener {
-  public JTabbedPaneWithCloseIcons() {
+public class Tc_JTabbedPaneWithCloseIcons extends JTabbedPane implements MouseListener {
+  public Tc_JTabbedPaneWithCloseIcons() {
     super();
     addMouseListener(this);
   }

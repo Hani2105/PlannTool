@@ -37,14 +37,14 @@ import org.joda.time.format.DateTimeFormatter;
  *
  * @author gabor_hanacsek
  */
-public class Betervezo extends javax.swing.JFrame {
+public class Tc_Betervezo extends javax.swing.JFrame {
 
     /**
      */
     public String[][] pns;
     public static List<String> partn = new ArrayList<String>();
     public static List<String> workstations = new ArrayList<String>();
-    public static Map<String, Besheet> Besheets = new TreeMap();
+    public static Map<String, Tc_Besheet> Besheets = new TreeMap();
 
     public static int slide1;
     public static int slide2;
@@ -53,7 +53,7 @@ public class Betervezo extends javax.swing.JFrame {
     public static int slide5;
     public static int slide6;
 
-    public Betervezo() throws SQLException, ClassNotFoundException {
+    public Tc_Betervezo() throws SQLException, ClassNotFoundException {
 
         initComponents();
         setExtendedState(MAXIMIZED_BOTH);
@@ -61,6 +61,8 @@ public class Betervezo extends javax.swing.JFrame {
         jButton1.requestFocus();
         //lekerjuk a szinezest
         planconnect pc = new planconnect();
+
+        //szinbeallitasok lekerese
         String Query = "select tc_users.slides from tc_users where tc_users.username = '" + System.getProperty("user.name") + "'";
 
         pc.planconnect(Query);
@@ -77,8 +79,6 @@ public class Betervezo extends javax.swing.JFrame {
             slide6 = Integer.parseInt(szamtomb[5]);
 
         }
-        
-        
 
     }
 
@@ -92,7 +92,7 @@ public class Betervezo extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jTabbedPane1 = new JTabbedPaneWithCloseIcons();
+        jTabbedPane1 = new PlannTool.Tc_JTabbedPaneWithCloseIcons();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jDateChooser1 = new com.toedter.calendar.JDateChooser();
@@ -264,12 +264,12 @@ public class Betervezo extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
         try {
-            cellavalaszto c = new cellavalaszto(this);
+            Tc_Cellavalaszto c = new Tc_Cellavalaszto(this);
             c.setVisible(true);
         } catch (SQLException ex) {
-            Logger.getLogger(Betervezo.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Tc_Betervezo.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Betervezo.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Tc_Betervezo.class.getName()).log(Level.SEVERE, null, ex);
         }
 
 
@@ -278,13 +278,13 @@ public class Betervezo extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
 
-        tc_besetup c = null;
+        Tc_Besetup c = null;
         try {
-            c = new tc_besetup();
+            c = new Tc_Besetup();
         } catch (SQLException ex) {
-            Logger.getLogger(Betervezo.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Tc_Betervezo.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Betervezo.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Tc_Betervezo.class.getName()).log(Level.SEVERE, null, ex);
         }
         c.setVisible(true);
 
@@ -298,7 +298,7 @@ public class Betervezo extends javax.swing.JFrame {
 
             String name = jTabbedPane1.getTitleAt(i);
 
-            Besheets.put(name, (Besheet) jTabbedPane1.getComponentAt(i));
+            Besheets.put(name, (Tc_Besheet) jTabbedPane1.getComponentAt(i));
 
         }
 
@@ -320,15 +320,15 @@ public class Betervezo extends javax.swing.JFrame {
             try {
                 one = df.parse(first);
             } catch (ParseException ex) {
-                Logger.getLogger(Betervezo.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Tc_Betervezo.class.getName()).log(Level.SEVERE, null, ex);
             }
             try {
                 two = df.parse(second);
             } catch (ParseException ex) {
-                Logger.getLogger(Betervezo.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Tc_Betervezo.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        napszamolo nap = new napszamolo();
+        Tc_Napszamolo nap = new Tc_Napszamolo();
         if (!first.equals("") && !second.equals("")) {
             napok = nap.daysBetweenUsingJoda(one, two);
         }
@@ -415,7 +415,7 @@ public class Betervezo extends javax.swing.JFrame {
                 + "left join tc_bestations on tc_bestations.idtc_bestations = tc_terv.idtc_bestations\n"
                 + "left join tc_becells on tc_becells.idtc_cells = tc_terv.idtc_becells\n"
                 + "where tc_terv.date between '" + fmt.print(dtOrg) + " 06:00:00" + "' and '" + columneve + ":00" + "' and tc_terv.active = 2 and tc_becells.cellname = '" + neve + "'  \n"
-                + "order by tc_terv.date , tc_terv.wtf";
+                + "order by   tc_terv.date , tc_terv.wtf";
 
         //feldolgozzuk az eredmenyt
         planconnect pc = new planconnect();
@@ -428,10 +428,13 @@ public class Betervezo extends javax.swing.JFrame {
             //vegigporgetjuk a resultsetet
             while (pc.rs.next()) {
 
+                //porgetjuk az oszlopokat
                 for (int i = 4; i < model.getColumnCount(); i++) {
 
+                    //h egyezik a query datuma az oszlop datumaval akkor 
                     if (pc.rs.getString(1).equals(model.getColumnName(i).substring(0, model.getColumnName(i).length() - 4) + ":00.0")) {
 
+                        // hozzaadunk egy terv vagy teny sort
                         if (pc.rs.getString(6).equals("0")) {
 
                             terv = "Terv";
@@ -443,18 +446,19 @@ public class Betervezo extends javax.swing.JFrame {
                         r++;
 
                     }
+
                 }
 
             }
 
         } catch (SQLException ex) {
-            Logger.getLogger(Betervezo.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Tc_Betervezo.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Betervezo.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Tc_Betervezo.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         Besheets.get(neve).jTable2.setModel(model);
-        Calculator calc = new Calculator(Besheets.get(neve), this);
+        Tc_Calculator calc = new Tc_Calculator(Besheets.get(neve), this);
 
 
     }//GEN-LAST:event_jButton3ActionPerformed
@@ -469,18 +473,10 @@ public class Betervezo extends javax.swing.JFrame {
         t2 = (DefaultTableModel) Besheets.get(neve).jTable2.getModel();
         int rownumber = t2.getRowCount();
 
-        for (int i = 0; i < Integer.parseInt(jTextField1.getText()) * 2; i++) {
+        for (int i = 0; i < Integer.parseInt(jTextField1.getText()); i++) {
 
-            t2.addRow(new Object[]{});
-
-            if ((rownumber + i) % 2 == 0 || i == 0) {
-
-                t2.setValueAt("Terv", rownumber + i, 3);
-
-            } else {
-
-                t2.setValueAt("Tény", rownumber + i, 3);
-            }
+            t2.addRow(new Object[]{null, null, null, "Terv"});
+            t2.addRow(new Object[]{null, null, null, "Tény"});
 
         }
 
@@ -513,9 +509,9 @@ public class Betervezo extends javax.swing.JFrame {
             gyujto.add(cellist);
 
         } catch (SQLException ex) {
-            Logger.getLogger(Betervezo.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Tc_Betervezo.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Betervezo.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Tc_Betervezo.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         //wsek
@@ -541,9 +537,9 @@ public class Betervezo extends javax.swing.JFrame {
             gyujto.add(wslist);
 
         } catch (SQLException ex) {
-            Logger.getLogger(Betervezo.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Tc_Betervezo.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Betervezo.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Tc_Betervezo.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         //pnek
@@ -569,9 +565,9 @@ public class Betervezo extends javax.swing.JFrame {
             gyujto.add(pnlist);
 
         } catch (SQLException ex) {
-            Logger.getLogger(Betervezo.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Tc_Betervezo.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Betervezo.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Tc_Betervezo.class.getName()).log(Level.SEVERE, null, ex);
         }
         //kitalaljuk a sheet nevet
         int n = jTabbedPane1.getSelectedIndex();
@@ -604,8 +600,10 @@ public class Betervezo extends javax.swing.JFrame {
         String wsid = "";
         String cellid = "";
         String feltoltadat = "";
-        // elinditjuk a nagy ciklust ()
+        // elinditjuk a nagy ciklust , az oszlopok szama ()
         for (int i = 0; i < oszlopszam; i++) {
+
+            //kis ciklus , sorok szama
             for (int r = 0; r < sorszam; r++) {
 
                 //ha nem infó a sor
@@ -613,8 +611,8 @@ public class Betervezo extends javax.swing.JFrame {
 
                     pnid = "";
                     wsid = "";
-                    job = "";
 
+                    //ha nem nullák a pn , job , ws
                     if (t2.getValueAt(r, 0) != null) {
                         pn = t2.getValueAt(r, 0).toString();
                     }
@@ -701,10 +699,11 @@ public class Betervezo extends javax.swing.JFrame {
                             ora = " 22:00:00";
                         }
 
+                        //ha van beírva valami darabszám
                         if (t2.getValueAt(r, i) != null && !t2.getValueAt(r, i).toString().equals("")) {
 
                             datum = t2.getColumnName(i).substring(0, 10) + ora;
-                            //String qty = t2.getValueAt(r, i).toString();
+
                             String qty = null;
                             try {
                                 qty = (String) t2.getValueAt(r, i);
@@ -727,13 +726,22 @@ public class Betervezo extends javax.swing.JFrame {
 
                             //ha nincs megadva sem pn sem ws akkor feltoltjuk tenykent a terv adatiat nulla megvalósulásal
                             try {
-                                if ((((t2.getValueAt(r + 1, 0) == null || t2.getValueAt(r + 1, 0).toString().equals("")) && (t2.getValueAt(r + 1, 2) == null || t2.getValueAt(r + 1, 2).toString().equals(""))) && t2.getValueAt(r, 3).toString().equals("Terv"))) {
+                                if (((((t2.getValueAt(r + 1, 0) == null || t2.getValueAt(r + 1, 0).toString().equals("")) && (t2.getValueAt(r + 1, 2) == null || t2.getValueAt(r + 1, 2).toString().equals(""))) && t2.getValueAt(r, 3).toString().equals("Terv"))) && (!t2.getValueAt(r, 0).toString().equals(""))) {
+                                    feltoltadat += "('" + cellid + "','" + wsid + "','" + pnid + "','" + job + "','" + datum + "','" + "0" + "','" + (i * r + 1) + "'," + "'1'," + "'" + System.getProperty("user.name") + "'),";
+
+                                } //vagy ha van tény pn és ws de nincs beírva darab
+                                else if (!t2.getValueAt(r + 1, 0).toString().equals("") && !t2.getValueAt(r + 1, 2).toString().equals("") && t2.getValueAt(r + 1, i) == null && t2.getValueAt(r, 3).equals("Terv")) {
+
                                     feltoltadat += "('" + cellid + "','" + wsid + "','" + pnid + "','" + job + "','" + datum + "','" + "0" + "','" + (i * r + 1) + "'," + "'1'," + "'" + System.getProperty("user.name") + "'),";
 
                                 }
+
                             } catch (Exception e) {
                             }
-
+                            pn = "";
+                            ws = "";
+                            cell = "";
+                            job = "";
                             //ha terv az utolsó sor akkor is
                         }
                     }
@@ -766,12 +774,12 @@ public class Betervezo extends javax.swing.JFrame {
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
 
             try {
-                cellavalaszto c = new cellavalaszto(this);
+                Tc_Cellavalaszto c = new Tc_Cellavalaszto(this);
                 c.setVisible(true);
             } catch (SQLException ex) {
-                Logger.getLogger(Betervezo.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Tc_Betervezo.class.getName()).log(Level.SEVERE, null, ex);
             } catch (ClassNotFoundException ex) {
-                Logger.getLogger(Betervezo.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Tc_Betervezo.class.getName()).log(Level.SEVERE, null, ex);
             }
 
         }
@@ -786,7 +794,7 @@ public class Betervezo extends javax.swing.JFrame {
 
                 String name = jTabbedPane1.getTitleAt(i);
 
-                Besheets.put(name, (Besheet) jTabbedPane1.getComponentAt(i));
+                Besheets.put(name, (Tc_Besheet) jTabbedPane1.getComponentAt(i));
 
             }
 
@@ -808,15 +816,15 @@ public class Betervezo extends javax.swing.JFrame {
                 try {
                     one = df.parse(first);
                 } catch (ParseException ex) {
-                    Logger.getLogger(Betervezo.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(Tc_Betervezo.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 try {
                     two = df.parse(second);
                 } catch (ParseException ex) {
-                    Logger.getLogger(Betervezo.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(Tc_Betervezo.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-            napszamolo nap = new napszamolo();
+            Tc_Napszamolo nap = new Tc_Napszamolo();
             if (!first.equals("") && !second.equals("")) {
                 napok = nap.daysBetweenUsingJoda(one, two);
             }
@@ -936,13 +944,13 @@ public class Betervezo extends javax.swing.JFrame {
                 }
 
             } catch (SQLException ex) {
-                Logger.getLogger(Betervezo.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Tc_Betervezo.class.getName()).log(Level.SEVERE, null, ex);
             } catch (ClassNotFoundException ex) {
-                Logger.getLogger(Betervezo.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Tc_Betervezo.class.getName()).log(Level.SEVERE, null, ex);
             }
 
             Besheets.get(neve).jTable2.setModel(model);
-            Calculator calc = new Calculator(Besheets.get(neve), this);
+            Tc_Calculator calc = new Tc_Calculator(Besheets.get(neve), this);
 
         }
     }//GEN-LAST:event_jButton3KeyPressed
@@ -973,21 +981,29 @@ public class Betervezo extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Betervezo.class
+            java.util.logging.Logger.getLogger(Tc_Betervezo.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Betervezo.class
+            java.util.logging.Logger.getLogger(Tc_Betervezo.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Betervezo.class
+            java.util.logging.Logger.getLogger(Tc_Betervezo.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Betervezo.class
+            java.util.logging.Logger.getLogger(Tc_Betervezo.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+
+        /* Create and display the form */
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new Betervezo().setVisible(true);
+//            }
+//        });
         //</editor-fold>
 
         /* Create and display the form */

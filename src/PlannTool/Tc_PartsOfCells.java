@@ -13,11 +13,11 @@ import javax.swing.DefaultListModel;
  *
  * @author gabor_hanacsek
  */
-public class PartsOfCells extends javax.swing.JFrame {
+public class Tc_PartsOfCells extends javax.swing.JFrame {
 
-    Besheet b;
+    Tc_Besheet b;
 
-    public PartsOfCells(Besheet b) {
+    public Tc_PartsOfCells(Tc_Besheet b) {
 
         initComponents();
         this.b = b;
@@ -116,7 +116,7 @@ public class PartsOfCells extends javax.swing.JFrame {
             b.jTable2.setValueAt(jList1.getSelectedValue(), b.jTable2.getSelectedRow(), b.jTable2.getSelectedColumn());
         }
 
-        this.setVisible(false);
+        this.dispose();
 
 
     }//GEN-LAST:event_jList1MouseClicked
@@ -138,14 +138,22 @@ public class PartsOfCells extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(PartsOfCells.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Tc_PartsOfCells.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(PartsOfCells.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Tc_PartsOfCells.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(PartsOfCells.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Tc_PartsOfCells.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(PartsOfCells.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Tc_PartsOfCells.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+
+        /* Create and display the form */
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new PartsOfCells().setVisible(true);
+//            }
+//        });
         //</editor-fold>
 
         /* Create and display the form */

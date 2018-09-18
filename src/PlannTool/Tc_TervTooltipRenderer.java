@@ -16,12 +16,12 @@ import javax.swing.table.DefaultTableCellRenderer;
  *
  * @author gabor_hanacsek
  */
-public class TervTooltipRenderer extends DefaultTableCellRenderer {
+public class Tc_TervTooltipRenderer extends DefaultTableCellRenderer {
 
-    Besheet b;
-    Tc_szinvalaszto sz;
+    Tc_Besheet b;
+    Tc_Szinvalaszto sz;
 
-    public TervTooltipRenderer(Besheet b) {
+    public Tc_TervTooltipRenderer(Tc_Besheet b) {
 
         this.b = b;
         this.sz = sz;
@@ -100,12 +100,12 @@ public class TervTooltipRenderer extends DefaultTableCellRenderer {
                 //terv sorok szinezése
             } else if (table.getValueAt(row, 3).toString().equals("Terv") && column > 3) {
 
-                c.setBackground(new Color(Betervezo.slide1, Betervezo.slide2, Betervezo.slide3));
+                c.setBackground(new Color(Tc_Betervezo.slide1, Tc_Betervezo.slide2, Tc_Betervezo.slide3));
 
             } //teny sorok szinezese
             else if (table.getValueAt(row, 3).toString().equals("Tény") && column > 3) {
 
-                c.setBackground(new Color(Betervezo.slide4, Betervezo.slide5, Betervezo.slide6));
+                c.setBackground(new Color(Tc_Betervezo.slide4, Tc_Betervezo.slide5, Tc_Betervezo.slide6));
 
                 //a tervezo oszlopok szine
             } else {

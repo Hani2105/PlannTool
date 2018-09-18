@@ -21,7 +21,7 @@ import javax.swing.table.TableCellRenderer;
  *
  * @author gabor_hanacsek
  */
-public class TervTablaRenderer extends DefaultTableCellRenderer {
+public class Tc_TervTablaRenderer extends DefaultTableCellRenderer {
 
     public Component getTableCellRendererComponent(JTable table, Object value,
             boolean isSelected, boolean hasFocus, int row, int column) {

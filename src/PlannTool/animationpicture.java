@@ -7,6 +7,7 @@ package PlannTool;
 
 import java.awt.Color;
 import java.awt.Point;
+import javax.swing.SwingConstants;
 
 /**
  *
@@ -18,16 +19,12 @@ public class animationpicture extends javax.swing.JFrame {
      * Creates new form animationpicture
      */
     public animationpicture() {
-        
+
         initComponents();
-        
-        Point p = new Point();
-        
-        p= ablak.jTable1.getLocationOnScreen();
-        setLocation(p);
-        
         setBackground(new Color(0, 0, 0, 0));
-        
+        this.setLocationRelativeTo(ablak.jTabbedPane1);
+        jLabel1.setHorizontalAlignment(SwingConstants.CENTER);
+
     }
 
     /**
@@ -42,9 +39,10 @@ public class animationpicture extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setBackground(new java.awt.Color(0, 0, 0));
+        setBackground(new java.awt.Color(102, 102, 102));
         setLocationByPlatform(true);
         setUndecorated(true);
+        setOpacity(0.8F);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/planning.gif"))); // NOI18N
 
@@ -52,17 +50,11 @@ public class animationpicture extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(145, Short.MAX_VALUE)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 609, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(47, 47, 47))
+            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 576, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(65, Short.MAX_VALUE))
+            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();

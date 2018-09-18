@@ -14,12 +14,12 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author gabor_hanacsek
  */
-public class Calculator {
+public class Tc_Calculator {
 
-    Besheet b;
-    Betervezo bt;
+    Tc_Besheet b;
+    Tc_Betervezo bt;
 
-    public Calculator(Besheet b, Betervezo bt) {
+    public Tc_Calculator(Tc_Besheet b, Tc_Betervezo bt) {
         this.b = b;
         this.bt = bt;
         String sheetname = bt.jTabbedPane1.getTitleAt(bt.jTabbedPane1.getSelectedIndex());
@@ -46,9 +46,10 @@ public class Calculator {
         //felvesszuk a ws eket elore uj sorkent
         for (int i = 0; i < model.getRowCount(); i++) {
 
-            if (!model.getValueAt(i, 3).toString().equals("Infó")) {
-
-                try {
+            try {
+                
+                //akkor ha nem infó , nem üres és nem null az értéke
+                if (!model.getValueAt(i, 3).toString().equals("Infó") && !model.getValueAt(i, 2).toString().equals("") && model.getValueAt(i, 2) != null) {
 
                     String ws = model.getValueAt(i, 2).toString();
 
@@ -70,10 +71,10 @@ public class Calculator {
                     }
 
                     irtunke = false;
-                } catch (Exception e) {
-                };
+                }
 
-            }
+            } catch (Exception e) {
+            };
 
         }
 

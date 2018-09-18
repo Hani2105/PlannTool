@@ -17,12 +17,12 @@ import javax.swing.JLabel;
  *
  * @author gabor_hanacsek
  */
-public class cellavalaszto extends javax.swing.JFrame {
+public class Tc_Cellavalaszto extends javax.swing.JFrame {
 
-    Betervezo bt;
+    Tc_Betervezo bt;
     public static String neve;
 
-    public cellavalaszto(Betervezo b) throws SQLException, ClassNotFoundException {
+    public Tc_Cellavalaszto(Tc_Betervezo b) throws SQLException, ClassNotFoundException {
         initComponents();
         bt = b;
         //lekerdezzuk az adatbazisbol a cellakat
@@ -289,9 +289,9 @@ public class cellavalaszto extends javax.swing.JFrame {
                 inf.infoBox("Sikertelen mentés!", "Mentés");
             }
         } catch (SQLException ex) {
-            Logger.getLogger(cellavalaszto.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Tc_Cellavalaszto.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(cellavalaszto.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Tc_Cellavalaszto.class.getName()).log(Level.SEVERE, null, ex);
         }
 
 
@@ -316,9 +316,9 @@ public class cellavalaszto extends javax.swing.JFrame {
                 }
 
             } catch (SQLException ex) {
-                Logger.getLogger(cellavalaszto.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Tc_Cellavalaszto.class.getName()).log(Level.SEVERE, null, ex);
             } catch (ClassNotFoundException ex) {
-                Logger.getLogger(cellavalaszto.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Tc_Cellavalaszto.class.getName()).log(Level.SEVERE, null, ex);
             }
 
             //feldaraboljuk az rs eredmenyet
@@ -349,9 +349,9 @@ public class cellavalaszto extends javax.swing.JFrame {
                 jList2.setModel(lm2);
 
             } catch (SQLException ex) {
-                Logger.getLogger(cellavalaszto.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Tc_Cellavalaszto.class.getName()).log(Level.SEVERE, null, ex);
             } catch (ClassNotFoundException ex) {
-                Logger.getLogger(cellavalaszto.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Tc_Cellavalaszto.class.getName()).log(Level.SEVERE, null, ex);
             }
 
         }
@@ -365,27 +365,27 @@ public class cellavalaszto extends javax.swing.JFrame {
         // TODO add your handling code here:
 
         //lekérjük a sheeteket
-        Betervezo.Besheets.clear();
+        Tc_Betervezo.Besheets.clear();
         for (int i = 0; i < jList2.getModel().getSize(); i++) {
 
-            Besheet sheet = null;
+            Tc_Besheet sheet = null;
             try {
-                sheet = new Besheet(bt);
+                sheet = new Tc_Besheet(bt);
             } catch (SQLException ex) {
-                Logger.getLogger(cellavalaszto.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Tc_Cellavalaszto.class.getName()).log(Level.SEVERE, null, ex);
             } catch (ClassNotFoundException ex) {
-                Logger.getLogger(cellavalaszto.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Tc_Cellavalaszto.class.getName()).log(Level.SEVERE, null, ex);
             }
             bt.jTabbedPane1.addTab(jList2.getModel().getElementAt(i), sheet);
             neve = jList2.getModel().getElementAt(i);
-            Betervezo.Besheets.put(jList2.getModel().getElementAt(i), sheet);
+            Tc_Betervezo.Besheets.put(jList2.getModel().getElementAt(i), sheet);
             try {
                 sheet.parts();
                 sheet.workstations();
             } catch (SQLException ex) {
-                Logger.getLogger(cellavalaszto.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Tc_Cellavalaszto.class.getName()).log(Level.SEVERE, null, ex);
             } catch (ClassNotFoundException ex) {
-                Logger.getLogger(cellavalaszto.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Tc_Cellavalaszto.class.getName()).log(Level.SEVERE, null, ex);
             }
 
         }
@@ -421,9 +421,9 @@ public class cellavalaszto extends javax.swing.JFrame {
                     }
 
                 } catch (SQLException ex) {
-                    Logger.getLogger(cellavalaszto.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(Tc_Cellavalaszto.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (ClassNotFoundException ex) {
-                    Logger.getLogger(cellavalaszto.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(Tc_Cellavalaszto.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
                 //feldaraboljuk az rs eredmenyet
@@ -454,9 +454,9 @@ public class cellavalaszto extends javax.swing.JFrame {
                     jList2.setModel(lm2);
 
                 } catch (SQLException ex) {
-                    Logger.getLogger(cellavalaszto.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(Tc_Cellavalaszto.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (ClassNotFoundException ex) {
-                    Logger.getLogger(cellavalaszto.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(Tc_Cellavalaszto.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
             }
@@ -474,27 +474,27 @@ public class cellavalaszto extends javax.swing.JFrame {
          // TODO add your handling code here:
 
         //lekérjük a sheeteket
-        Betervezo.Besheets.clear();
+        Tc_Betervezo.Besheets.clear();
         for (int i = 0; i < jList2.getModel().getSize(); i++) {
 
-            Besheet sheet = null;
+            Tc_Besheet sheet = null;
             try {
-                sheet = new Besheet(bt);
+                sheet = new Tc_Besheet(bt);
             } catch (SQLException ex) {
-                Logger.getLogger(cellavalaszto.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Tc_Cellavalaszto.class.getName()).log(Level.SEVERE, null, ex);
             } catch (ClassNotFoundException ex) {
-                Logger.getLogger(cellavalaszto.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Tc_Cellavalaszto.class.getName()).log(Level.SEVERE, null, ex);
             }
             bt.jTabbedPane1.addTab(jList2.getModel().getElementAt(i), sheet);
             neve = jList2.getModel().getElementAt(i);
-            Betervezo.Besheets.put(jList2.getModel().getElementAt(i), sheet);
+            Tc_Betervezo.Besheets.put(jList2.getModel().getElementAt(i), sheet);
             try {
                 sheet.parts();
                 sheet.workstations();
             } catch (SQLException ex) {
-                Logger.getLogger(cellavalaszto.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Tc_Cellavalaszto.class.getName()).log(Level.SEVERE, null, ex);
             } catch (ClassNotFoundException ex) {
-                Logger.getLogger(cellavalaszto.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Tc_Cellavalaszto.class.getName()).log(Level.SEVERE, null, ex);
             }
 
         }
@@ -535,9 +535,9 @@ public class cellavalaszto extends javax.swing.JFrame {
                     }
 
                 } catch (SQLException ex) {
-                    Logger.getLogger(cellavalaszto.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(Tc_Cellavalaszto.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (ClassNotFoundException ex) {
-                    Logger.getLogger(cellavalaszto.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(Tc_Cellavalaszto.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
                 //feldaraboljuk az rs eredmenyet
@@ -568,9 +568,9 @@ public class cellavalaszto extends javax.swing.JFrame {
                     jList2.setModel(lm2);
 
                 } catch (SQLException ex) {
-                    Logger.getLogger(cellavalaszto.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(Tc_Cellavalaszto.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (ClassNotFoundException ex) {
-                    Logger.getLogger(cellavalaszto.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(Tc_Cellavalaszto.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
             }
@@ -598,14 +598,38 @@ public class cellavalaszto extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(cellavalaszto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Tc_Cellavalaszto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(cellavalaszto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Tc_Cellavalaszto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(cellavalaszto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Tc_Cellavalaszto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(cellavalaszto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Tc_Cellavalaszto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+
+        /* Create and display the form */
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new cellavalaszto().setVisible(true);
+//            }
+//        });
+        //</editor-fold>
+
+        /* Create and display the form */
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new cellavalaszto().setVisible(true);
+//            }
+//        });
+        //</editor-fold>
+
+        /* Create and display the form */
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new cellavalaszto().setVisible(true);
+//            }
+//        });
         //</editor-fold>
 
         /* Create and display the form */

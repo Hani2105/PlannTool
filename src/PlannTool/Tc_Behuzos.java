@@ -29,6 +29,12 @@ public class Tc_Behuzos extends javax.swing.JFrame {
         initComponents();
         seticon();
         jTable1.setDefaultRenderer(Object.class, new Tc_Behuzosrenderer());
+        
+        if (ablak.planner == false) {
+            
+            jButton1.setEnabled(false);
+        }
+        
     }
 
     /**
@@ -186,59 +192,59 @@ public class Tc_Behuzos extends javax.swing.JFrame {
                 + "left join tc_bestations on tc_bestations.idtc_bestations = tc_prodmatrix.id_tc_bestations\n"
                 + "left join stations on stations.id = terv.stationid\n"
                 + "where terv.active = 1 and terv.startdate > '" + stol + "'  and terv.seq = '2' order by terv.startdate , stations.name";
-
+        
         planconnect pc = new planconnect();
-
+        
         boolean tarazva = false;
         try {
             pc.planconnect(query);
-
+            
             while (pc.rs.next()) {
-
+                
                 boolean irtunke = false;
                 if (Integer.parseInt(pc.rs.getString(4)) > 0) {
 
                     //boolean pipa vagy nem
                     if (pc.rs.getString(9).equals("0")) {
-
+                        
                         tarazva = false;
                     } else {
-
+                        
                         tarazva = true;
-
+                        
                     }
                     //bejárjuk a táblát job ért és pn ért és startdateért
                     for (int i = 0; i < jTable1.getRowCount(); i++) {
                         String tervezni = "";
                         //ha már van a táblában ez a pn
                         if (pc.rs.getString(1).equals(model.getValueAt(i, 0).toString()) && pc.rs.getString(2).equals(model.getValueAt(i, 1).toString()) && pc.rs.getString(3).equals(model.getValueAt(i, 2).toString() + ":00.0")) {
-
+                            
                             try {
                                 tervezni += model.getValueAt(i, 6).toString() + pc.rs.getString(7) + " " + pc.rs.getString(8) + " ";
                             } catch (Exception e) {
-
+                                
                             }
                             model.setValueAt(tervezni, i, 6);
                             irtunke = true;
                         }
-
+                        
                     }
-
+                    
                     if (irtunke == false) {
-
-                        model.addRow(new Object[]{pc.rs.getString(1), pc.rs.getString(2), pc.rs.getString(3).substring(0, pc.rs.getString(3).length() - 5), pc.rs.getString(4), pc.rs.getString(5), pc.rs.getString(6), pc.rs.getString(7) + " " + pc.rs.getString(8)+ " ", tarazva, pc.rs.getString(10)});
-
+                        
+                        model.addRow(new Object[]{pc.rs.getString(1), pc.rs.getString(2), pc.rs.getString(3).substring(0, pc.rs.getString(3).length() - 5), pc.rs.getString(4), pc.rs.getString(5), pc.rs.getString(6), pc.rs.getString(7) + " " + pc.rs.getString(8) + " ", tarazva, pc.rs.getString(10)});
+                        
                     }
                 }
-
+                
             }
-
+            
         } catch (SQLException ex) {
             Logger.getLogger(Tc_Behuzos.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Tc_Behuzos.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        
         jTable1.setModel(model);
 
     }//GEN-LAST:event_jButton2ActionPerformed
@@ -249,27 +255,27 @@ public class Tc_Behuzos extends javax.swing.JFrame {
 
         String tarazvaadat = "";
         String nincstarazvaadat = "";
-
+        
         for (int i = 0; i < jTable1.getRowCount(); i++) {
             //ha tarazva , azaz pipa
             if ((boolean) jTable1.getValueAt(i, 7) == true) {
-
+                
                 tarazvaadat += "'" + jTable1.getValueAt(i, 8) + "',";
             } //ha nincs tarazva , minden mas eset
             else {
-
+                
                 nincstarazvaadat += "'" + jTable1.getValueAt(i, 8) + "',";
-
+                
             }
-
+            
         }
-
+        
         tarazvaadat = tarazvaadat.substring(0, tarazvaadat.length() - 1);
         nincstarazvaadat = nincstarazvaadat.substring(0, nincstarazvaadat.length() - 1);
-
+        
         String tarazvaquery = "update terv set terv.be_terv = '1' where terv.id in (" + tarazvaadat + ")";
         String nincstarazvaquery = "update terv set terv.be_terv = '0' where terv.id in (" + nincstarazvaadat + ")";
-
+        
         planconnect pc = new planconnect();
         pc.feltolt(tarazvaquery, false);
         pc.feltolt(nincstarazvaquery, true);
@@ -282,21 +288,21 @@ public class Tc_Behuzos extends javax.swing.JFrame {
         String query = jTextField1.getText().toUpperCase().trim();
         filter(query);
     }//GEN-LAST:event_jTextField1KeyReleased
-
+    
     private void seticon() {
-
+        
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("kepek/pull2.png")));
-
+        
     }
-
+    
     private void filter(String query) {
         DefaultTableModel model = new DefaultTableModel();
         model = (DefaultTableModel) jTable1.getModel();
-
+        
         TableRowSorter<DefaultTableModel> tr = new TableRowSorter<DefaultTableModel>(model);
         jTable1.setRowSorter(tr);
         tr.setRowFilter(RowFilter.regexFilter(query));
-
+        
     }
 
     /**

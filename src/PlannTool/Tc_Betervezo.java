@@ -706,7 +706,7 @@ public class Tc_Betervezo extends javax.swing.JFrame {
 
                             String qty = null;
                             try {
-                                qty = (String) t2.getValueAt(r, i);
+                                qty = t2.getValueAt(r, i).toString();
 
                                 if (qty == null) {
                                     qty = "0";
@@ -1020,7 +1020,7 @@ public class Tc_Betervezo extends javax.swing.JFrame {
     public javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
-    private javax.swing.JComboBox<String> jComboBox1;
+    public static javax.swing.JComboBox<String> jComboBox1;
     private com.toedter.calendar.JDateChooser jDateChooser1;
     private com.toedter.calendar.JDateChooser jDateChooser2;
     private javax.swing.JLabel jLabel1;

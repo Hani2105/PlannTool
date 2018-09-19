@@ -52,12 +52,12 @@
             </MenuItem>
           </SubComponents>
         </Menu>
-        <MenuItem class="javax.swing.JMenuItem" name="PN_rendez&#xe9;s">
+        <MenuItem class="javax.swing.JMenuItem" name="SFDClekeres">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Rendez&#xe9;s PN-szerint"/>
+            <Property name="text" type="java.lang.String" value="SFDC lek&#xe9;r&#xe9;s"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="PN_rendez&#xe9;sActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="SFDClekeresActionPerformed"/>
           </Events>
         </MenuItem>
       </SubComponents>
@@ -255,7 +255,7 @@
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
           <Image iconType="3" name="/PlannTool/kepek/look1.png"/>
         </Property>
-        <Property name="toolTipText" type="java.lang.String" value="Keres&#x151;"/>
+        <Property name="toolTipText" type="java.lang.String" value="N&#xe9;zetv&#xe1;lt&#xe1;s (PN / JOB szerint)"/>
         <Property name="borderPainted" type="boolean" value="false"/>
         <Property name="contentAreaFilled" type="boolean" value="false"/>
       </Properties>

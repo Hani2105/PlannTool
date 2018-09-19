@@ -5,24 +5,25 @@
  */
 package PlannTool;
 
+import javax.swing.JFrame;
+
 /**
  *
  * @author gabor_hanacsek
  */
-public class animation extends Thread{
+public class animation extends Thread {
 
     public static boolean rajzol = true;
 
     public void run() {
+
         animationpicture a = new animationpicture();
-        a.setVisible(true);
 
         while (rajzol == true) {
-            
+
             a.repaint();
-            
+
             //System.out.println("futok");
-            
         }
 
         a.dispose();

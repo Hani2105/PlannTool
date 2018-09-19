@@ -6,6 +6,8 @@
 package PlannTool;
 
 import static PlannTool.Tc_Betervezo.Besheets;
+import static PlannTool.Tc_SfdcData.ig;
+import static PlannTool.Tc_SfdcData.tol;
 import static PlannTool.ablak.jTable1;
 import static PlannTool.ablak.jTable2;
 import static PlannTool.ablak.jTextField1;
@@ -13,9 +15,16 @@ import static PlannTool.ablak.model;
 import static PlannTool.ablak.model1;
 import java.awt.Color;
 import static java.awt.Frame.MAXIMIZED_BOTH;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
@@ -27,6 +36,8 @@ import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
 
 /**
  *
@@ -91,7 +102,7 @@ public class Tc_Besheet extends javax.swing.JPanel {
         MuveletekSorokkal = new javax.swing.JMenu();
         InsertRow = new javax.swing.JMenuItem();
         DeleteRow = new javax.swing.JMenuItem();
-        PN_rendezés = new javax.swing.JMenuItem();
+        SFDClekeres = new javax.swing.JMenuItem();
         jButton1 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
@@ -139,13 +150,13 @@ public class Tc_Besheet extends javax.swing.JPanel {
 
         JPopupMenu1.add(MuveletekSorokkal);
 
-        PN_rendezés.setText("Rendezés PN-szerint");
-        PN_rendezés.addActionListener(new java.awt.event.ActionListener() {
+        SFDClekeres.setText("SFDC lekérés");
+        SFDClekeres.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                PN_rendezésActionPerformed(evt);
+                SFDClekeresActionPerformed(evt);
             }
         });
-        JPopupMenu1.add(PN_rendezés);
+        JPopupMenu1.add(SFDClekeres);
 
         setComponentPopupMenu(JPopupMenu1);
         setPreferredSize(new java.awt.Dimension(1800, 700));
@@ -255,7 +266,7 @@ public class Tc_Besheet extends javax.swing.JPanel {
         });
 
         jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/look1.png"))); // NOI18N
-        jButton6.setToolTipText("Kereső");
+        jButton6.setToolTipText("Nézetváltás (PN / JOB szerint)");
         jButton6.setBorderPainted(false);
         jButton6.setContentAreaFilled(false);
         jButton6.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -472,13 +483,16 @@ public class Tc_Besheet extends javax.swing.JPanel {
 
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void PN_rendezésActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PN_rendezésActionPerformed
-        // TODO add your handling code here:
+    private void SFDClekeresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SFDClekeresActionPerformed
 
-        jTable2.getRowSorter().toggleSortOrder(0);
-
-
-    }//GEN-LAST:event_PN_rendezésActionPerformed
+          //sfdc lekeres
+          Tc_AnimationSFDC a = new Tc_AnimationSFDC();
+          a.start();
+          Tc_SFDCszal sz = new Tc_SFDCszal(this);
+          sz.start();
+          
+          
+    }//GEN-LAST:event_SFDClekeresActionPerformed
 
     private void jButton4MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton4MouseEntered
         // TODO add your handling code here:
@@ -501,7 +515,7 @@ public class Tc_Besheet extends javax.swing.JPanel {
     private void jTextField1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextField1MouseEntered
         // TODO add your handling code here:
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/search2.png")));
-        
+
     }//GEN-LAST:event_jTextField1MouseEntered
 
     private void jTextField1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextField1MouseExited
@@ -520,7 +534,86 @@ public class Tc_Besheet extends javax.swing.JPanel {
     }//GEN-LAST:event_jButton6MouseExited
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        // TODO add your handling code here:
+        //nezet atalakítas
+
+        //betesszuk egy uj modelbe a tabla jelenlegi adatait
+        DefaultTableModel model = new DefaultTableModel();
+        model = (DefaultTableModel) jTable2.getModel();
+
+        //betesszuk tommbe az adatokat
+        String[][] adatok = new String[model.getRowCount()][model.getColumnCount()];
+
+        for (int i = 0; i < model.getRowCount(); i++) {
+
+            for (int n = 0; n < model.getColumnCount(); n++) {
+
+                try {
+                    adatok[i][n] = model.getValueAt(i, n).toString();
+                } catch (Exception e) {
+                }
+            }
+
+        }
+
+        //kinullazzuk a modelt
+        model.setRowCount(0);
+        //elkezdjuk belepakolni az adatokat  , sor , oszlop
+        //az elmentett adat sorait porgetjuk , ha van mar akkor nem irjuk be megegyszer
+        for (int r = 0; r < adatok.length; r++) {
+
+            //ezzel figyeljuk hogy van e mar ilyen pn és job
+            boolean vanmar = false;
+            //vegigporgetjuk az uj tablat 
+            for (int sor = 0; sor < model.getRowCount(); sor++) {
+
+                // ha egyezik a pn és a JOB , és a ws es a terv/teny azaz van mar ilyen
+                if (adatok[r][0].toString().equals(model.getValueAt(sor, 0)) && adatok[r][1].toString().equals(model.getValueAt(sor, 1)) && adatok[r][2].toString().equals(model.getValueAt(sor, 2)) && adatok[r][3].toString().equals(model.getValueAt(sor, 3))) {
+
+                    vanmar = true;
+                    //akkor beirjuk a darabot a megfelelo oszlopbol az aktualis cellaba
+                    for (int o = 4; o < adatok.length; o++) {
+
+                        try {
+                            if (!adatok[r][o].toString().equals("") && adatok[r][o] != null) {
+
+                                model.setValueAt(adatok[r][o].toString(), sor, o);
+
+                            }
+                        } catch (Exception e) {
+                        }
+
+                    }
+
+                }
+
+            }
+
+            //de ha nincs , azaz false a vanemar , kell egy uj sor
+            if (vanmar == false) {
+
+                //beallitjuk a pn , job , ws -t és a terv/ tenyt
+                model.addRow(new Object[]{adatok[r][0], adatok[r][1], adatok[r][2], adatok[r][3]});
+
+                //megkeressuk az oszlopban a db ot
+                for (int o = 4; o < adatok.length; o++) {
+
+                    try {
+                        if (!adatok[r][o].toString().equals("") && adatok[r][o] != null) {
+
+                            model.setValueAt(adatok[r][o].toString(), model.getRowCount() - 1, o);
+
+                        }
+                    } catch (Exception e) {
+                    }
+
+                }
+
+            }
+
+        }
+
+        jTable2.setModel(model);
+
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void filter(String query) {
@@ -543,7 +636,7 @@ public class Tc_Besheet extends javax.swing.JPanel {
     private javax.swing.JMenuItem InsertRow;
     public javax.swing.JPopupMenu JPopupMenu1;
     private javax.swing.JMenu MuveletekSorokkal;
-    private javax.swing.JMenuItem PN_rendezés;
+    private javax.swing.JMenuItem SFDClekeres;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;

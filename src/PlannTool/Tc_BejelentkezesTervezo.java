@@ -6,6 +6,11 @@
 package PlannTool;
 
 import java.awt.event.KeyEvent;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.sql.Array;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -56,25 +61,39 @@ public class Tc_BejelentkezesTervezo extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setText("Dolgozói szám:");
+        jLabel1.setText("Felh. Név:");
 
         jLabel2.setText("Jelszó:");
 
         jButton1.setText("Bejelentkezés plannerként");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                try {
+                    jButton1ActionPerformed(evt);
+                } catch (IOException ex) {
+                    Logger.getLogger(Tc_BejelentkezesTervezo.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (SQLException ex) {
+                    Logger.getLogger(Tc_BejelentkezesTervezo.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(Tc_BejelentkezesTervezo.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
 
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("Kérlek jelentkezz be!");
+        jLabel3.setText("Kérlek jelentkezz be az Universal Loginoddal!!");
         jLabel3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         jButton2.setText("Nem vagyok Planner!");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                try {
+                    jButton2ActionPerformed(evt);
+                } catch (SQLException ex) {
+                    Logger.getLogger(Tc_BejelentkezesTervezo.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(Tc_BejelentkezesTervezo.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
 
@@ -133,46 +152,61 @@ public class Tc_BejelentkezesTervezo extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) throws MalformedURLException, IOException, SQLException, ClassNotFoundException {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
 
         planconnect pc = new planconnect();
         char[] password = jPasswordField1.getPassword();
 
-        String query = "SELECT job_positions_id as poz , pass FROM planningdb.perm where perm.id = '" + jTextField1.getText() + "'";
+        //proba universal login
+        URL oracle = new URL("http://143.116.140.120/api/auth/authlib.php?username=" + jTextField1.getText() + "&password=" + String.valueOf(password) + "");
 
-        try {
-            ResultSet rs = (ResultSet) pc.planconnect(query);
+        BufferedReader in = new BufferedReader(
+                new InputStreamReader(oracle.openStream()));
 
-            if (rs.next()) {
-                String poz = rs.getString(1);
-                String pass = rs.getString(2);
-                char[] correctpass = pass.toCharArray();
+        String inputLine = "";
+        String truee = "";
+        while ((inputLine = in.readLine()) != null) {
+            //System.out.println(inputLine);
+            truee = inputLine;
+        }
+        in.close();
 
-                if (Arrays.equals(password, correctpass) && (Integer.parseInt(poz) == 1 || Integer.parseInt(poz) == 2 || Integer.parseInt(poz) == 4)) {
+        //eredeti kód
+        String query = "SELECT job_positions_id as poz , pass FROM planningdb.perm where perm.email like '%" + jTextField1.getText().replace(".", "_") + "%'";
 
-                    Tc_Betervezo b = new Tc_Betervezo();
-                    b.setVisible(true);
-                    ablak.planner = true;
+        ResultSet rs = (ResultSet) pc.planconnect(query);
 
-                }
-                
-                else{
-                
-                    Tc_Betervezo b = new Tc_Betervezo();
-                    
-                    b.setVisible(true);
-                
-                
-                }
+        if (rs.next()) {
+
+            String poz = "";
+            poz = rs.getString(1);
+//            String pass = rs.getString(2);
+//            char[] correctpass = pass.toCharArray();
+
+            if (truee.equals("true") && (Integer.parseInt(poz) == 1 || Integer.parseInt(poz) == 2 || Integer.parseInt(poz) == 4)) {
+//sikeres bejelentkezes
+                ablak.planner = true;
+                Tc_Betervezo b = new Tc_Betervezo();
+                b.setVisible(true);
+                this.dispose();
+
+            } else {
+//sikertelen bejelentkezes
+                ablak.planner = false;
+                Tc_Betervezo b = new Tc_Betervezo();
+                b.setVisible(true);
+                this.dispose();
+
             }
 
-        } catch (SQLException ex) {
-            //Logger.getLogger(bejelentkezes.class.getName()).log(Level.SEVERE, null, ex);
-            ex.printStackTrace();
-        } catch (ClassNotFoundException ex) {
-            //Logger.getLogger(bejelentkezes.class.getName()).log(Level.SEVERE, null, ex);
-            ex.printStackTrace();
+        } else {
+//sikertelen bejelentkezes
+            ablak.planner = false;
+            Tc_Betervezo b = new Tc_Betervezo();
+            b.setVisible(true);
+            this.dispose();
+
         }
 
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -184,13 +218,15 @@ public class Tc_BejelentkezesTervezo extends javax.swing.JFrame {
 
     }//GEN-LAST:event_formWindowDeactivated
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-        this.setVisible(false);
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) throws SQLException, ClassNotFoundException {//GEN-FIRST:event_jButton2ActionPerformed
+        //a nem vagyok planner gomb
+        ablak.planner = false;
+        Tc_Betervezo b = new Tc_Betervezo();
+        b.setVisible(true);
+        this.dispose();
 
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;

@@ -80,6 +80,12 @@ public class Tc_Betervezo extends javax.swing.JFrame {
 
         }
 
+        //letiltjuk a gombokat ha nem planner
+        if (ablak.planner == false) {
+            this.jButton5.setEnabled(false);
+            this.jButton2.setEnabled(false);
+        }
+
     }
 
     /**

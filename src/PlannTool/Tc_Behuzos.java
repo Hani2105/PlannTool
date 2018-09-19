@@ -28,7 +28,7 @@ public class Tc_Behuzos extends javax.swing.JFrame {
     public Tc_Behuzos() {
         initComponents();
         seticon();
-        jTable1.setDefaultRenderer(Object.class, new Tc_Behuzosrenderer());
+        jTable1.setDefaultRenderer(Object.class, new Tc1_Behuzosrenderer());
     }
 
     /**

@@ -9,14 +9,14 @@ package PlannTool;
  *
  * @author gabor_hanacsek
  */
-public class Tc1_Szinvalaszto extends javax.swing.JFrame {
+public class Tc_Szinvalaszto extends javax.swing.JFrame {
 
     /**
      * Creates new form Tc_szinvalaszto
      */
     Tc_Besheet b;
 
-    public Tc1_Szinvalaszto(Tc_Besheet b) {
+    public Tc_Szinvalaszto(Tc_Besheet b) {
         initComponents();
         this.b = b;
         jSlider1.setValue(Tc_Betervezo.slide1);
@@ -232,14 +232,46 @@ public class Tc1_Szinvalaszto extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Tc1_Szinvalaszto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Tc_Szinvalaszto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Tc1_Szinvalaszto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Tc_Szinvalaszto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Tc1_Szinvalaszto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Tc_Szinvalaszto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Tc1_Szinvalaszto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Tc_Szinvalaszto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+
+        /* Create and display the form */
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new Tc_szinvalaszto().setVisible(true);
+//            }
+//        });
+        //</editor-fold>
+
+        /* Create and display the form */
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new Tc_szinvalaszto().setVisible(true);
+//            }
+//        });
+        //</editor-fold>
+
+        /* Create and display the form */
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new Tc_szinvalaszto().setVisible(true);
+//            }
+//        });
+        //</editor-fold>
+
+        /* Create and display the form */
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new Tc_szinvalaszto().setVisible(true);
+//            }
+//        });
         //</editor-fold>
 
         /* Create and display the form */

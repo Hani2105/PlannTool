@@ -11,14 +11,14 @@ package PlannTool;
  */
 public class Tc_AnimationSFDC extends Thread{
 
-    public static boolean rajzol = true;
+    public static boolean rajzole = true;
 
     public void run() {
 
         Tc_SFDCanimationpicture a = new Tc_SFDCanimationpicture();
         a.setVisible(true);
 
-        while (rajzol == true) {
+        while (rajzole == true) {
 
             a.repaint();
 
@@ -27,7 +27,7 @@ public class Tc_AnimationSFDC extends Thread{
 
         a.dispose();
         //System.out.println("megalltam");
-        rajzol = true;
+        rajzole = true;
 
     }
 

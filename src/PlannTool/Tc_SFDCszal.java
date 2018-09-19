@@ -138,7 +138,7 @@ public class Tc_SFDCszal extends Thread {
 
         }
 
-        Tc_AnimationSFDC.rajzol = false;
+        Tc_AnimationSFDC.rajzole = false;
     }
 
 }

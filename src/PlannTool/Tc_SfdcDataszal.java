@@ -126,7 +126,7 @@ public class Tc_SfdcDataszal extends Thread {
         }
 
         d.dispose();
-        Tc_AnimationSFDC.rajzol = false;
+        Tc_AnimationSFDC.rajzole = false;
 
     }
 

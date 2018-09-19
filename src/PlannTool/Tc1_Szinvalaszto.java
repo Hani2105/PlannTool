@@ -9,22 +9,22 @@ package PlannTool;
  *
  * @author gabor_hanacsek
  */
-public class Tc_szinvalaszto extends javax.swing.JFrame {
+public class Tc1_Szinvalaszto extends javax.swing.JFrame {
 
     /**
      * Creates new form Tc_szinvalaszto
      */
-    Besheet b;
+    Tc_Besheet b;
 
-    public Tc_szinvalaszto(Besheet b) {
+    public Tc1_Szinvalaszto(Tc_Besheet b) {
         initComponents();
         this.b = b;
-        jSlider1.setValue(Betervezo.slide1);
-        jSlider2.setValue(Betervezo.slide2);
-        jSlider3.setValue(Betervezo.slide3);
-        jSlider4.setValue(Betervezo.slide4);
-        jSlider5.setValue(Betervezo.slide5);
-        jSlider6.setValue(Betervezo.slide6);
+        jSlider1.setValue(Tc_Betervezo.slide1);
+        jSlider2.setValue(Tc_Betervezo.slide2);
+        jSlider3.setValue(Tc_Betervezo.slide3);
+        jSlider4.setValue(Tc_Betervezo.slide4);
+        jSlider5.setValue(Tc_Betervezo.slide5);
+        jSlider6.setValue(Tc_Betervezo.slide6);
 
     }
 
@@ -169,49 +169,49 @@ public class Tc_szinvalaszto extends javax.swing.JFrame {
 
     private void jSlider1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSlider1StateChanged
         // TODO add your handling code here:
-        Betervezo.slide1 = jSlider1.getValue();
+        Tc_Betervezo.slide1 = jSlider1.getValue();
         b.repaint();
         
     }//GEN-LAST:event_jSlider1StateChanged
 
     private void jSlider2StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSlider2StateChanged
         // TODO add your handling code here:
-        Betervezo.slide2 = jSlider2.getValue();
+        Tc_Betervezo.slide2 = jSlider2.getValue();
         b.repaint();
     }//GEN-LAST:event_jSlider2StateChanged
 
     private void jSlider3StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSlider3StateChanged
         // TODO add your handling code here:
-        Betervezo.slide3 = jSlider3.getValue();
+        Tc_Betervezo.slide3 = jSlider3.getValue();
         b.repaint();
     }//GEN-LAST:event_jSlider3StateChanged
 
     private void jSlider5StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSlider5StateChanged
         // TODO add your handling code here:
-        Betervezo.slide5 = jSlider5.getValue();
+        Tc_Betervezo.slide5 = jSlider5.getValue();
         b.repaint();
     }//GEN-LAST:event_jSlider5StateChanged
 
     private void jSlider6StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSlider6StateChanged
         // TODO add your handling code here:
-        Betervezo.slide6 = jSlider6.getValue();
+        Tc_Betervezo.slide6 = jSlider6.getValue();
         b.repaint();
     }//GEN-LAST:event_jSlider6StateChanged
 
     private void jSlider4StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSlider4StateChanged
         // TODO add your handling code here:
-        Betervezo.slide4 = jSlider4.getValue();
+        Tc_Betervezo.slide4 = jSlider4.getValue();
         b.repaint();
     }//GEN-LAST:event_jSlider4StateChanged
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
 
-        Betervezo.slide1 = jSlider1.getValue();
-        Betervezo.slide2 = jSlider2.getValue();
-        Betervezo.slide3 = jSlider3.getValue();
-        Betervezo.slide4 = jSlider4.getValue();
-        Betervezo.slide5 = jSlider5.getValue();
-        Betervezo.slide6 = jSlider6.getValue();
+        Tc_Betervezo.slide1 = jSlider1.getValue();
+        Tc_Betervezo.slide2 = jSlider2.getValue();
+        Tc_Betervezo.slide3 = jSlider3.getValue();
+        Tc_Betervezo.slide4 = jSlider4.getValue();
+        Tc_Betervezo.slide5 = jSlider5.getValue();
+        Tc_Betervezo.slide6 = jSlider6.getValue();
 
     }//GEN-LAST:event_formWindowClosing
 
@@ -232,14 +232,38 @@ public class Tc_szinvalaszto extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Tc_szinvalaszto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Tc1_Szinvalaszto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Tc_szinvalaszto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Tc1_Szinvalaszto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Tc_szinvalaszto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Tc1_Szinvalaszto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Tc_szinvalaszto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Tc1_Szinvalaszto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+
+        /* Create and display the form */
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new Tc_szinvalaszto().setVisible(true);
+//            }
+//        });
+        //</editor-fold>
+
+        /* Create and display the form */
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new Tc_szinvalaszto().setVisible(true);
+//            }
+//        });
+        //</editor-fold>
+
+        /* Create and display the form */
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new Tc_szinvalaszto().setVisible(true);
+//            }
+//        });
         //</editor-fold>
 
         /* Create and display the form */

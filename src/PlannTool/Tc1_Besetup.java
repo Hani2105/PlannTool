@@ -21,7 +21,7 @@ import javax.swing.table.TableCellRenderer;
  *
  * @author gabor_hanacsek
  */
-public class tc_besetup extends javax.swing.JFrame {
+public class Tc1_Besetup extends javax.swing.JFrame {
 
     /**
      * Creates new form tc_besetup
@@ -30,7 +30,7 @@ public class tc_besetup extends javax.swing.JFrame {
     public List<String> defaultadat2 = new ArrayList<String>();
     public List<String> defaultadat3 = new ArrayList<String>();
 
-    public tc_besetup() throws SQLException, ClassNotFoundException {
+    public Tc1_Besetup() throws SQLException, ClassNotFoundException {
 
         initComponents();
 
@@ -478,9 +478,9 @@ public class tc_besetup extends javax.swing.JFrame {
         try {
             rs = (ResultSet) pc.planconnect(query);
         } catch (SQLException ex) {
-            Logger.getLogger(tc_besetup.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Tc1_Besetup.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(tc_besetup.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Tc1_Besetup.class.getName()).log(Level.SEVERE, null, ex);
         }
         DefaultListModel lm2 = new DefaultListModel();
         lm2.removeAllElements();
@@ -492,7 +492,7 @@ public class tc_besetup extends javax.swing.JFrame {
 
             }
         } catch (SQLException ex) {
-            Logger.getLogger(tc_besetup.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Tc1_Besetup.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         jList2.setModel(lm2);
@@ -518,9 +518,9 @@ public class tc_besetup extends javax.swing.JFrame {
         try {
             rs = (ResultSet) pc.planconnect(query);
         } catch (SQLException ex) {
-            Logger.getLogger(tc_besetup.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Tc1_Besetup.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(tc_besetup.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Tc1_Besetup.class.getName()).log(Level.SEVERE, null, ex);
         }
         DefaultListModel lm1 = new DefaultListModel();
 
@@ -532,7 +532,7 @@ public class tc_besetup extends javax.swing.JFrame {
 
             }
         } catch (SQLException ex) {
-            Logger.getLogger(tc_besetup.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Tc1_Besetup.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         jList1.setModel(lm1);
@@ -557,9 +557,9 @@ public class tc_besetup extends javax.swing.JFrame {
         try {
             rs = (ResultSet) pc.planconnect(query);
         } catch (SQLException ex) {
-            Logger.getLogger(tc_besetup.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Tc1_Besetup.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(tc_besetup.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Tc1_Besetup.class.getName()).log(Level.SEVERE, null, ex);
         }
         DefaultListModel lm3 = new DefaultListModel();
 
@@ -571,7 +571,7 @@ public class tc_besetup extends javax.swing.JFrame {
 
             }
         } catch (SQLException ex) {
-            Logger.getLogger(tc_besetup.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Tc1_Besetup.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         jList4.setModel(lm3);
@@ -629,9 +629,9 @@ public class tc_besetup extends javax.swing.JFrame {
                 pnid = pc.rs.getString(1);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(tc_besetup.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Tc1_Besetup.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(tc_besetup.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Tc1_Besetup.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         //lekérdezzük a cella id-t
@@ -642,9 +642,9 @@ public class tc_besetup extends javax.swing.JFrame {
                 cellid = pc.rs.getString(1);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(tc_besetup.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Tc1_Besetup.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(tc_besetup.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Tc1_Besetup.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         //lekerdezzuk a ws id-t
@@ -655,9 +655,9 @@ public class tc_besetup extends javax.swing.JFrame {
                 wsid = pc.rs.getString(1);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(tc_besetup.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Tc1_Besetup.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(tc_besetup.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Tc1_Besetup.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         //lekerdezzuk , hogy van e ismetlodes
@@ -690,10 +690,17 @@ public class tc_besetup extends javax.swing.JFrame {
 
         } catch (SQLException ex) {
 
-            Logger.getLogger(tc_besetup.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Tc1_Besetup.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(tc_besetup.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Tc1_Besetup.class.getName()).log(Level.SEVERE, null, ex);
         }
+        //frissitjuk a tablat
+        //frissitjuk a tablat
+        //frissitjuk a tablat
+        //frissitjuk a tablat
+        //frissitjuk a tablat
+        //frissitjuk a tablat
+        //frissitjuk a tablat
         //frissitjuk a tablat
 
         DefaultTableModel model = new DefaultTableModel();
@@ -707,9 +714,9 @@ public class tc_besetup extends javax.swing.JFrame {
         try {
             rs = (ResultSet) pc.planconnect(query);
         } catch (SQLException ex) {
-            Logger.getLogger(tc_besetup.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Tc1_Besetup.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(tc_besetup.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Tc1_Besetup.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         try {
@@ -719,7 +726,7 @@ public class tc_besetup extends javax.swing.JFrame {
 
             }
         } catch (SQLException ex) {
-            Logger.getLogger(tc_besetup.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Tc1_Besetup.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         TableCellRenderer rendererFromHeader = jTable1.getTableHeader().getDefaultRenderer();
@@ -771,9 +778,9 @@ public class tc_besetup extends javax.swing.JFrame {
         try {
             rs = (ResultSet) pc.planconnect(query);
         } catch (SQLException ex) {
-            Logger.getLogger(tc_besetup.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Tc1_Besetup.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(tc_besetup.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Tc1_Besetup.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         try {
@@ -783,7 +790,7 @@ public class tc_besetup extends javax.swing.JFrame {
 
             }
         } catch (SQLException ex) {
-            Logger.getLogger(tc_besetup.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Tc1_Besetup.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         TableCellRenderer rendererFromHeader = jTable1.getTableHeader().getDefaultRenderer();
@@ -830,14 +837,70 @@ public class tc_besetup extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(tc_besetup.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Tc1_Besetup.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(tc_besetup.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Tc1_Besetup.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(tc_besetup.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Tc1_Besetup.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(tc_besetup.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Tc1_Besetup.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+
+        /* Create and display the form */
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new tc_besetup().setVisible(true);
+//            }
+//        });
+        //</editor-fold>
+
+        /* Create and display the form */
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new tc_besetup().setVisible(true);
+//            }
+//        });
+        //</editor-fold>
+
+        /* Create and display the form */
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new tc_besetup().setVisible(true);
+//            }
+//        });
+        //</editor-fold>
+
+        /* Create and display the form */
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new tc_besetup().setVisible(true);
+//            }
+//        });
+        //</editor-fold>
+
+        /* Create and display the form */
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new tc_besetup().setVisible(true);
+//            }
+//        });
+        //</editor-fold>
+
+        /* Create and display the form */
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new tc_besetup().setVisible(true);
+//            }
+//        });
+        //</editor-fold>
+
+        /* Create and display the form */
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new tc_besetup().setVisible(true);
+//            }
+//        });
         //</editor-fold>
 
         /* Create and display the form */

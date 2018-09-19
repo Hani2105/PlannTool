@@ -20,15 +20,15 @@ import javax.swing.table.TableRowSorter;
  *
  * @author gabor_hanacsek
  */
-public class Tc_behuzos extends javax.swing.JFrame {
+public class Tc1_Behuzos extends javax.swing.JFrame {
 
     /**
      * Creates new form Tc_behuzos
      */
-    public Tc_behuzos() {
+    public Tc1_Behuzos() {
         initComponents();
         seticon();
-        jTable1.setDefaultRenderer(Object.class, new Tc_behuzosrenderer());
+        jTable1.setDefaultRenderer(Object.class, new Tc_Behuzosrenderer());
     }
 
     /**
@@ -51,6 +51,7 @@ public class Tc_behuzos extends javax.swing.JFrame {
 
         setTitle("Behúzós!");
 
+        jTable1.setAutoCreateRowSorter(true);
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -233,9 +234,9 @@ public class Tc_behuzos extends javax.swing.JFrame {
             }
 
         } catch (SQLException ex) {
-            Logger.getLogger(Tc_behuzos.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Tc1_Behuzos.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Tc_behuzos.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Tc1_Behuzos.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         jTable1.setModel(model);
@@ -315,20 +316,23 @@ public class Tc_behuzos extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Tc_behuzos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Tc1_Behuzos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Tc_behuzos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Tc1_Behuzos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Tc_behuzos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Tc1_Behuzos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Tc_behuzos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Tc1_Behuzos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Tc_behuzos().setVisible(true);
+                new Tc1_Behuzos().setVisible(true);
             }
         });
     }

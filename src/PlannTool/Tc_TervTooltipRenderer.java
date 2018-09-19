@@ -19,7 +19,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 public class Tc_TervTooltipRenderer extends DefaultTableCellRenderer {
 
     Tc_Besheet b;
-    Tc_Szinvalaszto sz;
+    Tc1_Szinvalaszto sz;
 
     public Tc_TervTooltipRenderer(Tc_Besheet b) {
 

@@ -443,7 +443,7 @@ public class Tc_Besheet extends javax.swing.JPanel {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
 
-        Tc_Szinvalaszto sz = new Tc_Szinvalaszto(this);
+        Tc1_Szinvalaszto sz = new Tc1_Szinvalaszto(this);
         sz.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -460,7 +460,7 @@ public class Tc_Besheet extends javax.swing.JPanel {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
 
-        Tc_Behuzos bh = new Tc_Behuzos();
+        Tc1_Behuzos bh = new Tc1_Behuzos();
         bh.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 

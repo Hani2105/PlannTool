@@ -278,9 +278,9 @@ public class Tc_Betervezo extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
 
-        Tc_Besetup c = null;
+        Tc1_Besetup c = null;
         try {
-            c = new Tc_Besetup();
+            c = new Tc1_Besetup();
         } catch (SQLException ex) {
             Logger.getLogger(Tc_Betervezo.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {

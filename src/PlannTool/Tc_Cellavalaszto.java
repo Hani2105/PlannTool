@@ -376,7 +376,7 @@ public class Tc_Cellavalaszto extends javax.swing.JFrame {
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(Tc_Cellavalaszto.class.getName()).log(Level.SEVERE, null, ex);
             }
-            bt.jTabbedPane1.addTab(jList2.getModel().getElementAt(i), sheet);
+            Tc_Betervezo.jTabbedPane1.addTab(jList2.getModel().getElementAt(i), sheet);
             neve = jList2.getModel().getElementAt(i);
             Tc_Betervezo.Besheets.put(jList2.getModel().getElementAt(i), sheet);
             try {

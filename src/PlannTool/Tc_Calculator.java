@@ -22,7 +22,7 @@ public class Tc_Calculator {
     public Tc_Calculator(Tc_Besheet b, Tc_Betervezo bt) {
         this.b = b;
         this.bt = bt;
-        String sheetname = bt.jTabbedPane1.getTitleAt(bt.jTabbedPane1.getSelectedIndex());
+        String sheetname = Tc_Betervezo.jTabbedPane1.getTitleAt(Tc_Betervezo.jTabbedPane1.getSelectedIndex());
 
         List<String> wsek = new ArrayList<String>();
         boolean irtunke = false;

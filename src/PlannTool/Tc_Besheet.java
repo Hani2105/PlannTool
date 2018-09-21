@@ -6,6 +6,8 @@
 package PlannTool;
 
 import static PlannTool.Tc_Betervezo.Besheets;
+import static PlannTool.Tc_Betervezo.jComboBox1;
+import static PlannTool.Tc_Betervezo.jTabbedPane1;
 import static PlannTool.Tc_SfdcData.ig;
 import static PlannTool.Tc_SfdcData.tol;
 import static PlannTool.ablak.jTable1;
@@ -19,9 +21,12 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -44,21 +49,27 @@ import org.joda.time.format.DateTimeFormat;
  * @author gabor_hanacsek
  */
 public class Tc_Besheet extends javax.swing.JPanel {
-
+    
     public List<String> partnumbers = new ArrayList<String>();
     public List<String> workstations = new ArrayList<String>();
     public List<String[][]> ciklusidok = new ArrayList<String[][]>();
-
+    
     Tc_Betervezo bt;
-
+    
     public Tc_Besheet(Tc_Betervezo b) throws SQLException, ClassNotFoundException {
         initComponents();
-
+        
         jTable2.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         new ExcelAdapter(jTable2);
         jTable2.getTableHeader().setDefaultRenderer(new Tc_TervTablaRenderer());
         jTable2.setDefaultRenderer(Object.class, new Tc_TervTooltipRenderer(this));
         bt = b;
+
+        //letiltjuk a terv mentése gombot ha a planner false
+        if (ablak.planner == false) {
+            
+            jButton10.setEnabled(false);
+        }
 
         //lekerdezzuk a ciklusidoket
         String query = "select tc_becells.cellname , tc_bepns.partnumber , tc_bestations.workstation , tc_prodmatrix.ciklusido from tc_prodmatrix \n"
@@ -67,23 +78,23 @@ public class Tc_Besheet extends javax.swing.JPanel {
                 + "left join tc_bestations on tc_bestations.idtc_bestations = tc_prodmatrix.id_tc_bestations";
         planconnect pc = new planconnect();
         pc.planconnect(query);
-
+        
         pc.rs.last();
         int utsosor = pc.rs.getRow();
         pc.rs.beforeFirst();
-
+        
         String[][] ciklusidok = new String[utsosor][4];
         int i = 0;
         while (pc.rs.next()) {
-
+            
             ciklusidok[i][0] = pc.rs.getString(1);
             ciklusidok[i][1] = pc.rs.getString(2);
             ciklusidok[i][2] = pc.rs.getString(3);
             ciklusidok[i][3] = pc.rs.getString(4);
-
+            
             i++;
         }
-
+        
         this.ciklusidok.add(ciklusidok);
     }
 
@@ -113,6 +124,8 @@ public class Tc_Besheet extends javax.swing.JPanel {
         jButton6 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        jButton8 = new javax.swing.JButton();
+        jButton10 = new javax.swing.JButton();
 
         CellaAdatok.setText("Elérhető PN / WS");
         CellaAdatok.addActionListener(new java.awt.event.ActionListener() {
@@ -303,6 +316,42 @@ public class Tc_Besheet extends javax.swing.JPanel {
             }
         });
 
+        jButton8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/plan1.png"))); // NOI18N
+        jButton8.setToolTipText("Terv lekérése!");
+        jButton8.setBorderPainted(false);
+        jButton8.setContentAreaFilled(false);
+        jButton8.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jButton8MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jButton8MouseExited(evt);
+            }
+        });
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
+            }
+        });
+
+        jButton10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/save1.png"))); // NOI18N
+        jButton10.setToolTipText("Terv mentése!");
+        jButton10.setBorderPainted(false);
+        jButton10.setContentAreaFilled(false);
+        jButton10.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jButton10MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jButton10MouseExited(evt);
+            }
+        });
+        jButton10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton10ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -324,6 +373,10 @@ public class Tc_Besheet extends javax.swing.JPanel {
                 .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 1800, Short.MAX_VALUE)
         );
@@ -344,89 +397,91 @@ public class Tc_Besheet extends javax.swing.JPanel {
                                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGroup(layout.createSequentialGroup()
                                             .addGap(11, 11, 11)
-                                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                .addGap(1, 1, 1))
-                            .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(1, 1, 1))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(24, 24, 24)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 614, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 613, Short.MAX_VALUE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
     public void parts() throws SQLException, ClassNotFoundException {
-
+        
         planconnect pc = new planconnect();
         String query = "SELECT tc_bepns.partnumber  from tc_bepns where tc_bepns.idtc_bepns in \n"
                 + "(select distinct tc_prodmatrix.id_tc_bepns from tc_prodmatrix where tc_prodmatrix.id_tc_becells  = \n"
                 + "(SELECT tc_becells.idtc_cells FROM planningdb.tc_becells where tc_becells.cellname = '" + Tc_Cellavalaszto.neve + "'))";
-
+        
         pc.planconnect(query);
-
+        
         while (pc.rs.next()) {
-
+            
             partnumbers.add(pc.rs.getString(1));
-
+            
         }
-
+        
     }
-
+    
     public void workstations() throws SQLException, ClassNotFoundException {
-
+        
         planconnect pc = new planconnect();
         String query = "SELECT tc_bestations.workstation  from tc_bestations where tc_bestations.idtc_bestations in \n"
                 + "(select distinct tc_prodmatrix.id_tc_bestations from tc_prodmatrix where tc_prodmatrix.id_tc_becells  = \n"
                 + "(SELECT tc_becells.idtc_cells FROM planningdb.tc_becells where tc_becells.cellname = '" + Tc_Cellavalaszto.neve + "'))";
-
+        
         pc.planconnect(query);
-
+        
         while (pc.rs.next()) {
-
+            
             workstations.add(pc.rs.getString(1));
-
+            
         }
-
+        
     }
-
+    
 
     private void DeleteRowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteRowActionPerformed
-
+        
         jTable2.revalidate();
         jTable2.invalidate();
         DefaultTableModel model = new DefaultTableModel();
         model = (DefaultTableModel) jTable2.getModel();
-
+        
         model.removeRow(jTable2.convertRowIndexToModel(jTable2.getSelectedRow()));
-
+        
         jTable2.setModel(model);
-
+        
         Tc_Calculator calc = new Tc_Calculator(this, bt);
-
+        
 
     }//GEN-LAST:event_DeleteRowActionPerformed
 
     private void DeleteAreaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteAreaActionPerformed
-
+        
         int rows[] = jTable2.getSelectedRows();
         int columns[] = jTable2.getSelectedColumns();
-
+        
         for (int i = 0; i < rows.length; i++) {
-
+            
             for (int n = 0; n < columns.length; n++) {
-
+                
                 jTable2.setValueAt("", rows[i], columns[n]);
-
+                
             }
-
+            
         }
-
+        
 
     }//GEN-LAST:event_DeleteAreaActionPerformed
 
     private void CellaAdatokActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CellaAdatokActionPerformed
-
+        
         Tc_PartsOfCells p = new Tc_PartsOfCells(this);
         p.setVisible(true);
 
@@ -435,28 +490,28 @@ public class Tc_Besheet extends javax.swing.JPanel {
     private void InsertRowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_InsertRowActionPerformed
         DefaultTableModel model = new DefaultTableModel();
         model = (DefaultTableModel) jTable2.getModel();
-
+        
         if (jTable2.getValueAt(jTable2.getSelectedRow(), 3).equals("Terv")) {
-
+            
             int i = jTable2.convertRowIndexToModel(jTable2.getSelectedRow());
             model.insertRow(i, new Object[]{null, null, null, "Tény"});
             model.insertRow(i, new Object[]{null, null, null, "Terv"});
-
+            
         } else if (jTable2.getValueAt(jTable2.getSelectedRow(), 3).equals("Tény")) {
-
+            
             int i = jTable2.convertRowIndexToModel(jTable2.getSelectedRow());
             model.insertRow(i - 1, new Object[]{null, null, null, "Tény"});
             model.insertRow(i - 1, new Object[]{null, null, null, "Terv"});
-
+            
         }
-
+        
         jTable2.setModel(model);
         Tc_Calculator calc = new Tc_Calculator(this, bt);
 
     }//GEN-LAST:event_InsertRowActionPerformed
 
     private void jTable2KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTable2KeyReleased
-
+        
         if (!jTable2.isEditing()) {
             Tc_Calculator calc = new Tc_Calculator(this, bt);
         }
@@ -523,7 +578,7 @@ public class Tc_Besheet extends javax.swing.JPanel {
         a.start();
         Tc_SFDCszal sz = new Tc_SFDCszal(this);
         sz.start();
-
+        
 
     }//GEN-LAST:event_SFDClekeresActionPerformed
 
@@ -575,17 +630,17 @@ public class Tc_Besheet extends javax.swing.JPanel {
 
         //betesszuk tommbe az adatokat
         String[][] adatok = new String[model.getRowCount()][model.getColumnCount()];
-
+        
         for (int i = 0; i < model.getRowCount(); i++) {
-
+            
             for (int n = 0; n < model.getColumnCount(); n++) {
-
+                
                 try {
                     adatok[i][n] = model.getValueAt(i, n).toString();
                 } catch (Exception e) {
                 }
             }
-
+            
         }
 
         //kinullazzuk a modelt
@@ -602,26 +657,26 @@ public class Tc_Besheet extends javax.swing.JPanel {
                 // ha egyezik a pn és a JOB , és a ws es a terv/teny azaz van mar ilyen
                 try {
                     if (adatok[r][0].toString().equals(model.getValueAt(sor, 0)) && adatok[r][1].toString().equals(model.getValueAt(sor, 1)) && adatok[r][2].toString().equals(model.getValueAt(sor, 2)) && adatok[r][3].toString().equals(model.getValueAt(sor, 3))) {
-
+                        
                         vanmar = true;
                         //akkor beirjuk a darabot a megfelelo oszlopbol az aktualis cellaba
                         for (int o = 4; o < adatok.length; o++) {
-
+                            
                             try {
                                 if (!adatok[r][o].toString().equals("") && adatok[r][o] != null) {
-
+                                    
                                     model.setValueAt(adatok[r][o].toString(), sor, o);
-
+                                    
                                 }
                             } catch (Exception e) {
                             }
-
+                            
                         }
-
+                        
                     }
                 } catch (Exception e) {
                 }
-
+                
             }
 
             //de ha nincs , azaz false a vanemar , kell egy uj sor
@@ -632,22 +687,22 @@ public class Tc_Besheet extends javax.swing.JPanel {
 
                 //megkeressuk az oszlopban a db ot
                 for (int o = 4; o < adatok.length; o++) {
-
+                    
                     try {
                         if (!adatok[r][o].toString().equals("") && adatok[r][o] != null) {
-
+                            
                             model.setValueAt(adatok[r][o].toString(), model.getRowCount() - 1, o);
-
+                            
                         }
                     } catch (Exception e) {
                     }
-
+                    
                 }
-
+                
             }
-
+            
         }
-
+        
         jTable2.setModel(model);
 
     }//GEN-LAST:event_jButton6ActionPerformed
@@ -655,7 +710,7 @@ public class Tc_Besheet extends javax.swing.JPanel {
     private void jButton7MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton7MouseEntered
         // TODO add your handling code here:
         jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/envelop2.png")));
-
+        
 
     }//GEN-LAST:event_jButton7MouseEntered
 
@@ -676,20 +731,217 @@ public class Tc_Besheet extends javax.swing.JPanel {
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Tc_Besheet.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        
 
     }//GEN-LAST:event_jButton7ActionPerformed
 
-    private void filter(String query) {
+    private void jButton8MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton8MouseEntered
+        // TODO add your handling code here:
+        
+        jButton8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/plan2.png")));        
+    }//GEN-LAST:event_jButton8MouseEntered
 
+    private void jButton8MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton8MouseExited
+        jButton8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/plan1.png")));
+    }//GEN-LAST:event_jButton8MouseExited
+
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        // terv lekérése
+        
+        Besheets.clear();
+        for (int i = 0; i < jTabbedPane1.getTabCount(); i++) {
+            
+            String name = jTabbedPane1.getTitleAt(i);
+            
+            Besheets.put(name, (Tc_Besheet) jTabbedPane1.getComponentAt(i));
+            
+        }
+        
+        SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd");
+        String first = "";
+        String second = "";
+        
+        try {
+            first = df.format(bt.jDateChooser1.getDate());
+            second = df.format(bt.jDateChooser2.getDate());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        Date one = null;
+        Date two = null;
+        int napok = 0;
+        if (!first.equals("") && !second.equals("")) {
+            try {
+                one = df.parse(first);
+            } catch (ParseException ex) {
+                Logger.getLogger(Tc_Betervezo.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            try {
+                two = df.parse(second);
+            } catch (ParseException ex) {
+                Logger.getLogger(Tc_Betervezo.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        Tc_Napszamolo nap = new Tc_Napszamolo();
+        if (!first.equals("") && !second.equals("")) {
+            napok = nap.daysBetweenUsingJoda(one, two);
+        }
+
+        //System.out.println(napok);
+        //hozzaadjuk a napok es a muszakhossznak megfelelo oszlopok szamat a tablahoz
+        int n = jTabbedPane1.getSelectedIndex();
+        String neve = jTabbedPane1.getTitleAt(n);
+
+        //kitoroljuk az oszlopokat
+        DefaultTableModel model = (DefaultTableModel) Besheets.get(neve).jTable2.getModel();
+        model.setColumnCount(4);
+
+        //oszlopok neve a datumbol
+        Calendar c = Calendar.getInstance();
+        c.setTime(bt.jDateChooser1.getDate());
+        Date dt = new Date();
+        dt = c.getTime();
+        org.joda.time.format.DateTimeFormatter fmt = DateTimeFormat.forPattern("yyyy-MM-dd");
+        org.joda.time.format.DateTimeFormatter fmtnap = DateTimeFormat.forPattern("E");
+        
+        DateTime dtOrg = new DateTime(dt);
+        String columneve = "";
+        String szak = "";
+        String napneve = "";
+        TableColumn column = null;
+
+        //napok szamaszor futtatjuk
+        for (int i = 0; i < napok; i++) {
+
+            //ha 12 órás a műszakrend 2 szer
+            if (jComboBox1.getSelectedIndex() == 0) {
+                for (int k = 0; k < 2; k++) {
+                    
+                    szak = (k == 0) ? " 06:00" : " 18:00";
+                    columneve = fmt.print(dtOrg.plusDays(i)) + szak;
+                    
+                    napneve = fmtnap.print(dtOrg.plusDays(i));
+                    
+                    model.addColumn(columneve + " " + napneve);
+                    
+                }
+            }
+
+            //ha 8 órás 3 szor
+            if (jComboBox1.getSelectedIndex() == 1) {
+                for (int k = 0; k < 3; k++) {
+                    
+                    if (k == 0) {
+                        
+                        szak = " 06:00";
+                        
+                    } else if (k == 1) {
+                        
+                        szak = " 14:00";
+                    } else {
+                        
+                        szak = " 22:00";
+                        
+                    }
+                    columneve = fmt.print(dtOrg.plusDays(i)) + szak;
+                    napneve = fmtnap.print(dtOrg.plusDays(i));
+                    model.addColumn(columneve + " " + napneve);
+                    
+                }
+            }
+            
+        }
+        //col szelesseg allitas
+
+        for (int i = 0; i < Besheets.get(neve).jTable2.getModel().getColumnCount(); i++) {
+            
+            if (i != 3) {
+                column = Besheets.get(neve).jTable2.getColumnModel().getColumn(i);
+                column.setPreferredWidth(130);
+            }
+            
+        }
+
+        //lekerdezzuk az adatbazis adatokat
+        String Query = "select tc_terv.date , tc_bepns.partnumber , tc_terv.job , tc_bestations.workstation , tc_terv.qty , tc_terv.tt \n"
+                + "from tc_terv \n"
+                + "left join tc_bepns on tc_bepns.idtc_bepns = tc_terv.idtc_bepns \n"
+                + "left join tc_bestations on tc_bestations.idtc_bestations = tc_terv.idtc_bestations\n"
+                + "left join tc_becells on tc_becells.idtc_cells = tc_terv.idtc_becells\n"
+                + "where tc_terv.date between '" + fmt.print(dtOrg) + " 06:00:00" + "' and '" + columneve + ":00" + "' and tc_terv.active = 2 and tc_becells.cellname = '" + neve + "'  \n"
+                + "order by   tc_terv.date , tc_terv.wtf";
+
+        //feldolgozzuk az eredmenyt
+        planconnect pc = new planconnect();
+        try {
+            pc.planconnect(Query);
+            model.setRowCount(0);
+            int r = 0;
+            String terv = "";
+
+            //vegigporgetjuk a resultsetet
+            while (pc.rs.next()) {
+
+                //porgetjuk az oszlopokat
+                for (int i = 4; i < model.getColumnCount(); i++) {
+
+                    //h egyezik a query datuma az oszlop datumaval akkor 
+                    if (pc.rs.getString(1).equals(model.getColumnName(i).substring(0, model.getColumnName(i).length() - 4) + ":00.0")) {
+
+                        // hozzaadunk egy terv vagy teny sort
+                        if (pc.rs.getString(6).equals("0")) {
+                            
+                            terv = "Terv";
+                        } else {
+                            terv = "Tény";
+                        }
+                        model.addRow(new Object[]{pc.rs.getString(2), pc.rs.getString(3), pc.rs.getString(4), terv});
+                        model.setValueAt(pc.rs.getString(5), r, i);
+                        r++;
+                        
+                    }
+                    
+                }
+                
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(Tc_Betervezo.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Tc_Betervezo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        Besheets.get(neve).jTable2.setModel(model);
+        Tc_Calculator calc = new Tc_Calculator(Besheets.get(neve), bt);
+        
+
+    }//GEN-LAST:event_jButton8ActionPerformed
+
+    private void jButton10MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton10MouseEntered
+        // TODO add your handling code here:
+        jButton10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/save2.png")));        
+    }//GEN-LAST:event_jButton10MouseEntered
+
+    private void jButton10MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton10MouseExited
+        // TODO add your handling code here:
+        jButton10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/save1.png")));        
+    }//GEN-LAST:event_jButton10MouseExited
+
+    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton10ActionPerformed
+    
+    private void filter(String query) {
+        
         DefaultTableModel model = new DefaultTableModel();
         model = (DefaultTableModel) jTable2.getModel();
         TableRowSorter<DefaultTableModel> tr = new TableRowSorter<DefaultTableModel>(model);
-
+        
         jTable2.setRowSorter(tr);
-
+        
         tr.setRowFilter(RowFilter.regexFilter(query));
-
+        
     }
 
 
@@ -702,11 +954,13 @@ public class Tc_Besheet extends javax.swing.JPanel {
     private javax.swing.JMenu MuveletekSorokkal;
     private javax.swing.JMenuItem SFDClekeres;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
+    private javax.swing.JButton jButton8;
     public javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane2;
     public javax.swing.JTable jTable2;

@@ -37,7 +37,7 @@ public class Tc_Muszakjelentes extends javax.swing.JFrame {
         pc.planconnect(query);
 
         //cimlista string
-        String cimlista = null;
+        String cimlista = "";
 
         while (pc.rs.next()) {
 

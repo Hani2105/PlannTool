@@ -6,6 +6,9 @@
 package PlannTool;
 
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -19,6 +22,9 @@ public class Tc_Muszakjelentes extends javax.swing.JFrame {
      * Creates new form Tc_Muszakjelentes
      */
     Tc_Besheet b;
+    String ellenorzoadat = "";
+    String Email = "";
+    String subject = "";
 
     public Tc_Muszakjelentes(Tc_Besheet b) throws SQLException, ClassNotFoundException {
         initComponents();
@@ -56,7 +62,6 @@ public class Tc_Muszakjelentes extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -66,6 +71,11 @@ public class Tc_Muszakjelentes extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
+        jLabel7 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTextArea2 = new javax.swing.JTextArea();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jTextArea3 = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Műszakjelentés");
@@ -109,41 +119,65 @@ public class Tc_Muszakjelentes extends javax.swing.JFrame {
         jTextArea1.setRows(5);
         jScrollPane1.setViewportView(jTextArea1);
 
+        jLabel7.setText("Műszakvezetői komment:");
+
+        jTextArea2.setColumns(20);
+        jTextArea2.setRows(5);
+        jTextArea2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextArea2KeyTyped(evt);
+            }
+        });
+        jScrollPane2.setViewportView(jTextArea2);
+
+        jTextArea3.setEditable(false);
+        jTextArea3.setColumns(20);
+        jTextArea3.setRows(5);
+        jScrollPane3.setViewportView(jTextArea3);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                        .addGap(0, 0, Short.MAX_VALUE)
-                                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(137, 137, 137)))
-                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(0, 9, Short.MAX_VALUE)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 509, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 509, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(137, 137, 137)
+                                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addContainerGap(21, Short.MAX_VALUE)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 509, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 509, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 342, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 342, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jScrollPane2)
+                                    .addComponent(jScrollPane3))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -170,11 +204,18 @@ public class Tc_Muszakjelentes extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(12, 12, 12)
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel7)))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(230, 230, 230)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
 
@@ -239,7 +280,7 @@ public class Tc_Muszakjelentes extends javax.swing.JFrame {
         //az osszesitett adatok formazasa , osszeallitasa
         String osszesitett1 = "<tr align=\"center\"><td>Terv/Tény</td><td align=\"center\">Állomás</td><td align=\"center\">Summa</td></tr>";
         String osszesitett = "";
-        
+
         try {
             while (pc.rs.next()) {
 
@@ -259,9 +300,11 @@ public class Tc_Muszakjelentes extends javax.swing.JFrame {
                 + "(select tc_becells.idtc_cells from tc_becells where tc_becells.cellname = '" + cellname + "') and tc_terv.active = 2\n"
                 + "order by tc_terv.wtf, tc_bepns.partnumber , workstation ,   tt desc";
 
-        String reszletes1 = "<tr><td align=\"center\">Terv/Tény</td><td align=\"center\">Partnumber</td><td>JOB</td><td align=\"center\">Állomás</td><td align=\"center\">Darab</td></tr>";
+        String reszletes1 = "<tr><td align=\"center\">Terv/Tény</td><td align=\"center\">Partnumber</td><td>JOB</td><td align=\"center\">Állomás</td><td align=\"center\">Darab/Komment</td></tr>";
         String reszletes = "";
-        String ellenorzo = "Ezek az adatok kerülnek elküldésre! \n Módosí";
+
+        String ellenorzo = "";
+
         try {
             //osszeallitjuk a stringet az adatokból
 
@@ -269,7 +312,7 @@ public class Tc_Muszakjelentes extends javax.swing.JFrame {
 
             while (pc.rs.next()) {
 
-                ellenorzo +=  pc.rs.getString(1) + " " + pc.rs.getString(2) + " " + pc.rs.getString(3) + " " + pc.rs.getString(4) + " " + pc.rs.getString(5) + "\n";
+                ellenorzo += pc.rs.getString(1) + "  " + pc.rs.getString(2) + "  " + pc.rs.getString(3) + "  " + pc.rs.getString(4) + "  " + pc.rs.getString(5) + "\n";
                 reszletes += "<tr><td align=\"center\">" + pc.rs.getString(1) + "</td><td align=\"center\">" + pc.rs.getString(2) + "</td><td align=\"center\">" + pc.rs.getString(3) + "</td><td align=\"center\">" + pc.rs.getString(4) + "</td><td align=\"center\">" + pc.rs.getString(5) + "</td></tr>";
 
             }
@@ -280,7 +323,11 @@ public class Tc_Muszakjelentes extends javax.swing.JFrame {
             Logger.getLogger(Tc_Muszakjelentes.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        String Email = "<html>\n"
+        ellenorzoadat = "Ezek az adatok kerülnek elküldésre! \nMódosításhoz változtasd meg az elmentett adatokat! \n \n" + ellenorzo + "\n\n" + "Műszakvezetői komment:\n";
+
+        jTextArea3.setText(ellenorzoadat);
+
+        Email = "<html>\n"
                 + "    <head>\n"
                 + "        <title>TODO supply a title</title>\n"
                 + "        <meta charset=\"UTF-8\">\n"
@@ -288,7 +335,7 @@ public class Tc_Muszakjelentes extends javax.swing.JFrame {
                 + "    </head>\n"
                 + "    <body>\n"
                 //cella neve
-                + "        <div style=\"color:red;font-size:200%\">" + cellname + " Cella hatékonysága:<br></div>\n"
+                + "<div style=\"color:red;font-size:200%\">" + cellname + " Cella hatékonysága:<br></div>\n"
                 //állomások kihasználtsága idő
                 + ws
                 + "<br>"
@@ -306,22 +353,39 @@ public class Tc_Muszakjelentes extends javax.swing.JFrame {
                 + reszletes1
                 + reszletes
                 + "</table>"
+                //műszakvezetői komment
+                + "<br><br>"
+                + "<div style=\"font-size:200%\">Műszakvezetői komment:</div>"
                 + "    </body>\n"
                 + "</html>";
 //osszeallitjuk a targyat
-        String subject = "Műszakjelentés: " + cellname + " " + b.jTable2.getColumnName(b.jTable2.getSelectedColumn()).substring(0, 16);
-
-        //peldanyositunk egy levelkuldot
-        Tc_Levelkuldes l = new Tc_Levelkuldes();
-
-        l.beir(subject, Email, "gabor.hanacsek@sanmina.com,roland.bognar@sanmina.com,gina.gerecz@sanmina.com,alexandra.havelda@sanmina.com");
-
+        subject = "Műszakjelentés: " + cellname + " " + b.jTable2.getColumnName(b.jTable2.getSelectedColumn()).substring(0, 16);
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+
+        //peldanyositunk egy levelkuldot
+        Tc_Levelkuldes l = new Tc_Levelkuldes();
+
+        Email += "<html><div>" + jTextArea2.getText().replace("\n", "<br>") + "</div></html>";
+
+        l.beir(subject, Email, "gabor.hanacsek@sanmina.com,roland.bognar@sanmina.com,gina.gerecz@sanmina.com,alexandra.havelda@sanmina.com");
+        DateFormat df = new SimpleDateFormat("HH:mm:ss");
+        Date dateobj = new Date();
+        //System.out.println(df.format(dateobj));
+        b.jLabel1.setText("Levél elküldve: " + df.format(dateobj));
+        this.dispose();
+
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jTextArea2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextArea2KeyTyped
+        // TODO add your handling code here:
+
+        String ellenorzobe = jTextArea2.getText();
+        jTextArea3.setText(ellenorzoadat + ellenorzobe);
+
+    }//GEN-LAST:event_jTextArea2KeyTyped
 
     /**
      * @param args the command line arguments
@@ -367,9 +431,13 @@ public class Tc_Muszakjelentes extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextArea jTextArea2;
+    private javax.swing.JTextArea jTextArea3;
     // End of variables declaration//GEN-END:variables
 }

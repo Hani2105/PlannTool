@@ -124,8 +124,8 @@ public class Tc_Muszakjelentes extends javax.swing.JFrame {
         jTextArea2.setColumns(20);
         jTextArea2.setRows(5);
         jTextArea2.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                jTextArea2KeyTyped(evt);
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextArea2KeyPressed(evt);
             }
         });
         jScrollPane2.setViewportView(jTextArea2);
@@ -370,7 +370,7 @@ public class Tc_Muszakjelentes extends javax.swing.JFrame {
 
         Email += "<html><div>" + jTextArea2.getText().replace("\n", "<br>") + "</div></html>";
 
-        l.beir(subject, Email, "gabor.hanacsek@sanmina.com,roland.bognar@sanmina.com,gina.gerecz@sanmina.com,alexandra.havelda@sanmina.com");
+        l.beir(subject, Email, jTextArea1.getText());
         DateFormat df = new SimpleDateFormat("HH:mm:ss");
         Date dateobj = new Date();
         //System.out.println(df.format(dateobj));
@@ -379,13 +379,13 @@ public class Tc_Muszakjelentes extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jTextArea2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextArea2KeyTyped
-        // TODO add your handling code here:
+    private void jTextArea2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextArea2KeyPressed
 
         String ellenorzobe = jTextArea2.getText();
         jTextArea3.setText(ellenorzoadat + ellenorzobe);
 
-    }//GEN-LAST:event_jTextArea2KeyTyped
+
+    }//GEN-LAST:event_jTextArea2KeyPressed
 
     /**
      * @param args the command line arguments

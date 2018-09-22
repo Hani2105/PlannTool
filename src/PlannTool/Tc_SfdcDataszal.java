@@ -103,17 +103,37 @@ public class Tc_SfdcDataszal extends Thread {
 
                     if (osszeg > 0) {
 
+                        //ezzel ellenorizzuk hogy beirtuk e a szamot
+                        boolean irtunke = false;
+                        int sorszam = 0;
+
                         //miutan vegigporgettuk a lekerdezes eredmenyet (rowdata) beirjuk a terve alá
                         for (int sor = 0; sor < d.b.jTable2.getRowCount(); sor++) {
 
+                            //felvesszuk az utolso megfelelo sor szamat , hogy kesobb irhassunk bele ha nincs terve az adott napra
                             try {
-                                if (d.b.jTable2.getValueAt(sor, 0).toString().equals(d.b.jTable2.getValueAt(r, 0)) && d.b.jTable2.getValueAt(sor, 3).toString().equals("Tény") && !d.b.jTable2.getValueAt(sor - 1, i).toString().equals("")) {
+                                if (d.b.jTable2.getValueAt(sor, 0).toString().equals(d.b.jTable2.getValueAt(r, 0)) && d.b.jTable2.getValueAt(sor, 3).toString().equals("Tény") && d.b.jTable2.getValueAt(sor, 2).toString().equals(d.b.jTable2.getValueAt(r, 2))) {
+
+                                    sorszam = sor;
+                                }
+                            } catch (Exception e) {
+                            }
+                            try {
+                                if (d.b.jTable2.getValueAt(sor, 0).toString().equals(d.b.jTable2.getValueAt(r, 0)) && d.b.jTable2.getValueAt(sor, 3).toString().equals("Tény") && d.b.jTable2.getValueAt(sor, 2).toString().equals(d.b.jTable2.getValueAt(r, 2)) && !d.b.jTable2.getValueAt(sor - 1, i).toString().equals("")&& d.b.jTable2.getValueAt(sor -1, 3).toString().equals("Terv") ) {
 
                                     d.b.jTable2.setValueAt(osszeg, sor, i);
+                                    irtunke = true;
+                                    break;
 
                                 }
                             } catch (Exception e) {
                             }
+
+                        }
+
+                        if (irtunke == false && sorszam > 0) {
+
+                            d.b.jTable2.setValueAt(osszeg, sorszam, i);
 
                         }
 
@@ -125,9 +145,7 @@ public class Tc_SfdcDataszal extends Thread {
 
         }
 
-        d.dispose();
         Tc_AnimationSFDC.rajzole = false;
-
     }
 
 }

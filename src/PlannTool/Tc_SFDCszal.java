@@ -31,11 +31,27 @@ public class Tc_SFDCszal extends Thread {
 
         // sfdc keres
         // az oszlop nevet atalakitjuk stringe , ez lesz a tol datum
-        String tol = b.jTable2.getColumnName(b.jTable2.getSelectedColumn()).substring(0, b.jTable2.getColumnName(b.jTable2.getSelectedColumn()).length() - 4);
+        String tol = "";
+        try {
+            tol = b.jTable2.getColumnName(b.jTable2.getSelectedColumn()).substring(0, b.jTable2.getColumnName(b.jTable2.getSelectedColumn()).length() - 4);
+        } catch (Exception e) {
+
+            infobox info = new infobox();
+            info.infoBox("Nem jó oszlopot választottál ki , vagy nem választottál ki oszlopot!", "Hiba!");
+        }
 
         // kitalaljuk a meddiget
         org.joda.time.format.DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm");
-        DateTime dt = formatter.parseDateTime(tol);
+
+        DateTime dt = null;
+        try {
+            dt = formatter.parseDateTime(tol);
+        } catch (Exception e) {
+
+            infobox info = new infobox();
+            info.infoBox("Nem jó oszlopot választottál ki , vagy nem választottál ki oszlopot!", "Hiba!");
+
+        }
 
         //ha 12 ora van beallitva 12 -t adunk hozza
         if (Tc_Betervezo.jComboBox1.getSelectedIndex() == 0) {
@@ -116,17 +132,38 @@ public class Tc_SFDCszal extends Thread {
 
                     if (osszeg > 0) {
 
+                        //ezzel ellenorizzuk hogy beirtuk e a szamot
+                        boolean irtunke = false;
+                        int sorszam = 0;
+
                         //miutan vegigporgettuk a lekerdezes eredmenyet (rowdata) beirjuk a terve alá
                         for (int sor = 0; sor < b.jTable2.getRowCount(); sor++) {
 
+                            //felvesszuk az utolso megfelelo sor szamat , hogy kesobb irhassunk bele ha nincs terve az adott napra
                             try {
-                                if (b.jTable2.getValueAt(sor, 0).toString().equals(b.jTable2.getValueAt(r, 0)) && b.jTable2.getValueAt(sor, 3).toString().equals("Tény") && !b.jTable2.getValueAt(sor - 1, i).toString().equals("")) {
+                                if (b.jTable2.getValueAt(sor, 0).toString().equals(b.jTable2.getValueAt(r, 0)) && b.jTable2.getValueAt(sor, 3).toString().equals("Tény") && b.jTable2.getValueAt(sor, 2).toString().equals(b.jTable2.getValueAt(r, 2))) {
+
+                                    sorszam = sor;
+                                }
+                            } catch (Exception e) {
+                            }
+                            try {
+                                if (b.jTable2.getValueAt(sor, 0).toString().equals(b.jTable2.getValueAt(r, 0)) && b.jTable2.getValueAt(sor, 3).toString().equals("Tény") && b.jTable2.getValueAt(sor, 2).toString().equals(b.jTable2.getValueAt(r, 2)) && !b.jTable2.getValueAt(sor - 1, i).toString().equals("") && b.jTable2.getValueAt(sor -1, 3).toString().equals("Terv") ) {
 
                                     b.jTable2.setValueAt(osszeg, sor, i);
+                                    irtunke = true;
+                                    break;
 
                                 }
                             } catch (Exception e) {
                             }
+
+                        }
+
+                        //ha nem irtuk be mert nem volt terve akkor beirjuk
+                        if (irtunke == false && sorszam > 0) {
+
+                            b.jTable2.setValueAt(osszeg, sorszam, i);
 
                         }
 

@@ -371,10 +371,9 @@ public class Tc_Muszakjelentes extends javax.swing.JFrame {
         Email += "<html><div>" + jTextArea2.getText().replace("\n", "<br>") + "</div></html>";
 
         l.beir(subject, Email, jTextArea1.getText());
-        DateFormat df = new SimpleDateFormat("HH:mm:ss");
+        DateFormat df = new SimpleDateFormat("HH:mm");
         Date dateobj = new Date();
-        //System.out.println(df.format(dateobj));
-        b.jLabel1.setText("Levél elküldve: " + df.format(dateobj));
+        b.jLabel1.setText("Elküldve: " + df.format(dateobj));
         this.dispose();
 
     }//GEN-LAST:event_jButton2ActionPerformed

@@ -121,11 +121,11 @@ public class Tc_Calculator {
                             boolean hiba = true;
 
                             //megkeressuk a darab/orat
-                            for (int n = 0; n < b.ciklusidok.get(0).length; n++) {
+                            for (int n = 0; n < Tc_Besheet.ciklusidok.get(0).length; n++) {
 
-                                if (b.ciklusidok.get(0)[n][0].equals(sheetname) && b.ciklusidok.get(0)[n][1].equals(pn) && b.ciklusidok.get(0)[n][2].equals(ws)) {
+                                if (Tc_Besheet.ciklusidok.get(0)[n][0].equals(sheetname) && Tc_Besheet.ciklusidok.get(0)[n][1].equals(pn) && Tc_Besheet.ciklusidok.get(0)[n][2].equals(ws)) {
 
-                                    dbo = Double.parseDouble(b.ciklusidok.get(0)[n][3]);
+                                    dbo = Double.parseDouble(Tc_Besheet.ciklusidok.get(0)[n][3]);
                                     hiba = false;
 
                                 }

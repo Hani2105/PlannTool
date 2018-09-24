@@ -694,9 +694,7 @@ public class Tc_Besetup extends javax.swing.JFrame {
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Tc_Besetup.class.getName()).log(Level.SEVERE, null, ex);
         }
-        //frissitjuk a tablat
-        //frissitjuk a tablat
-        //frissitjuk a tablat
+       
         //frissitjuk a tablat
 
         DefaultTableModel model = new DefaultTableModel();
@@ -732,6 +730,63 @@ public class Tc_Besetup extends javax.swing.JFrame {
         centerRenderer.setHorizontalAlignment(JLabel.CENTER);
         jTable1.setDefaultRenderer(Object.class, centerRenderer);
         jTable1.setModel(model);
+        
+        //frissitjuk a sheet adatait , hogy frissuljon a kalkulátor
+        
+        //kinullazzuk a ciklusidok adatokat
+        
+        Tc_Besheet.ciklusidok.clear();
+        
+        //lekerdezzuk a ciklusidoket
+        
+        
+        query = "select tc_becells.cellname , tc_bepns.partnumber , tc_bestations.workstation , tc_prodmatrix.ciklusido from tc_prodmatrix \n"
+                + "left join tc_becells on tc_becells.idtc_cells = tc_prodmatrix.id_tc_becells \n"
+                + "left join tc_bepns on tc_bepns.idtc_bepns = tc_prodmatrix.id_tc_bepns\n"
+                + "left join tc_bestations on tc_bestations.idtc_bestations = tc_prodmatrix.id_tc_bestations";
+        pc = new planconnect();
+        try {
+            pc.planconnect(query);
+        } catch (SQLException ex) {
+            Logger.getLogger(Tc_Besetup.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Tc_Besetup.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        try {
+            pc.rs.last();
+        } catch (SQLException ex) {
+            Logger.getLogger(Tc_Besetup.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        int utsosor = 0;
+        try {
+            utsosor = pc.rs.getRow();
+        } catch (SQLException ex) {
+            Logger.getLogger(Tc_Besetup.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            pc.rs.beforeFirst();
+        } catch (SQLException ex) {
+            Logger.getLogger(Tc_Besetup.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        String[][] ciklusidok = new String[utsosor][4];
+        int i = 0;
+        try {
+            while (pc.rs.next()) {
+                
+                ciklusidok[i][0] = pc.rs.getString(1);
+                ciklusidok[i][1] = pc.rs.getString(2);
+                ciklusidok[i][2] = pc.rs.getString(3);
+                ciklusidok[i][3] = pc.rs.getString(4);
+                
+                i++;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Tc_Besetup.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        Tc_Besheet.ciklusidok.add(ciklusidok);
 
 
     }//GEN-LAST:event_jButton4ActionPerformed

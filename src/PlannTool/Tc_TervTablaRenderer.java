@@ -28,31 +28,38 @@ public class Tc_TervTablaRenderer extends DefaultTableCellRenderer {
 
         JLabel c = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 
-        if (table.getColumnName(column).toLowerCase().contains("Sun".toLowerCase())) {
+        try {
 
-            c.setBackground(Color.RED);
-            c.setBorder(BorderFactory.createEtchedBorder(1));
-            c.setForeground(Color.BLACK);
+            if (table.getColumnName(column).toLowerCase().contains("Sun".toLowerCase())) {
 
-        } else if (table.getColumnName(column).toLowerCase().contains("Sat".toLowerCase())) {
+                c.setBackground(Color.RED);
+                c.setBorder(BorderFactory.createEtchedBorder(1));
+                c.setForeground(Color.BLACK);
 
-            c.setBackground(Color.ORANGE);
-            c.setBorder(BorderFactory.createEtchedBorder(1));
-            c.setForeground(Color.BLACK);
+            } else if (table.getColumnName(column).toLowerCase().contains("Sat".toLowerCase())) {
 
-        } else {
-            setBackground(null);
-            c.setBorder(BorderFactory.createEtchedBorder(1));
-            c.setForeground(Color.BLACK);
+                c.setBackground(Color.ORANGE);
+                c.setBorder(BorderFactory.createEtchedBorder(1));
+                c.setForeground(Color.BLACK);
 
+            } else {
+                setBackground(null);
+                c.setBorder(BorderFactory.createEtchedBorder(1));
+                c.setForeground(Color.BLACK);
+
+            }
+        } catch (Exception e) {
         }
 
-        if (table.getColumnName(column).toLowerCase().contains("PartNumber".toLowerCase()) || table.getColumnName(column).toLowerCase().contains("workstation".toLowerCase()) || table.getColumnName(column).toLowerCase().contains("job".toLowerCase())) {
+        try {
+            if (table.getColumnName(column).toLowerCase().contains("PartNumber".toLowerCase()) || table.getColumnName(column).toLowerCase().contains("workstation".toLowerCase()) || table.getColumnName(column).toLowerCase().contains("job".toLowerCase())) {
 
-            c.setBackground(Color.LIGHT_GRAY);
-            c.setForeground(Color.BLACK);
-            c.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+                c.setBackground(Color.LIGHT_GRAY);
+                c.setForeground(Color.BLACK);
+                c.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
+            }
+        } catch (Exception e) {
         }
 
         c.setHorizontalAlignment(CENTER);

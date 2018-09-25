@@ -124,7 +124,9 @@ public class Tc_Besheet extends javax.swing.JPanel {
         MuveletekSorokkal = new javax.swing.JMenu();
         InsertRow = new javax.swing.JMenuItem();
         DeleteRow = new javax.swing.JMenuItem();
+        SFDCmuveletek = new javax.swing.JMenu();
         SFDClekeres = new javax.swing.JMenuItem();
+        SFDCall = new javax.swing.JMenuItem();
         jButton1 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
@@ -179,18 +181,30 @@ public class Tc_Besheet extends javax.swing.JPanel {
 
         JPopupMenu1.add(MuveletekSorokkal);
 
+        SFDCmuveletek.setText("Műveletek az SFDC vel:");
+
         SFDClekeres.setText("SFDC lekérés");
         SFDClekeres.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 SFDClekeresActionPerformed(evt);
             }
         });
-        JPopupMenu1.add(SFDClekeres);
+        SFDCmuveletek.add(SFDClekeres);
+
+        SFDCall.setText("SFDC lekérése az összes cellára!");
+        SFDCall.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SFDCallActionPerformed(evt);
+            }
+        });
+        SFDCmuveletek.add(SFDCall);
+
+        JPopupMenu1.add(SFDCmuveletek);
 
         setComponentPopupMenu(JPopupMenu1);
         setPreferredSize(new java.awt.Dimension(1800, 700));
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/paint1.png"))); // NOI18N
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/colorc1.png"))); // NOI18N
         jButton1.setToolTipText("Ter/Tény színezése");
         jButton1.setBorderPainted(false);
         jButton1.setContentAreaFilled(false);
@@ -231,7 +245,7 @@ public class Tc_Besheet extends javax.swing.JPanel {
             jTable2.getColumnModel().getColumn(3).setPreferredWidth(70);
         }
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/pull1.png"))); // NOI18N
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/behuzos1.png"))); // NOI18N
         jButton2.setToolTipText("Behúzós");
         jButton2.setBorderPainted(false);
         jButton2.setContentAreaFilled(false);
@@ -312,7 +326,7 @@ public class Tc_Besheet extends javax.swing.JPanel {
             }
         });
 
-        jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/envelop1.png"))); // NOI18N
+        jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/email1.png"))); // NOI18N
         jButton7.setToolTipText("Műszakjelentés küldése");
         jButton7.setBorderPainted(false);
         jButton7.setContentAreaFilled(false);
@@ -371,7 +385,7 @@ public class Tc_Besheet extends javax.swing.JPanel {
             }
         });
 
-        jButton11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/tenysave1.png"))); // NOI18N
+        jButton11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/upload1.png"))); // NOI18N
         jButton11.setToolTipText("Tény mentése!");
         jButton11.setBorderPainted(false);
         jButton11.setContentAreaFilled(false);
@@ -460,8 +474,7 @@ public class Tc_Besheet extends javax.swing.JPanel {
                         .addGap(23, 23, 23)
                         .addComponent(jLabel3)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 613, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 625, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -574,12 +587,12 @@ public class Tc_Besheet extends javax.swing.JPanel {
 
     private void jButton1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseEntered
         // TODO add your handling code here:
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/paint2.png")));
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/colorc.png")));
     }//GEN-LAST:event_jButton1MouseEntered
 
     private void jButton1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseExited
         // TODO add your handling code here:
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/paint1.png")));
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/colorc1.png")));
     }//GEN-LAST:event_jButton1MouseExited
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -591,12 +604,12 @@ public class Tc_Besheet extends javax.swing.JPanel {
 
     private void jButton2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseEntered
         // TODO add your handling code here:
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/pull2.png")));
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/behuzos.png")));
     }//GEN-LAST:event_jButton2MouseEntered
 
     private void jButton2MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseExited
         // TODO add your handling code here:
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/pull1.png")));
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/behuzos1.png")));
     }//GEN-LAST:event_jButton2MouseExited
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -638,7 +651,7 @@ public class Tc_Besheet extends javax.swing.JPanel {
 
     private void jButton4MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton4MouseEntered
         // TODO add your handling code here:
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/search2.png")));
+        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/search.png")));
 
     }//GEN-LAST:event_jButton4MouseEntered
 
@@ -656,7 +669,7 @@ public class Tc_Besheet extends javax.swing.JPanel {
 
     private void jTextField1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextField1MouseEntered
         // TODO add your handling code here:
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/search2.png")));
+        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/search.png")));
 
     }//GEN-LAST:event_jTextField1MouseEntered
 
@@ -667,7 +680,7 @@ public class Tc_Besheet extends javax.swing.JPanel {
 
     private void jButton6MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton6MouseEntered
         // TODO add your handling code here:
-        jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/look2.png")));
+        jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/look.png")));
     }//GEN-LAST:event_jButton6MouseEntered
 
     private void jButton6MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton6MouseExited
@@ -763,14 +776,14 @@ public class Tc_Besheet extends javax.swing.JPanel {
 
     private void jButton7MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton7MouseEntered
         // TODO add your handling code here:
-        jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/envelop2.png")));
+        jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/email.png")));
 
 
     }//GEN-LAST:event_jButton7MouseEntered
 
     private void jButton7MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton7MouseExited
         // TODO add your handling code here:
-        jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/envelop1.png")));
+        jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/email1.png")));
     }//GEN-LAST:event_jButton7MouseExited
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
@@ -792,7 +805,7 @@ public class Tc_Besheet extends javax.swing.JPanel {
     private void jButton8MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton8MouseEntered
         // TODO add your handling code here:
 
-        jButton8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/plan2.png")));
+        jButton8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/plan.png")));
     }//GEN-LAST:event_jButton8MouseEntered
 
     private void jButton8MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton8MouseExited
@@ -934,7 +947,7 @@ public class Tc_Besheet extends javax.swing.JPanel {
                 + "left join tc_bestations on tc_bestations.idtc_bestations = tc_terv.idtc_bestations\n"
                 + "left join tc_becells on tc_becells.idtc_cells = tc_terv.idtc_becells\n"
                 + "where tc_terv.date between '" + fmt.print(dtOrg) + " 06:00:00" + "' and '" + columneve + ":00" + "' and tc_terv.active = 2 and tc_becells.cellname = '" + neve + "'  \n"
-                + "order by   tc_terv.date , tc_terv.wtf";
+                + "order by tc_terv.date , tc_terv.wtf";
 
         //feldolgozzuk az eredmenyt
         planconnect pc = new planconnect();
@@ -984,7 +997,7 @@ public class Tc_Besheet extends javax.swing.JPanel {
 
     private void jButton10MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton10MouseEntered
         // TODO add your handling code here:
-        jButton10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/save2.png")));
+        jButton10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/save.png")));
     }//GEN-LAST:event_jButton10MouseEntered
 
     private void jButton10MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton10MouseExited
@@ -1210,45 +1223,22 @@ public class Tc_Besheet extends javax.swing.JPanel {
                             ora = " 22:00:00";
                         }
 
-                        //ha van beírva valami darabszám
-                        if (t2.getValueAt(r, i) != null && !t2.getValueAt(r, i).toString().equals("")) {
+                        //ha van beírva valami darabszám és terv asor
+                        if (t2.getValueAt(r, i) != null && !t2.getValueAt(r, i).toString().equals("") && t2.getValueAt(r, 3).toString().equals("Terv")) {
+                            int tervwtf = (r * i);
+                            int tenywtf = tervwtf + 1;
 
                             datum = t2.getColumnName(i).substring(0, 10) + ora;
 
-                            String qty = null;
+                            feltoltadat += "('" + cellid + "','" + wsid + "','" + pnid + "','" + job + "','" + datum + "','" + t2.getValueAt(r, i) + "','" + tervwtf + "'," + "0" + ",'" + System.getProperty("user.name") + "'),";
                             try {
-                                qty = t2.getValueAt(r, i).toString();
-
-                                if (qty == null) {
-                                    qty = "0";
-                                }
+                                feltoltadat += "('" + cellid + "','" + wsid + "','" + pnid + "','" + job + "','" + datum + "','" + t2.getValueAt(r + 1, i).toString() + "','" + tenywtf + "'," + "1" + ",'" + System.getProperty("user.name") + "'),";
                             } catch (Exception e) {
-                            };
 
-                            //terv vagy teny
-                            int tervteny = 0;
-                            if (t2.getValueAt(r, 3).toString().equals("Tény") || t2.getValueAt(r, 3) == null || t2.getValueAt(r, 3).toString().equals("")) {
-
-                                tervteny = 1;
+                                feltoltadat += "('" + cellid + "','" + wsid + "','" + pnid + "','" + job + "','" + datum + "','" + "0" + "','" + tenywtf + "'," + "1" + ",'" + System.getProperty("user.name") + "'),";
 
                             }
 
-                            feltoltadat += "('" + cellid + "','" + wsid + "','" + pnid + "','" + job + "','" + datum + "','" + qty + "','" + i * r + "'," + tervteny + ",'" + System.getProperty("user.name") + "'),";
-
-                            //ha nincs megadva sem pn sem ws akkor feltoltjuk tenykent a terv adatiat nulla megvalósulásal
-                            try {
-                                if (((((t2.getValueAt(r + 1, 0) == null || t2.getValueAt(r + 1, 0).toString().equals("")) && (t2.getValueAt(r + 1, 2) == null || t2.getValueAt(r + 1, 2).toString().equals(""))) && t2.getValueAt(r, 3).toString().equals("Terv"))) && (!t2.getValueAt(r, 0).toString().equals(""))) {
-                                    feltoltadat += "('" + cellid + "','" + wsid + "','" + pnid + "','" + job + "','" + datum + "','" + "0" + "','" + (i * r + 1) + "'," + "'1'," + "'" + System.getProperty("user.name") + "'),";
-
-                                } //vagy ha van tény pn és ws de nincs beírva darab
-                                else if (!t2.getValueAt(r + 1, 0).toString().equals("") && !t2.getValueAt(r + 1, 2).toString().equals("") && t2.getValueAt(r + 1, i) == null && t2.getValueAt(r, 3).equals("Terv")) {
-
-                                    feltoltadat += "('" + cellid + "','" + wsid + "','" + pnid + "','" + job + "','" + datum + "','" + "0" + "','" + (i * r + 1) + "'," + "'1'," + "'" + System.getProperty("user.name") + "'),";
-
-                                }
-
-                            } catch (Exception e) {
-                            }
                             pn = "";
                             ws = "";
                             cell = "";
@@ -1289,12 +1279,12 @@ public class Tc_Besheet extends javax.swing.JPanel {
 
     private void jButton11MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton11MouseEntered
         // TODO add your handling code here:
-        jButton11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/tenysave2.png")));
+        jButton11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/upload.png")));
     }//GEN-LAST:event_jButton11MouseEntered
 
     private void jButton11MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton11MouseExited
         // TODO add your handling code here:
-        jButton11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/tenysave1.png")));
+        jButton11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/upload1.png")));
     }//GEN-LAST:event_jButton11MouseExited
 
     private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
@@ -1341,7 +1331,7 @@ public class Tc_Besheet extends javax.swing.JPanel {
             infobox info = new infobox();
             info.infoBox("Változott a terv! Kérd le újból!", "Terv változás!");
             return;
-        } 
+        }
 
         //mentjuk a tervet , összeallitjuk az adat queryt
         //bejarjuk az oszlopokat 4 től
@@ -1354,11 +1344,12 @@ public class Tc_Besheet extends javax.swing.JPanel {
 
                 if (jTable2.getValueAt(r, i) != null && jTable2.getValueAt(r, 3).toString().equals("Tény")) {
                     String job = "";
+                    int tenywtf = r * i;
                     try {
                         job = jTable2.getValueAt(r, 1).toString();
                     } catch (Exception e) {
                     }
-                    adat += "('" + jTable2.getColumnName(i).substring(0, 16) + ":00',(select tc_becells.idtc_cells from tc_becells where tc_becells.cellname = '" + bt.jTabbedPane1.getTitleAt(bt.jTabbedPane1.getSelectedIndex()) + "'),(select tc_bestations.idtc_bestations from tc_bestations where tc_bestations.workstation = '" + jTable2.getValueAt(r, 2).toString() + "'),(select tc_bepns.idtc_bepns from tc_bepns where tc_bepns.partnumber = '" + jTable2.getValueAt(r, 0).toString() + "'),'" + jTable2.getValueAt(r, i).toString() + "','" + (i * r + 1) + "','2','1','" + System.getProperty("user.name") + "','" + job + "'),";
+                    adat += "('" + jTable2.getColumnName(i).substring(0, 16) + ":00',(select tc_becells.idtc_cells from tc_becells where tc_becells.cellname = '" + bt.jTabbedPane1.getTitleAt(bt.jTabbedPane1.getSelectedIndex()) + "'),(select tc_bestations.idtc_bestations from tc_bestations where tc_bestations.workstation = '" + jTable2.getValueAt(r, 2).toString() + "'),(select tc_bepns.idtc_bepns from tc_bepns where tc_bepns.partnumber = '" + jTable2.getValueAt(r, 0).toString() + "'),'" + jTable2.getValueAt(r, i).toString() + "','" + tenywtf + "','2','1','" + System.getProperty("user.name") + "','" + job + "'),";
                 }
 
             }
@@ -1407,6 +1398,16 @@ public class Tc_Besheet extends javax.swing.JPanel {
 
     }//GEN-LAST:event_jButton11ActionPerformed
 
+    private void SFDCallActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SFDCallActionPerformed
+        // sfdc lekerese az osszes szakra
+        Tc_osszsfdccellabol o = new Tc_osszsfdccellabol(this);
+        Tc_AnimationSFDC a = new Tc_AnimationSFDC();
+        o.start();
+        a.start();
+        
+        
+    }//GEN-LAST:event_SFDCallActionPerformed
+
     private void filter(String query) {
 
         DefaultTableModel model = new DefaultTableModel();
@@ -1427,7 +1428,9 @@ public class Tc_Besheet extends javax.swing.JPanel {
     private javax.swing.JMenuItem InsertRow;
     public javax.swing.JPopupMenu JPopupMenu1;
     private javax.swing.JMenu MuveletekSorokkal;
+    private javax.swing.JMenuItem SFDCall;
     private javax.swing.JMenuItem SFDClekeres;
+    private javax.swing.JMenu SFDCmuveletek;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton11;

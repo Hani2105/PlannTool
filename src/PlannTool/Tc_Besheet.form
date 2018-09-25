@@ -52,14 +52,29 @@
             </MenuItem>
           </SubComponents>
         </Menu>
-        <MenuItem class="javax.swing.JMenuItem" name="SFDClekeres">
+        <Menu class="javax.swing.JMenu" name="SFDCmuveletek">
           <Properties>
-            <Property name="text" type="java.lang.String" value="SFDC lek&#xe9;r&#xe9;s"/>
+            <Property name="text" type="java.lang.String" value="M&#x171;veletek az SFDC vel:"/>
           </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="SFDClekeresActionPerformed"/>
-          </Events>
-        </MenuItem>
+          <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="SFDClekeres">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="SFDC lek&#xe9;r&#xe9;s"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="SFDClekeresActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="SFDCall">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="SFDC lek&#xe9;r&#xe9;se az &#xf6;sszes cell&#xe1;ra!"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="SFDCallActionPerformed"/>
+              </Events>
+            </MenuItem>
+          </SubComponents>
+        </Menu>
       </SubComponents>
     </Container>
   </NonVisualComponents>
@@ -161,8 +176,7 @@
                   </Group>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="jScrollPane2" pref="613" max="32767" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jScrollPane2" pref="625" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -171,7 +185,7 @@
     <Component class="javax.swing.JButton" name="jButton1">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/PlannTool/kepek/paint1.png"/>
+          <Image iconType="3" name="/PlannTool/kepek/colorc1.png"/>
         </Property>
         <Property name="toolTipText" type="java.lang.String" value="Ter/T&#xe9;ny sz&#xed;nez&#xe9;se"/>
         <Property name="borderPainted" type="boolean" value="false"/>
@@ -241,7 +255,7 @@
     <Component class="javax.swing.JButton" name="jButton2">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/PlannTool/kepek/pull1.png"/>
+          <Image iconType="3" name="/PlannTool/kepek/behuzos1.png"/>
         </Property>
         <Property name="toolTipText" type="java.lang.String" value="Beh&#xfa;z&#xf3;s"/>
         <Property name="borderPainted" type="boolean" value="false"/>
@@ -307,7 +321,7 @@
     <Component class="javax.swing.JButton" name="jButton7">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/PlannTool/kepek/envelop1.png"/>
+          <Image iconType="3" name="/PlannTool/kepek/email1.png"/>
         </Property>
         <Property name="toolTipText" type="java.lang.String" value="M&#x171;szakjelent&#xe9;s k&#xfc;ld&#xe9;se"/>
         <Property name="borderPainted" type="boolean" value="false"/>
@@ -363,7 +377,7 @@
     <Component class="javax.swing.JButton" name="jButton11">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/PlannTool/kepek/tenysave1.png"/>
+          <Image iconType="3" name="/PlannTool/kepek/upload1.png"/>
         </Property>
         <Property name="toolTipText" type="java.lang.String" value="T&#xe9;ny ment&#xe9;se!"/>
         <Property name="borderPainted" type="boolean" value="false"/>

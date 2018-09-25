@@ -1340,13 +1340,14 @@ public class Tc_Besheet extends javax.swing.JPanel {
         }
 
         //osszenezzuk a tervellenor adatat a most lekertel
-        for (int i = 0; i < Tc_Tervvaltozasellenor.tervellenor.get(0).length; i++) {
+        for (int i = 0; i < Tc_Tervvaltozasellenor.tervellenor.get(0)[0].length; i++) {
 
             if (Tc_Tervvaltozasellenor.tervellenor.get(0)[0][i].toString().equals(id)) {
 
                 valtozott = false;
 
             }
+
         }
 
         //ha valtozott kiirjuk az uzit es megszakitjuk a metodus futását
@@ -1428,27 +1429,27 @@ public class Tc_Besheet extends javax.swing.JPanel {
         Tc_AnimationSFDC a = new Tc_AnimationSFDC();
         o.start();
         a.start();
-        
-        
+
+
     }//GEN-LAST:event_SFDCallActionPerformed
 
     private void jButton5MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton5MouseEntered
         // TODO add your handling code here:
-        
-        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/osz.png"))); 
+
+        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/osz.png")));
     }//GEN-LAST:event_jButton5MouseEntered
 
     private void jButton5MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton5MouseExited
         // TODO add your handling code here:
-        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/osz1.png"))); 
+        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/osz1.png")));
     }//GEN-LAST:event_jButton5MouseExited
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
-        
+
         Tc_Oszlopallito o = new Tc_Oszlopallito(this);
         o.setVisible(true);
-        
+
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void filter(String query) {

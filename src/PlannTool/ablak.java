@@ -45,7 +45,7 @@ public class ablak extends javax.swing.JFrame {
 
     public static DefaultTableModel model = new DefaultTableModel();
     public static DefaultTableModel model1 = new DefaultTableModel();
-    public DefaultTableModel modelacti = new DefaultTableModel();
+    public static DefaultTableModel modelacti = new DefaultTableModel();
     public static DefaultTableModel modelstatus = new DefaultTableModel();
     public static DefaultTableModel jobstatus = new DefaultTableModel();
     public DefaultTableModel pcbtabla = new DefaultTableModel();
@@ -244,2393 +244,2395 @@ public class ablak extends javax.swing.JFrame {
             public Component prepareRenderer(TableCellRenderer renderer, int row, int col) {
                 Component comp = super.prepareRenderer(renderer, row, col);
                 Object value = getModel().getValueAt(row, col);
-                if (value.equals("Nem létezik SFDC-ben!")) {
-                    comp.setBackground(Color.red);
-                    comp.setForeground(Color.BLACK);
+                try{
+                    if (value.equals("Nem létezik SFDC-ben!")) {
+                        comp.setBackground(Color.red);
+                        comp.setForeground(Color.BLACK);
+                    }
+                    else if (value.equals("Minden elindult!")) {
+                        comp.setBackground(Color.green);
+                        comp.setForeground(Color.BLACK);
+                    }
+                    else {
+                        comp.setBackground(Color.white);
+                        comp.setForeground(Color.BLACK);
+                    }}
+                    catch(Exception e){}
+                    return comp;
                 }
-                else if (value.equals("Minden elindult!")) {
-                    comp.setBackground(Color.green);
-                    comp.setForeground(Color.BLACK);
+            }
+            ;
+            jButton18 = new javax.swing.JButton();
+
+            setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+            setTitle("PlannTool");
+            setLocation(new java.awt.Point(500, 300));
+
+            jPanel6.setPreferredSize(new java.awt.Dimension(1100, 550));
+            jPanel6.setLayout(new java.awt.BorderLayout());
+
+            jScrollPane7.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+            jScrollPane7.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+            jScrollPane7.setPreferredSize(new java.awt.Dimension(1100, 600));
+
+            jTabbedPane1.setPreferredSize(new java.awt.Dimension(1100, 550));
+            jTabbedPane1.addChangeListener(new javax.swing.event.ChangeListener() {
+                public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                    jTabbedPane1StateChanged(evt);
                 }
-                else {
-                    comp.setBackground(Color.white);
-                    comp.setForeground(Color.BLACK);
+            });
+
+            jPanel1.setPreferredSize(new java.awt.Dimension(1100, 550));
+
+            jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/leker1.png"))); // NOI18N
+            jButton1.setToolTipText("Lekér");
+            jButton1.setAlignmentX(500.0F);
+            jButton1.setBorderPainted(false);
+            jButton1.setContentAreaFilled(false);
+            jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+                public void mouseEntered(java.awt.event.MouseEvent evt) {
+                    jButton1MouseEntered(evt);
                 }
-                return comp;
-            }
-        }
-        ;
-        jButton18 = new javax.swing.JButton();
+                public void mouseExited(java.awt.event.MouseEvent evt) {
+                    jButton1MouseExited(evt);
+                }
+            });
+            jButton1.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    jButton1ActionPerformed(evt);
+                }
+            });
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("PlannTool");
-        setLocation(new java.awt.Point(500, 300));
+            jLabel2.setText("Mit keresünk?");
 
-        jPanel6.setPreferredSize(new java.awt.Dimension(1100, 550));
-        jPanel6.setLayout(new java.awt.BorderLayout());
+            jTable1.setModel(new javax.swing.table.DefaultTableModel(
+                new Object [][] {
 
-        jScrollPane7.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        jScrollPane7.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
-        jScrollPane7.setPreferredSize(new java.awt.Dimension(1100, 600));
+                },
+                new String [] {
+                    "PartNumber", "Workstation", "Qty"
+                }
+            ) {
+                Class[] types = new Class [] {
+                    java.lang.String.class, java.lang.String.class, java.lang.String.class
+                };
 
-        jTabbedPane1.setPreferredSize(new java.awt.Dimension(1100, 550));
-        jTabbedPane1.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                jTabbedPane1StateChanged(evt);
-            }
-        });
+                public Class getColumnClass(int columnIndex) {
+                    return types [columnIndex];
+                }
+            });
+            jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+                public void mouseClicked(java.awt.event.MouseEvent evt) {
+                    jTable1MouseClicked(evt);
+                }
+            });
+            jScrollPane1.setViewportView(jTable1);
 
-        jPanel1.setPreferredSize(new java.awt.Dimension(1100, 550));
+            jLabel3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+            jLabel3.setText("All Wip");
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/leker1.png"))); // NOI18N
-        jButton1.setToolTipText("Lekér");
-        jButton1.setAlignmentX(500.0F);
-        jButton1.setBorderPainted(false);
-        jButton1.setContentAreaFilled(false);
-        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jButton1MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                jButton1MouseExited(evt);
-            }
-        });
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
+            jTable2.setModel(new javax.swing.table.DefaultTableModel(
+                new Object [][] {
 
-        jLabel2.setText("Mit keresünk?");
+                },
+                new String [] {
+                    "Item", "Subinv", "Locator", "Qty"
+                }
+            ) {
+                Class[] types = new Class [] {
+                    java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+                };
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
+                public Class getColumnClass(int columnIndex) {
+                    return types [columnIndex];
+                }
+            });
+            jTable2.addMouseListener(new java.awt.event.MouseAdapter() {
+                public void mouseClicked(java.awt.event.MouseEvent evt) {
+                    jTable2MouseClicked(evt);
+                }
+            });
+            jScrollPane2.setViewportView(jTable2);
 
-            },
-            new String [] {
-                "PartNumber", "Workstation", "Qty"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class
-            };
+            jLabel4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+            jLabel4.setText("OH");
 
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
-        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTable1MouseClicked(evt);
-            }
-        });
-        jScrollPane1.setViewportView(jTable1);
+            jTextField1.setPreferredSize(new java.awt.Dimension(8, 20));
+            jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+                public void keyReleased(java.awt.event.KeyEvent evt) {
+                    jTextField1KeyReleased(evt);
+                }
+            });
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel3.setText("All Wip");
+            jLabel1.setText("Kereső:");
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
+            jLabel10.setText("All Wip tábla összegzése:");
 
-            },
-            new String [] {
-                "Item", "Subinv", "Locator", "Qty"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
-            };
+            jTextField6.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    jTextField6ActionPerformed(evt);
+                }
+            });
 
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
-        jTable2.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTable2MouseClicked(evt);
-            }
-        });
-        jScrollPane2.setViewportView(jTable2);
+            jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/excel1.png"))); // NOI18N
+            jButton3.setToolTipText("Exportálás excelbe!");
+            jButton3.setBorderPainted(false);
+            jButton3.setContentAreaFilled(false);
+            jButton3.addMouseListener(new java.awt.event.MouseAdapter() {
+                public void mouseEntered(java.awt.event.MouseEvent evt) {
+                    jButton3MouseEntered(evt);
+                }
+                public void mouseExited(java.awt.event.MouseEvent evt) {
+                    jButton3MouseExited(evt);
+                }
+            });
+            jButton3.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    jButton3ActionPerformed(evt);
+                }
+            });
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel4.setText("OH");
+            jLabel18.setText("Kijelölések összege:");
 
-        jTextField1.setPreferredSize(new java.awt.Dimension(8, 20));
-        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                jTextField1KeyReleased(evt);
-            }
-        });
+            jTextField13.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    jTextField13ActionPerformed(evt);
+                }
+            });
 
-        jLabel1.setText("Kereső:");
-
-        jLabel10.setText("All Wip tábla összegzése:");
-
-        jTextField6.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField6ActionPerformed(evt);
-            }
-        });
-
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/excel1.png"))); // NOI18N
-        jButton3.setToolTipText("Exportálás excelbe!");
-        jButton3.setBorderPainted(false);
-        jButton3.setContentAreaFilled(false);
-        jButton3.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jButton3MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                jButton3MouseExited(evt);
-            }
-        });
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
-
-        jLabel18.setText("Kijelölések összege:");
-
-        jTextField13.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField13ActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(27, 27, 27)
-                                .addComponent(jLabel2)
-                                .addGap(452, 452, 452)
-                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(563, 563, 563)
-                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 477, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addGap(7, 7, 7)
-                                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(42, 42, 42)
-                                .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel18)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField13, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel10)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(13, 13, 13))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jScrollPane1))))))
-                .addContainerGap())
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+            javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+            jPanel1.setLayout(jPanel1Layout);
+            jPanel1Layout.setHorizontalGroup(
+                jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addGap(27, 27, 27)
+                                    .addComponent(jLabel2)
+                                    .addGap(452, 452, 452)
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addGap(563, 563, 563)
+                                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGap(0, 477, Short.MAX_VALUE))
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                    .addGap(7, 7, 7)
+                                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addContainerGap()
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addGap(42, 42, 42)
+                                    .addComponent(jLabel1)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(jLabel18)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(jTextField13, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel10)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(13, 13, 13))
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                    .addGap(18, 18, 18)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(jScrollPane1))))))
+                    .addContainerGap())
+            );
+            jPanel1Layout.setVerticalGroup(
+                jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createSequentialGroup()
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel18, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jTextField13, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(34, 34, 34))
-        );
-
-        jTabbedPane1.addTab("Készlet", jPanel1);
-
-        jLabel5.setText("Tól:");
-
-        jLabel6.setText("Ig:");
-
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/leker1.png"))); // NOI18N
-        jButton2.setToolTipText("Lekér");
-        jButton2.setBorderPainted(false);
-        jButton2.setContentAreaFilled(false);
-        jButton2.setPreferredSize(new java.awt.Dimension(132, 33));
-        jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jButton2MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                jButton2MouseExited(evt);
-            }
-        });
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-
-        jLabel7.setText("Keresett termékszám:");
-
-        jTable3.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Workstation", "Part Number", "Pass", "Shop Order Number", "Sumpass Qty", "Move Qty", "Manu Move Qty"
-            }
-        ));
-        jTable3.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTable3MouseClicked(evt);
-            }
-        });
-        jScrollPane3.setViewportView(jTable3);
-
-        jLabel8.setText("Kereső:");
-
-        jTextField4.setPreferredSize(new java.awt.Dimension(6, 25));
-        jTextField4.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                jTextField4KeyReleased(evt);
-            }
-        });
-
-        jTextField5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField5ActionPerformed(evt);
-            }
-        });
-
-        jLabel9.setText("Tábla összegzése:");
-
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/excel1.png"))); // NOI18N
-        jButton4.setToolTipText("Exportálás excelbe!");
-        jButton4.setBorderPainted(false);
-        jButton4.setContentAreaFilled(false);
-        jButton4.setPreferredSize(new java.awt.Dimension(132, 33));
-        jButton4.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jButton4MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                jButton4MouseExited(evt);
-            }
-        });
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
-            }
-        });
-
-        jLabel13.setText("óra:perc");
-
-        jTextField8.setText("06:00");
-
-        jLabel14.setText("óra:perc");
-
-        jTextField9.setText("18:00");
-
-        jLabel19.setText("Kijelölések összege:");
-
-        jLabel20.setText("Kijelölések összege:");
-
-        jLabel22.setText("Kijelölések összegzése:");
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                                .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                                .addComponent(jDateChooser3, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                        .addGap(200, 200, 200))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                        .addComponent(jLabel7)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
-                                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 1034, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(156, 156, 156))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
-                        .addGap(44, 44, 44)
-                        .addComponent(jLabel8)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(116, 116, 116)
-                        .addComponent(jLabel22)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField17, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel9)
-                        .addGap(4, 4, 4)
-                        .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel2Layout.createSequentialGroup()
-                    .addGap(3141, 3141, 3141)
-                    .addComponent(jLabel19)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(jTextField14, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel2Layout.createSequentialGroup()
-                    .addGap(3141, 3141, 3141)
-                    .addComponent(jLabel20)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(18, 18, 18)
+                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(jTextField15, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(18, 18, 18)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel18, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jTextField13, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGap(34, 34, 34))
+            );
+
+            jTabbedPane1.addTab("Készlet", jPanel1);
+
+            jLabel5.setText("Tól:");
+
+            jLabel6.setText("Ig:");
+
+            jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/leker1.png"))); // NOI18N
+            jButton2.setToolTipText("Lekér");
+            jButton2.setBorderPainted(false);
+            jButton2.setContentAreaFilled(false);
+            jButton2.setPreferredSize(new java.awt.Dimension(132, 33));
+            jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
+                public void mouseEntered(java.awt.event.MouseEvent evt) {
+                    jButton2MouseEntered(evt);
+                }
+                public void mouseExited(java.awt.event.MouseEvent evt) {
+                    jButton2MouseExited(evt);
+                }
+            });
+            jButton2.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    jButton2ActionPerformed(evt);
+                }
+            });
+
+            jLabel7.setText("Keresett termékszám:");
+
+            jTable3.setModel(new javax.swing.table.DefaultTableModel(
+                new Object [][] {
+
+                },
+                new String [] {
+                    "Workstation", "Part Number", "Pass", "Shop Order Number", "Sumpass Qty", "Move Qty", "Manu Move Qty"
+                }
+            ));
+            jTable3.addMouseListener(new java.awt.event.MouseAdapter() {
+                public void mouseClicked(java.awt.event.MouseEvent evt) {
+                    jTable3MouseClicked(evt);
+                }
+            });
+            jScrollPane3.setViewportView(jTable3);
+
+            jLabel8.setText("Kereső:");
+
+            jTextField4.setPreferredSize(new java.awt.Dimension(6, 25));
+            jTextField4.addKeyListener(new java.awt.event.KeyAdapter() {
+                public void keyReleased(java.awt.event.KeyEvent evt) {
+                    jTextField4KeyReleased(evt);
+                }
+            });
+
+            jTextField5.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    jTextField5ActionPerformed(evt);
+                }
+            });
+
+            jLabel9.setText("Tábla összegzése:");
+
+            jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/excel1.png"))); // NOI18N
+            jButton4.setToolTipText("Exportálás excelbe!");
+            jButton4.setBorderPainted(false);
+            jButton4.setContentAreaFilled(false);
+            jButton4.setPreferredSize(new java.awt.Dimension(132, 33));
+            jButton4.addMouseListener(new java.awt.event.MouseAdapter() {
+                public void mouseEntered(java.awt.event.MouseEvent evt) {
+                    jButton4MouseEntered(evt);
+                }
+                public void mouseExited(java.awt.event.MouseEvent evt) {
+                    jButton4MouseExited(evt);
+                }
+            });
+            jButton4.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    jButton4ActionPerformed(evt);
+                }
+            });
+
+            jLabel13.setText("óra:perc");
+
+            jTextField8.setText("06:00");
+
+            jLabel14.setText("óra:perc");
+
+            jTextField9.setText("18:00");
+
+            jLabel19.setText("Kijelölések összege:");
+
+            jLabel20.setText("Kijelölések összege:");
+
+            jLabel22.setText("Kijelölések összegzése:");
+
+            javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+            jPanel2.setLayout(jPanel2Layout);
+            jPanel2Layout.setHorizontalGroup(
+                jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel2Layout.createSequentialGroup()
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(jPanel2Layout.createSequentialGroup()
+                            .addContainerGap()
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel2Layout.createSequentialGroup()
+                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(jPanel2Layout.createSequentialGroup()
+                                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addGroup(jPanel2Layout.createSequentialGroup()
+                                                    .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                    .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                    .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addGroup(jPanel2Layout.createSequentialGroup()
+                                                    .addComponent(jDateChooser3, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                    .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                    .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                            .addGap(200, 200, 200))
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                            .addComponent(jLabel7)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 1034, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGap(156, 156, 156))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                            .addGap(44, 44, 44)
+                            .addComponent(jLabel8)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(116, 116, 116)
+                            .addComponent(jLabel22)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jTextField17, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(jLabel9)
+                            .addGap(4, 4, 4)
+                            .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(33, 33, 33)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jDateChooser3, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(36, 36, 36)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(20, 20, 20)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel22)
-                    .addComponent(jTextField17, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(184, Short.MAX_VALUE))
-            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel2Layout.createSequentialGroup()
-                    .addGap(645, 645, 645)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGap(3141, 3141, 3141)
                         .addComponent(jLabel19)
-                        .addComponent(jTextField14, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel2Layout.createSequentialGroup()
-                    .addGap(645, 645, 645)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextField14, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(3141, 3141, 3141)
                         .addComponent(jLabel20)
-                        .addComponent(jTextField15, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-        );
-
-        jTabbedPane1.addTab("Activity", jPanel2);
-
-        jTable4.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
-            },
-            new String [] {
-                "Serial N", "SN", "JOB", "Part Number", "Location", "Last Comp Date"
-            }
-        ));
-        jScrollPane4.setViewportView(jTable4);
-
-        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/leker1.png"))); // NOI18N
-        jButton5.setToolTipText("Lekér");
-        jButton5.setBorderPainted(false);
-        jButton5.setContentAreaFilled(false);
-        jButton5.setPreferredSize(new java.awt.Dimension(132, 33));
-        jButton5.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jButton5MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                jButton5MouseExited(evt);
-            }
-        });
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
-            }
-        });
-
-        jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/torles1.png"))); // NOI18N
-        jButton6.setToolTipText("Tábla törlése");
-        jButton6.setBorderPainted(false);
-        jButton6.setContentAreaFilled(false);
-        jButton6.setPreferredSize(new java.awt.Dimension(132, 33));
-        jButton6.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jButton6MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                jButton6MouseExited(evt);
-            }
-        });
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
-            }
-        });
-
-        jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/selejt1.png"))); // NOI18N
-        jButton7.setToolTipText("Tovább a selejtezéshez");
-        jButton7.setBorderPainted(false);
-        jButton7.setContentAreaFilled(false);
-        jButton7.setEnabled(false);
-        jButton7.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jButton7MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                jButton7MouseExited(evt);
-            }
-        });
-        jButton7.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton7ActionPerformed(evt);
-            }
-        });
-
-        jButton8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/excel1.png"))); // NOI18N
-        jButton8.setToolTipText("Exportálás excelbe!");
-        jButton8.setBorderPainted(false);
-        jButton8.setContentAreaFilled(false);
-        jButton8.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jButton8MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                jButton8MouseExited(evt);
-            }
-        });
-        jButton8.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton8ActionPerformed(evt);
-            }
-        });
-
-        jTable11.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "PartN", "QTY"
-            }
-        ));
-        jScrollPane12.setViewportView(jTable11);
-        if (jTable11.getColumnModel().getColumnCount() > 0) {
-            jTable11.getColumnModel().getColumn(1).setMinWidth(1);
-            jTable11.getColumnModel().getColumn(1).setPreferredWidth(40);
-            jTable11.getColumnModel().getColumn(1).setMaxWidth(100);
-        }
-
-        jLabel29.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel29.setText("RTV QTY");
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 807, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane12, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(38, 38, 38)
-                        .addComponent(jLabel29, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel29, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane12, javax.swing.GroupLayout.PREFERRED_SIZE, 444, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 480, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
-                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 30, Short.MAX_VALUE))
-        );
+                        .addComponent(jTextField15, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+            );
+            jPanel2Layout.setVerticalGroup(
+                jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel2Layout.createSequentialGroup()
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel2Layout.createSequentialGroup()
+                            .addContainerGap()
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(jPanel2Layout.createSequentialGroup()
+                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                            .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGap(33, 33, 33)
+                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                            .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jDateChooser3, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButton4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGroup(jPanel2Layout.createSequentialGroup()
+                            .addGap(36, 36, 36)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGap(20, 20, 20)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(18, 18, 18)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel22)
+                        .addComponent(jTextField17, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addContainerGap(184, Short.MAX_VALUE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(645, 645, 645)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel19)
+                            .addComponent(jTextField14, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(645, 645, 645)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel20)
+                            .addComponent(jTextField15, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+            );
 
-        jTabbedPane1.addTab("SN infó", jPanel3);
+            jTabbedPane1.addTab("Activity", jPanel2);
 
-        jTable5.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
+            jTable4.setModel(new javax.swing.table.DefaultTableModel(
+                new Object [][] {
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null},
+                    {null, null, null, null, null, null}
+                },
+                new String [] {
+                    "Serial N", "SN", "JOB", "Part Number", "Location", "Last Comp Date"
+                }
+            ));
+            jScrollPane4.setViewportView(jTable4);
 
-            },
-            new String [] {
-                "Shop Order", "Part Number", "Worksation", "QTY", "Unit Status"
+            jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/leker1.png"))); // NOI18N
+            jButton5.setToolTipText("Lekér");
+            jButton5.setBorderPainted(false);
+            jButton5.setContentAreaFilled(false);
+            jButton5.setPreferredSize(new java.awt.Dimension(132, 33));
+            jButton5.addMouseListener(new java.awt.event.MouseAdapter() {
+                public void mouseEntered(java.awt.event.MouseEvent evt) {
+                    jButton5MouseEntered(evt);
+                }
+                public void mouseExited(java.awt.event.MouseEvent evt) {
+                    jButton5MouseExited(evt);
+                }
+            });
+            jButton5.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    jButton5ActionPerformed(evt);
+                }
+            });
+
+            jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/torles1.png"))); // NOI18N
+            jButton6.setToolTipText("Tábla törlése");
+            jButton6.setBorderPainted(false);
+            jButton6.setContentAreaFilled(false);
+            jButton6.setPreferredSize(new java.awt.Dimension(132, 33));
+            jButton6.addMouseListener(new java.awt.event.MouseAdapter() {
+                public void mouseEntered(java.awt.event.MouseEvent evt) {
+                    jButton6MouseEntered(evt);
+                }
+                public void mouseExited(java.awt.event.MouseEvent evt) {
+                    jButton6MouseExited(evt);
+                }
+            });
+            jButton6.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    jButton6ActionPerformed(evt);
+                }
+            });
+
+            jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/selejt1.png"))); // NOI18N
+            jButton7.setToolTipText("Tovább a selejtezéshez");
+            jButton7.setBorderPainted(false);
+            jButton7.setContentAreaFilled(false);
+            jButton7.setEnabled(false);
+            jButton7.addMouseListener(new java.awt.event.MouseAdapter() {
+                public void mouseEntered(java.awt.event.MouseEvent evt) {
+                    jButton7MouseEntered(evt);
+                }
+                public void mouseExited(java.awt.event.MouseEvent evt) {
+                    jButton7MouseExited(evt);
+                }
+            });
+            jButton7.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    jButton7ActionPerformed(evt);
+                }
+            });
+
+            jButton8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/excel1.png"))); // NOI18N
+            jButton8.setToolTipText("Exportálás excelbe!");
+            jButton8.setBorderPainted(false);
+            jButton8.setContentAreaFilled(false);
+            jButton8.addMouseListener(new java.awt.event.MouseAdapter() {
+                public void mouseEntered(java.awt.event.MouseEvent evt) {
+                    jButton8MouseEntered(evt);
+                }
+                public void mouseExited(java.awt.event.MouseEvent evt) {
+                    jButton8MouseExited(evt);
+                }
+            });
+            jButton8.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    jButton8ActionPerformed(evt);
+                }
+            });
+
+            jTable11.setModel(new javax.swing.table.DefaultTableModel(
+                new Object [][] {
+
+                },
+                new String [] {
+                    "PartN", "QTY"
+                }
+            ));
+            jScrollPane12.setViewportView(jTable11);
+            if (jTable11.getColumnModel().getColumnCount() > 0) {
+                jTable11.getColumnModel().getColumn(1).setMinWidth(1);
+                jTable11.getColumnModel().getColumn(1).setPreferredWidth(40);
+                jTable11.getColumnModel().getColumn(1).setMaxWidth(100);
             }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
-            };
 
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
-        jTable5.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTable5MouseClicked(evt);
-            }
-        });
-        jScrollPane5.setViewportView(jTable5);
+            jLabel29.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+            jLabel29.setText("RTV QTY");
 
-        jTextField7.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField7ActionPerformed(evt);
-            }
-        });
+            javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+            jPanel3.setLayout(jPanel3Layout);
+            jPanel3Layout.setHorizontalGroup(
+                jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel3Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGap(18, 18, 18)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 807, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jScrollPane12, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel3Layout.createSequentialGroup()
+                            .addGap(38, 38, 38)
+                            .addComponent(jLabel29, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            );
+            jPanel3Layout.setVerticalGroup(
+                jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel3Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(jPanel3Layout.createSequentialGroup()
+                            .addComponent(jLabel29, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(jScrollPane12, javax.swing.GroupLayout.PREFERRED_SIZE, 444, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 480, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
+                            .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGap(0, 30, Short.MAX_VALUE))
+            );
 
-        jButton9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/search1.png"))); // NOI18N
-        jButton9.setToolTipText("Keres");
-        jButton9.setBorderPainted(false);
-        jButton9.setContentAreaFilled(false);
-        jButton9.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jButton9MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                jButton9MouseExited(evt);
-            }
-        });
-        jButton9.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton9ActionPerformed(evt);
-            }
-        });
+            jTabbedPane1.addTab("SN infó", jPanel3);
 
-        jLabel11.setText("JOB szám:");
+            jTable5.setModel(new javax.swing.table.DefaultTableModel(
+                new Object [][] {
 
-        jLabel12.setText("JOB total QTY:");
+                },
+                new String [] {
+                    "Shop Order", "Part Number", "Worksation", "QTY", "Unit Status"
+                }
+            ) {
+                Class[] types = new Class [] {
+                    java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                };
 
-        jLabel17.setText("Kijelölések összege:");
+                public Class getColumnClass(int columnIndex) {
+                    return types [columnIndex];
+                }
+            });
+            jTable5.addMouseListener(new java.awt.event.MouseAdapter() {
+                public void mouseClicked(java.awt.event.MouseEvent evt) {
+                    jTable5MouseClicked(evt);
+                }
+            });
+            jScrollPane5.setViewportView(jTable5);
 
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(51, 51, 51)
-                        .addComponent(jLabel11))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(16, 16, 16)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+            jTextField7.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    jTextField7ActionPerformed(evt);
+                }
+            });
+
+            jButton9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/search1.png"))); // NOI18N
+            jButton9.setToolTipText("Keres");
+            jButton9.setBorderPainted(false);
+            jButton9.setContentAreaFilled(false);
+            jButton9.addMouseListener(new java.awt.event.MouseAdapter() {
+                public void mouseEntered(java.awt.event.MouseEvent evt) {
+                    jButton9MouseEntered(evt);
+                }
+                public void mouseExited(java.awt.event.MouseEvent evt) {
+                    jButton9MouseExited(evt);
+                }
+            });
+            jButton9.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    jButton9ActionPerformed(evt);
+                }
+            });
+
+            jLabel11.setText("JOB szám:");
+
+            jLabel12.setText("JOB total QTY:");
+
+            jLabel17.setText("Kijelölések összege:");
+
+            javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+            jPanel4.setLayout(jPanel4Layout);
+            jPanel4Layout.setHorizontalGroup(
+                jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel4Layout.createSequentialGroup()
+                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel4Layout.createSequentialGroup()
+                            .addGap(51, 51, 51)
+                            .addComponent(jLabel11))
+                        .addGroup(jPanel4Layout.createSequentialGroup()
+                            .addGap(16, 16, 16)
+                            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jLabel17)
+                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jTextField7, javax.swing.GroupLayout.DEFAULT_SIZE, 156, Short.MAX_VALUE)
+                            .addComponent(jTextField12)))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 873, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(64, Short.MAX_VALUE))
+            );
+            jPanel4Layout.setVerticalGroup(
+                jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel4Layout.createSequentialGroup()
+                    .addGap(4, 4, 4)
+                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 504, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel4Layout.createSequentialGroup()
+                            .addComponent(jLabel11)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(jLabel17)
-                            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jTextField7, javax.swing.GroupLayout.DEFAULT_SIZE, 156, Short.MAX_VALUE)
-                        .addComponent(jTextField12)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 873, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(64, Short.MAX_VALUE))
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(4, 4, 4)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 504, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jLabel11)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel17)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextField12, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(15, Short.MAX_VALUE))
-        );
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(jTextField12, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addContainerGap(15, Short.MAX_VALUE))
+            );
 
-        jLabel11.getAccessibleContext().setAccessibleDescription("");
+            jLabel11.getAccessibleContext().setAccessibleDescription("");
 
-        jTabbedPane1.addTab("JOB infó", jPanel4);
+            jTabbedPane1.addTab("JOB infó", jPanel4);
 
-        jTable6.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null}
-            },
-            new String [] {
-                "Partnumber", "PCB PN", "QTY"
+            jTable6.setModel(new javax.swing.table.DefaultTableModel(
+                new Object [][] {
+                    {null, null, null}
+                },
+                new String [] {
+                    "Partnumber", "PCB PN", "QTY"
+                }
+            ) {
+                boolean[] canEdit = new boolean [] {
+                    false, false, false
+                };
+
+                public boolean isCellEditable(int rowIndex, int columnIndex) {
+                    return canEdit [columnIndex];
+                }
+            });
+            jScrollPane6.setViewportView(jTable6);
+
+            jLabel15.setText("PartNumber:");
+
+            jTextField10.addKeyListener(new java.awt.event.KeyAdapter() {
+                public void keyPressed(java.awt.event.KeyEvent evt) {
+                    jTextField10KeyPressed(evt);
+                }
+            });
+
+            jLabel16.setText("Vagy PCB PN:");
+
+            jTextField11.addKeyListener(new java.awt.event.KeyAdapter() {
+                public void keyPressed(java.awt.event.KeyEvent evt) {
+                    jTextField11KeyPressed(evt);
+                }
+            });
+
+            jButton10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/search1.png"))); // NOI18N
+            jButton10.setToolTipText("Keres");
+            jButton10.setBorderPainted(false);
+            jButton10.setContentAreaFilled(false);
+            jButton10.addMouseListener(new java.awt.event.MouseAdapter() {
+                public void mouseEntered(java.awt.event.MouseEvent evt) {
+                    jButton10MouseEntered(evt);
+                }
+                public void mouseExited(java.awt.event.MouseEvent evt) {
+                    jButton10MouseExited(evt);
+                }
+            });
+            jButton10.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    jButton10ActionPerformed(evt);
+                }
+            });
+
+            javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+            jPanel5.setLayout(jPanel5Layout);
+            jPanel5Layout.setHorizontalGroup(
+                jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel5Layout.createSequentialGroup()
+                    .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jTextField10, javax.swing.GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE)
+                            .addComponent(jTextField11))
+                        .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel5Layout.createSequentialGroup()
+                            .addGap(27, 27, 27)
+                            .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 892, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(69, Short.MAX_VALUE))
+            );
+            jPanel5Layout.setVerticalGroup(
+                jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel5Layout.createSequentialGroup()
+                    .addGap(6, 6, 6)
+                    .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 508, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel5Layout.createSequentialGroup()
+                            .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            );
+
+            jTabbedPane1.addTab("Harman PCB Infó ", jPanel5);
+
+            jButton11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/upload1.png"))); // NOI18N
+            jButton11.setToolTipText("Feltölt");
+            jButton11.setBorderPainted(false);
+            jButton11.setContentAreaFilled(false);
+            jButton11.addMouseListener(new java.awt.event.MouseAdapter() {
+                public void mouseEntered(java.awt.event.MouseEvent evt) {
+                    jButton11MouseEntered(evt);
+                }
+                public void mouseExited(java.awt.event.MouseEvent evt) {
+                    jButton11MouseExited(evt);
+                }
+            });
+            jButton11.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    jButton11ActionPerformed(evt);
+                }
+            });
+
+            jLabel23.setText("Mikortól:");
+
+            jLabel24.setText("Meddig:");
+
+            jLabel25.setForeground(new java.awt.Color(255, 0, 0));
+            jLabel25.setText("Alapból az utolsó lejkérdezett időpontra áll be!");
+
+            jButton12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/leker1.png"))); // NOI18N
+            jButton12.setToolTipText("Lekér");
+            jButton12.setBorderPainted(false);
+            jButton12.setContentAreaFilled(false);
+            jButton12.addMouseListener(new java.awt.event.MouseAdapter() {
+                public void mouseEntered(java.awt.event.MouseEvent evt) {
+                    jButton12MouseEntered(evt);
+                }
+                public void mouseExited(java.awt.event.MouseEvent evt) {
+                    jButton12MouseExited(evt);
+                }
+            });
+            jButton12.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    jButton12ActionPerformed(evt);
+                }
+            });
+
+            jTable7.setModel(new javax.swing.table.DefaultTableModel(
+                new Object [][] {
+
+                },
+                new String [] {
+                    "Part Number", "Serial Number", "Tól ", "Ig", "OH"
+                }
+            ) {
+                Class[] types = new Class [] {
+                    java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Boolean.class
+                };
+
+                public Class getColumnClass(int columnIndex) {
+                    return types [columnIndex];
+                }
+            });
+            jScrollPane8.setViewportView(jTable7);
+            if (jTable7.getColumnModel().getColumnCount() > 0) {
+                jTable7.getColumnModel().getColumn(0).setResizable(false);
+                jTable7.getColumnModel().getColumn(4).setResizable(false);
+                jTable7.getColumnModel().getColumn(4).setPreferredWidth(5);
             }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false
-            };
 
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
+            jTable8.setModel(new javax.swing.table.DefaultTableModel(
+                new Object [][] {
+                    {null},
+                    {null},
+                    {null},
+                    {null},
+                    {null},
+                    {null},
+                    {null},
+                    {null},
+                    {null},
+                    {null},
+                    {null},
+                    {null},
+                    {null},
+                    {null},
+                    {null},
+                    {null},
+                    {null},
+                    {null},
+                    {null},
+                    {null}
+                },
+                new String [] {
+                    "Prefix"
+                }
+            ));
+            jScrollPane9.setViewportView(jTable8);
+
+            jLabel26.setForeground(new java.awt.Color(255, 0, 0));
+            jLabel26.setText("Alapból az aktuális dátumra áll be!");
+
+            jButton13.setText("Prefixek mentése");
+            jButton13.setToolTipText("Prefixek mentése");
+            jButton13.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    jButton13ActionPerformed(evt);
+                }
+            });
+
+            jButton14.setText("Lekérdezés visszamenőleg!");
+            jButton14.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    jButton14ActionPerformed(evt);
+                }
+            });
+
+            jTable9.setModel(new javax.swing.table.DefaultTableModel(
+                new Object [][] {
+
+                },
+                new String [] {
+                    "Partnumber", "QTY", "P"
+                }
+            ) {
+                Class[] types = new Class [] {
+                    java.lang.Object.class, java.lang.Object.class, java.lang.Boolean.class
+                };
+
+                public Class getColumnClass(int columnIndex) {
+                    return types [columnIndex];
+                }
+            });
+            jTable9.addMouseListener(new java.awt.event.MouseAdapter() {
+                public void mouseClicked(java.awt.event.MouseEvent evt) {
+                    jTable9MouseClicked(evt);
+                }
+            });
+            jScrollPane10.setViewportView(jTable9);
+            if (jTable9.getColumnModel().getColumnCount() > 0) {
+                jTable9.getColumnModel().getColumn(1).setPreferredWidth(5);
+                jTable9.getColumnModel().getColumn(2).setMinWidth(30);
+                jTable9.getColumnModel().getColumn(2).setMaxWidth(30);
             }
-        });
-        jScrollPane6.setViewportView(jTable6);
 
-        jLabel15.setText("PartNumber:");
+            jLabel27.setText("Summa:");
 
-        jTextField10.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jTextField10KeyPressed(evt);
-            }
-        });
+            jLabel28.setText("Részletes találat:");
 
-        jLabel16.setText("Vagy PCB PN:");
+            jCheckBox1.setText("Select all");
+            jCheckBox1.addItemListener(new java.awt.event.ItemListener() {
+                public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                    jCheckBox1ItemStateChanged(evt);
+                }
+            });
 
-        jTextField11.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jTextField11KeyPressed(evt);
-            }
-        });
+            jTable10.setModel(new javax.swing.table.DefaultTableModel(
+                new Object [][] {
+                    {null},
+                    {null},
+                    {null},
+                    {null},
+                    {null},
+                    {null},
+                    {null},
+                    {null},
+                    {null},
+                    {null},
+                    {null},
+                    {null},
+                    {null},
+                    {null},
+                    {null},
+                    {null},
+                    {null},
+                    {null},
+                    {null},
+                    {null},
+                    {null},
+                    {null},
+                    {null},
+                    {null},
+                    {null},
+                    {null},
+                    {null},
+                    {null},
+                    {null},
+                    {null},
+                    {null},
+                    {null},
+                    {null},
+                    {null},
+                    {null},
+                    {null},
+                    {null},
+                    {null},
+                    {null},
+                    {null}
+                },
+                new String [] {
+                    "Kivételek (PN)"
+                }
+            ));
+            jScrollPane11.setViewportView(jTable10);
 
-        jButton10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/search1.png"))); // NOI18N
-        jButton10.setToolTipText("Keres");
-        jButton10.setBorderPainted(false);
-        jButton10.setContentAreaFilled(false);
-        jButton10.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jButton10MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                jButton10MouseExited(evt);
-            }
-        });
-        jButton10.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton10ActionPerformed(evt);
-            }
-        });
+            jButton15.setText("Kivételek mentése!");
+            jButton15.setToolTipText("");
+            jButton15.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    jButton15ActionPerformed(evt);
+                }
+            });
 
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jTextField10, javax.swing.GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE)
-                        .addComponent(jTextField11))
-                    .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(27, 27, 27)
-                        .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 892, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(69, Short.MAX_VALUE))
-        );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(6, 6, 6)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 508, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+            jButton17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/excel1.png"))); // NOI18N
+            jButton17.setToolTipText("Exportálás excelbe!");
+            jButton17.setBorderPainted(false);
+            jButton17.setContentAreaFilled(false);
+            jButton17.addMouseListener(new java.awt.event.MouseAdapter() {
+                public void mouseEntered(java.awt.event.MouseEvent evt) {
+                    jButton17MouseEntered(evt);
+                }
+                public void mouseExited(java.awt.event.MouseEvent evt) {
+                    jButton17MouseExited(evt);
+                }
+            });
+            jButton17.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    jButton17ActionPerformed(evt);
+                }
+            });
 
-        jTabbedPane1.addTab("Harman PCB Infó ", jPanel5);
-
-        jButton11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/upload1.png"))); // NOI18N
-        jButton11.setToolTipText("Feltölt");
-        jButton11.setBorderPainted(false);
-        jButton11.setContentAreaFilled(false);
-        jButton11.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jButton11MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                jButton11MouseExited(evt);
-            }
-        });
-        jButton11.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton11ActionPerformed(evt);
-            }
-        });
-
-        jLabel23.setText("Mikortól:");
-
-        jLabel24.setText("Meddig:");
-
-        jLabel25.setForeground(new java.awt.Color(255, 0, 0));
-        jLabel25.setText("Alapból az utolsó lejkérdezett időpontra áll be!");
-
-        jButton12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/leker1.png"))); // NOI18N
-        jButton12.setToolTipText("Lekér");
-        jButton12.setBorderPainted(false);
-        jButton12.setContentAreaFilled(false);
-        jButton12.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jButton12MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                jButton12MouseExited(evt);
-            }
-        });
-        jButton12.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton12ActionPerformed(evt);
-            }
-        });
-
-        jTable7.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Part Number", "Serial Number", "Tól ", "Ig", "OH"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Boolean.class
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
-        jScrollPane8.setViewportView(jTable7);
-        if (jTable7.getColumnModel().getColumnCount() > 0) {
-            jTable7.getColumnModel().getColumn(0).setResizable(false);
-            jTable7.getColumnModel().getColumn(4).setResizable(false);
-            jTable7.getColumnModel().getColumn(4).setPreferredWidth(5);
-        }
-
-        jTable8.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null},
-                {null},
-                {null},
-                {null},
-                {null},
-                {null},
-                {null},
-                {null},
-                {null},
-                {null},
-                {null},
-                {null},
-                {null},
-                {null},
-                {null},
-                {null},
-                {null},
-                {null},
-                {null},
-                {null}
-            },
-            new String [] {
-                "Prefix"
-            }
-        ));
-        jScrollPane9.setViewportView(jTable8);
-
-        jLabel26.setForeground(new java.awt.Color(255, 0, 0));
-        jLabel26.setText("Alapból az aktuális dátumra áll be!");
-
-        jButton13.setText("Prefixek mentése");
-        jButton13.setToolTipText("Prefixek mentése");
-        jButton13.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton13ActionPerformed(evt);
-            }
-        });
-
-        jButton14.setText("Lekérdezés visszamenőleg!");
-        jButton14.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton14ActionPerformed(evt);
-            }
-        });
-
-        jTable9.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Partnumber", "QTY", "P"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.Object.class, java.lang.Boolean.class
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
-        jTable9.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTable9MouseClicked(evt);
-            }
-        });
-        jScrollPane10.setViewportView(jTable9);
-        if (jTable9.getColumnModel().getColumnCount() > 0) {
-            jTable9.getColumnModel().getColumn(1).setPreferredWidth(5);
-            jTable9.getColumnModel().getColumn(2).setMinWidth(30);
-            jTable9.getColumnModel().getColumn(2).setMaxWidth(30);
-        }
-
-        jLabel27.setText("Summa:");
-
-        jLabel28.setText("Részletes találat:");
-
-        jCheckBox1.setText("Select all");
-        jCheckBox1.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                jCheckBox1ItemStateChanged(evt);
-            }
-        });
-
-        jTable10.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null},
-                {null},
-                {null},
-                {null},
-                {null},
-                {null},
-                {null},
-                {null},
-                {null},
-                {null},
-                {null},
-                {null},
-                {null},
-                {null},
-                {null},
-                {null},
-                {null},
-                {null},
-                {null},
-                {null},
-                {null},
-                {null},
-                {null},
-                {null},
-                {null},
-                {null},
-                {null},
-                {null},
-                {null},
-                {null},
-                {null},
-                {null},
-                {null},
-                {null},
-                {null},
-                {null},
-                {null},
-                {null},
-                {null},
-                {null}
-            },
-            new String [] {
-                "Kivételek (PN)"
-            }
-        ));
-        jScrollPane11.setViewportView(jTable10);
-
-        jButton15.setText("Kivételek mentése!");
-        jButton15.setToolTipText("");
-        jButton15.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton15ActionPerformed(evt);
-            }
-        });
-
-        jButton17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/excel1.png"))); // NOI18N
-        jButton17.setToolTipText("Exportálás excelbe!");
-        jButton17.setBorderPainted(false);
-        jButton17.setContentAreaFilled(false);
-        jButton17.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jButton17MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                jButton17MouseExited(evt);
-            }
-        });
-        jButton17.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton17ActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
-        jPanel7.setLayout(jPanel7Layout);
-        jPanel7Layout.setHorizontalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel7Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel7Layout.createSequentialGroup()
-                                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel24))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel7Layout.createSequentialGroup()
-                                .addComponent(jButton13, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton15, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel7Layout.createSequentialGroup()
-                                .addComponent(jLabel25)
-                                .addGap(5, 5, 5)
-                                .addComponent(jButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton17, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(13, 13, 13))
-                            .addComponent(jButton14, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel7Layout.createSequentialGroup()
-                                .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jScrollPane11, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 598, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel7Layout.createSequentialGroup()
-                                .addComponent(jDateChooser4, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel26, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(378, 378, 378))
-                            .addGroup(jPanel7Layout.createSequentialGroup()
-                                .addComponent(jLabel28, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(206, 206, 206)
-                                .addComponent(jCheckBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel7Layout.createSequentialGroup()
-                                .addGap(101, 101, 101)
-                                .addComponent(jLabel27))
-                            .addGroup(jPanel7Layout.createSequentialGroup()
-                                .addGap(6, 6, 6)
-                                .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel7Layout.setVerticalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel7Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jDateChooser4, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+            javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
+            jPanel7.setLayout(jPanel7Layout);
+            jPanel7Layout.setHorizontalGroup(
+                jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel7Layout.createSequentialGroup()
+                    .addContainerGap()
                     .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel7Layout.createSequentialGroup()
                             .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel25)
-                                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(jDateChooser2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
-                                    .addComponent(jLabel23, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addGroup(jPanel7Layout.createSequentialGroup()
+                                    .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabel24))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jPanel7Layout.createSequentialGroup()
+                                    .addComponent(jButton13, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(jButton15, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGap(18, 18, 18)
+                            .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(jPanel7Layout.createSequentialGroup()
+                                    .addComponent(jLabel25)
+                                    .addGap(5, 5, 5)
+                                    .addComponent(jButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(jButton17, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(13, 13, 13))
+                                .addComponent(jButton14, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanel7Layout.createSequentialGroup()
+                            .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(jPanel7Layout.createSequentialGroup()
+                                    .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(jScrollPane11, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 598, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jPanel7Layout.createSequentialGroup()
+                                    .addComponent(jDateChooser4, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(jLabel26, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(378, 378, 378))
+                                .addGroup(jPanel7Layout.createSequentialGroup()
+                                    .addComponent(jLabel28, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(206, 206, 206)
+                                    .addComponent(jCheckBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(jPanel7Layout.createSequentialGroup()
-                                    .addGap(21, 21, 21)
-                                    .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jLabel26, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jButton17, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(25, 25, 25)
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGap(101, 101, 101)
+                                    .addComponent(jLabel27))
+                                .addGroup(jPanel7Layout.createSequentialGroup()
+                                    .addGap(6, 6, 6)
+                                    .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            );
+            jPanel7Layout.setVerticalGroup(
+                jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel7Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jDateChooser4, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel7Layout.createSequentialGroup()
+                                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel25)
+                                    .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addComponent(jDateChooser2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
+                                        .addComponent(jLabel23, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel7Layout.createSequentialGroup()
+                                        .addGap(21, 21, 21)
+                                        .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jLabel26, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jButton17, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGap(25, 25, 25)
+                    .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jCheckBox1))
+                        .addGroup(jPanel7Layout.createSequentialGroup()
+                            .addGap(5, 5, 5)
+                            .addComponent(jLabel28, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGap(10, 10, 10)
+                    .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel7Layout.createSequentialGroup()
+                            .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel7Layout.createSequentialGroup()
+                                .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(12, 12, 12))
+                            .addGroup(jPanel7Layout.createSequentialGroup()
+                                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                                    .addComponent(jScrollPane11, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))))
                     .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jCheckBox1))
-                    .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addGap(5, 5, 5)
-                        .addComponent(jLabel28, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(10, 10, 10)
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
-                    .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(jPanel7Layout.createSequentialGroup()
-                            .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(12, 12, 12))
-                        .addGroup(jPanel7Layout.createSequentialGroup()
-                            .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                                .addComponent(jScrollPane11, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))))
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton14, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton13, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton15, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+                        .addComponent(jButton14, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButton13, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButton15, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            );
 
-        jTabbedPane1.addTab("OH Query!", jPanel7);
+            jTabbedPane1.addTab("OH Query!", jPanel7);
 
-        jLabel31.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel31.setText("Keresett PN:");
+            jLabel31.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+            jLabel31.setText("Keresett PN:");
 
-        jLabel32.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel32.setText("Gyártandó mennyiség:");
+            jLabel32.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+            jLabel32.setText("Gyártandó mennyiség:");
 
-        jButton16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/leker1.png"))); // NOI18N
-        jButton16.setToolTipText("Lekér");
-        jButton16.setBorderPainted(false);
-        jButton16.setContentAreaFilled(false);
-        jButton16.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jButton16MouseEntered(evt);
+            jButton16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/leker1.png"))); // NOI18N
+            jButton16.setToolTipText("Lekér");
+            jButton16.setBorderPainted(false);
+            jButton16.setContentAreaFilled(false);
+            jButton16.addMouseListener(new java.awt.event.MouseAdapter() {
+                public void mouseEntered(java.awt.event.MouseEvent evt) {
+                    jButton16MouseEntered(evt);
+                }
+                public void mouseExited(java.awt.event.MouseEvent evt) {
+                    jButton16MouseExited(evt);
+                }
+            });
+            jButton16.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    jButton16ActionPerformed(evt);
+                }
+            });
+
+            jTable12.setModel(new javax.swing.table.DefaultTableModel(
+                new Object [][] {
+                    {null, null, null, null, null, null, null, null, null, null},
+                    {null, null, null, null, null, null, null, null, null, null},
+                    {null, null, null, null, null, null, null, null, null, null},
+                    {null, null, null, null, null, null, null, null, null, null},
+                    {null, null, null, null, null, null, null, null, null, null},
+                    {null, null, null, null, null, null, null, null, null, null},
+                    {null, null, null, null, null, null, null, null, null, null},
+                    {null, null, null, null, null, null, null, null, null, null},
+                    {null, null, null, null, null, null, null, null, null, null},
+                    {null, null, null, null, null, null, null, null, null, null},
+                    {null, null, null, null, null, null, null, null, null, null},
+                    {null, null, null, null, null, null, null, null, null, null},
+                    {null, null, null, null, null, null, null, null, null, null},
+                    {null, null, null, null, null, null, null, null, null, null},
+                    {null, null, null, null, null, null, null, null, null, null},
+                    {null, null, null, null, null, null, null, null, null, null},
+                    {null, null, null, null, null, null, null, null, null, null},
+                    {null, null, null, null, null, null, null, null, null, null},
+                    {null, null, null, null, null, null, null, null, null, null},
+                    {null, null, null, null, null, null, null, null, null, null},
+                    {null, null, null, null, null, null, null, null, null, null},
+                    {null, null, null, null, null, null, null, null, null, null},
+                    {null, null, null, null, null, null, null, null, null, null}
+                },
+                new String [] {
+                    "Oracle PN", "SMT ProgNév", "Sor", "Gyártási oldal", "Panelizáció", "Mértidő", "Gyors mérés", "Kalkulált idő", "Hatékonyság (%)", "Gyártási idő / Óra"
+                }
+            ));
+            jScrollPane13.setViewportView(jTable12);
+            if (jTable12.getColumnModel().getColumnCount() > 0) {
+                jTable12.getColumnModel().getColumn(0).setMinWidth(150);
+                jTable12.getColumnModel().getColumn(0).setPreferredWidth(150);
+                jTable12.getColumnModel().getColumn(0).setMaxWidth(200);
+                jTable12.getColumnModel().getColumn(1).setMinWidth(150);
+                jTable12.getColumnModel().getColumn(1).setPreferredWidth(150);
+                jTable12.getColumnModel().getColumn(1).setMaxWidth(200);
+                jTable12.getColumnModel().getColumn(9).setMinWidth(170);
+                jTable12.getColumnModel().getColumn(9).setPreferredWidth(170);
+                jTable12.getColumnModel().getColumn(9).setMaxWidth(300);
             }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                jButton16MouseExited(evt);
+
+            jLabel30.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
+            jLabel30.setText("Backend");
+
+            jLabel33.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
+            jLabel33.setText("SMT");
+
+            jTable13.setModel(new javax.swing.table.DefaultTableModel(
+                new Object [][] {
+                    {null, null, null, null, null},
+                    {null, null, null, null, null},
+                    {null, null, null, null, null},
+                    {null, null, null, null, null}
+                },
+                new String [] {
+                    "Oracle PN", "Cella", "Workstation", "Darab/Óra", "Gyártási idő / Óra"
+                }
+            ));
+            jScrollPane14.setViewportView(jTable13);
+
+            javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
+            jPanel8.setLayout(jPanel8Layout);
+            jPanel8Layout.setHorizontalGroup(
+                jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel8Layout.createSequentialGroup()
+                    .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel8Layout.createSequentialGroup()
+                            .addGap(483, 483, 483)
+                            .addComponent(jLabel30))
+                        .addGroup(jPanel8Layout.createSequentialGroup()
+                            .addContainerGap()
+                            .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(jPanel8Layout.createSequentialGroup()
+                                    .addComponent(jLabel31, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jTextField18, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
+                                    .addComponent(jLabel32, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
+                                    .addComponent(jTextField19, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel8Layout.createSequentialGroup()
+                                    .addGap(164, 164, 164)
+                                    .addComponent(jLabel33, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jPanel8Layout.createSequentialGroup()
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(jButton16, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(jScrollPane13, javax.swing.GroupLayout.PREFERRED_SIZE, 1095, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jScrollPane14, javax.swing.GroupLayout.PREFERRED_SIZE, 1095, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            );
+            jPanel8Layout.setVerticalGroup(
+                jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel8Layout.createSequentialGroup()
+                    .addGap(38, 38, 38)
+                    .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel8Layout.createSequentialGroup()
+                            .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel31)
+                                .addComponent(jTextField18, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel32)
+                                .addComponent(jTextField19, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jButton16, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGap(21, 21, 21)
+                    .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel8Layout.createSequentialGroup()
+                            .addGap(36, 36, 36)
+                            .addComponent(jScrollPane13, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jLabel30))
+                        .addComponent(jLabel33))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jScrollPane14, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            );
+
+            jTabbedPane1.addTab("Daraboló", jPanel8);
+
+            jPanel9.setBackground(new java.awt.Color(204, 204, 204));
+
+            jLabel34.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/Selective11.jpg"))); // NOI18N
+            jLabel34.setText("jLabel34");
+
+            javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
+            jPanel9.setLayout(jPanel9Layout);
+            jPanel9Layout.setHorizontalGroup(
+                jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel9Layout.createSequentialGroup()
+                    .addGap(129, 129, 129)
+                    .addComponent(jLabel34, javax.swing.GroupLayout.PREFERRED_SIZE, 829, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(141, Short.MAX_VALUE))
+            );
+            jPanel9Layout.setVerticalGroup(
+                jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel9Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(jLabel34)
+                    .addContainerGap(26, Short.MAX_VALUE))
+            );
+
+            jTabbedPane1.addTab("BeTervező", jPanel9);
+
+            jList1.setToolTipText("Válaszd ki az állomásaidat!\nA CTR+ klikkel több állomás is kiválasztahtó!");
+            jScrollPane15.setViewportView(jList1);
+
+            jLabel35.setText("Sor/Cella");
+
+            jLabel36.setText("Lekérdezés futtatása ettől a dátumtól:");
+
+            jTable14.setModel(new javax.swing.table.DefaultTableModel(
+                new Object [][] {
+
+                },
+                new String [] {
+                    "Sor/Cella", "Partnumber", "JOB", "Startdate", "Skeleton/TP15"
+                }
+            ));
+            jScrollPane16.setViewportView(jTable14);
+            if (jTable14.getColumnModel().getColumnCount() > 0) {
+                jTable14.getColumnModel().getColumn(0).setMinWidth(150);
+                jTable14.getColumnModel().getColumn(0).setMaxWidth(200);
             }
-        });
-        jButton16.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton16ActionPerformed(evt);
-            }
-        });
 
-        jTable12.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null}
-            },
-            new String [] {
-                "Oracle PN", "SMT ProgNév", "Sor", "Gyártási oldal", "Panelizáció", "Mértidő", "Gyors mérés", "Kalkulált idő", "Hatékonyság (%)", "Gyártási idő / Óra"
-            }
-        ));
-        jScrollPane13.setViewportView(jTable12);
-        if (jTable12.getColumnModel().getColumnCount() > 0) {
-            jTable12.getColumnModel().getColumn(0).setMinWidth(150);
-            jTable12.getColumnModel().getColumn(0).setPreferredWidth(150);
-            jTable12.getColumnModel().getColumn(0).setMaxWidth(200);
-            jTable12.getColumnModel().getColumn(1).setMinWidth(150);
-            jTable12.getColumnModel().getColumn(1).setPreferredWidth(150);
-            jTable12.getColumnModel().getColumn(1).setMaxWidth(200);
-            jTable12.getColumnModel().getColumn(9).setMinWidth(170);
-            jTable12.getColumnModel().getColumn(9).setPreferredWidth(170);
-            jTable12.getColumnModel().getColumn(9).setMaxWidth(300);
-        }
+            jButton18.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/leker1.png"))); // NOI18N
+            jButton18.setToolTipText("Lekér");
+            jButton18.setBorderPainted(false);
+            jButton18.setContentAreaFilled(false);
+            jButton18.addMouseListener(new java.awt.event.MouseAdapter() {
+                public void mouseEntered(java.awt.event.MouseEvent evt) {
+                    jButton18MouseEntered(evt);
+                }
+                public void mouseExited(java.awt.event.MouseEvent evt) {
+                    jButton18MouseExited(evt);
+                }
+            });
+            jButton18.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    jButton18ActionPerformed(evt);
+                }
+            });
 
-        jLabel30.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
-        jLabel30.setText("Backend");
+            javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
+            jPanel10.setLayout(jPanel10Layout);
+            jPanel10Layout.setHorizontalGroup(
+                jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel10Layout.createSequentialGroup()
+                    .addComponent(jScrollPane15, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(18, 18, 18)
+                    .addComponent(jScrollPane16, javax.swing.GroupLayout.PREFERRED_SIZE, 929, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 26, Short.MAX_VALUE))
+                .addGroup(jPanel10Layout.createSequentialGroup()
+                    .addGap(25, 25, 25)
+                    .addComponent(jLabel35, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(49, 49, 49)
+                    .addComponent(jLabel36)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(jDateChooser5, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(jButton18, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            );
+            jPanel10Layout.setVerticalGroup(
+                jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel10Layout.createSequentialGroup()
+                    .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel10Layout.createSequentialGroup()
+                            .addGap(16, 16, 16)
+                            .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel35, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel36))
+                                .addComponent(jDateChooser5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jButton18, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jScrollPane15, javax.swing.GroupLayout.DEFAULT_SIZE, 467, Short.MAX_VALUE)
+                        .addComponent(jScrollPane16))
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            );
 
-        jLabel33.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
-        jLabel33.setText("SMT");
+            jTabbedPane1.addTab("JOB figyelő", jPanel10);
 
-        jTable13.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
-            },
-            new String [] {
-                "Oracle PN", "Cella", "Workstation", "Darab/Óra", "Gyártási idő / Óra"
-            }
-        ));
-        jScrollPane14.setViewportView(jTable13);
+            jScrollPane7.setViewportView(jTabbedPane1);
 
-        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
-        jPanel8.setLayout(jPanel8Layout);
-        jPanel8Layout.setHorizontalGroup(
-            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel8Layout.createSequentialGroup()
-                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel8Layout.createSequentialGroup()
-                        .addGap(483, 483, 483)
-                        .addComponent(jLabel30))
-                    .addGroup(jPanel8Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(jPanel8Layout.createSequentialGroup()
-                                .addComponent(jLabel31, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jTextField18, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
-                                .addComponent(jLabel32, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
-                                .addComponent(jTextField19, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel8Layout.createSequentialGroup()
-                                .addGap(164, 164, 164)
-                                .addComponent(jLabel33, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel8Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton16, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addComponent(jScrollPane13, javax.swing.GroupLayout.PREFERRED_SIZE, 1095, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane14, javax.swing.GroupLayout.PREFERRED_SIZE, 1095, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel8Layout.setVerticalGroup(
-            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel8Layout.createSequentialGroup()
-                .addGap(38, 38, 38)
-                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel8Layout.createSequentialGroup()
-                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel31)
-                            .addComponent(jTextField18, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel32)
-                            .addComponent(jTextField19, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jButton16, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(21, 21, 21)
-                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel8Layout.createSequentialGroup()
-                        .addGap(36, 36, 36)
-                        .addComponent(jScrollPane13, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel30))
-                    .addComponent(jLabel33))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane14, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+            jPanel6.add(jScrollPane7, java.awt.BorderLayout.CENTER);
 
-        jTabbedPane1.addTab("Daraboló", jPanel8);
+            getContentPane().add(jPanel6, java.awt.BorderLayout.CENTER);
 
-        jPanel9.setBackground(new java.awt.Color(204, 204, 204));
-
-        jLabel34.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/Selective11.jpg"))); // NOI18N
-        jLabel34.setText("jLabel34");
-
-        javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
-        jPanel9.setLayout(jPanel9Layout);
-        jPanel9Layout.setHorizontalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel9Layout.createSequentialGroup()
-                .addGap(129, 129, 129)
-                .addComponent(jLabel34, javax.swing.GroupLayout.PREFERRED_SIZE, 829, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(141, Short.MAX_VALUE))
-        );
-        jPanel9Layout.setVerticalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel9Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel34)
-                .addContainerGap(26, Short.MAX_VALUE))
-        );
-
-        jTabbedPane1.addTab("BeTervező", jPanel9);
-
-        jList1.setToolTipText("Válaszd ki az állomásaidat!\nA CTR+ klikkel több állomás is kiválasztahtó!");
-        jScrollPane15.setViewportView(jList1);
-
-        jLabel35.setText("Sor/Cella");
-
-        jLabel36.setText("Lekérdezés futtatása ettől a dátumtól:");
-
-        jTable14.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Sor/Cella", "Partnumber", "JOB", "Startdate", "Skeleton/TP15"
-            }
-        ));
-        jScrollPane16.setViewportView(jTable14);
-        if (jTable14.getColumnModel().getColumnCount() > 0) {
-            jTable14.getColumnModel().getColumn(0).setMinWidth(150);
-            jTable14.getColumnModel().getColumn(0).setMaxWidth(200);
-        }
-
-        jButton18.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/leker1.png"))); // NOI18N
-        jButton18.setToolTipText("Lekér");
-        jButton18.setBorderPainted(false);
-        jButton18.setContentAreaFilled(false);
-        jButton18.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jButton18MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                jButton18MouseExited(evt);
-            }
-        });
-        jButton18.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton18ActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
-        jPanel10.setLayout(jPanel10Layout);
-        jPanel10Layout.setHorizontalGroup(
-            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel10Layout.createSequentialGroup()
-                .addComponent(jScrollPane15, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane16, javax.swing.GroupLayout.PREFERRED_SIZE, 929, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 26, Short.MAX_VALUE))
-            .addGroup(jPanel10Layout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addComponent(jLabel35, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(49, 49, 49)
-                .addComponent(jLabel36)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jDateChooser5, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton18, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel10Layout.setVerticalGroup(
-            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel10Layout.createSequentialGroup()
-                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel10Layout.createSequentialGroup()
-                        .addGap(16, 16, 16)
-                        .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel35, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel36))
-                            .addComponent(jDateChooser5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jButton18, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane15, javax.swing.GroupLayout.DEFAULT_SIZE, 467, Short.MAX_VALUE)
-                    .addComponent(jScrollPane16))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        jTabbedPane1.addTab("JOB figyelő", jPanel10);
-
-        jScrollPane7.setViewportView(jTabbedPane1);
-
-        jPanel6.add(jScrollPane7, java.awt.BorderLayout.CENTER);
-
-        getContentPane().add(jPanel6, java.awt.BorderLayout.CENTER);
-
-        pack();
-        setLocationRelativeTo(null);
-    }// </editor-fold>//GEN-END:initComponents
+            pack();
+            setLocationRelativeTo(null);
+        }// </editor-fold>//GEN-END:initComponents
 
     private void jTabbedPane1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabbedPane1StateChanged
 
@@ -2776,137 +2778,11 @@ public class ablak extends javax.swing.JFrame {
     private void jButton18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton18ActionPerformed
 
         //kiszedjuk a kijelolt elemeket
-        List<String> allomasok = new ArrayList<String>();
-        allomasok = jList1.getSelectedValuesList();
-        boolean irtunke;
-
-        //feldolgozzuk stringge
-        String allomasokquerybe = "";
-        for (int i = 0; i < allomasok.size(); i++) {
-
-            allomasokquerybe += "'" + allomasok.get(i) + "',";
-
-        }
-
-        allomasokquerybe = allomasokquerybe.substring(0, allomasokquerybe.length() - 1);
-
-        //kiszedjuk a datumot
-        Date tol = jDateChooser5.getDate();
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd 06:00:00");
-        String stol = df.format(tol);
-
-        //smt lekérdezés sor , job , pn  a megadott dátumtól
-        String Query = "select distinct stations.name , terv.partnumber , terv.job , terv.startdate from stations left join terv on terv.stationid = stations.id where terv.active = 1 and terv.startdate >= '" + stol + "' and stations.name in (" + allomasokquerybe + ") group by terv.job order by stations.name asc , terv.startdate asc";
-        //vegrehajtjuk
-
-        planconnect pc = new planconnect();
-        try {
-            pc.planconnect(Query);
-        } catch (SQLException ex) {
-            Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        //betesszuk a tablaba a meglevo adatokat
-        DefaultTableModel model = new DefaultTableModel();
-        model = (DefaultTableModel) jTable14.getModel();
-        model.setRowCount(0);
-
-        try {
-            while (pc.rs.next()) {
-
-                model.addRow(new Object[]{pc.rs.getString(1), pc.rs.getString(2), pc.rs.getString(3).trim(), pc.rs.getString(4)});
-
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        //lekerdezzuk a backendet is
-        Query = "SELECT distinct Beterv.sht , Beterv.pn , Beterv.job , Beterv.startdate from Beterv where Beterv.startdate >= '" + stol + "' and Beterv.active = 2 and Beterv.sht in (" + allomasokquerybe + ") group by Beterv.job order by Beterv.sht asc , Beterv.startdate asc";
-
-        try {
-            pc.planconnect(Query);
-        } catch (SQLException ex) {
-            Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        try {
-            while (pc.rs.next()) {
-
-                model.addRow(new Object[]{pc.rs.getString(1), pc.rs.getString(2), pc.rs.getString(3), pc.rs.getString(4)});
-
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        jTable14.setModel(model);
-
-        //kiszedjuk a tablabol az adatokat es lekerdezzuk
-        String jobszamok = "";
-        for (int i = 0; i < jTable14.getRowCount(); i++) {
-
-            jobszamok += jTable14.getValueAt(i, 2).toString().trim() + ";";
-
-        }
-
-        jobszamok = jobszamok.substring(0, jobszamok.length() - 1);
-
-        xmlfeldolg xxx = new xmlfeldolg();
-        Object rowdata[][] = null;
-        URL url = null;
-        try {
-            url = new URL("http://143.116.140.120/rest/request.php?page=planning_shop_order&shoporder=" + jobszamok + "&format=xml");
-            ArrayList<String> lista = new ArrayList();
-
-            String nodelist = "planning_shop_order";
-            lista.add("Shop_Order_Number");
-            lista.add("Part_Number");
-            lista.add("Workstation");
-            lista.add("Qty");
-            lista.add("Unit_Status");
-            rowdata = (Object[][]) xxx.xmlfeldolg(url, nodelist, lista);
-
-        } catch (Exception e) {
-        }
-
-        //betesszuk a tablaba
-        model = (DefaultTableModel) jTable14.getModel();
-
-        for (int i = 0; i < jTable14.getRowCount(); i++) {
-
-            irtunke = false;
-
-            for (int n = 0; n < rowdata.length; n++) {
-
-                if (jTable14.getValueAt(i, 2).toString().equals(rowdata[n][0]) && (rowdata[n][4].equals("Traveler Printed") || rowdata[n][4].equals("Unit Skeleton"))) {
-
-                    model.setValueAt(rowdata[n][3], i, 4);
-                    irtunke = true;
-
-                } else if (jTable14.getValueAt(i, 2).toString().equals(rowdata[n][0]) && irtunke == false) {
-
-                    model.setValueAt("Minden elindult!", i, 4);
-
-                }
-
-            }
-
-            if (model.getValueAt(i, 4) == null) {
-
-                model.setValueAt("Nem létezik SFDC-ben!", i, 4);
-
-            }
-
-        }
-
-        jTable14.setModel(model);
-
-        stat.beir(System.getProperty("user.name"), jTabbedPane1.getTitleAt(jTabbedPane1.getSelectedIndex()), "", "gabor.hanacsek@sanmina.com");
+        Jobfigyeloszal j = new Jobfigyeloszal();
+        j.start();
+        animation a = new animation();
+        a.start();
+       
     }//GEN-LAST:event_jButton18ActionPerformed
 
     private void jButton16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton16ActionPerformed
@@ -3499,48 +3375,12 @@ public class ablak extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        String part;
-        part = jTextField3.getText();
-        Date tol = jDateChooser1.getDate();
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd%20HH:mm:ss");
-        String stol = df.format(tol);
-        stol = stol.substring(0, 13) + jTextField8.getText() + ":00";
-        Date ig = jDateChooser3.getDate();
-        String sig = df.format(ig);
-        sig = sig.substring(0, 13) + jTextField9.getText() + ":00";
 
-        modelacti = (DefaultTableModel) jTable3.getModel();
-        modelacti.setRowCount(0);
-        URL url = null;
-
-        xmlfeldolg xxx = new xmlfeldolg();
-        Object rowdata[][] = null;
-
-        try {
-
-            url = new URL("http://143.116.140.120/rest/request.php?page=planning_realisation&product=" + part + "&starttime=" + stol + "&endtime=" + sig + "&format=xml");
-            ArrayList<String> lista = new ArrayList();
-
-            String nodelist = "planning_realisation";
-            lista.add("Workstation");
-            lista.add("Part_Number");
-            lista.add("Pass");
-            lista.add("Shop_Order_Number");
-            lista.add("SUMPassQty");
-            lista.add("move_qty");
-            lista.add("manual_move_qty");
-
-            rowdata = (Object[][]) xxx.xmlfeldolg(url, nodelist, lista);
-
-        } catch (MalformedURLException ex) {
-            Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        modelacti = (DefaultTableModel) xxx.totable(modelacti, rowdata);
-
-        jTable3.setModel(modelacti);
-
-        stat.beir(System.getProperty("user.name"), jTabbedPane1.getTitleAt(jTabbedPane1.getSelectedIndex()), "", "gabor.hanacsek@sanmina.com");
+        Activityszal a = new Activityszal();
+        a.start();
+        animation an = new animation();
+        an.start();
+        
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -3911,11 +3751,11 @@ public class ablak extends javax.swing.JFrame {
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
     private javax.swing.JCheckBox jCheckBox1;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
+    public static com.toedter.calendar.JDateChooser jDateChooser1;
     public static com.toedter.calendar.JDateChooser jDateChooser2;
-    private com.toedter.calendar.JDateChooser jDateChooser3;
+    public static com.toedter.calendar.JDateChooser jDateChooser3;
     public static com.toedter.calendar.JDateChooser jDateChooser4;
-    private com.toedter.calendar.JDateChooser jDateChooser5;
+    public static com.toedter.calendar.JDateChooser jDateChooser5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -3951,7 +3791,7 @@ public class ablak extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JList<String> jList1;
+    public static javax.swing.JList<String> jList1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel2;
@@ -3984,9 +3824,9 @@ public class ablak extends javax.swing.JFrame {
     public static javax.swing.JTable jTable11;
     private javax.swing.JTable jTable12;
     private javax.swing.JTable jTable13;
-    private javax.swing.JTable jTable14;
+    public static javax.swing.JTable jTable14;
     public static javax.swing.JTable jTable2;
-    private javax.swing.JTable jTable3;
+    public static javax.swing.JTable jTable3;
     public static javax.swing.JTable jTable4;
     public static javax.swing.JTable jTable5;
     private javax.swing.JTable jTable6;
@@ -4004,12 +3844,12 @@ public class ablak extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField18;
     private javax.swing.JTextField jTextField19;
     public static javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
+    public static javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField5;
     private javax.swing.JTextField jTextField6;
     public static javax.swing.JTextField jTextField7;
-    private javax.swing.JTextField jTextField8;
-    private javax.swing.JTextField jTextField9;
+    public static javax.swing.JTextField jTextField8;
+    public static javax.swing.JTextField jTextField9;
     // End of variables declaration//GEN-END:variables
 }

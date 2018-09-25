@@ -537,6 +537,9 @@
                       </Events>
                     </Component>
                     <Component class="javax.swing.JTextField" name="jTextField3">
+                      <AuxValues>
+                        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
+                      </AuxValues>
                     </Component>
                     <Component class="javax.swing.JLabel" name="jLabel7">
                       <Properties>
@@ -567,6 +570,9 @@
                           <Events>
                             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jTable3MouseClicked"/>
                           </Events>
+                          <AuxValues>
+                            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
+                          </AuxValues>
                         </Component>
                       </SubComponents>
                     </Container>
@@ -614,8 +620,14 @@
                       </Events>
                     </Component>
                     <Component class="com.toedter.calendar.JDateChooser" name="jDateChooser1">
+                      <AuxValues>
+                        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
+                      </AuxValues>
                     </Component>
                     <Component class="com.toedter.calendar.JDateChooser" name="jDateChooser3">
+                      <AuxValues>
+                        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
+                      </AuxValues>
                     </Component>
                     <Component class="javax.swing.JLabel" name="jLabel13">
                       <Properties>
@@ -626,6 +638,9 @@
                       <Properties>
                         <Property name="text" type="java.lang.String" value="06:00"/>
                       </Properties>
+                      <AuxValues>
+                        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
+                      </AuxValues>
                     </Component>
                     <Component class="javax.swing.JLabel" name="jLabel14">
                       <Properties>
@@ -636,6 +651,9 @@
                       <Properties>
                         <Property name="text" type="java.lang.String" value="18:00"/>
                       </Properties>
+                      <AuxValues>
+                        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
+                      </AuxValues>
                     </Component>
                     <Component class="javax.swing.JLabel" name="jLabel19">
                       <Properties>
@@ -2011,6 +2029,7 @@
                           </Properties>
                           <AuxValues>
                             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+                            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
                           </AuxValues>
                         </Component>
                       </SubComponents>
@@ -2021,6 +2040,9 @@
                       </Properties>
                     </Component>
                     <Component class="com.toedter.calendar.JDateChooser" name="jDateChooser5">
+                      <AuxValues>
+                        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
+                      </AuxValues>
                     </Component>
                     <Component class="javax.swing.JLabel" name="jLabel36">
                       <Properties>
@@ -2079,7 +2101,8 @@
                             </Property>
                           </Properties>
                           <AuxValues>
-                            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JTable(){&#xa;    @Override&#xa;    public Component prepareRenderer(TableCellRenderer renderer, int row, int col) {&#xa;        Component comp = super.prepareRenderer(renderer, row, col);&#xa;        Object value = getModel().getValueAt(row, col);&#xa;        if (value.equals(&quot;Nem l&#xe9;tezik SFDC-ben!&quot;)) {&#xa;            comp.setBackground(Color.red);&#xa;            comp.setForeground(Color.BLACK);&#xa;        }&#xa;        else if (value.equals(&quot;Minden elindult!&quot;)) {&#xa;            comp.setBackground(Color.green);&#xa;            comp.setForeground(Color.BLACK);&#xa;        }&#xa;        else {&#xa;            comp.setBackground(Color.white);&#xa;            comp.setForeground(Color.BLACK);&#xa;        }&#xa;        return comp;&#xa;    }&#xa;}&#xa;"/>
+                            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JTable(){&#xa;    @Override&#xa;    public Component prepareRenderer(TableCellRenderer renderer, int row, int col) {&#xa;        Component comp = super.prepareRenderer(renderer, row, col);&#xa;        Object value = getModel().getValueAt(row, col);&#xa;try{&#xa;        if (value.equals(&quot;Nem l&#xe9;tezik SFDC-ben!&quot;)) {&#xa;            comp.setBackground(Color.red);&#xa;            comp.setForeground(Color.BLACK);&#xa;        }&#xa;        else if (value.equals(&quot;Minden elindult!&quot;)) {&#xa;            comp.setBackground(Color.green);&#xa;            comp.setForeground(Color.BLACK);&#xa;        }&#xa;        else {&#xa;            comp.setBackground(Color.white);&#xa;            comp.setForeground(Color.BLACK);&#xa;        }}&#xa;catch(Exception e){}&#xa;        return comp;&#xa;    }&#xa;}&#xa;"/>
+                            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
                           </AuxValues>
                         </Component>
                       </SubComponents>

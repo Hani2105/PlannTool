@@ -9,9 +9,12 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
 import javax.swing.BorderFactory;
+import static javax.swing.GroupLayout.Alignment.CENTER;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JTable;
+import javax.swing.JTextArea;
+import javax.swing.LookAndFeel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
@@ -62,7 +65,14 @@ public class Tc_TervTablaRenderer extends DefaultTableCellRenderer {
         } catch (Exception e) {
         }
 
+        try {
+            if (column > 3) {
+                c.setToolTipText(table.getColumnName(column));
+            }
+        } catch (Exception e) {
+        }
         c.setHorizontalAlignment(CENTER);
+
         return c;
 
     }

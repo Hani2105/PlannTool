@@ -194,18 +194,27 @@ public class Tc_BejelentkezesTervezo extends javax.swing.JFrame {
             } else {
 //sikertelen bejelentkezes
                 ablak.planner = false;
-                Tc_Betervezo b = new Tc_Betervezo();
-                b.setVisible(true);
-                this.dispose();
+                //Tc_Betervezo b = new Tc_Betervezo();
+                //b.setVisible(true);
+                //this.dispose();
+                infobox info = new infobox();
+                info.infoBox("Nem jó jelszó vagy felh. név!", "Hiba!");
+                 Tc_BejelentkezesTervezo b = new Tc_BejelentkezesTervezo(az);
+                 b.setVisible(true);
+                
 
             }
 
         } else {
 //sikertelen bejelentkezes
             ablak.planner = false;
-            Tc_Betervezo b = new Tc_Betervezo();
-            b.setVisible(true);
-            this.dispose();
+                //Tc_Betervezo b = new Tc_Betervezo();
+                //b.setVisible(true);
+                //this.dispose();
+                infobox info = new infobox();
+                info.infoBox("Nem jó jelszó vagy felh. név!", "Hiba!");
+                Tc_BejelentkezesTervezo b = new Tc_BejelentkezesTervezo(az);
+                b.setVisible(true);
 
         }
 

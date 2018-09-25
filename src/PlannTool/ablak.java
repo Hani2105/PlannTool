@@ -3417,15 +3417,15 @@ public class ablak extends javax.swing.JFrame {
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         // TODO add your handling code here:
+        
+        Selejtszal s = new Selejtszal();
+        s.start();
+        animation a = new animation();
+        a.start();
 
-        selejt sele = null;
-        try {
-            sele = new selejt(this);
-        } catch (MalformedURLException ex) {
-            Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        sele.setDefaultCloseOperation(sele.DISPOSE_ON_CLOSE);
-        sele.setVisible(true);
+
+        
+        
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed

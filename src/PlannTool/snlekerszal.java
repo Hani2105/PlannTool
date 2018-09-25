@@ -166,6 +166,7 @@ public class snlekerszal extends Thread{
         }
         
         animation.rajzol = false;
+        ablak.jTable4.repaint();
 
         stat.beir(System.getProperty("user.name"), jTabbedPane1.getTitleAt(jTabbedPane1.getSelectedIndex()), "", "gabor.hanacsek@sanmina.com");
     

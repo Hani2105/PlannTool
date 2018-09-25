@@ -19,18 +19,14 @@ public class szal extends Thread {
 
     ablak a;
     selejt s;
-   
 
     public szal(ablak a, selejt s) throws MalformedURLException {
         this.a = a;
         this.s = s;
-      
 
     }
 
-   
     public DefaultTableModel mukodj() {
-
 
         int count = 0;
 
@@ -109,7 +105,7 @@ public class szal extends Thread {
                 if (s.selejtmodel.getValueAt(i, 2).toString().equals(rowdata[n][0].toString()) && rowdata[n][4].toString().equals("Finished")) {
                     finishcounter = finishcounter + Integer.parseInt(rowdata[n][3].toString());
                     s.selejtmodel.setValueAt(finishcounter, i, 4);
-                    
+
                 }
             }
         }
@@ -143,8 +139,9 @@ public class szal extends Thread {
                 }
             }
         }
-
+        animation.rajzol = false;
         return s.selejtmodel;
 
     }
+
 }

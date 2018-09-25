@@ -24,8 +24,7 @@ public class Tc_Cellavalaszto extends javax.swing.JFrame {
 
     public Tc_Cellavalaszto(Tc_Betervezo b) throws SQLException, ClassNotFoundException {
         initComponents();
-        
-        
+
         bt = b;
         //lekerdezzuk az adatbazisbol a cellakat
         planconnect pc = new planconnect();
@@ -38,10 +37,6 @@ public class Tc_Cellavalaszto extends javax.swing.JFrame {
         jList1.setModel(lm1);
         jList2.setModel(lm2);
         jComboBox1.requestFocus();
-        
-        jList1.setCellRenderer(new TransparentListCellRenderer());
-        jList2.setCellRenderer(new TransparentListCellRenderer());
-        
 
         while (rs.next()) {
 
@@ -62,7 +57,6 @@ public class Tc_Cellavalaszto extends javax.swing.JFrame {
         }
 
         jComboBox1.setSelectedIndex(-1);
-        
 
 //        Besheet sheet = new Besheet();
 //        bt.jTabbedPane1.add("valami", sheet);
@@ -87,7 +81,6 @@ public class Tc_Cellavalaszto extends javax.swing.JFrame {
         jComboBox1 = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
         jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -96,18 +89,14 @@ public class Tc_Cellavalaszto extends javax.swing.JFrame {
 
         jScrollPane1.setOpaque(false);
 
-        jList1.setOpaque(false);
         jScrollPane1.setViewportView(jList1);
-        jScrollPane1.getViewport().setOpaque(false);
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 120, 170, 310));
 
         jScrollPane2.setOpaque(false);
 
         jList2.setToolTipText("");
-        jList2.setOpaque(false);
         jScrollPane2.setViewportView(jList2);
-        jScrollPane2.getViewport().setOpaque(false);
 
         getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 120, 170, 310));
 
@@ -117,7 +106,7 @@ public class Tc_Cellavalaszto extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 170, -1, -1));
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 120, -1, -1));
 
         jButton2.setText("<--");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -125,7 +114,7 @@ public class Tc_Cellavalaszto extends javax.swing.JFrame {
                 jButton2ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 230, -1, -1));
+        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 170, -1, -1));
 
         jButton3.setText("Cellák megnyitása");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -138,7 +127,7 @@ public class Tc_Cellavalaszto extends javax.swing.JFrame {
                 jButton3KeyPressed(evt);
             }
         });
-        getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 60, 130, -1));
+        getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 10, 130, -1));
 
         jComboBox1.setOpaque(false);
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
@@ -164,154 +153,12 @@ public class Tc_Cellavalaszto extends javax.swing.JFrame {
         });
         getContentPane().add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 290, 70, 30));
 
-        jButton5.setText("Lekér");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
-            }
-        });
-        jButton5.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jButton5KeyPressed(evt);
-            }
-        });
-        getContentPane().add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 10, 70, 30));
-
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/cella.png"))); // NOI18N
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 0, 300, 430));
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 120, 200, 300));
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jButton5KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jButton5KeyPressed
-
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-
-            if (jComboBox1.getSelectedIndex() != -1) {
-                String query = "select tc_users.cellaids from tc_users where tc_users.username = '" + jComboBox1.getSelectedItem().toString() + "'";
-                //System.out.println(query);
-
-                String cellak = "";
-                planconnect pc = new planconnect();
-                try {
-                    pc.planconnect(query);
-
-                    while (pc.rs.next()) {
-
-                        cellak = pc.rs.getString(1);
-                        //System.out.println(cellak);
-
-                    }
-
-                } catch (SQLException ex) {
-                    Logger.getLogger(Tc_Cellavalaszto.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (ClassNotFoundException ex) {
-                    Logger.getLogger(Tc_Cellavalaszto.class.getName()).log(Level.SEVERE, null, ex);
-                }
-
-                //feldaraboljuk az rs eredmenyet
-                String[] cellaktomb = cellak.split(",");
-
-                //atalakitjuk hasznalhato formava a queryhez
-                String querybe = "";
-
-                for (int i = 0; i < cellaktomb.length; i++) {
-
-                    querybe += "'" + cellaktomb[i].toString() + "',";
-
-                }
-                querybe = querybe.substring(0, querybe.length() - 1);
-
-                //osszeqallitjuk a queryt
-                query = "SELECT tc_becells.cellname from tc_becells where tc_becells.idtc_cells in (" + querybe + ")";
-                DefaultListModel lm2 = new DefaultListModel();
-
-                try {
-                    //lekerdezzuk
-
-                    pc.planconnect(query);
-                    while (pc.rs.next()) {
-                        lm2.addElement(pc.rs.getString(1));
-                    }
-
-                    jList2.setModel(lm2);
-
-                } catch (SQLException ex) {
-                    Logger.getLogger(Tc_Cellavalaszto.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (ClassNotFoundException ex) {
-                    Logger.getLogger(Tc_Cellavalaszto.class.getName()).log(Level.SEVERE, null, ex);
-                }
-
-            }
-
-            jButton3.requestFocus();
-
-        }
-    }//GEN-LAST:event_jButton5KeyPressed
-
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-
-        if (jComboBox1.getSelectedIndex() != -1) {
-            String query = "select tc_users.cellaids from tc_users where tc_users.username = '" + jComboBox1.getSelectedItem().toString() + "'";
-            //System.out.println(query);
-
-            String cellak = "";
-            planconnect pc = new planconnect();
-            try {
-                pc.planconnect(query);
-
-                while (pc.rs.next()) {
-
-                    cellak = pc.rs.getString(1);
-                    //System.out.println(cellak);
-
-                }
-
-            } catch (SQLException ex) {
-                Logger.getLogger(Tc_Cellavalaszto.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(Tc_Cellavalaszto.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
-            //feldaraboljuk az rs eredmenyet
-            String[] cellaktomb = cellak.split(",");
-
-            //atalakitjuk hasznalhato formava a queryhez
-            String querybe = "";
-
-            for (int i = 0; i < cellaktomb.length; i++) {
-
-                querybe += "'" + cellaktomb[i].toString() + "',";
-
-            }
-            querybe = querybe.substring(0, querybe.length() - 1);
-
-            //osszeqallitjuk a queryt
-            query = "SELECT tc_becells.cellname from tc_becells where tc_becells.idtc_cells in (" + querybe + ")";
-            DefaultListModel lm2 = new DefaultListModel();
-
-            try {
-                //lekerdezzuk
-
-                pc.planconnect(query);
-                while (pc.rs.next()) {
-                    lm2.addElement(pc.rs.getString(1));
-                }
-
-                jList2.setModel(lm2);
-
-            } catch (SQLException ex) {
-                Logger.getLogger(Tc_Cellavalaszto.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(Tc_Cellavalaszto.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
-        }
-
-        jButton3.requestFocus();
-
-    }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
 
@@ -360,8 +207,6 @@ public class Tc_Cellavalaszto extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jComboBox1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jComboBox1KeyPressed
-
-        jButton5.requestFocus();
 
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
 
@@ -430,14 +275,70 @@ public class Tc_Cellavalaszto extends javax.swing.JFrame {
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
 
-        jButton5.requestFocus();
+        if (jComboBox1.getSelectedIndex() != -1) {
+            String query = "select tc_users.cellaids from tc_users where tc_users.username = '" + jComboBox1.getSelectedItem().toString() + "'";
+            //System.out.println(query);
+
+            String cellak = "";
+            planconnect pc = new planconnect();
+            try {
+                pc.planconnect(query);
+
+                while (pc.rs.next()) {
+
+                    cellak = pc.rs.getString(1);
+                    //System.out.println(cellak);
+
+                }
+
+            } catch (SQLException ex) {
+                Logger.getLogger(Tc_Cellavalaszto.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(Tc_Cellavalaszto.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            //feldaraboljuk az rs eredmenyet
+            String[] cellaktomb = cellak.split(",");
+
+            //atalakitjuk hasznalhato formava a queryhez
+            String querybe = "";
+
+            for (int i = 0; i < cellaktomb.length; i++) {
+
+                querybe += "'" + cellaktomb[i].toString() + "',";
+
+            }
+            querybe = querybe.substring(0, querybe.length() - 1);
+
+            //osszeqallitjuk a queryt
+            query = "SELECT tc_becells.cellname from tc_becells where tc_becells.idtc_cells in (" + querybe + ")";
+            DefaultListModel lm2 = new DefaultListModel();
+
+            try {
+                //lekerdezzuk
+
+                pc.planconnect(query);
+                while (pc.rs.next()) {
+                    lm2.addElement(pc.rs.getString(1));
+                }
+
+                jList2.setModel(lm2);
+
+            } catch (SQLException ex) {
+                Logger.getLogger(Tc_Cellavalaszto.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(Tc_Cellavalaszto.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
+
+        jButton3.requestFocus();
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void jButton3KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jButton3KeyPressed
         // TODO add your handling code here:
 
         // TODO add your handling code here:
-
         //lekérjük a sheeteket
         Tc_Betervezo.Besheets.clear();
         for (int i = 0; i < jList2.getModel().getSize(); i++) {
@@ -503,7 +404,6 @@ public class Tc_Cellavalaszto extends javax.swing.JFrame {
 
         //bt.jButton1.setFocusable(false);
         //bt.jButton3.requestFocus();
-
         this.setVisible(false);
 
     }//GEN-LAST:event_jButton3ActionPerformed
@@ -601,7 +501,6 @@ public class Tc_Cellavalaszto extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

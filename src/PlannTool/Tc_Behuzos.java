@@ -287,11 +287,12 @@ public class Tc_Behuzos extends javax.swing.JFrame {
 
         String query = jTextField1.getText().toUpperCase().trim();
         filter(query);
+        
     }//GEN-LAST:event_jTextField1KeyReleased
     
     private void seticon() {
         
-        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("kepek/pull2.png")));
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("kepek/behuzos1.png")));
         
     }
     

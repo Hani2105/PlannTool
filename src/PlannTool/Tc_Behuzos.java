@@ -186,7 +186,7 @@ public class Tc_Behuzos extends javax.swing.JFrame {
         //lekerdezzuk az adatokat
         String query = "select terv.partnumber , terv.job , terv.startdate , terv.qty_terv ,stations.name ,ifnull(tc_bepns.partnumber,\"Nincs megadva!\") , ifnull(tc_becells.cellname,\"Nincs megadva!\") ,ifnull(tc_bestations.workstation,\"\") , terv.be_terv , terv.id\n"
                 + "from terv \n"
-                + "left join tc_bepns on tc_bepns.smt_pn = terv.partnumber \n"
+                + "left join tc_bepns on terv.partnumber like tc_bepns.smt_pn \n"
                 + "left join tc_prodmatrix on tc_prodmatrix.id_tc_bepns = tc_bepns.idtc_bepns\n"
                 + "left join tc_becells on tc_becells.idtc_cells = tc_prodmatrix.id_tc_becells\n"
                 + "left join tc_bestations on tc_bestations.idtc_bestations = tc_prodmatrix.id_tc_bestations\n"

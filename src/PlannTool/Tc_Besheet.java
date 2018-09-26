@@ -52,7 +52,7 @@ public class Tc_Besheet extends javax.swing.JPanel {
 
     public List<String> partnumbers = new ArrayList<String>();
     public List<String> workstations = new ArrayList<String>();
-    public static List<String[][]> ciklusidok = new ArrayList<String[][]>();
+    
 
     Tc_Betervezo bt;
 
@@ -82,31 +82,7 @@ public class Tc_Besheet extends javax.swing.JPanel {
 
         }
 
-        //lekerdezzuk a ciklusidoket
-        String query = "select tc_becells.cellname , tc_bepns.partnumber , tc_bestations.workstation , tc_prodmatrix.ciklusido from tc_prodmatrix \n"
-                + "left join tc_becells on tc_becells.idtc_cells = tc_prodmatrix.id_tc_becells \n"
-                + "left join tc_bepns on tc_bepns.idtc_bepns = tc_prodmatrix.id_tc_bepns\n"
-                + "left join tc_bestations on tc_bestations.idtc_bestations = tc_prodmatrix.id_tc_bestations";
-        planconnect pc = new planconnect();
-        pc.planconnect(query);
-
-        pc.rs.last();
-        int utsosor = pc.rs.getRow();
-        pc.rs.beforeFirst();
-
-        String[][] ciklusidok = new String[utsosor][4];
-        int i = 0;
-        while (pc.rs.next()) {
-
-            ciklusidok[i][0] = pc.rs.getString(1);
-            ciklusidok[i][1] = pc.rs.getString(2);
-            ciklusidok[i][2] = pc.rs.getString(3);
-            ciklusidok[i][3] = pc.rs.getString(4);
-
-            i++;
-        }
-
-        this.ciklusidok.add(ciklusidok);
+       
     }
 
     /**
@@ -548,7 +524,7 @@ public class Tc_Besheet extends javax.swing.JPanel {
 
         jTable2.setModel(model);
 
-        Tc_Calculator calc = new Tc_Calculator(this, bt);
+        Tc_Calculator calc = new Tc_Calculator(this);
 
 
     }//GEN-LAST:event_DeleteRowActionPerformed
@@ -597,14 +573,14 @@ public class Tc_Besheet extends javax.swing.JPanel {
         }
 
         jTable2.setModel(model);
-        Tc_Calculator calc = new Tc_Calculator(this, bt);
+        Tc_Calculator calc = new Tc_Calculator(this);
 
     }//GEN-LAST:event_InsertRowActionPerformed
 
     private void jTable2KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTable2KeyReleased
 
         if (!jTable2.isEditing()) {
-            Tc_Calculator calc = new Tc_Calculator(this, bt);
+            Tc_Calculator calc = new Tc_Calculator(this);
         }
 
     }//GEN-LAST:event_jTable2KeyReleased
@@ -622,7 +598,7 @@ public class Tc_Besheet extends javax.swing.JPanel {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
 
-        Tc_Szinvalaszto sz = new Tc_Szinvalaszto(this);
+        Tc_Szinvalasztos sz = new Tc_Szinvalasztos(this);
         sz.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -1014,7 +990,7 @@ public class Tc_Besheet extends javax.swing.JPanel {
         }
 
         Besheets.get(neve).jTable2.setModel(model);
-        Tc_Calculator calc = new Tc_Calculator(Besheets.get(neve), bt);
+        Tc_Calculator calc = new Tc_Calculator(Besheets.get(neve));
 
 
     }//GEN-LAST:event_jButton8ActionPerformed

@@ -24,7 +24,6 @@ public class Tc_Tervvaltozasellenor {
         planconnect pc = new planconnect();
         pc.planconnect(query);
         pc.rs.last();
-
         int sorokszama = pc.rs.getRow();
         pc.rs.beforeFirst();
         String[][] adatok = new String[2][sorokszama];

@@ -17,12 +17,16 @@ import javax.swing.table.DefaultTableModel;
 public class Tc_Calculator {
 
     Tc_Besheet b;
-    Tc_Betervezo bt;
 
-    public Tc_Calculator(Tc_Besheet b, Tc_Betervezo bt) {
+    public Tc_Calculator(Tc_Besheet b) {
+
         this.b = b;
-        this.bt = bt;
-        String sheetname = Tc_Betervezo.jTabbedPane1.getTitleAt(Tc_Betervezo.jTabbedPane1.getSelectedIndex());
+
+        String sheetname = "";
+        try {
+            sheetname = Tc_Betervezo.jTabbedPane1.getTitleAt(Tc_Betervezo.jTabbedPane1.getSelectedIndex());
+        } catch (Exception e) {
+        }
 
         List<String> wsek = new ArrayList<String>();
         boolean irtunke = false;
@@ -37,6 +41,7 @@ public class Tc_Calculator {
             if (model.getValueAt(i, 3).toString().equals("Infó")) {
 
                 model.removeRow(i);
+
                 i = i - 1;
 
             }
@@ -47,7 +52,7 @@ public class Tc_Calculator {
         for (int i = 0; i < model.getRowCount(); i++) {
 
             try {
-                
+
                 //akkor ha nem infó , nem üres és nem null az értéke
                 if (!model.getValueAt(i, 3).toString().equals("Infó") && !model.getValueAt(i, 2).toString().equals("") && model.getValueAt(i, 2) != null) {
 
@@ -121,15 +126,18 @@ public class Tc_Calculator {
                             boolean hiba = true;
 
                             //megkeressuk a darab/orat
-                            for (int n = 0; n < Tc_Besheet.ciklusidok.get(0).length; n++) {
+                            try {
+                                for (int n = 0; n < Tc_Betervezo.ciklusidok.get(0).length; n++) {
 
-                                if (Tc_Besheet.ciklusidok.get(0)[n][0].equals(sheetname) && Tc_Besheet.ciklusidok.get(0)[n][1].equals(pn) && Tc_Besheet.ciklusidok.get(0)[n][2].equals(ws)) {
+                                    if (Tc_Betervezo.ciklusidok.get(0)[n][0].equals(sheetname) && Tc_Betervezo.ciklusidok.get(0)[n][1].equals(pn) && Tc_Betervezo.ciklusidok.get(0)[n][2].equals(ws)) {
 
-                                    dbo = Double.parseDouble(Tc_Besheet.ciklusidok.get(0)[n][3]);
-                                    hiba = false;
+                                        dbo = Double.parseDouble(Tc_Betervezo.ciklusidok.get(0)[n][3]);
+                                        hiba = false;
+
+                                    }
 
                                 }
-
+                            } catch (Exception e) {
                             }
                             //ha nem volt a pn hez ws hibát írunk
                             if (hiba == true && model.getValueAt(i, 3).toString().equals("Terv")) {
@@ -171,4 +179,5 @@ public class Tc_Calculator {
         this.b.jTable2.setModel(model);
 
     }
+
 }

@@ -8,6 +8,7 @@ package PlannTool;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.joda.time.DateTime;
@@ -32,6 +33,7 @@ public class Tc_SFDCszal extends Thread {
         // sfdc keres
         // az oszlop nevet atalakitjuk stringe , ez lesz a tol datum
         String tol = "";
+
         try {
             tol = b.jTable2.getColumnName(b.jTable2.getSelectedColumn()).substring(0, b.jTable2.getColumnName(b.jTable2.getSelectedColumn()).length() - 4);
         } catch (Exception e) {
@@ -102,80 +104,153 @@ public class Tc_SFDCszal extends Thread {
             Logger.getLogger(Tc_SfdcData.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        //feldolgozzuk a row datát
+        //ebben taroljuk le a pn -eket hogy lassuk foglalkoztunk e már vele
+        List<String> pnlist = new ArrayList<String>();
+        pnlist.add("first");
+
         //elindulunk , bejarjuk a tablat es megkeressuk a megfelelo oszlopot
         for (int i = 4; i < b.jTable2.getColumnCount(); i++) {
 
             //ha egyezik az oszlop neve a datummal akkor bejarjuk  sorokat
             if (b.jTable2.getColumnName(i).substring(0, b.jTable2.getColumnName(i).length() - 4).equals(tol.replace("%20", " "))) {
 
-                //bejarjuk a sorokat es ha egyezik a ws és a pn és teny a sor akkor irunk bele
                 for (int r = 0; r < b.jTable2.getRowCount(); r++) {
 
-                    //ez lesz az adatok osszege
-                    long osszeg = 0;
-                    //elkezdjuk porgetni a rowdatat (adatokat) is
-                    for (int d = 0; d < rowdata.length; d++) {
+                    //felvesszuk a pn-t valtozonak es a ws-t
+                    String pn = "";
+                    String ws = "";
+                    boolean tovabbmegyunk = true;
 
-                        try {
+                    try {
+                        pn = b.jTable2.getValueAt(r, 0).toString();
+                        ws = b.jTable2.getValueAt(r, 2).toString();
+                    } catch (Exception e) {
+                    };
 
-                            if (rowdata[d][1].toString().equals(b.jTable2.getValueAt(r, 0).toString()) && rowdata[d][0].toString().contains(b.jTable2.getValueAt(r, 2).toString()) && b.jTable2.getValueAt(r, 3).equals("Tény")) {
+                    //megvizsgaljuk , hogy foglalkoztunk e már ezzel a pn-el
+                    for (int k = 0; k < pnlist.size(); k++) {
+
+                        if (pn.equals(pnlist.get(k).toString())) {
+
+                            tovabbmegyunk = false;
+                        }
+                    } //ha nem akkor tovább megyünk a műveletekkel ha nem infó a sor és tény
+                    if (tovabbmegyunk == true && !b.jTable2.getValueAt(r, 3).toString().equals("Infó") && b.jTable2.getValueAt(r, 3).toString().equals("Tény")) {
+
+                        //végigpörgetjük a row datát és összeszedjük a pn hez tartozó darabszámot
+                        int osszeg = 0;
+                        for (int n = 0; n < rowdata.length; n++) {
+
+                            if (rowdata[n][1].toString().equals(pn) && rowdata[n][0].toString().contains(ws) && b.jTable2.getValueAt(r, 3).toString().equals("Tény")) {
 
                                 //osszeadjuk hatha tobbszor fordul elo a rowdataban
-                                osszeg += Long.parseLong(rowdata[d][4].toString());
+                                osszeg += Long.parseLong(rowdata[n][4].toString());
 
                             }
-                        } catch (Exception e) {
+
                         }
 
-                    }
+                        //beirjuk az összeget a terve alá vagy az utolsó sorba  és a pn-t a pnlistbe ha nem nulla az összeg
+                        if (osszeg != 0) {
 
-                    if (osszeg > 0) {
+                            //bejarjuk az oszlopot vegig soronkent h megkeressuk a tervet vagy az utolso sorat
+                            //irtunk e
+                            boolean irtunke = false;
+                            int sorszam = 0;
+                            String cellaadat = "";
+                            for (int n = 0; n < b.jTable2.getRowCount(); n++) {
 
-                        //ezzel ellenorizzuk hogy beirtuk e a szamot
-                        boolean irtunke = false;
-                        int sorszam = 0;
+                                String actualterv = "";
+                                try {
 
-                        //miutan vegigporgettuk a lekerdezes eredmenyet (rowdata) beirjuk a terve alá
-                        for (int sor = 0; sor < b.jTable2.getRowCount(); sor++) {
+                                    actualterv = b.jTable2.getValueAt(n - 1, i).toString();
 
-                            //felvesszuk az utolso megfelelo sor szamat , hogy kesobb irhassunk bele ha nincs terve az adott napra
-                            try {
-                                if (b.jTable2.getValueAt(sor, 0).toString().equals(b.jTable2.getValueAt(r, 0)) && b.jTable2.getValueAt(sor, 3).toString().equals("Tény") && b.jTable2.getValueAt(sor, 2).toString().equals(b.jTable2.getValueAt(r, 2))) {
-
-                                    sorszam = sor;
-                                }
-                            } catch (Exception e) {
-                            }
-                            try {
-                                if (b.jTable2.getValueAt(sor, 0).toString().equals(b.jTable2.getValueAt(r, 0)) && b.jTable2.getValueAt(sor, 3).toString().equals("Tény") && b.jTable2.getValueAt(sor, 2).toString().equals(b.jTable2.getValueAt(r, 2)) && !b.jTable2.getValueAt(sor - 1, i).toString().equals("") && b.jTable2.getValueAt(sor -1, 3).toString().equals("Terv") ) {
-
-                                    b.jTable2.setValueAt(osszeg, sor, i);
-                                    irtunke = true;
-                                    break;
+                                } catch (Exception e) {
 
                                 }
-                            } catch (Exception e) {
+
+                                try {
+                                    if (pn.equals(b.jTable2.getValueAt(n, 0).toString()) && ws.equals(b.jTable2.getValueAt(n, 2).toString()) && !actualterv.equals("") && b.jTable2.getValueAt(n, 3).toString().equals("Tény")) {
+
+                                        //kivesszuk a tobo a vizet oszt ottmarad a béka
+                                        boolean inte = true;
+                                        int eddigmenni = 1;
+                                        int db = 0;
+
+                                        while (inte) {
+                                            try {
+                                                db = Integer.parseInt(b.jTable2.getValueAt(n, i).toString().substring(0, eddigmenni));
+                                                eddigmenni++;
+                                            } catch (Exception e) {
+
+                                                inte = false;
+
+                                            }
+                                        }
+
+                                        //replaceljuk a stringben a darabot semmire
+                                        try {
+                                            cellaadat = b.jTable2.getValueAt(n, i).toString().trim();
+                                        } catch (Exception e) {
+                                        }
+
+                                        cellaadat = cellaadat.replace(String.valueOf(db), "");
+
+                                        b.jTable2.setValueAt(osszeg + " " + cellaadat, n, i);
+                                        pnlist.add(pn);
+                                        irtunke = true;
+
+                                    } else if (pn.equals(b.jTable2.getValueAt(n, 0).toString()) && ws.equals(b.jTable2.getValueAt(n, 2).toString()) && b.jTable2.getValueAt(n, 3).toString().equals("Tény")) {
+
+                                        sorszam = n;
+
+                                    }
+                                } catch (Exception e) {
+                                }
+
+                            }
+
+                            //ha nem irtunk irunk az utolso sorba
+                            if (irtunke == false && sorszam != 0) {
+
+                                boolean inte = true;
+                                int eddigmenni = 1;
+                                int db = 0;
+
+                                while (inte) {
+                                    try {
+                                        db = Integer.parseInt(b.jTable2.getValueAt(sorszam, i).toString().substring(0, eddigmenni));
+                                        eddigmenni++;
+                                    } catch (Exception e) {
+
+                                        inte = false;
+
+                                    }
+                                }
+
+                                //replaceljuk a stringben a darabot semmire
+                                try {
+                                    cellaadat = b.jTable2.getValueAt(sorszam, i).toString().trim();
+                                } catch (Exception e) {
+                                }
+
+                                cellaadat = cellaadat.replace(String.valueOf(db), "");
+
+                                b.jTable2.setValueAt(osszeg + " " + cellaadat, sorszam, i);
+                                pnlist.add(pn);
+                                irtunke = true;
+
                             }
 
                         }
-
-                        //ha nem irtuk be mert nem volt terve akkor beirjuk
-                        if (irtunke == false && sorszam > 0) {
-
-                            b.jTable2.setValueAt(osszeg, sorszam, i);
-
-                        }
-
                     }
-
                 }
-
             }
 
         }
 
         Tc_AnimationSFDC.rajzole = false;
+
     }
 
 }

@@ -117,6 +117,9 @@ public class Tc_Betervezo extends javax.swing.JFrame {
         }
 
         this.ciklusidok.add(ciklusidok);
+        
+        Tc_Cellavalaszto c = new Tc_Cellavalaszto(this);
+        c.setVisible(true);
 
     }
 

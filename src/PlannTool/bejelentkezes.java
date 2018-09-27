@@ -77,6 +77,12 @@ public class bejelentkezes extends javax.swing.JFrame {
         jLabel3.setText("Kérlek jelentkezz be!");
         jLabel3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
+        jPasswordField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jPasswordField1KeyPressed(evt);
+            }
+        });
+
         jButton2.setText("Nem vagyok Planner!");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -199,6 +205,10 @@ public class bejelentkezes extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_jTextField1KeyPressed
+
+    private void jPasswordField1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPasswordField1KeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jPasswordField1KeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

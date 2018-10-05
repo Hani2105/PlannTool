@@ -697,6 +697,7 @@ public class Tc_Besetup extends javax.swing.JFrame {
 
                 infobox inf = new infobox();
                 inf.infoBox("Nem adtál meg valamilyen szükséges adatot!", "Hiba!");
+                return;
 
             }
             pc.planconnect(query);
@@ -813,6 +814,57 @@ public class Tc_Besetup extends javax.swing.JFrame {
 
         Tc_Betervezo.ciklusidok.add(ciklusidok);
 
+        //frissitjuk a workstation adatokat
+        for (int n = 0; n < Tc_Betervezo.jTabbedPane1.getTabCount(); n++) {
+
+            query = "SELECT tc_bestations.workstation  from tc_bestations where tc_bestations.idtc_bestations in \n"
+                    + "(select distinct tc_prodmatrix.id_tc_bestations from tc_prodmatrix where tc_prodmatrix.id_tc_becells  = \n"
+                    + "(SELECT tc_becells.idtc_cells FROM planningdb.tc_becells where tc_becells.cellname = '" + Tc_Betervezo.jTabbedPane1.getTitleAt(n) + "'))";
+
+            try {
+                pc.planconnect(query);
+            } catch (SQLException ex) {
+                Logger.getLogger(Tc_Besetup.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(Tc_Besetup.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            Tc_Betervezo.Besheets.get(Tc_Betervezo.jTabbedPane1.getTitleAt(n)).workstations.clear();
+
+            try {
+                while (pc.rs.next()) {
+
+                    Tc_Betervezo.Besheets.get(Tc_Betervezo.jTabbedPane1.getTitleAt(n)).workstations.add(pc.rs.getString(1));
+
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(Tc_Besetup.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            //frissitjuk a pn adatokat
+            query = "SELECT tc_bepns.partnumber  from tc_bepns where tc_bepns.idtc_bepns in \n"
+                    + "(select distinct tc_prodmatrix.id_tc_bepns from tc_prodmatrix where tc_prodmatrix.id_tc_becells  = \n"
+                    + "(SELECT tc_becells.idtc_cells FROM planningdb.tc_becells where tc_becells.cellname = '" + Tc_Betervezo.jTabbedPane1.getTitleAt(n) + "'))";
+
+            try {
+                pc.planconnect(query);
+            } catch (SQLException ex) {
+                Logger.getLogger(Tc_Besetup.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(Tc_Besetup.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            try {
+                while (pc.rs.next()) {
+
+                    Tc_Betervezo.Besheets.get(Tc_Betervezo.jTabbedPane1.getTitleAt(n)).partnumbers.add(pc.rs.getString(1));
+
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(Tc_Besetup.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
 
     }//GEN-LAST:event_jButton4ActionPerformed
 

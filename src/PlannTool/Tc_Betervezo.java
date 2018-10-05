@@ -24,6 +24,7 @@ import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JPopupMenu;
+import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import org.joda.time.DateTime;
@@ -117,7 +118,7 @@ public class Tc_Betervezo extends javax.swing.JFrame {
         }
 
         this.ciklusidok.add(ciklusidok);
-        
+
         Tc_Cellavalaszto c = new Tc_Cellavalaszto(this);
         c.setVisible(true);
 
@@ -360,8 +361,6 @@ public class Tc_Betervezo extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
 
-        //ciklust indítunk és végrehajtjuk a lekért cellákon a dátum beállítást
-        //bepakoljuk a maptree be a sheeteket ujból
         Tc_ossztervlekerszal o = new Tc_ossztervlekerszal();
         o.start();
 
@@ -649,19 +648,11 @@ public class Tc_Betervezo extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-//        java.awt.EventQueue.invokeLater(new Runnable() {
-//            public void run() {
-//                new Betervezo().setVisible(true);
-//            }
-//        });
-        //</editor-fold>
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
 
-        /* Create and display the form */
-//        java.awt.EventQueue.invokeLater(new Runnable() {
-//            public void run() {
-//                new Betervezo().setVisible(true);
-//            }
-//        });
+            }
+        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

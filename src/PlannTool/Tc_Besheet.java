@@ -52,7 +52,6 @@ public class Tc_Besheet extends javax.swing.JPanel {
 
     public List<String> partnumbers = new ArrayList<String>();
     public List<String> workstations = new ArrayList<String>();
-    
 
     Tc_Betervezo bt;
 
@@ -82,7 +81,6 @@ public class Tc_Besheet extends javax.swing.JPanel {
 
         }
 
-       
     }
 
     /**

@@ -535,13 +535,13 @@ public class Tc_Besheet extends javax.swing.JPanel {
 
             int i = jTable2.convertRowIndexToModel(jTable2.getSelectedRow());
             model.insertRow(i, new Object[]{null, null, null, "Tény"});
-            model.insertRow(i, new Object[]{null, null, null, "Terv"});
+            //model.insertRow(i, new Object[]{null, null, null, "Terv"});
 
         } else if (jTable2.getValueAt(jTable2.getSelectedRow(), 3).equals("Tény")) {
 
             int i = jTable2.convertRowIndexToModel(jTable2.getSelectedRow());
-            model.insertRow(i - 1, new Object[]{null, null, null, "Tény"});
-            model.insertRow(i - 1, new Object[]{null, null, null, "Terv"});
+            //model.insertRow(i - 1, new Object[]{null, null, null, "Tény"});
+            model.insertRow(i, new Object[]{null, null, null, "Terv"});
 
         }
 
@@ -707,7 +707,7 @@ public class Tc_Besheet extends javax.swing.JPanel {
                 model.addRow(new Object[]{adatok[r][0], adatok[r][1], adatok[r][2], adatok[r][3]});
 
                 //megkeressuk az oszlopban a db ot
-                for (int o = 4; o < adatok.length; o++) {
+                for (int o = 4; o < adatok[1].length; o++) {
 
                     try {
                         if (!adatok[r][o].toString().equals("") && adatok[r][o] != null) {

@@ -100,17 +100,19 @@ public class Tc_ossztervlekerszal extends Thread {
         String napneve = "";
         TableColumn column = null;
 
+        //letrehozunk egy megfelelo jtablet
         //most indítjuk a nagy ciklust amiben végigpörgetjük a sheeteket
         for (int b = 0; b < Tc_Betervezo.jTabbedPane1.getTabCount(); b++) {
 
             //ez már az eredeti sheetenkénti kód
             String neve = Tc_Betervezo.jTabbedPane1.getTitleAt(b);
             Tc_Betervezo.jTabbedPane1.setSelectedIndex(b);
+            DefaultTableModel model = new DefaultTableModel();
 
             //kitoroljuk az oszlopokat
-            DefaultTableModel model = new DefaultTableModel();
             try {
                 model = (DefaultTableModel) Tc_Betervezo.Besheets.get(neve).jTable2.getModel();
+                
             } catch (Exception e) {
             }
 
@@ -126,6 +128,7 @@ public class Tc_ossztervlekerszal extends Thread {
                         szak = (k == 0) ? " 06:00" : " 18:00";
                         columneve = fmt.print(dtOrg.plusDays(i)) + szak;
                         napneve = fmtnap.print(dtOrg.plusDays(i));
+
                         model.addColumn(columneve + " " + napneve);
 
                     }

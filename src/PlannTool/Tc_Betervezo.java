@@ -54,6 +54,11 @@ public class Tc_Betervezo extends javax.swing.JFrame {
     public static int slide4;
     public static int slide5;
     public static int slide6;
+    
+    //oszlopallitas valtozoi
+    public static boolean allitsuke = true;
+    public static int slider1 = 130;
+    public static int slider2 = 130;
 
     public Tc_Betervezo() throws SQLException, ClassNotFoundException {
 

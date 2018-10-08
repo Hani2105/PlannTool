@@ -19,9 +19,16 @@ public class Tc_Oszlopallito extends javax.swing.JFrame {
     public Tc_Oszlopallito(Tc_Besheet b) {
         initComponents();
         this.b = b;
-        jSlider1.setValue(b.jTable2.getColumnModel().getColumn(4).getWidth());
-        jSlider2.setValue(b.jTable2.getColumnModel().getColumn(0).getWidth());
-        
+
+        try {
+            jSlider1.setValue(b.jTable2.getColumnModel().getColumn(4).getWidth());
+            Tc_Betervezo.slider1 = jSlider1.getValue();
+            jSlider2.setValue(b.jTable2.getColumnModel().getColumn(0).getWidth());
+            Tc_Betervezo.slider2 = jSlider1.getValue();
+            jToggleButton1.setSelected(!Tc_Betervezo.allitsuke);
+        } catch (Exception e) {
+        }
+
     }
 
     /**
@@ -37,6 +44,8 @@ public class Tc_Oszlopallito extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jSlider2 = new javax.swing.JSlider();
+        jLabel3 = new javax.swing.JLabel();
+        jToggleButton1 = new javax.swing.JToggleButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Oszlop szélesség");
@@ -62,12 +71,21 @@ public class Tc_Oszlopallito extends javax.swing.JFrame {
             }
         });
 
+        jLabel3.setText("Automata szélesség állítás kikapcsolása!");
+
+        jToggleButton1.setText("On!");
+        jToggleButton1.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jToggleButton1ItemStateChanged(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(24, Short.MAX_VALUE)
+                .addContainerGap(23, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
@@ -78,6 +96,14 @@ public class Tc_Oszlopallito extends javax.swing.JFrame {
                             .addComponent(jSlider2, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jSlider1, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(38, 38, 38))))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(120, 120, 120)
+                .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(58, 58, 58))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -90,7 +116,11 @@ public class Tc_Oszlopallito extends javax.swing.JFrame {
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSlider2, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jToggleButton1)
+                .addContainerGap(44, Short.MAX_VALUE))
         );
 
         pack();
@@ -101,7 +131,11 @@ public class Tc_Oszlopallito extends javax.swing.JFrame {
         // TODO add your handling code here:
 
         for (int i = 4; i < b.jTable2.getColumnCount(); i++) {
-            b.jTable2.getColumnModel().getColumn(i).setPreferredWidth(jSlider1.getValue());
+            
+            Tc_Betervezo.slider1 = jSlider1.getValue();
+            b.jTable2.getColumnModel().getColumn(i).setPreferredWidth(Tc_Betervezo.slider1);
+            
+            
         }
 
     }//GEN-LAST:event_jSlider1StateChanged
@@ -109,10 +143,28 @@ public class Tc_Oszlopallito extends javax.swing.JFrame {
     private void jSlider2StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSlider2StateChanged
         // TODO add your handling code here:
         for (int i = 0; i < 3; i++) {
-            b.jTable2.getColumnModel().getColumn(i).setPreferredWidth(jSlider2.getValue());
+            Tc_Betervezo.slider2 = jSlider2.getValue();
+            b.jTable2.getColumnModel().getColumn(i).setPreferredWidth(Tc_Betervezo.slider2);
         }
-        
+
     }//GEN-LAST:event_jSlider2StateChanged
+
+    private void jToggleButton1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jToggleButton1ItemStateChanged
+
+        if (jToggleButton1.isSelected() == true) {
+
+            jToggleButton1.setText("Off!");
+            Tc_Betervezo.allitsuke = false;
+
+        } else if (jToggleButton1.isSelected() == false) {
+
+            jToggleButton1.setText("On!");
+            Tc_Betervezo.allitsuke = true;
+
+        }
+
+
+    }//GEN-LAST:event_jToggleButton1ItemStateChanged
 
     /**
      * @param args the command line arguments
@@ -152,7 +204,9 @@ public class Tc_Oszlopallito extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JSlider jSlider1;
     private javax.swing.JSlider jSlider2;
+    private javax.swing.JToggleButton jToggleButton1;
     // End of variables declaration//GEN-END:variables
 }

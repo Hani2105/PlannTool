@@ -36,92 +36,122 @@ public class Tc_TervTooltipRenderer extends DefaultTableCellRenderer {
         String tooltiptext = "";
 
         //tooltip beállítása
-        if (column > 3 && (table.getValueAt(row, 0) != null && table.getValueAt(row, 2) != null) && table.getValueAt(row, column) != null) {
+        try {
+            if (column > 3 && (table.getValueAt(row, 0) != null && table.getValueAt(row, 2) != null) && table.getValueAt(row, column) != null) {
 
-            try {
-                tooltiptext = ("<html>" + "Terv/Tény: " + table.getValueAt(row, 3).toString() + "<br>" + "PN: " + table.getValueAt(row, 0).toString() + "<br>" + "JOB: " + table.getValueAt(row, 1).toString() + "<br>" + "WS: " + table.getValueAt(row, 2).toString());
-            } catch (Exception e) {
-            };
-        } else {
+                try {
+                    tooltiptext = ("<html>" + "Terv/Tény: " + table.getValueAt(row, 3).toString() + "<br>" + "PN: " + table.getValueAt(row, 0).toString() + "<br>" + "JOB: " + table.getValueAt(row, 1).toString() + "<br>" + "WS: " + table.getValueAt(row, 2).toString());
+                } catch (Exception e) {
+                };
+            } else {
 
-            tooltiptext = null;
+                tooltiptext = null;
 
+            }
+        } catch (Exception e) {
         }
 
         //pn szinezes , piros ha nincs az adatbazisban+
-        if (column == 0 && (table.getValueAt(row, 0) != null && !table.getValueAt(row, 0).toString().equals(""))) {
+        try {
+            if (column == 0 && (table.getValueAt(row, 0) != null && !table.getValueAt(row, 0).toString().equals(""))) {
 
-            boolean piros = true;
+                boolean piros = true;
 
-            for (int i = 0; i < b.partnumbers.size(); i++) {
+                for (int i = 0; i < b.partnumbers.size(); i++) {
 
-                if (table.getValueAt(row, 0).toString().equals(b.partnumbers.get(i))) {
+                    if (table.getValueAt(row, 0).toString().equals(b.partnumbers.get(i))) {
 
-                    piros = false;
+                        piros = false;
+
+                    }
 
                 }
 
-            }
+                if (piros == true) {
 
-            if (piros == true) {
+                    c.setBackground(Color.red);
+                } else {
 
-                c.setBackground(Color.red);
+                    //ha terv a sor
+                    if (table.getValueAt(row, 3).toString().equals("Terv")) {
+
+                        c.setBackground(new Color(Tc_Betervezo.slide1, Tc_Betervezo.slide2, Tc_Betervezo.slide3));
+                        //ha tény a sor
+                    } else if (table.getValueAt(row, 3).toString().equals("Tény")) {
+
+                        c.setBackground(new Color(Tc_Betervezo.slide4, Tc_Betervezo.slide5, Tc_Betervezo.slide6));
+
+                        //ha egyik sem
+                    }
+
+                }
+
+            } //ws szinezes , piros ha nincs az adatbazisban
+            else if (column == 2 && (table.getValueAt(row, 2) != null && !table.getValueAt(row, 2).toString().equals(""))) {
+
+                boolean piros = true;
+
+                for (int i = 0; i < b.workstations.size(); i++) {
+
+                    if (table.getValueAt(row, 2).toString().equals(b.workstations.get(i))) {
+
+                        piros = false;
+
+                    }
+
+                }
+
+                if (piros == true) {
+
+                    c.setBackground(Color.red);
+                }
+
+            } //infó sorok színezése
+            else if (table.getValueAt(row, 3).toString().equals("Infó") && column == 3) {
+
+                c.setBackground(Color.YELLOW);
+
+                //terv sorok szinezése
+            } else if (table.getValueAt(row, 3).toString().equals("Terv")) {
+
+                c.setBackground(new Color(Tc_Betervezo.slide1, Tc_Betervezo.slide2, Tc_Betervezo.slide3));
+
+            } //teny sorok szinezese
+            else if (table.getValueAt(row, 3).toString().equals("Tény")) {
+
+                c.setBackground(new Color(Tc_Betervezo.slide4, Tc_Betervezo.slide5, Tc_Betervezo.slide6));
+
             } else {
 
-                //ha terv a sor
-                if (table.getValueAt(row, 3).toString().equals("Terv")) {
-
-                    c.setBackground(new Color(Tc_Betervezo.slide1, Tc_Betervezo.slide2, Tc_Betervezo.slide3));
-                    //ha tény a sor
-                } else if (table.getValueAt(row, 3).toString().equals("Tény")) {
-
-                    c.setBackground(new Color(Tc_Betervezo.slide4, Tc_Betervezo.slide5, Tc_Betervezo.slide6));
-
-                    //ha egyik sem
-                }
+                c.setBackground(null);
 
             }
 
-        } //ws szinezes , piros ha nincs az adatbazisban
-        else if (column == 2 && (table.getValueAt(row, 2) != null && !table.getValueAt(row, 2).toString().equals(""))) {
+            //sum oszlop szinezese
+            if (table.getColumnName(column).equals("Sum: PN,JOB,WS") && table.getValueAt(row, 3).equals("Tény") && ((Integer.parseInt(table.getValueAt(row, column).toString())) >= (Integer.parseInt(table.getValueAt(row - 1, column).toString())))) {
 
-            boolean piros = true;
+                c.setBackground(Color.GREEN);
 
-            for (int i = 0; i < b.workstations.size(); i++) {
+            } else if (table.getColumnName(column).equals("Sum: PN,JOB,WS") && table.getValueAt(row, 3).equals("Terv") && ((Integer.parseInt(table.getValueAt(row, column).toString())) <= (Integer.parseInt(table.getValueAt(row + 1, column).toString())))) {
 
-                if (table.getValueAt(row, 2).toString().equals(b.workstations.get(i))) {
-
-                    piros = false;
-
-                }
+                c.setBackground(Color.GREEN);
 
             }
+            
+            //pn ws job szinezese ha megvalosult
+            
+             if ((table.getColumnName(column).equals("PartNumber") || table.getColumnName(column).equals("Job") || table.getColumnName(column).equals("WorkStation")) && table.getValueAt(row, 3).equals("Tény") && ((Integer.parseInt(table.getValueAt(row, table.getColumnCount()-1).toString())) >= (Integer.parseInt(table.getValueAt(row - 1, table.getColumnCount()-1).toString())))) {
 
-            if (piros == true) {
+                c.setBackground(Color.GREEN);
 
-                c.setBackground(Color.red);
+            } else if ((table.getColumnName(column).equals("PartNumber") || table.getColumnName(column).equals("Job") || table.getColumnName(column).equals("WorkStation")) && table.getValueAt(row, 3).equals("Terv") && ((Integer.parseInt(table.getValueAt(row, table.getColumnCount()-1).toString())) <= (Integer.parseInt(table.getValueAt(row + 1, table.getColumnCount()-1).toString())))) {
+
+                c.setBackground(Color.GREEN);
+
             }
+            
 
-        } //infó sorok színezése
-        else if (table.getValueAt(row, 3).toString().equals("Infó") && column == 3) {
-
-            c.setBackground(Color.YELLOW);
-
-            //terv sorok szinezése
-        } else if (table.getValueAt(row, 3).toString().equals("Terv")) {
-
-            c.setBackground(new Color(Tc_Betervezo.slide1, Tc_Betervezo.slide2, Tc_Betervezo.slide3));
-
-        } //teny sorok szinezese
-        else if (table.getValueAt(row, 3).toString().equals("Tény")) {
-
-            c.setBackground(new Color(Tc_Betervezo.slide4, Tc_Betervezo.slide5, Tc_Betervezo.slide6));
-
-            //ha egyik sem
-        } else {
-
-            c.setBackground(null);
-
+        } catch (Exception e) {
         }
 
         if (isSelected) {

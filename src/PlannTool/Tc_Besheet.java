@@ -885,14 +885,14 @@ public class Tc_Besheet extends javax.swing.JPanel {
         }
         //col szelesseg allitas
 
-        for (int i = 0; i < Besheets.get(neve).jTable2.getModel().getColumnCount(); i++) {
-
-            if (i != 3) {
-                column = Besheets.get(neve).jTable2.getColumnModel().getColumn(i);
-                column.setPreferredWidth(130);
-            }
-
-        }
+//        for (int i = 0; i < Besheets.get(neve).jTable2.getModel().getColumnCount(); i++) {
+//
+//            if (i != 3) {
+//                column = Besheets.get(neve).jTable2.getColumnModel().getColumn(i);
+//                column.setPreferredWidth(130);
+//            }
+//
+//        }
 
         //lekerdezzuk az adatbazis adatokat
         String Query = "select tc_terv.date , tc_bepns.partnumber , tc_terv.job , tc_bestations.workstation , tc_terv.qty , tc_terv.tt \n"
@@ -1054,13 +1054,13 @@ public class Tc_Besheet extends javax.swing.JPanel {
         String ig = "";
 
         //tol ig intervallum a sheeten
-        if (Besheets.get(neve).jTable2.getColumnName(Besheets.get(neve).jTable2.getColumnCount() - 1).substring(11, 12).equals("2")) {
+        if (Besheets.get(neve).jTable2.getColumnName(Besheets.get(neve).jTable2.getColumnCount() - 2).substring(11, 12).equals("2")) {
 
-            ig += Besheets.get(neve).jTable2.getColumnName(Besheets.get(neve).jTable2.getColumnCount() - 1).substring(0, 10) + " 22:00:00";
+            ig += Besheets.get(neve).jTable2.getColumnName(Besheets.get(neve).jTable2.getColumnCount() - 2).substring(0, 10) + " 22:00:00";
 
         } else {
 
-            ig += Besheets.get(neve).jTable2.getColumnName(Besheets.get(neve).jTable2.getColumnCount() - 1).substring(0, 10) + " 18:00:00";
+            ig += Besheets.get(neve).jTable2.getColumnName(Besheets.get(neve).jTable2.getColumnCount() - 2).substring(0, 10) + " 18:00:00";
 
         }
 
@@ -1178,7 +1178,7 @@ public class Tc_Besheet extends javax.swing.JPanel {
                         }
 
                         //ha van beírva valami darabszám és terv asor
-                        if (t2.getValueAt(r, i) != null && !t2.getValueAt(r, i).toString().equals("") && t2.getValueAt(r, 3).toString().equals("Terv")) {
+                        if (t2.getValueAt(r, i) != null && !t2.getValueAt(r, i).toString().equals("") && t2.getValueAt(r, 3).toString().equals("Terv") && !t2.getColumnName(i).equals("Sum: PN,JOB,WS")) {
                             int tervwtf = (r * i);
                             int tenywtf = tervwtf + 1;
 
@@ -1297,7 +1297,7 @@ public class Tc_Besheet extends javax.swing.JPanel {
             for (int r = 0; r < jTable2.getRowCount(); r++) {
                 //ha van adat a cellaban és tény sorban vagyunk akkor begyűjtjük
 
-                if (jTable2.getValueAt(r, i) != null && jTable2.getValueAt(r, 3).toString().equals("Tény")) {
+                if (jTable2.getValueAt(r, i) != null && jTable2.getValueAt(r, 3).toString().equals("Tény") && !jTable2.getColumnName(i).equals("Sum: PN,JOB,WS")) {
                     String job = "";
                     int tenywtf = r * i;
                     try {
@@ -1327,13 +1327,13 @@ public class Tc_Besheet extends javax.swing.JPanel {
         String ig = "";
 
         //tol ig intervallum a sheeten
-        if (Besheets.get(neve).jTable2.getColumnName(Besheets.get(neve).jTable2.getColumnCount() - 1).substring(11, 12).equals("2")) {
+        if (Besheets.get(neve).jTable2.getColumnName(Besheets.get(neve).jTable2.getColumnCount() - 2).substring(11, 12).equals("2")) {
 
-            ig += Besheets.get(neve).jTable2.getColumnName(Besheets.get(neve).jTable2.getColumnCount() - 1).substring(0, 10) + " 22:00:00";
+            ig += Besheets.get(neve).jTable2.getColumnName(Besheets.get(neve).jTable2.getColumnCount() - 2).substring(0, 10) + " 22:00:00";
 
         } else {
 
-            ig += Besheets.get(neve).jTable2.getColumnName(Besheets.get(neve).jTable2.getColumnCount() - 1).substring(0, 10) + " 18:00:00";
+            ig += Besheets.get(neve).jTable2.getColumnName(Besheets.get(neve).jTable2.getColumnCount() - 2).substring(0, 10) + " 18:00:00";
 
         }
 

@@ -160,14 +160,14 @@ public class Tc_ossztervlekerszal extends Thread {
             }
             //col szelesseg allitas
 
-            for (int i = 0; i < Tc_Betervezo.Besheets.get(neve).jTable2.getModel().getColumnCount(); i++) {
-
-                if (i != 3) {
-                    column = Tc_Betervezo.Besheets.get(neve).jTable2.getColumnModel().getColumn(i);
-                    column.setPreferredWidth(130);
-                }
-
-            }
+//            for (int i = 0; i < Tc_Betervezo.Besheets.get(neve).jTable2.getModel().getColumnCount(); i++) {
+//
+//                if (i != 3) {
+//                    column = Tc_Betervezo.Besheets.get(neve).jTable2.getColumnModel().getColumn(i);
+//                    column.setPreferredWidth(130);
+//                }
+//
+//            }
 
             //lekerdezzuk az adatbazis adatokat
             String Query = "select tc_terv.date , tc_bepns.partnumber , tc_terv.job , tc_bestations.workstation , tc_terv.qty , tc_terv.tt \n"

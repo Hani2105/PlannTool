@@ -206,6 +206,7 @@ public class Tc_Besheet extends javax.swing.JPanel {
         ));
         jTable2.setCellSelectionEnabled(true);
         jTable2.setComponentPopupMenu(JPopupMenu1);
+        jTable2.getTableHeader().setReorderingAllowed(false);
         jTable2.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 jTable2KeyReleased(evt);
@@ -893,7 +894,6 @@ public class Tc_Besheet extends javax.swing.JPanel {
 //            }
 //
 //        }
-
         //lekerdezzuk az adatbazis adatokat
         String Query = "select tc_terv.date , tc_bepns.partnumber , tc_terv.job , tc_bestations.workstation , tc_terv.qty , tc_terv.tt \n"
                 + "from tc_terv \n"
@@ -1177,29 +1177,67 @@ public class Tc_Besheet extends javax.swing.JPanel {
                             ora = " 22:00:00";
                         }
 
-                        //ha van beírva valami darabszám és terv asor
-                        if (t2.getValueAt(r, i) != null && !t2.getValueAt(r, i).toString().equals("") && t2.getValueAt(r, 3).toString().equals("Terv") && !t2.getColumnName(i).equals("Sum: PN,JOB,WS")) {
+                        //terv vagy teny  10.09
+                        String tt = "";
+                        if (t2.getValueAt(r, 3).equals("Terv")) {
+
+                            tt = "0";
+
+                        } else {
+
+                            tt = "1";
+
+                        }
+                        //ha van beírva valami és nem üres string és nem a summa oszlop
+                        if (t2.getValueAt(r, i) != null && !t2.getValueAt(r, i).toString().equals("") && !t2.getColumnName(i).equals("Sum: PN,JOB,WS")) {
+                            //terv waterfall
                             int tervwtf = (r * i);
-                            int tenywtf = tervwtf + 1;
-
+                            //datum
                             datum = t2.getColumnName(i).substring(0, 10) + ora;
+                            //ezt toltjuk fel , lehet ez terv vagy teny
+                            feltoltadat += "('" + cellid + "','" + wsid + "','" + pnid + "','" + job + "','" + datum + "','" + t2.getValueAt(r, i) + "','" + tervwtf + "'," + tt + ",'" + System.getProperty("user.name") + "'),";
 
-                            feltoltadat += "('" + cellid + "','" + wsid + "','" + pnid + "','" + job + "','" + datum + "','" + t2.getValueAt(r, i) + "','" + tervwtf + "'," + "0" + ",'" + System.getProperty("user.name") + "'),";
-                            try {
-                                feltoltadat += "('" + cellid + "','" + wsid + "','" + pnid + "','" + job + "','" + datum + "','" + t2.getValueAt(r + 1, i).toString() + "','" + tenywtf + "'," + "1" + ",'" + System.getProperty("user.name") + "'),";
-                            } catch (Exception e) {
+                        } //ha terv a sor de nincs alá beírva pn és semmi darab sem és felette van terv darab
+                        
+                            if (t2.getValueAt(r,3).toString().equals("Terv") && t2.getValueAt(r + 1, i) == null &&  t2.getValueAt(r + 1, 0) == null && !t2.getColumnName(i).equals("Sum: PN,JOB,WS") && t2.getValueAt(r, i) != null) {
 
-                                feltoltadat += "('" + cellid + "','" + wsid + "','" + pnid + "','" + job + "','" + datum + "','" + "0" + "','" + tenywtf + "'," + "1" + ",'" + System.getProperty("user.name") + "'),";
+                                int tervwtf = (r * i) + 1;
+                                //datum
+                                datum = t2.getColumnName(i).substring(0, 10) + ora;
+                                //ezt toltjuk fel , lehet ez terv vagy teny
+                                feltoltadat += "('" + cellid + "','" + wsid + "','" + pnid + "','" + job + "','" + datum + "','" + "0" + "','" + tervwtf + "'," + "1" + ",'" + System.getProperty("user.name") + "'),";
 
                             }
+                        
 
-                            pn = "";
-                            ws = "";
-                            cell = "";
-                            job = "";
-                            //ha terv az utolsó sor akkor is
-                        }
+                        //ha van beírva valami darabszám és terv a sor
+//                        if (t2.getValueAt(r, i) != null && !t2.getValueAt(r, i).toString().equals("") && t2.getValueAt(r, 3).toString().equals("Terv") && !t2.getColumnName(i).equals("Sum: PN,JOB,WS")) {
+//                            int tervwtf = (r * i);
+//                            int tenywtf = tervwtf + 1;
+//
+//                            datum = t2.getColumnName(i).substring(0, 10) + ora;
+//
+//                            feltoltadat += "('" + cellid + "','" + wsid + "','" + pnid + "','" + job + "','" + datum + "','" + t2.getValueAt(r, i) + "','" + tervwtf + "'," + "0" + ",'" + System.getProperty("user.name") + "'),";
+//                            try {
+//                                feltoltadat += "('" + cellid + "','" + wsid + "','" + pnid + "','" + job + "','" + datum + "','" + t2.getValueAt(r + 1, i).toString() + "','" + tenywtf + "'," + "1" + ",'" + System.getProperty("user.name") + "'),";
+//                            } catch (Exception e) {
+//
+//                                feltoltadat += "('" + cellid + "','" + wsid + "','" + pnid + "','" + job + "','" + datum + "','" + "0" + "','" + tenywtf + "'," + "1" + ",'" + System.getProperty("user.name") + "'),";
+//
+//                            }
+//                            pn = "";
+//                            ws = "";
+//                            cell = "";
+//                            job = "";
+//                            //ha terv az utolsó sor akkor is
+//                        }
+                        pn = "";
+                        ws = "";
+                        cell = "";
+                        job = "";
+
                     }
+
                 }
 
             }

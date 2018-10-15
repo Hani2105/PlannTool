@@ -19,9 +19,21 @@ import javax.mail.internet.MimeMessage;
  *
  * @author gabor_hanacsek
  */
-public class Tc_Levelkuldes {
+public class Tc_Levelkuldes extends Thread {
 
-    public void beir(String Subject, String szoveg, String cimzett) {
+    String Subject;
+    String szoveg;
+    String cimzett;
+
+    public Tc_Levelkuldes(String Subject, String szoveg, String cimzett) {
+
+        this.Subject = Subject;
+        this.szoveg = szoveg;
+        this.cimzett = cimzett;
+
+    }
+
+    public void run() {
 
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         LocalDateTime now = LocalDateTime.now();

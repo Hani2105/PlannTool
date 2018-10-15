@@ -89,12 +89,7 @@ public class keszletszal extends Thread {
 
         animation.rajzol = false;
 
-        if (System.getProperty("user.name").equals("eva_istenes")) {
-
-            ugyivagy u = new ugyivagy();
-            u.setVisible(true);
-
-        }
+        
 
         ablak.stat.beir(System.getProperty("user.name"), ablak.jTabbedPane1.getTitleAt(ablak.jTabbedPane1.getSelectedIndex()), "", "gabor.hanacsek@sanmina.com");
 

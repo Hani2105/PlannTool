@@ -47,7 +47,7 @@ public class Tc_Cellavalaszto extends javax.swing.JFrame {
         jList1.setModel(lm1);
 
         // lekerdezzuk a felhasznalokat es betesszuk a comboboxba
-        query = "select * from tc_users";
+        query = "select * from tc_users order by username asc";
         pc.planconnect(query);
 
         while (pc.rs.next()) {

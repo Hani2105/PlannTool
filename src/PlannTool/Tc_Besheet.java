@@ -8,8 +8,7 @@ package PlannTool;
 import static PlannTool.Tc_Betervezo.Besheets;
 import static PlannTool.Tc_Betervezo.jComboBox1;
 import static PlannTool.Tc_Betervezo.jTabbedPane1;
-import static PlannTool.Tc_SfdcData.ig;
-import static PlannTool.Tc_SfdcData.tol;
+
 import static PlannTool.ablak.jTable1;
 import static PlannTool.ablak.jTable2;
 import static PlannTool.ablak.jTextField1;
@@ -68,6 +67,8 @@ public class Tc_Besheet extends javax.swing.JPanel {
         if (ablak.planner == false) {
 
             jButton10.setEnabled(false);
+            
+            
         } //letiltjuk a teny menteset ha planner van bent
         else {
             jButton11.setEnabled(false);
@@ -101,6 +102,7 @@ public class Tc_Besheet extends javax.swing.JPanel {
         SFDCmuveletek = new javax.swing.JMenu();
         SFDClekeres = new javax.swing.JMenuItem();
         SFDCall = new javax.swing.JMenuItem();
+        Termekleker = new javax.swing.JMenuItem();
         jButton1 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
@@ -172,6 +174,14 @@ public class Tc_Besheet extends javax.swing.JPanel {
             }
         });
         SFDCmuveletek.add(SFDCall);
+
+        Termekleker.setText("Termék a szakban!");
+        Termekleker.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TermeklekerActionPerformed(evt);
+            }
+        });
+        SFDCmuveletek.add(Termekleker);
 
         JPopupMenu1.add(SFDCmuveletek);
 
@@ -886,14 +896,6 @@ public class Tc_Besheet extends javax.swing.JPanel {
         }
         //col szelesseg allitas
 
-//        for (int i = 0; i < Besheets.get(neve).jTable2.getModel().getColumnCount(); i++) {
-//
-//            if (i != 3) {
-//                column = Besheets.get(neve).jTable2.getColumnModel().getColumn(i);
-//                column.setPreferredWidth(130);
-//            }
-//
-//        }
         //lekerdezzuk az adatbazis adatokat
         String Query = "select tc_terv.date , tc_bepns.partnumber , tc_terv.job , tc_bestations.workstation , tc_terv.qty , tc_terv.tt \n"
                 + "from tc_terv \n"
@@ -1070,19 +1072,20 @@ public class Tc_Besheet extends javax.swing.JPanel {
         int oszlopszam = t2.getColumnCount();  //t2 a tervtabla 
         int sorszam = t2.getRowCount();
 
-        String pn = "";
-        String ws = "";
-        String cell = "";
-        String job = "";
-        String pnid = "";
-        String wsid = "";
-        String cellid = "";
         String feltoltadat = "";
+        String cellid = "";
         // elinditjuk a nagy ciklust , az oszlopok szama ()
         for (int i = 0; i < oszlopszam; i++) {
 
             //kis ciklus , sorok szama
             for (int r = 0; r < sorszam; r++) {
+
+                String pn = "";
+                String ws = "";
+                String cell = "";
+                String job = "";
+                String pnid = "";
+                String wsid = "";
 
                 //ha nem infó a sor
                 if (!t2.getValueAt(r, 3).equals("Infó")) {
@@ -1177,64 +1180,27 @@ public class Tc_Besheet extends javax.swing.JPanel {
                             ora = " 22:00:00";
                         }
 
-                        //terv vagy teny  10.09
-                        String tt = "";
-                        if (t2.getValueAt(r, 3).equals("Terv")) {
+                        //beirjuk a terv sorokat es ala mindenkeppen tenykent felvisszuk ugyanazon adatokat
+                        if (t2.getValueAt(r, 3).toString().equals("Terv") && t2.getValueAt(r, 0) != null && t2.getValueAt(r, 2) != null && !t2.getValueAt(r, 0).toString().equals("") && t2.getValueAt(r, i) != null && !jTable2.getColumnName(i).equals("Sum: PN,JOB,WS")) {
+                            int tervwtf = (r * i);
+                            int tenywtf = ((r + 1) * i);
+                            datum = t2.getColumnName(i).substring(0, 10) + ora;
+                            feltoltadat += "('" + cellid + "','" + wsid + "','" + pnid + "','" + job + "','" + datum + "','" + t2.getValueAt(r, i) + "','" + tervwtf + "'," + 0 + ",'" + System.getProperty("user.name") + "'),";
+                            //feltoltjuk tenykent is , ehhez kell a darabszam
 
-                            tt = "0";
+                            String qty = "";
+                            if (t2.getValueAt(r + 1, i) != null) {
 
-                        } else {
+                                qty = t2.getValueAt(r + 1, i).toString();
 
-                            tt = "1";
+                            } else {
+
+                                qty = "0";
+                            }
+
+                            feltoltadat += "('" + cellid + "','" + wsid + "','" + pnid + "','" + job + "','" + datum + "','" + qty + "','" + tenywtf + "'," + 1 + ",'" + System.getProperty("user.name") + "'),";
 
                         }
-                        //ha van beírva valami és nem üres string és nem a summa oszlop
-                        if (t2.getValueAt(r, i) != null && !t2.getValueAt(r, i).toString().equals("") && !t2.getColumnName(i).equals("Sum: PN,JOB,WS")) {
-                            //terv waterfall
-                            int tervwtf = (r * i);
-                            //datum
-                            datum = t2.getColumnName(i).substring(0, 10) + ora;
-                            //ezt toltjuk fel , lehet ez terv vagy teny
-                            feltoltadat += "('" + cellid + "','" + wsid + "','" + pnid + "','" + job + "','" + datum + "','" + t2.getValueAt(r, i) + "','" + tervwtf + "'," + tt + ",'" + System.getProperty("user.name") + "'),";
-
-                        } //ha terv a sor de nincs alá beírva pn és semmi darab sem és felette van terv darab
-                        
-                            if (t2.getValueAt(r,3).toString().equals("Terv") && t2.getValueAt(r + 1, i) == null &&  t2.getValueAt(r + 1, 0) == null && !t2.getColumnName(i).equals("Sum: PN,JOB,WS") && t2.getValueAt(r, i) != null) {
-
-                                int tervwtf = (r * i) + 1;
-                                //datum
-                                datum = t2.getColumnName(i).substring(0, 10) + ora;
-                                //ezt toltjuk fel , lehet ez terv vagy teny
-                                feltoltadat += "('" + cellid + "','" + wsid + "','" + pnid + "','" + job + "','" + datum + "','" + "0" + "','" + tervwtf + "'," + "1" + ",'" + System.getProperty("user.name") + "'),";
-
-                            }
-                        
-
-                        //ha van beírva valami darabszám és terv a sor
-//                        if (t2.getValueAt(r, i) != null && !t2.getValueAt(r, i).toString().equals("") && t2.getValueAt(r, 3).toString().equals("Terv") && !t2.getColumnName(i).equals("Sum: PN,JOB,WS")) {
-//                            int tervwtf = (r * i);
-//                            int tenywtf = tervwtf + 1;
-//
-//                            datum = t2.getColumnName(i).substring(0, 10) + ora;
-//
-//                            feltoltadat += "('" + cellid + "','" + wsid + "','" + pnid + "','" + job + "','" + datum + "','" + t2.getValueAt(r, i) + "','" + tervwtf + "'," + "0" + ",'" + System.getProperty("user.name") + "'),";
-//                            try {
-//                                feltoltadat += "('" + cellid + "','" + wsid + "','" + pnid + "','" + job + "','" + datum + "','" + t2.getValueAt(r + 1, i).toString() + "','" + tenywtf + "'," + "1" + ",'" + System.getProperty("user.name") + "'),";
-//                            } catch (Exception e) {
-//
-//                                feltoltadat += "('" + cellid + "','" + wsid + "','" + pnid + "','" + job + "','" + datum + "','" + "0" + "','" + tenywtf + "'," + "1" + ",'" + System.getProperty("user.name") + "'),";
-//
-//                            }
-//                            pn = "";
-//                            ws = "";
-//                            cell = "";
-//                            job = "";
-//                            //ha terv az utolsó sor akkor is
-//                        }
-                        pn = "";
-                        ws = "";
-                        cell = "";
-                        job = "";
 
                     }
 
@@ -1333,11 +1299,13 @@ public class Tc_Besheet extends javax.swing.JPanel {
         for (int i = 4; i < jTable2.getColumnCount(); i++) {
             //elinditjuk a sorok bejarasat is
             for (int r = 0; r < jTable2.getRowCount(); r++) {
-                //ha van adat a cellaban és tény sorban vagyunk akkor begyűjtjük
+                String pn = "";
 
+                //ha van adat a cellaban és tény sorban vagyunk akkor begyűjtjük és van felette terv
                 if (jTable2.getValueAt(r, i) != null && jTable2.getValueAt(r, 3).toString().equals("Tény") && !jTable2.getColumnName(i).equals("Sum: PN,JOB,WS")) {
                     String job = "";
-                    int tenywtf = r * i;
+                    int tenywtf = (r * i);
+
                     try {
                         job = jTable2.getValueAt(r, 1).toString();
                     } catch (Exception e) {
@@ -1403,7 +1371,6 @@ public class Tc_Besheet extends javax.swing.JPanel {
 
     private void jButton5MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton5MouseEntered
         // TODO add your handling code here:
-
         jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/osz.png")));
     }//GEN-LAST:event_jButton5MouseEntered
 
@@ -1419,6 +1386,15 @@ public class Tc_Besheet extends javax.swing.JPanel {
         o.setVisible(true);
 
     }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void TermeklekerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TermeklekerActionPerformed
+        // TODO add your handling code here:
+        Tc_AnimationSFDC a = new Tc_AnimationSFDC();
+        a.start();
+        Tc_Termekleker t = new Tc_Termekleker(this);
+        t.start();
+        
+    }//GEN-LAST:event_TermeklekerActionPerformed
 
     private void filter(String query) {
 
@@ -1443,6 +1419,7 @@ public class Tc_Besheet extends javax.swing.JPanel {
     private javax.swing.JMenuItem SFDCall;
     private javax.swing.JMenuItem SFDClekeres;
     private javax.swing.JMenu SFDCmuveletek;
+    private javax.swing.JMenuItem Termekleker;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton11;

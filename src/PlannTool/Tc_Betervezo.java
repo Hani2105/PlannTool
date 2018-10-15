@@ -91,11 +91,14 @@ public class Tc_Betervezo extends javax.swing.JFrame {
         if (ablak.planner == false) {
             //this.jButton5.setEnabled(false);
             this.jButton2.setEnabled(false);
+            this.jButton5.setEnabled(false);
+            
         }
-
+         //ha en akkor mehet
         if (System.getProperty("user.name").equals("gabor_hanacsek")) {
 
             jButton2.setEnabled(true);
+            jButton5.setEnabled(true);
         }
 
         //lekerdezzuk a ciklusidoket
@@ -669,7 +672,7 @@ public class Tc_Betervezo extends javax.swing.JFrame {
         //oszeallitjuk a queryt a lekerdezeshez
         String query = "select distinct tc_terv.active , tc_terv.timestamp from tc_terv \n"
                 + "left join tc_becells on tc_becells.idtc_cells = tc_terv.idtc_becells\n"
-                + "where (tc_terv.active = '1' or tc_terv.active = '0') and tc_becells.cellname = '" + Tc_Betervezo.jTabbedPane1.getTitleAt(Tc_Betervezo.jTabbedPane1.getSelectedIndex()) + "' and tc_terv.date between '" + tol + "' and '" + ig + "'";
+                + "where (tc_terv.active = '1' or tc_terv.active = '0') and tc_becells.cellname = '" + Tc_Betervezo.jTabbedPane1.getTitleAt(Tc_Betervezo.jTabbedPane1.getSelectedIndex()) + "' and tc_terv.date between '" + tol + "' and '" + ig + "' group by active order by active  ";
 
         //lekerdezzuk
         planconnect pc = new planconnect();

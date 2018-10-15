@@ -7,8 +7,7 @@ package PlannTool;
 
 import static PlannTool.Tc_Betervezo.Besheets;
 import static PlannTool.Tc_Betervezo.jTabbedPane1;
-import static PlannTool.Tc_SfdcData.ig;
-import static PlannTool.Tc_SfdcData.tol;
+
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.DateFormat;
@@ -117,16 +116,14 @@ public class Tc_osszsfdccellabol extends Thread {
             rowdata = (Object[][]) xxx.xmlfeldolg(url, nodelist, lista);
 
         } catch (MalformedURLException ex) {
-            Logger.getLogger(Tc_SfdcData.class.getName()).log(Level.SEVERE, null, ex);
+
         }
         //inditjuk a nagy ciklus amiben vegigporgetjuk a sheeteket
 
         for (int q = 0; q < Tc_Betervezo.jTabbedPane1.getTabCount(); q++) {
-            
+
             //beallitjuk az aktualis sheetet
-            
             b = Besheets.get(Tc_Betervezo.jTabbedPane1.getTitleAt(q));
-            
 
             //ebben taroljuk le a pn -eket hogy lassuk foglalkoztunk e már vele
             List<String> pnlist = new ArrayList<String>();

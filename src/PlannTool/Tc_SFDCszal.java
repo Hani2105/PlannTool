@@ -101,7 +101,7 @@ public class Tc_SFDCszal extends Thread {
             rowdata = (Object[][]) xxx.xmlfeldolg(url, nodelist, lista);
 
         } catch (MalformedURLException ex) {
-            Logger.getLogger(Tc_SfdcData.class.getName()).log(Level.SEVERE, null, ex);
+
         }
 
         //ebben taroljuk le a pn -eket hogy lassuk foglalkoztunk e már vele

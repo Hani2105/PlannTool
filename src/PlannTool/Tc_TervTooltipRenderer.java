@@ -37,10 +37,18 @@ public class Tc_TervTooltipRenderer extends DefaultTableCellRenderer {
 
         //tooltip beállítása
         try {
-            if (column > 3 && (table.getValueAt(row, 0) != null && table.getValueAt(row, 2) != null) && table.getValueAt(row, column) != null) {
+            if (column > 3 && (table.getValueAt(row, 0) != null && table.getValueAt(row, 2) != null) && table.getValueAt(row, column) != null && !table.getValueAt(row, column).toString().equals("")) {
 
+                String komment = "";
                 try {
                     tooltiptext = ("<html>" + "Terv/Tény: " + table.getValueAt(row, 3).toString() + "<br>" + "PN: " + table.getValueAt(row, 0).toString() + "<br>" + "JOB: " + table.getValueAt(row, 1).toString() + "<br>" + "WS: " + table.getValueAt(row, 2).toString());
+
+                    
+                        komment = new Tc_Stringbolint(table.getValueAt(row, column).toString()).komment;
+                    
+
+                    tooltiptext += "<br> Komment: " + komment + "</html>";
+
                 } catch (Exception e) {
                 };
             } else {
@@ -81,7 +89,6 @@ public class Tc_TervTooltipRenderer extends DefaultTableCellRenderer {
 
                         c.setBackground(new Color(Tc_Betervezo.slide4, Tc_Betervezo.slide5, Tc_Betervezo.slide6));
 
-                        //ha egyik sem
                     }
 
                 }
@@ -127,29 +134,15 @@ public class Tc_TervTooltipRenderer extends DefaultTableCellRenderer {
 
             }
 
-            //sum oszlop szinezese
-            if (table.getColumnName(column).equals("Sum: PN,JOB,WS") && table.getValueAt(row, 3).equals("Tény") && ((Integer.parseInt(table.getValueAt(row, column).toString())) >= (Integer.parseInt(table.getValueAt(row - 1, column).toString())))) {
+            if (table.getValueAt(row, 3).equals("Tény") && ((Integer.parseInt(table.getValueAt(row, table.getColumnCount() - 1).toString())) >= (Integer.parseInt(table.getValueAt(row - 1, table.getColumnCount() - 1).toString())))) {
 
                 c.setBackground(Color.GREEN);
 
-            } else if (table.getColumnName(column).equals("Sum: PN,JOB,WS") && table.getValueAt(row, 3).equals("Terv") && ((Integer.parseInt(table.getValueAt(row, column).toString())) <= (Integer.parseInt(table.getValueAt(row + 1, column).toString())))) {
-
-                c.setBackground(Color.GREEN);
-
-            }
-            
-            //pn ws job szinezese ha megvalosult
-            
-             if ((table.getColumnName(column).equals("PartNumber") || table.getColumnName(column).equals("Job") || table.getColumnName(column).equals("WorkStation")) && table.getValueAt(row, 3).equals("Tény") && ((Integer.parseInt(table.getValueAt(row, table.getColumnCount()-1).toString())) >= (Integer.parseInt(table.getValueAt(row - 1, table.getColumnCount()-1).toString())))) {
-
-                c.setBackground(Color.GREEN);
-
-            } else if ((table.getColumnName(column).equals("PartNumber") || table.getColumnName(column).equals("Job") || table.getColumnName(column).equals("WorkStation")) && table.getValueAt(row, 3).equals("Terv") && ((Integer.parseInt(table.getValueAt(row, table.getColumnCount()-1).toString())) <= (Integer.parseInt(table.getValueAt(row + 1, table.getColumnCount()-1).toString())))) {
+            } else if (table.getValueAt(row, 3).equals("Terv") && ((Integer.parseInt(table.getValueAt(row, table.getColumnCount() - 1).toString())) <= (Integer.parseInt(table.getValueAt(row + 1, table.getColumnCount() - 1).toString())))) {
 
                 c.setBackground(Color.GREEN);
 
             }
-            
 
         } catch (Exception e) {
         }

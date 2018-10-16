@@ -340,9 +340,10 @@ public class Tc_Muszakjelentes extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
 
         //peldanyositunk egy levelkuldot
-        Tc_Levelkuldes l = new Tc_Levelkuldes(subject, Email, jTextArea1.getText());
+        
 
         Email += "<html><div>" + jTextArea2.getText().replace("\n", "<br>") + "</div></html>";
+        Tc_Levelkuldes l = new Tc_Levelkuldes(subject, Email, jTextArea1.getText());
 
         l.start();
         DateFormat df = new SimpleDateFormat("HH:mm");

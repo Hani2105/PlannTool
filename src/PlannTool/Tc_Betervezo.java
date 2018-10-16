@@ -48,6 +48,7 @@ public class Tc_Betervezo extends javax.swing.JFrame {
     public static Map<String, Tc_Besheet> Besheets = new TreeMap();
     public static List<String[][]> ciklusidok = new ArrayList<String[][]>();
 
+    //szinezes adatai
     public static int slide1;
     public static int slide2;
     public static int slide3;
@@ -59,6 +60,9 @@ public class Tc_Betervezo extends javax.swing.JFrame {
     public static boolean allitsuke = true;
     public static int slider1 = 130;
     public static int slider2 = 130;
+    
+    //kalkulátor sor vagy oszlop?
+    public static boolean calc = false;
 
     public Tc_Betervezo() throws SQLException, ClassNotFoundException {
 

@@ -187,18 +187,23 @@ public class Tc_Cellavalaszto extends javax.swing.JFrame {
             //updatelunk
             query = "update tc_users set tc_users.cellaids = '" + querybe + "' where tc_users.username = '" + jComboBox1.getSelectedItem().toString() + "'";
             try {
-                pc.feltolt(query, true);
-                infobox inf = new infobox();
-                inf.infoBox("Sikeres mentés!", "Mentés");
+                pc.feltolt(query, false);
+                
+                //infobox inf = new infobox();
+                //inf.infoBox("Sikeres mentés!", "Mentés");
             } catch (Exception e) {
-                infobox inf = new infobox();
-                inf.infoBox("Sikertelen mentés!", "Mentés");
+                //infobox inf = new infobox();
+                //inf.infoBox("Sikertelen mentés!", "Mentés");
             }
         } catch (SQLException ex) {
             Logger.getLogger(Tc_Cellavalaszto.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Tc_Cellavalaszto.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        this.dispose();
+
+        
 
     }//GEN-LAST:event_jButton4ActionPerformed
 
@@ -242,7 +247,6 @@ public class Tc_Cellavalaszto extends javax.swing.JFrame {
 
             //osszeqallitjuk a queryt
             query = "SELECT tc_becells.cellname from tc_becells where tc_becells.idtc_cells in (" + querybe + ")";
-            
 
             try {
                 //lekerdezzuk
@@ -259,18 +263,13 @@ public class Tc_Cellavalaszto extends javax.swing.JFrame {
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(Tc_Cellavalaszto.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
-            
 
-      }
-        
-        else{
-        lm2.removeAllElements();
-        jList2.setModel(lm2);
+        } else {
+            lm2.removeAllElements();
+            jList2.setModel(lm2);
         }
 
-        
-        
+
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void jButton3KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jButton3KeyPressed

@@ -16,19 +16,19 @@ import javax.swing.table.TableColumn;
  * @author gabor_hanacsek
  */
 public class Tc_Calculator {
-
+    
     Tc_Besheet b;
-
+    
     public Tc_Calculator(Tc_Besheet b) {
-
+        
         this.b = b;
-
+        
         String sheetname = "";
         try {
             sheetname = Tc_Betervezo.jTabbedPane1.getTitleAt(Tc_Betervezo.jTabbedPane1.getSelectedIndex());
         } catch (Exception e) {
         }
-
+        
         List<String> wsek = new ArrayList<String>();
         boolean irtunke = false;
 
@@ -38,50 +38,50 @@ public class Tc_Calculator {
 
         //kiszedjuk az info sorokat
         for (int i = 0; i < model.getRowCount(); i++) {
-
+            
             if (model.getValueAt(i, 3).toString().equals("Infó")) {
-
+                
                 model.removeRow(i);
-
+                
                 i = i - 1;
-
+                
             }
-
+            
         }
 
         //felvesszuk a ws eket elore uj sorkent
         for (int i = 0; i < model.getRowCount(); i++) {
-
+            
             try {
 
                 //akkor ha nem infó , nem üres és nem null az értéke
                 if (!model.getValueAt(i, 3).toString().equals("Infó") && !model.getValueAt(i, 2).toString().equals("") && model.getValueAt(i, 2) != null) {
-
+                    
                     String ws = model.getValueAt(i, 2).toString();
-
+                    
                     for (int n = 0; n < wsek.size(); n++) {
-
+                        
                         if (ws.equals(wsek.get(n))) {
-
+                            
                             irtunke = true;
-
+                            
                         }
-
+                        
                     }
-
+                    
                     if (irtunke == false) {
-
+                        
                         wsek.add(ws);
                         model.insertRow(0, new Object[]{null, null, ws, "Infó"});
-
+                        
                     }
-
+                    
                     irtunke = false;
                 }
-
+                
             } catch (Exception e) {
             };
-
+            
         }
 
         //szamoljuk az idoket
@@ -103,7 +103,7 @@ public class Tc_Calculator {
 
                         //ha nem null az ertek és egyezik a ws felvesszuk darabszamnak
                         if (model.getValueAt(i, o) != null && ws.equals(model.getValueAt(i, 2)) && !model.getValueAt(i, 3).toString().equals("Infó")) {
-
+                            
                             double dbo = 0;
                             double db = 0;
                             boolean inte = true;
@@ -115,12 +115,12 @@ public class Tc_Calculator {
                                     db = Double.parseDouble(model.getValueAt(i, o).toString().substring(0, eddigmenni));
                                     eddigmenni++;
                                 } catch (Exception e) {
-
+                                    
                                     inte = false;
-
+                                    
                                 }
                             }
-
+                            
                             String pn = model.getValueAt(i, 0).toString();
 
                             //hibaüzit kiiratjuk ha nincs a pn hez ws a cellaban
@@ -129,190 +129,260 @@ public class Tc_Calculator {
                             //megkeressuk a darab/orat
                             try {
                                 for (int n = 0; n < Tc_Betervezo.ciklusidok.get(0).length; n++) {
-
+                                    
                                     if (Tc_Betervezo.ciklusidok.get(0)[n][0].equals(sheetname) && Tc_Betervezo.ciklusidok.get(0)[n][1].equals(pn) && Tc_Betervezo.ciklusidok.get(0)[n][2].equals(ws)) {
-
+                                        
                                         dbo = Double.parseDouble(Tc_Betervezo.ciklusidok.get(0)[n][3]);
                                         hiba = false;
-
+                                        
                                     }
-
+                                    
                                 }
                             } catch (Exception e) {
                             }
                             //ha nem volt a pn hez ws hibát írunk
                             if (hiba == true && model.getValueAt(i, 3).toString().equals("Terv")) {
-
+                                
                                 infobox info = new infobox();
                                 info.infoBox("Nincs mgeadva ciklusidő a \n " + pn + " -hez a " + ws + " - állomáson! \n Kérlek vidd fel az adatbázisba!", "Hiba!");
-
+                                
                             }
 
                             //terv vagy teny
                             if (model.getValueAt(i, 3).toString().equals("Terv")) {
-
+                                
                                 tervido += db / dbo;
-
+                                
                             }
                             if (model.getValueAt(i, 3).toString().equals("Tény")) {
-
+                                
                                 tenyido += db / dbo;
-
+                                
                             }
-
+                            
                         }
-
+                        
                     }
 
                     //kiirjuk a cellaba
                     //csak 2 tizedesig írunk
                     DecimalFormat df2 = new DecimalFormat("#.##");
                     model.setValueAt("Terv: " + df2.format(tervido) + " " + "Tény: " + df2.format(tenyido), s, o);
-
+                    
                 } else {
                     continue;
                 };
-
+                
             }
-
+            
         }
 
         //egy utolso oszlopot hozunk letre amiben a summakat kiiratjuk ha még nem az
         if (!model.getColumnName(model.getColumnCount() - 1).equals("Sum: PN,JOB,WS")) {
             model.addColumn("Sum: PN,JOB,WS");
 
-            //bejarjuk a sorokat , felvesszuk a ws-t , a job -ot es a pn-t , terv/tenyt , darabszamot
-            String pn = "";
-            String job = "";
-            String ws = "";
-            String tt = "";
-            int qty;
+            //ha soronkénti összeadás van
+            if (Tc_Betervezo.calc == false) {
 
-            for (int i = 0; i < model.getRowCount(); i++) {
+                //összeadjuk a darabot a tt oszloptól a summa oszlopig ha nem infó a sor
+                for (int r = 0; r < model.getRowCount(); r++) {
+                    //ebbe számolunk
+                    int qty = 0;
+                    
+                    if (!model.getValueAt(r, 3).toString().equals("Infó")) {
 
-                //elvesszuk az ertekeket (ha nem info a sor) 
-                if (!model.getValueAt(i, 3).toString().equals("Infó")) {
-                    pn = model.getValueAt(i, 0).toString();
-                    job = model.getValueAt(i, 1).toString();
-                    ws = model.getValueAt(i, 2).toString();
-                    tt = model.getValueAt(i, 3).toString();
-                    qty = 0;
+                        //bejárjuk az oszlopokat 4- utolsó előttig
+                        for (int i = 4; i < model.getColumnCount(); i++) {
 
-                    //elinditjuk a ket kisebb ciklust , hogy osszeszamoljuk a darabokat
-                    for (int r = 0; r < model.getRowCount(); r++) {
-
-                        for (int o = 4; o < model.getColumnCount(); o++) {
-
-                            //kinullazzuk a darabot
-                            //ha egyezik az aktuális sorban a job ws pn és tt és nem üres és a szamolo nagyobb nulla és nem a summa oszlop 
+                            //ha nagyobb mint nulla a stringől int és nem summa az osulop
                             try {
-                                if (model.getValueAt(r, 0).toString().equals(pn) && model.getValueAt(r, 1).toString().equals(job) && model.getValueAt(r, 2).toString().equals(ws)
-                                        && model.getValueAt(r, 3).toString().equals(tt) && model.getValueAt(r, o) != null && new Tc_Stringbolint(model.getValueAt(r, o).toString()).db > 0 && !model.getColumnName(o).equals("Sum: PN,JOB,WS")) {
+                                if (new Tc_Stringbolint(model.getValueAt(r, i).toString()).db > 0 && !model.getColumnName(i).equals("Sum: PN,JOB,WS")) {
+                                    //kiszedjuk a stringű az intete
 
-                                    //itt jon a stringbol kiszedjuk a qty-t resz
-                                    //Tc_Stringbolint tc = new Tc_Stringbolint();
-                                    qty += new Tc_Stringbolint(model.getValueAt(r, o).toString()).db;
-
+                                    qty += new Tc_Stringbolint(model.getValueAt(r, i).toString()).db;
+                                    
                                 }
                             } catch (Exception e) {
                             }
+                        }
+                        
+                        model.setValueAt(qty, r, model.getColumnCount() - 1);
+                        
+                    }
+                    
+                }
+                
+            } //ha nem soronkénti összeadás van!
+            else if (Tc_Betervezo.calc == true) {
+                //bejarjuk a sorokat , felvesszuk a ws-t , a job -ot es a pn-t , terv/tenyt , darabszamot
+                String pn = "";
+                String job = "";
+                String ws = "";
+                String tt = "";
+                int qty;
+                
+                for (int i = 0; i < model.getRowCount(); i++) {
 
+                    //felvesszuk az ertekeket (ha nem info a sor) 
+                    if (!model.getValueAt(i, 3).toString().equals("Infó")) {
+                        pn = model.getValueAt(i, 0).toString();
+                        job = model.getValueAt(i, 1).toString();
+                        ws = model.getValueAt(i, 2).toString();
+                        tt = model.getValueAt(i, 3).toString();
+                        qty = 0;
+
+                        //elinditjuk a ket kisebb ciklust , hogy osszeszamoljuk a darabokat
+                        for (int r = 0; r < model.getRowCount(); r++) {
+                            
+                            for (int o = 4; o < model.getColumnCount(); o++) {
+
+                                //kinullazzuk a darabot
+                                //ha egyezik az aktuális sorban a job ws pn és tt és nem üres és a szamolo nagyobb nulla és nem a summa oszlop 
+                                try {
+                                    if (model.getValueAt(r, 0).toString().equals(pn) && model.getValueAt(r, 1).toString().equals(job) && model.getValueAt(r, 2).toString().equals(ws)
+                                            && model.getValueAt(r, 3).toString().equals(tt) && model.getValueAt(r, o) != null && new Tc_Stringbolint(model.getValueAt(r, o).toString()).db > 0 && !model.getColumnName(o).equals("Sum: PN,JOB,WS")) {
+
+                                        //itt jon a stringbol kiszedjuk a qty-t resz
+                                        //Tc_Stringbolint tc = new Tc_Stringbolint();
+                                        qty += new Tc_Stringbolint(model.getValueAt(r, o).toString()).db;
+                                        
+                                    }
+                                } catch (Exception e) {
+                                }
+                                
+                            }
+                            
                         }
 
+                        //ha lefutott a ciklus beírjuk az utolsó oszlopba
+                        model.setValueAt(qty, i, model.getColumnCount() - 1);
+                        
                     }
-
-                    //ha lefutott a ciklus beírjuk az utolsó oszlopba
-                    model.setValueAt(qty, i, model.getColumnCount() - 1);
-
+                    
                 }
-
+                
             }
-
+            
         } //ha már létezik csak az adatokat változtatjuk benne
         else {
 
-            //bejarjuk a sorokat , felvesszuk a ws-t , a job -ot es a pn-t , terv/tenyt , darabszamot
-            String pn = "";
-            String job = "";
-            String ws = "";
-            String tt = "";
-            int qty;
-
-            for (int i = 0; i < model.getRowCount(); i++) {
-
-                //elvesszuk az ertekeket (ha nem info a sor) 
-                if (!model.getValueAt(i, 3).toString().equals("Infó")) {
-                    pn = model.getValueAt(i, 0).toString();
-                    job = model.getValueAt(i, 1).toString();
-                    ws = model.getValueAt(i, 2).toString();
-                    tt = model.getValueAt(i, 3).toString();
+            //ha soronkénti összeadás van
+            if (Tc_Betervezo.calc == false) {
+                
+                int qty;
+                //összeadjuk a darabot a tt oszloptól a summa oszlopig ha nem infó a sor
+                for (int r = 0; r < model.getRowCount(); r++) {
+                    //ebbe számolunk
                     qty = 0;
+                    
+                    if (!model.getValueAt(r, 3).toString().equals("Infó")) {
 
-                    //elinditjuk a ket kisebb ciklust , hogy osszeszamoljuk a darabokat
-                    for (int r = 0; r < model.getRowCount(); r++) {
+                        //bejárjuk az oszlopokat 
+                        for (int i = 4; i < model.getColumnCount(); i++) {
 
-                        for (int o = 4; o < model.getColumnCount(); o++) {
-
-                            //kinullazzuk a darabot
-                            //ha egyezik az aktuális sorban a job ws pn és tt és nem üres és a szamolo nagyobb nulla és nem a summa oszlop 
+                            //ha nagyobb mint nulla a stringől int és nem summa az osulop
                             try {
-                                if (model.getValueAt(r, 0).toString().equals(pn) && model.getValueAt(r, 1).toString().equals(job) && model.getValueAt(r, 2).toString().equals(ws)
-                                        && model.getValueAt(r, 3).toString().equals(tt) && model.getValueAt(r, o) != null && new Tc_Stringbolint(model.getValueAt(r, o).toString()).db > 0 && !model.getColumnName(o).equals("Sum: PN,JOB,WS")) {
+                                if (new Tc_Stringbolint(model.getValueAt(r, i).toString()).db > 0 && !model.getColumnName(i).equals("Sum: PN,JOB,WS")) {
+                                    //kiszedjuk a stringű az intete
 
-                                    //itt jon a stringbol kiszedjuk a qty-t resz
-                                    //Tc_Stringbolint tc = new Tc_Stringbolint();
-                                    qty += new Tc_Stringbolint(model.getValueAt(r, o).toString()).db;
-
+                                    qty += new Tc_Stringbolint(model.getValueAt(r, i).toString()).db;
+                                    
                                 }
                             } catch (Exception e) {
                             }
+                        }
+                        
+                        model.setValueAt(qty, r, model.getColumnCount() - 1);
+                        
+                    }
+                    
+                }
+                
+            } else if (Tc_Betervezo.calc == true) {
 
+                //bejarjuk a sorokat , felvesszuk a ws-t , a job -ot es a pn-t , terv/tenyt , darabszamot
+                String pn = "";
+                String job = "";
+                String ws = "";
+                String tt = "";
+                int qty;
+                
+                for (int i = 0; i < model.getRowCount(); i++) {
+
+                    //elvesszuk az ertekeket (ha nem info a sor) 
+                    if (!model.getValueAt(i, 3).toString().equals("Infó")) {
+                        pn = model.getValueAt(i, 0).toString();
+                        job = model.getValueAt(i, 1).toString();
+                        ws = model.getValueAt(i, 2).toString();
+                        tt = model.getValueAt(i, 3).toString();
+                        qty = 0;
+
+                        //elinditjuk a ket kisebb ciklust , hogy osszeszamoljuk a darabokat
+                        for (int r = 0; r < model.getRowCount(); r++) {
+                            
+                            for (int o = 4; o < model.getColumnCount(); o++) {
+
+                                //kinullazzuk a darabot
+                                //ha egyezik az aktuális sorban a job ws pn és tt és nem üres és a szamolo nagyobb nulla és nem a summa oszlop 
+                                try {
+                                    if (model.getValueAt(r, 0).toString().equals(pn) && model.getValueAt(r, 1).toString().equals(job) && model.getValueAt(r, 2).toString().equals(ws)
+                                            && model.getValueAt(r, 3).toString().equals(tt) && model.getValueAt(r, o) != null && new Tc_Stringbolint(model.getValueAt(r, o).toString()).db > 0 && !model.getColumnName(o).equals("Sum: PN,JOB,WS")) {
+
+                                        //itt jon a stringbol kiszedjuk a qty-t resz
+                                        //Tc_Stringbolint tc = new Tc_Stringbolint();
+                                        qty += new Tc_Stringbolint(model.getValueAt(r, o).toString()).db;
+                                        
+                                    }
+                                } catch (Exception e) {
+                                }
+                                
+                            }
+                            
                         }
 
+                        //ha lefutott a ciklus beírjuk az utolsó oszlopba
+                        model.setValueAt(qty, i, model.getColumnCount() - 1);
+                        
                     }
-
-                    //ha lefutott a ciklus beírjuk az utolsó oszlopba
-                    model.setValueAt(qty, i, model.getColumnCount() - 1);
-
+                    
                 }
-
+                
             }
-
         }
-
+        
         this.b.jTable2.setModel(model);
 
         //szelesseg allitas ha engedelyezett
         TableColumn column = null;
         if (Tc_Betervezo.allitsuke == true) {
-
+            
             for (int i = 0; i < model.getColumnCount(); i++) {
-
+                
                 if (i != 3) {
                     column = b.jTable2.getColumnModel().getColumn(i);
                     column.setPreferredWidth(130);
                 }
-
+                
             }
-
+            
         } //ha nem engedelyezett akkor a sliderek ertekei
         else {
-
+            
             for (int i = 0; i < model.getColumnCount(); i++) {
-
+                
                 if (i < 3) {
                     column = b.jTable2.getColumnModel().getColumn(i);
                     column.setPreferredWidth(Tc_Betervezo.slider2);
                 } else if (i > 3) {
-
+                    
                     column = b.jTable2.getColumnModel().getColumn(i);
                     column.setPreferredWidth(Tc_Betervezo.slider1);
-
+                    
                 }
-
+                
             }
-
+            
         }
     }
-
+    
 }

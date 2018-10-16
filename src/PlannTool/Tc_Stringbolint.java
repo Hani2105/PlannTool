@@ -12,11 +12,14 @@ package PlannTool;
 public class Tc_Stringbolint {
 
     public static int db = 0;
+    public static String komment = "";
 
     public Tc_Stringbolint(String szoveg) {
 
         boolean inte = true;
         int eddigmenni = 1;
+        boolean szovege = true;
+        int innentol = 1;
 
         //kiszedjuk a stringbol az integert
         while (inte) {
@@ -30,7 +33,12 @@ public class Tc_Stringbolint {
             }
         }
 
-        //return db;
+        try {
+            komment = szoveg.substring(eddigmenni, szoveg.length());
+        } catch (Exception e) {
+            komment = "";
+        }
+
     }
 
 }

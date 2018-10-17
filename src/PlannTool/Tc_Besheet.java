@@ -57,7 +57,6 @@ public class Tc_Besheet extends javax.swing.JPanel {
 
     public Tc_Besheet(Tc_Betervezo b) throws SQLException, ClassNotFoundException {
         initComponents();
-        
 
         jTable2.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         new ExcelAdapter(jTable2);
@@ -228,6 +227,11 @@ public class Tc_Besheet extends javax.swing.JPanel {
         jTable2.setCellSelectionEnabled(true);
         jTable2.setComponentPopupMenu(JPopupMenu1);
         jTable2.getTableHeader().setReorderingAllowed(false);
+        jTable2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable2MouseClicked(evt);
+            }
+        });
         jTable2.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 jTable2KeyReleased(evt);
@@ -421,7 +425,7 @@ public class Tc_Besheet extends javax.swing.JPanel {
             }
         });
 
-        jLabel4.setText("Calc: Soronként");
+        jLabel4.setText("Calc: Időpontig");
         jLabel4.setPreferredSize(new java.awt.Dimension(20, 20));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -1472,13 +1476,18 @@ public class Tc_Besheet extends javax.swing.JPanel {
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
 
-        if (bt.calc == false) {
-            bt.calc = true;
+        if (bt.calc == 1) {
+            bt.calc = 2;
             jLabel4.setText("Calc: Összesen");
 
-        } else {
+        } else if (bt.calc == 2) {
 
-            bt.calc = false;
+            bt.calc = 3;
+            jLabel4.setText("Calc: Időpontig");
+
+        } else if (bt.calc == 3) {
+
+            bt.calc = 1;
             jLabel4.setText("Calc: Soronként");
 
         }
@@ -1486,6 +1495,11 @@ public class Tc_Besheet extends javax.swing.JPanel {
         Tc_Calculator c = new Tc_Calculator(this);
 
     }//GEN-LAST:event_jButton9ActionPerformed
+
+    private void jTable2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable2MouseClicked
+        // kalkulátort lefuttatjuk
+        Tc_Calculator c = new Tc_Calculator(this);
+    }//GEN-LAST:event_jTable2MouseClicked
 
     private void filter(String query) {
 

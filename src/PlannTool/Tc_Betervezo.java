@@ -61,8 +61,8 @@ public class Tc_Betervezo extends javax.swing.JFrame {
     public static int slider1 = 130;
     public static int slider2 = 130;
     
-    //kalkulátor sor vagy oszlop?
-    public static boolean calc = false;
+    //kalkulátor sor vagy ossz vagy oszlopig?
+    public static int calc = 3;
 
     public Tc_Betervezo() throws SQLException, ClassNotFoundException {
 

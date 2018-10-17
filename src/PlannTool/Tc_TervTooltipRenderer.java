@@ -43,9 +43,7 @@ public class Tc_TervTooltipRenderer extends DefaultTableCellRenderer {
                 try {
                     tooltiptext = ("<html>" + "Terv/Tény: " + table.getValueAt(row, 3).toString() + "<br>" + "PN: " + table.getValueAt(row, 0).toString() + "<br>" + "JOB: " + table.getValueAt(row, 1).toString() + "<br>" + "WS: " + table.getValueAt(row, 2).toString());
 
-                    
-                        komment = new Tc_Stringbolint(table.getValueAt(row, column).toString()).komment;
-                    
+                    komment = new Tc_Stringbolint(table.getValueAt(row, column).toString()).komment;
 
                     tooltiptext += "<br> Komment: " + komment + "</html>";
 
@@ -134,11 +132,12 @@ public class Tc_TervTooltipRenderer extends DefaultTableCellRenderer {
 
             }
 
-            if (table.getValueAt(row, 3).equals("Tény") && ((Integer.parseInt(table.getValueAt(row, table.getColumnCount() - 1).toString())) >= (Integer.parseInt(table.getValueAt(row - 1, table.getColumnCount() - 1).toString())))) {
+            //calculátor zöld színe ha hagyobb vagy egyenlő a tény a tervnél és nem nulla
+            if (Integer.parseInt(table.getValueAt(row, table.getColumnCount() - 1).toString()) != 0 && table.getValueAt(row, 3).equals("Tény") && ((Integer.parseInt(table.getValueAt(row, table.getColumnCount() - 1).toString())) >= (Integer.parseInt(table.getValueAt(row - 1, table.getColumnCount() - 1).toString())))) {
 
                 c.setBackground(Color.GREEN);
 
-            } else if (table.getValueAt(row, 3).equals("Terv") && ((Integer.parseInt(table.getValueAt(row, table.getColumnCount() - 1).toString())) <= (Integer.parseInt(table.getValueAt(row + 1, table.getColumnCount() - 1).toString())))) {
+            } else if (Integer.parseInt(table.getValueAt(row, table.getColumnCount() - 1).toString()) != 0 && table.getValueAt(row, 3).equals("Terv") && ((Integer.parseInt(table.getValueAt(row, table.getColumnCount() - 1).toString())) <= (Integer.parseInt(table.getValueAt(row + 1, table.getColumnCount() - 1).toString())))) {
 
                 c.setBackground(Color.GREEN);
 

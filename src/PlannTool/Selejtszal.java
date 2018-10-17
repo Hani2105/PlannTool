@@ -13,21 +13,26 @@ import java.util.logging.Logger;
  *
  * @author gabor_hanacsek
  */
-public class Selejtszal extends Thread{
-    
-    public void run(){
-    
+public class Selejtszal extends Thread {
+
+    ablak a;
+
+    public Selejtszal(ablak a) {
+
+        this.a = a;
+
+    }
+
+    public void run() {
+
         selejt sele = null;
         try {
-            sele = new selejt(new ablak());
+            sele = new selejt(a);
+            sele.setVisible(true);
         } catch (MalformedURLException ex) {
             Logger.getLogger(Selejtszal.class.getName()).log(Level.SEVERE, null, ex);
         }
-        sele.setDefaultCloseOperation(sele.DISPOSE_ON_CLOSE);
-        sele.setVisible(true);
-        
-        
-    
+
     }
-    
+
 }

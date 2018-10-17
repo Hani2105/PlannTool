@@ -2782,7 +2782,7 @@ public class ablak extends javax.swing.JFrame {
         j.start();
         animation a = new animation();
         a.start();
-       
+
     }//GEN-LAST:event_jButton18ActionPerformed
 
     private void jButton16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton16ActionPerformed
@@ -3293,18 +3293,17 @@ public class ablak extends javax.swing.JFrame {
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         // TODO add your handling code here:
-        
-        Selejtszal s = new Selejtszal();
+
+        Selejtszal s = new Selejtszal(this);
         s.start();
         animation a = new animation();
         a.start();
 
 
-        
-        
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+
         // TODO add your handling code here:
         modelstatus = (DefaultTableModel) jTable4.getModel();
         for (int i = 0; i < modelstatus.getRowCount(); i++) {
@@ -3380,7 +3379,7 @@ public class ablak extends javax.swing.JFrame {
         a.start();
         animation an = new animation();
         an.start();
-        
+
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -3591,7 +3590,7 @@ public class ablak extends javax.swing.JFrame {
 
     private void jButton16MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton16MouseEntered
         // TODO add your handling code here:
-         jButton16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/leker.png")));
+        jButton16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/leker.png")));
     }//GEN-LAST:event_jButton16MouseEntered
 
     private void jButton16MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton16MouseExited

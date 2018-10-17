@@ -273,6 +273,7 @@ public class Tc_osszsfdccellabol extends Thread {
         }
 
         Tc_AnimationSFDC.rajzole = false;
+        Tc_Calculator c = new Tc_Calculator(b);
 
     }
 

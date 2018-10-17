@@ -250,6 +250,7 @@ public class Tc_SFDCszal extends Thread {
         }
 
         Tc_AnimationSFDC.rajzole = false;
+        Tc_Calculator c = new Tc_Calculator(b);
 
     }
 

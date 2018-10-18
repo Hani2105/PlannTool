@@ -105,8 +105,9 @@ public class Tc_SFDCszal extends Thread {
         }
 
         //ebben taroljuk le a pn -eket hogy lassuk foglalkoztunk e már vele
-        List<String> pnlist = new ArrayList<String>();
-        pnlist.add("first");
+        //List<String> pnlist = new ArrayList<String>();
+        //pnlist.add("first");
+        String[][] pnlista = new String[b.jTable2.getRowCount()][3];
 
         //elindulunk , bejarjuk a tablat es megkeressuk a megfelelo oszlopot
         for (int i = 4; i < b.jTable2.getColumnCount(); i++) {
@@ -119,20 +120,26 @@ public class Tc_SFDCszal extends Thread {
                     //felvesszuk a pn-t valtozonak es a ws-t
                     String pn = "";
                     String ws = "";
+                    String job = "";
                     boolean tovabbmegyunk = true;
 
                     try {
                         pn = b.jTable2.getValueAt(r, 0).toString();
                         ws = b.jTable2.getValueAt(r, 2).toString();
+                        job = b.jTable2.getValueAt(r, 1).toString();
                     } catch (Exception e) {
                     };
 
                     //megvizsgaljuk , hogy foglalkoztunk e már ezzel a pn-el
-                    for (int k = 0; k < pnlist.size(); k++) {
+                    for (int k = 0; k < pnlista.length; k++) {
 
-                        if (pn.equals(pnlist.get(k).toString())) {
+                        try {
+                            if (pn.equals(pnlista[k][0].toString()) && ws.equals(pnlista[k][1].toString()) && job.equals(pnlista[k][2].toString())) {
 
-                            tovabbmegyunk = false;
+                                tovabbmegyunk = false;
+                                break;
+                            }
+                        } catch (Exception e) {
                         }
                     } //ha nem akkor tovább megyünk a műveletekkel ha nem infó a sor és tény
                     if (tovabbmegyunk == true && !b.jTable2.getValueAt(r, 3).toString().equals("Infó") && b.jTable2.getValueAt(r, 3).toString().equals("Tény")) {
@@ -197,7 +204,10 @@ public class Tc_SFDCszal extends Thread {
                                         cellaadat = cellaadat.replace(String.valueOf(db), "");
 
                                         b.jTable2.setValueAt(osszeg + " " + cellaadat, n, i);
-                                        pnlist.add(pn);
+                                        //pnlist.add(pn);
+                                        pnlista[n][0] = pn;
+                                        pnlista[n][1] = ws;
+                                        pnlista[n][2] = job;
                                         irtunke = true;
 
                                     } else if (pn.equals(b.jTable2.getValueAt(n, 0).toString()) && ws.equals(b.jTable2.getValueAt(n, 2).toString()) && b.jTable2.getValueAt(n, 3).toString().equals("Tény")) {
@@ -237,7 +247,11 @@ public class Tc_SFDCszal extends Thread {
                                 cellaadat = cellaadat.replace(String.valueOf(db), "");
 
                                 b.jTable2.setValueAt(osszeg + " " + cellaadat, sorszam, i);
-                                pnlist.add(pn);
+                                //pnlist.add(pn);
+                                pnlista[sorszam][0] = pn;
+                                pnlista[sorszam][1] = ws;
+                                pnlista[sorszam][2] = job;
+
                                 irtunke = true;
 
                             }

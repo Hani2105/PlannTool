@@ -60,7 +60,7 @@ public class Tc_Betervezo extends javax.swing.JFrame {
     public static boolean allitsuke = true;
     public static int slider1 = 130;
     public static int slider2 = 130;
-    
+
     //kalkulátor sor vagy ossz vagy oszlopig?
     public static int calc = 3;
 
@@ -96,9 +96,9 @@ public class Tc_Betervezo extends javax.swing.JFrame {
             //this.jButton5.setEnabled(false);
             this.jButton2.setEnabled(false);
             this.jButton5.setEnabled(false);
-            
+
         }
-         //ha en akkor mehet
+        //ha en akkor mehet
         if (System.getProperty("user.name").equals("gabor_hanacsek")) {
 
             jButton2.setEnabled(true);
@@ -160,6 +160,7 @@ public class Tc_Betervezo extends javax.swing.JFrame {
         jButton4 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jButton5 = new javax.swing.JButton();
+        jButton6 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -268,6 +269,24 @@ public class Tc_Betervezo extends javax.swing.JFrame {
             }
         });
 
+        jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/segedlet1.png"))); // NOI18N
+        jButton6.setToolTipText("Segédlet!");
+        jButton6.setBorderPainted(false);
+        jButton6.setContentAreaFilled(false);
+        jButton6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jButton6MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jButton6MouseExited(evt);
+            }
+        });
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -304,7 +323,10 @@ public class Tc_Betervezo extends javax.swing.JFrame {
                             .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(23, 23, 23)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(25, 25, 25)
+                        .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 973, Short.MAX_VALUE))
         );
@@ -337,7 +359,9 @@ public class Tc_Betervezo extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(79, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(jTabbedPane1)
         );
 
@@ -689,7 +713,7 @@ public class Tc_Betervezo extends javax.swing.JFrame {
         }
 
         DefaultTableModel model = new DefaultTableModel();
-        Tc_Visszaallito v = new Tc_Visszaallito(Tc_Betervezo.jTabbedPane1.getTitleAt(Tc_Betervezo.jTabbedPane1.getSelectedIndex()), tol , ig);
+        Tc_Visszaallito v = new Tc_Visszaallito(Tc_Betervezo.jTabbedPane1.getTitleAt(Tc_Betervezo.jTabbedPane1.getSelectedIndex()), tol, ig);
         model = (DefaultTableModel) v.jTable1.getModel();
         model.setRowCount(0);
 
@@ -702,12 +726,29 @@ public class Tc_Betervezo extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(Tc_Betervezo.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        
+
         v.setVisible(true);
 
 
     }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton6MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton6MouseEntered
+        // TODO add your handling code here:
+        jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/segedlet.png")));
+
+    }//GEN-LAST:event_jButton6MouseEntered
+
+    private void jButton6MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton6MouseExited
+        // TODO add your handling code here:
+        jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/segedlet1.png")));
+    }//GEN-LAST:event_jButton6MouseExited
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        // TODO add your handling code here:
+      Tc_Segedletablak s = new Tc_Segedletablak();
+      s.setVisible(true);
+        
+    }//GEN-LAST:event_jButton6ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -758,6 +799,7 @@ public class Tc_Betervezo extends javax.swing.JFrame {
     public static javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
     public static javax.swing.JComboBox<String> jComboBox1;
     public static com.toedter.calendar.JDateChooser jDateChooser1;
     public static com.toedter.calendar.JDateChooser jDateChooser2;

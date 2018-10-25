@@ -5,6 +5,8 @@
  */
 package PlannTool;
 
+import static PlannTool.ablak.jTabbedPane1;
+import static PlannTool.ablak.stat;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -91,6 +93,7 @@ public class Gyartasinfoszal extends Thread {
             
         }
         
+        stat.beir(System.getProperty("user.name"), jTabbedPane1.getTitleAt(jTabbedPane1.getSelectedIndex()), "", "gabor.hanacsek@sanmina.com");
         animation.rajzol = false;
         
     }

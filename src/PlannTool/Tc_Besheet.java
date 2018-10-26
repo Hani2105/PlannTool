@@ -1365,16 +1365,30 @@ public class Tc_Besheet extends javax.swing.JPanel {
             for (int r = 0; r < jTable2.getRowCount(); r++) {
                 String pn = "";
 
-                //ha van adat a cellaban és tény sorban vagyunk akkor begyűjtjük és van felette terv
-                if (jTable2.getValueAt(r, i) != null && jTable2.getValueAt(r, 3).toString().equals("Tény") && !jTable2.getColumnName(i).equals("Sum: PN,JOB,WS")) {
+                //ha van adat a cellaban  akkor begyűjtjük és van felette terv
+                if (jTable2.getValueAt(r, i) != null && !jTable2.getColumnName(i).equals("Sum: PN,JOB,WS")) {
                     String job = "";
                     int tenywtf = (r * i);
+                    int tervteny;
+
+                    //terv vagy teny?
+                    if (jTable2.getValueAt(r, 3).toString().equals("Terv")) {
+
+                        tervteny = 0;
+
+                    } else {
+
+                        tervteny = 1;
+                    }
 
                     try {
                         job = jTable2.getValueAt(r, 1).toString();
                     } catch (Exception e) {
                     }
-                    adat += "('" + jTable2.getColumnName(i).substring(0, 16) + ":00',(select tc_becells.idtc_cells from tc_becells where tc_becells.cellname = '" + bt.jTabbedPane1.getTitleAt(bt.jTabbedPane1.getSelectedIndex()) + "'),(select tc_bestations.idtc_bestations from tc_bestations where tc_bestations.workstation = '" + jTable2.getValueAt(r, 2).toString() + "'),(select tc_bepns.idtc_bepns from tc_bepns where tc_bepns.partnumber = '" + jTable2.getValueAt(r, 0).toString() + "'),'" + jTable2.getValueAt(r, i).toString() + "','" + tenywtf + "','2','1','" + System.getProperty("user.name") + "','" + job + "'),";
+                    try {
+                        adat += "('" + jTable2.getColumnName(i).substring(0, 16) + ":00',(select tc_becells.idtc_cells from tc_becells where tc_becells.cellname = '" + bt.jTabbedPane1.getTitleAt(bt.jTabbedPane1.getSelectedIndex()) + "'),(select tc_bestations.idtc_bestations from tc_bestations where tc_bestations.workstation = '" + jTable2.getValueAt(r, 2).toString() + "'),(select tc_bepns.idtc_bepns from tc_bepns where tc_bepns.partnumber = '" + jTable2.getValueAt(r, 0).toString() + "'),'" + jTable2.getValueAt(r, i).toString() + "','" + tenywtf + "','2','" + tervteny + "','" + System.getProperty("user.name") + "','" + job + "'),";
+                    } catch (Exception e) {
+                    }
                 }
 
             }
@@ -1407,8 +1421,8 @@ public class Tc_Besheet extends javax.swing.JPanel {
 
         }
 
-        //update 2-->1-->0 ami tény!!
-        String updatequery = "update tc_terv set active = CASE when tc_terv.active = 2 then 1 when tc_terv.active = 1 then 0 end where tc_terv.active in (2,1) and tc_terv.date between '" + tol + "' and '" + ig + "' and tc_terv.idtc_becells = (select tc_becells.idtc_cells from tc_becells where tc_becells.cellname = '" + bt.jTabbedPane1.getTitleAt(bt.jTabbedPane1.getSelectedIndex()) + "') and tc_terv.tt = 1";
+        //update 2-->1-->0!!
+        String updatequery = "update tc_terv set active = CASE when tc_terv.active = 2 then 1 when tc_terv.active = 1 then 0 end where tc_terv.active in (2,1) and tc_terv.date between '" + tol + "' and '" + ig + "' and tc_terv.idtc_becells = (select tc_becells.idtc_cells from tc_becells where tc_becells.cellname = '" + bt.jTabbedPane1.getTitleAt(bt.jTabbedPane1.getSelectedIndex()) + "')";
         pc.feltolt(updatequery, false);
 
         //feltoltjuk az uj adatokat!
@@ -1419,6 +1433,18 @@ public class Tc_Besheet extends javax.swing.JPanel {
         Date dateobj = new Date();
         jLabel3.setText("Mentve: " + df.format(dateobj));
         //this.dispose();
+
+        //frissitjuk a tervvaltozas ellenort
+        //eltesszuk az adatokat az ellenorzeshez , hogy valtozott e a terv
+        Tc_Tervvaltozasellenor.tervellenor.clear();
+        Tc_Tervvaltozasellenor t = new Tc_Tervvaltozasellenor();
+        try {
+            t.leker();
+        } catch (SQLException ex) {
+            Logger.getLogger(Tc_Besheet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Tc_Besheet.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
 
     }//GEN-LAST:event_jButton11ActionPerformed

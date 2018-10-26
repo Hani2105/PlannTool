@@ -40,10 +40,10 @@ public class Gyartasinfoszal extends Thread {
         String query = "select distinct terv.partnumber as pn , stations.name as sor , min(terv.startdate) as elso , max(terv.startdate) as utolso ,  count(terv.job) as hanyszor , datediff (now() , max(terv.startdate)) as hanynapja\n"
                 + "from terv\n"
                 + "left join stations on stations.id = terv.stationid\n"
-                + "where " + valtozo
-                + "and terv.active = 1\n"
+                + "where (" + valtozo
+                + ") and terv.active = 1\n"
                 + "group by sor , pn\n"
-                + "order by pn";
+                + "order by sor";
 
         //peldanositunk egy plan connectet
         planconnect pc = new planconnect();

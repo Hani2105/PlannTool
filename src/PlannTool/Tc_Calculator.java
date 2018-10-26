@@ -413,17 +413,20 @@ public class Tc_Calculator {
                 String job = "";
                 String ws = "";
                 String tt = "";
-                int qty;
+                int qty = 0;
 
                 for (int i = 0; i < b.jTable2.getSelectedRow() + 1; i++) {
 
                     //elvesszuk az ertekeket (ha nem info a sor) 
                     if (!model.getValueAt(i, 3).toString().equals("Infó")) {
-                        pn = model.getValueAt(i, 0).toString();
-                        job = model.getValueAt(i, 1).toString();
-                        ws = model.getValueAt(i, 2).toString();
-                        tt = model.getValueAt(i, 3).toString();
-                        qty = 0;
+                        try {
+                            pn = model.getValueAt(i, 0).toString();
+                            job = model.getValueAt(i, 1).toString();
+                            ws = model.getValueAt(i, 2).toString();
+                            tt = model.getValueAt(i, 3).toString();
+                            qty = 0;
+                        } catch (Exception e) {
+                        }
 
                         //elinditjuk a ket kisebb ciklust , hogy osszeszamoljuk a darabokat
                         for (int r = 0; r <= b.jTable2.getSelectedRow(); r++) {

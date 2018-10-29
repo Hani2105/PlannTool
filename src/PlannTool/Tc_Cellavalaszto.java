@@ -188,7 +188,7 @@ public class Tc_Cellavalaszto extends javax.swing.JFrame {
             query = "update tc_users set tc_users.cellaids = '" + querybe + "' where tc_users.username = '" + jComboBox1.getSelectedItem().toString() + "'";
             try {
                 pc.feltolt(query, false);
-                
+
                 //infobox inf = new infobox();
                 //inf.infoBox("Sikeres mentés!", "Mentés");
             } catch (Exception e) {
@@ -200,10 +200,9 @@ public class Tc_Cellavalaszto extends javax.swing.JFrame {
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Tc_Cellavalaszto.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         this.dispose();
 
-        
 
     }//GEN-LAST:event_jButton4ActionPerformed
 
@@ -317,24 +316,39 @@ public class Tc_Cellavalaszto extends javax.swing.JFrame {
         //lekérjük a sheeteket
         for (int i = 0; i < jList2.getModel().getSize(); i++) {
 
-            Tc_Besheet sheet = null;
-            try {
-                sheet = new Tc_Besheet(bt);
-            } catch (SQLException ex) {
-                Logger.getLogger(Tc_Cellavalaszto.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(Tc_Cellavalaszto.class.getName()).log(Level.SEVERE, null, ex);
+            //megnezzuk hogy van e már ilyen tab
+            boolean vanemar = false;
+            for (int t = 0; t < Tc_Betervezo.jTabbedPane1.getTabCount(); t++) {
+
+                if (Tc_Betervezo.jTabbedPane1.getTitleAt(t).equals(jList2.getModel().getElementAt(i))) {
+
+                    vanemar = true;
+
+                }
+
             }
-            Tc_Betervezo.jTabbedPane1.addTab(jList2.getModel().getElementAt(i), sheet);
-            neve = jList2.getModel().getElementAt(i);
-            Tc_Betervezo.Besheets.put(jList2.getModel().getElementAt(i), sheet);
-            try {
-                sheet.parts();
-                sheet.workstations();
-            } catch (SQLException ex) {
-                Logger.getLogger(Tc_Cellavalaszto.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(Tc_Cellavalaszto.class.getName()).log(Level.SEVERE, null, ex);
+
+            if (vanemar == false) {
+
+                Tc_Besheet sheet = null;
+                try {
+                    sheet = new Tc_Besheet(bt);
+                } catch (SQLException ex) {
+                    Logger.getLogger(Tc_Cellavalaszto.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(Tc_Cellavalaszto.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                Tc_Betervezo.jTabbedPane1.addTab(jList2.getModel().getElementAt(i), sheet);
+                neve = jList2.getModel().getElementAt(i);
+                Tc_Betervezo.Besheets.put(jList2.getModel().getElementAt(i), sheet);
+                try {
+                    sheet.parts();
+                    sheet.workstations();
+                } catch (SQLException ex) {
+                    Logger.getLogger(Tc_Cellavalaszto.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(Tc_Cellavalaszto.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
 
         }
@@ -361,6 +375,7 @@ public class Tc_Cellavalaszto extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         DefaultListModel lm2 = new DefaultListModel();
+        lm2 = (DefaultListModel) jList2.getModel();
         for (int i = 0; i < jList1.getModel().getSize(); i++) {
 
             if (jList1.isSelectedIndex(i)) {

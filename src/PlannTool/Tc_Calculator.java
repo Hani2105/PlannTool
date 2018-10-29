@@ -219,7 +219,7 @@ public class Tc_Calculator {
                 String job = "";
                 String ws = "";
                 String tt = "";
-                int qty;
+                int qty = 0;
 
                 for (int i = 0; i < model.getRowCount(); i++) {
 
@@ -268,7 +268,7 @@ public class Tc_Calculator {
                 String job = "";
                 String ws = "";
                 String tt = "";
-                int qty;
+                int qty = 0;
 
                 for (int i = 0; i <= b.jTable2.getSelectedRow(); i++) {
 
@@ -322,7 +322,7 @@ public class Tc_Calculator {
             }
 
         } //ha már létezik csak az adatokat változtatjuk benne >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>ha már létezik a summa osulop<<<<<<<<<
-        else {
+        else if (model.getColumnName(model.getColumnCount() - 1).equals("Sum: PN,JOB,WS")) {
 
             //ha soronkénti összeadás van
             if (Tc_Betervezo.calc == 1) {
@@ -363,7 +363,7 @@ public class Tc_Calculator {
                 String job = "";
                 String ws = "";
                 String tt = "";
-                int qty;
+                int qty = 0;
 
                 for (int i = 0; i < model.getRowCount(); i++) {
 

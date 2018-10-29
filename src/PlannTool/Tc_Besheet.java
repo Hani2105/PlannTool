@@ -14,8 +14,10 @@ import static PlannTool.ablak.jTable2;
 import static PlannTool.ablak.jTextField1;
 import static PlannTool.ablak.model;
 import static PlannTool.ablak.model1;
+
 import java.awt.Color;
 import static java.awt.Frame.MAXIMIZED_BOTH;
+import java.awt.event.ActionEvent;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -29,6 +31,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -36,6 +40,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.RowFilter;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
@@ -243,9 +249,17 @@ public class Tc_Besheet extends javax.swing.JPanel {
                 jTable2MouseClicked(evt);
             }
         });
+        jTable2.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                jTable2PropertyChange(evt);
+            }
+        });
         jTable2.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 jTable2KeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTable2KeyReleased(evt);
             }
         });
         jScrollPane2.setViewportView(jTable2);
@@ -1527,7 +1541,10 @@ public class Tc_Besheet extends javax.swing.JPanel {
 
     private void jTable2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable2MouseClicked
         // kalkulátort lefuttatjuk
-        Tc_Calculator c = new Tc_Calculator(this);
+
+        if (jTable2.getSelectedColumn() > 3) {
+            Tc_Calculator c = new Tc_Calculator(this);
+        }
         if (ablak.planner == false && jTable2.getValueAt(jTable2.getSelectedRow(), 3).toString().equals("Terv")) {
 
             infobox info = new infobox();
@@ -1538,6 +1555,7 @@ public class Tc_Besheet extends javax.swing.JPanel {
         }
 
     }//GEN-LAST:event_jTable2MouseClicked
+
 
     private void keresesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_keresesActionPerformed
         // TODO add your handling code here:
@@ -1566,6 +1584,28 @@ public class Tc_Besheet extends javax.swing.JPanel {
 
 
     }//GEN-LAST:event_jTable2KeyPressed
+
+    private void jTable2KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTable2KeyReleased
+
+        //Tc_Calculator c = new Tc_Calculator(this);
+        if (ablak.planner == false && jTable2.getValueAt(jTable2.getSelectedRow(), 3).toString().equals("Terv")) {
+
+            infobox info = new infobox();
+            info.infoBox("Nem írhatsz a Terv sorba!", "Hiba");
+            jTable2.setColumnSelectionInterval(0, 0);
+            jTable2.setRowSelectionInterval(0, 0);
+
+        }
+
+
+    }//GEN-LAST:event_jTable2KeyReleased
+
+    private void jTable2PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jTable2PropertyChange
+
+        Tc_Calculator c = new Tc_Calculator(this);
+
+
+    }//GEN-LAST:event_jTable2PropertyChange
 
     private void filter(String query) {
 

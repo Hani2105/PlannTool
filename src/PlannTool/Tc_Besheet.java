@@ -608,7 +608,7 @@ public class Tc_Besheet extends javax.swing.JPanel {
 
             for (int n = 0; n < columns.length; n++) {
 
-                jTable2.setValueAt("", rows[i], columns[n]);
+                jTable2.setValueAt(null, rows[i], columns[n]);
 
             }
 
@@ -1259,7 +1259,7 @@ public class Tc_Besheet extends javax.swing.JPanel {
                         }
 
                         //beirjuk a terv sorokat es ala mindenkeppen tenykent felvisszuk ugyanazon adatokat
-                        if (t2.getValueAt(r, 3).toString().equals("Terv") && t2.getValueAt(r, 0) != null && t2.getValueAt(r, 2) != null && !t2.getValueAt(r, 0).toString().equals("") && t2.getValueAt(r, i) != null && !jTable2.getColumnName(i).equals("Sum: PN,JOB,WS")) {
+                        if (t2.getValueAt(r, 3).toString().equals("Terv") && t2.getValueAt(r, 0) != null && t2.getValueAt(r, 2) != null && !t2.getValueAt(r, 0).toString().equals("") && t2.getValueAt(r, i) != null && !t2.getValueAt(r, i).toString().equals("") && !jTable2.getColumnName(i).equals("Sum: PN,JOB,WS")) {
                             int tervwtf = (r * i);
                             int tenywtf = ((r + 1) * i);
                             datum = t2.getColumnName(i).substring(0, 10) + ora;

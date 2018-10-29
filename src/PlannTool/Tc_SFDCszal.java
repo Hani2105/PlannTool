@@ -203,7 +203,7 @@ public class Tc_SFDCszal extends Thread {
 
                                         cellaadat = cellaadat.replace(String.valueOf(db), "");
 
-                                        b.jTable2.setValueAt(osszeg + " " + cellaadat, n, i);
+                                        b.jTable2.setValueAt(osszeg + " " + cellaadat.trim(), n, i);
                                         //pnlist.add(pn);
                                         pnlista[n][0] = pn;
                                         pnlista[n][1] = ws;
@@ -246,7 +246,7 @@ public class Tc_SFDCszal extends Thread {
 
                                 cellaadat = cellaadat.replace(String.valueOf(db), "");
 
-                                b.jTable2.setValueAt(osszeg + " " + cellaadat, sorszam, i);
+                                b.jTable2.setValueAt(osszeg + " " + cellaadat.trim(), sorszam, i);
                                 //pnlist.add(pn);
                                 pnlista[sorszam][0] = pn;
                                 pnlista[sorszam][1] = ws;

@@ -63,6 +63,9 @@ public class Tc_Betervezo extends javax.swing.JFrame {
 
     //kalkulátor sor vagy ossz vagy oszlopig?
     public static int calc = 3;
+    
+    //ha csukodik ne fusson a kalkulator
+    public static boolean csuk = false;
 
     public Tc_Betervezo() throws SQLException, ClassNotFoundException {
 
@@ -634,9 +637,11 @@ public class Tc_Betervezo extends javax.swing.JFrame {
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         // TODO add your handling code here:
 
+        csuk = true;
         planconnect pc = new planconnect();
         String Query = "update tc_users set tc_users.slides = '" + slide1 + "," + slide2 + "," + slide3 + "," + slide4 + "," + slide5 + "," + slide6 + "'" + "where tc_users.username = '" + System.getProperty("user.name") + "'";
         pc.feltolt(Query, false);
+        
     }//GEN-LAST:event_formWindowClosing
 
     private void jButton1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseEntered

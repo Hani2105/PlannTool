@@ -1573,6 +1573,10 @@ public class Tc_Besheet extends javax.swing.JPanel {
 
     private void jTable2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTable2KeyPressed
         // TODO add your handling code here:
+
+        Tc_Betervezo.csuk = false;
+        Tc_Calculator c = new Tc_Calculator(this);
+
         if (ablak.planner == false && jTable2.getValueAt(jTable2.getSelectedRow(), 3).toString().equals("Terv")) {
 
             infobox info = new infobox();
@@ -1587,7 +1591,8 @@ public class Tc_Besheet extends javax.swing.JPanel {
 
     private void jTable2KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTable2KeyReleased
 
-        //Tc_Calculator c = new Tc_Calculator(this);
+        Tc_Betervezo.csuk = false;
+        Tc_Calculator c = new Tc_Calculator(this);
         if (ablak.planner == false && jTable2.getValueAt(jTable2.getSelectedRow(), 3).toString().equals("Terv")) {
 
             infobox info = new infobox();
@@ -1602,7 +1607,10 @@ public class Tc_Besheet extends javax.swing.JPanel {
 
     private void jTable2PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jTable2PropertyChange
 
-        Tc_Calculator c = new Tc_Calculator(this);
+        Tc_Betervezo.csuk = true;
+        if (Tc_Betervezo.csuk == false) {
+            Tc_Calculator c = new Tc_Calculator(this);
+        }
 
 
     }//GEN-LAST:event_jTable2PropertyChange

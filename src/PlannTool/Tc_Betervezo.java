@@ -97,12 +97,6 @@ public class Tc_Betervezo extends javax.swing.JFrame {
 
         }
 
-        //ha en akkor mehet
-//        if (System.getProperty("user.name").equals("gabor_hanacsek")) {
-//
-//            jButton2.setEnabled(true);
-//            jButton5.setEnabled(true);
-//        }
         //lekerdezzuk a ciklusidoket
         String query = "select tc_becells.cellname , tc_bepns.partnumber , tc_bestations.workstation , tc_prodmatrix.ciklusido from tc_prodmatrix \n"
                 + "left join tc_becells on tc_becells.idtc_cells = tc_prodmatrix.id_tc_becells \n"
@@ -432,11 +426,13 @@ public class Tc_Betervezo extends javax.swing.JFrame {
             //this.jButton5.setEnabled(false);
             Tc_Betervezo.jButton2.setEnabled(false);
             Tc_Betervezo.jButton5.setEnabled(false);
+            Tc_Besheet.tilt();
 
         } else if (ablak.planner == true) {
 
             Tc_Betervezo.jButton2.setEnabled(true);
             Tc_Betervezo.jButton5.setEnabled(true);
+            Tc_Besheet.tilt();
 
         }
 

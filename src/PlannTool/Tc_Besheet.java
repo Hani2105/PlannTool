@@ -80,15 +80,6 @@ public class Tc_Besheet extends javax.swing.JPanel {
         else {
             jButton11.setEnabled(false);
         }
-
-        //ha en vagyok bent mindkettő enged
-        if (System.getProperty("user.name").equals("gabor_hanacsek")) {
-
-            jButton10.setEnabled(true);
-            jButton11.setEnabled(true);
-
-        }
-
     }
 
     /**
@@ -561,6 +552,24 @@ public class Tc_Besheet extends javax.swing.JPanel {
 
             partnumbers.add(pc.rs.getString(1));
 
+        }
+
+    }
+
+    //letiltjuk a terv mentése gombot ha a planner false
+    public static void tilt() {
+        try {
+            if (ablak.planner == false) {
+
+                jButton10.setEnabled(false);
+                jButton11.setEnabled(true);
+
+            } //letiltjuk a teny menteset ha planner van bent
+            else {
+                jButton11.setEnabled(false);
+                jButton10.setEnabled(true);
+            }
+        } catch (Exception e) {
         }
 
     }
@@ -1382,6 +1391,7 @@ public class Tc_Besheet extends javax.swing.JPanel {
                 //ha van adat a cellaban  akkor begyűjtjük és van felette terv
                 if (jTable2.getValueAt(r, i) != null && !jTable2.getColumnName(i).equals("Sum: PN,JOB,WS")) {
                     String job = "";
+                    String qty = "";
                     int tenywtf = (r * i);
                     int tervteny;
 
@@ -1400,7 +1410,11 @@ public class Tc_Besheet extends javax.swing.JPanel {
                     } catch (Exception e) {
                     }
                     try {
-                        adat += "('" + jTable2.getColumnName(i).substring(0, 16) + ":00',(select tc_becells.idtc_cells from tc_becells where tc_becells.cellname = '" + bt.jTabbedPane1.getTitleAt(bt.jTabbedPane1.getSelectedIndex()) + "'),(select tc_bestations.idtc_bestations from tc_bestations where tc_bestations.workstation = '" + jTable2.getValueAt(r, 2).toString() + "'),(select tc_bepns.idtc_bepns from tc_bepns where tc_bepns.partnumber = '" + jTable2.getValueAt(r, 0).toString() + "'),'" + jTable2.getValueAt(r, i).toString() + "','" + tenywtf + "','2','" + tervteny + "','" + System.getProperty("user.name") + "','" + job + "'),";
+                        qty = jTable2.getValueAt(r, i).toString();
+                    } catch (Exception e) {
+                    }
+                    try {
+                        adat += "('" + jTable2.getColumnName(i).substring(0, 16) + ":00',(select tc_becells.idtc_cells from tc_becells where tc_becells.cellname = '" + bt.jTabbedPane1.getTitleAt(bt.jTabbedPane1.getSelectedIndex()) + "'),(select tc_bestations.idtc_bestations from tc_bestations where tc_bestations.workstation = '" + jTable2.getValueAt(r, 2).toString() + "'),(select tc_bepns.idtc_bepns from tc_bepns where tc_bepns.partnumber = '" + jTable2.getValueAt(r, 0).toString() + "'),'" + qty + "','" + tenywtf + "','2','" + tervteny + "','" + System.getProperty("user.name") + "','" + job + "'),";
                     } catch (Exception e) {
                     }
                 }
@@ -1640,8 +1654,8 @@ public class Tc_Besheet extends javax.swing.JPanel {
     private javax.swing.JMenu SFDCmuveletek;
     private javax.swing.JMenuItem Termekleker;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton10;
-    private javax.swing.JButton jButton11;
+    public static javax.swing.JButton jButton10;
+    public static javax.swing.JButton jButton11;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;

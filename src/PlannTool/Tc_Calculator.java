@@ -203,7 +203,7 @@ public class Tc_Calculator {
 
                                 }
                             } catch (Exception e) {
-                                qty = 0;
+                                
                             }
                         }
 
@@ -249,7 +249,7 @@ public class Tc_Calculator {
 
                                     }
                                 } catch (Exception e) {
-                                    qty = 0;
+                                    
                                 }
 
                             }
@@ -299,7 +299,7 @@ public class Tc_Calculator {
 
                                     }
                                 } catch (Exception e) {
-                                    qty = 0;
+                                    
                                 }
 
                             }
@@ -350,7 +350,7 @@ public class Tc_Calculator {
 
                                 }
                             } catch (Exception e) {
-                                qty = 0;
+                                
                             }
                         }
 
@@ -396,7 +396,7 @@ public class Tc_Calculator {
 
                                     }
                                 } catch (Exception e) {
-                                    qty = 0;
+                                   
                                 }
 
                             }
@@ -450,7 +450,7 @@ public class Tc_Calculator {
 
                                     }
                                 } catch (Exception e) {
-                                    qty = 0;
+                                    
                                 }
 
                             }

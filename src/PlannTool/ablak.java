@@ -2837,6 +2837,7 @@ public class ablak extends javax.swing.JFrame {
 
         if (i == 7) {
 
+            Tc_Bejelentkezes.nyit = true;
             Tc_Bejelentkezes a = new Tc_Bejelentkezes(this);
             a.setVisible(true);
 

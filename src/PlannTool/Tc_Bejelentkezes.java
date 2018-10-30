@@ -30,6 +30,9 @@ public class Tc_Bejelentkezes extends javax.swing.JFrame {
      */
     private ablak az;
 
+    //nyissunk e uj ablakot
+    public static boolean nyit = true;
+
     public Tc_Bejelentkezes(ablak a) {
         initComponents();
         this.az = a;
@@ -169,7 +172,7 @@ public class Tc_Bejelentkezes extends javax.swing.JFrame {
         String truee = "";
         try {
             while ((inputLine = in.readLine()) != null) {
-                
+
                 truee = inputLine;
             }
         } catch (IOException ex) {
@@ -199,13 +202,17 @@ public class Tc_Bejelentkezes extends javax.swing.JFrame {
                 String poz = "";
                 poz = rs.getString(1);
 
-
                 if (truee.equals("true") && (Integer.parseInt(poz) == 1 || Integer.parseInt(poz) == 2 || Integer.parseInt(poz) == 4)) {
 //sikeres bejelentkezes
                     ablak.planner = true;
-                    Tc_Betervezo b = new Tc_Betervezo();
-                    b.setVisible(true);
+                    
+                    if (nyit == true) {
+                        Tc_Betervezo b = new Tc_Betervezo(az);
+                        b.setVisible(true);
+
+                    }
                     this.dispose();
+                    Tc_Betervezo.gombenged();
 
                 } else {
 //sikertelen bejelentkezes
@@ -300,9 +307,14 @@ public class Tc_Bejelentkezes extends javax.swing.JFrame {
                     if (truee.equals("true") && (Integer.parseInt(poz) == 1 || Integer.parseInt(poz) == 2 || Integer.parseInt(poz) == 4)) {
 //sikeres bejelentkezes
                         ablak.planner = true;
-                        Tc_Betervezo b = new Tc_Betervezo();
-                        b.setVisible(true);
+                        
+                        if (nyit == true) {
+                            Tc_Betervezo b = new Tc_Betervezo(az);
+                            b.setVisible(true);
+
+                        }
                         this.dispose();
+                        Tc_Betervezo.gombenged();
 
                     } else {
 //sikertelen bejelentkezes
@@ -345,15 +357,21 @@ public class Tc_Bejelentkezes extends javax.swing.JFrame {
         //a nem vagyok planner gomb
         ablak.planner = false;
         Tc_Betervezo b = null;
-        try {
-            b = new Tc_Betervezo();
-        } catch (SQLException ex) {
-            Logger.getLogger(Tc_Bejelentkezes.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Tc_Bejelentkezes.class.getName()).log(Level.SEVERE, null, ex);
+
+        if (nyit == true) {
+            try {
+
+                b = new Tc_Betervezo(az);
+            } catch (SQLException ex) {
+                Logger.getLogger(Tc_Bejelentkezes.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(Tc_Bejelentkezes.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            b.setVisible(true);
+
         }
-        b.setVisible(true);
         this.dispose();
+        Tc_Betervezo.gombenged();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing

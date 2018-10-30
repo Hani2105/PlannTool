@@ -63,11 +63,14 @@ public class Tc_Betervezo extends javax.swing.JFrame {
 
     //kalkulátor sor vagy ossz vagy oszlopig?
     public static int calc = 3;
-    
+
     //ha csukodik ne fusson a kalkulator
     public static boolean csuk = false;
 
-    public Tc_Betervezo() throws SQLException, ClassNotFoundException {
+    //az ablak
+    public static ablak a;
+
+    public Tc_Betervezo(ablak a) throws SQLException, ClassNotFoundException {
 
         initComponents();
         setExtendedState(MAXIMIZED_BOTH);
@@ -94,20 +97,12 @@ public class Tc_Betervezo extends javax.swing.JFrame {
 
         }
 
-        //letiltjuk a gombokat ha nem planner
-        if (ablak.planner == false) {
-            //this.jButton5.setEnabled(false);
-            this.jButton2.setEnabled(false);
-            this.jButton5.setEnabled(false);
-
-        }
         //ha en akkor mehet
-        if (System.getProperty("user.name").equals("gabor_hanacsek")) {
-
-            jButton2.setEnabled(true);
-            jButton5.setEnabled(true);
-        }
-
+//        if (System.getProperty("user.name").equals("gabor_hanacsek")) {
+//
+//            jButton2.setEnabled(true);
+//            jButton5.setEnabled(true);
+//        }
         //lekerdezzuk a ciklusidoket
         String query = "select tc_becells.cellname , tc_bepns.partnumber , tc_bestations.workstation , tc_prodmatrix.ciklusido from tc_prodmatrix \n"
                 + "left join tc_becells on tc_becells.idtc_cells = tc_prodmatrix.id_tc_becells \n"
@@ -136,6 +131,7 @@ public class Tc_Betervezo extends javax.swing.JFrame {
 
         Tc_Cellavalaszto c = new Tc_Cellavalaszto(this);
         c.setVisible(true);
+        this.a = a;
 
     }
 
@@ -164,6 +160,7 @@ public class Tc_Betervezo extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
+        jButton7 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -290,6 +287,24 @@ public class Tc_Betervezo extends javax.swing.JFrame {
             }
         });
 
+        jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/login2.png"))); // NOI18N
+        jButton7.setToolTipText("Login!");
+        jButton7.setBorderPainted(false);
+        jButton7.setContentAreaFilled(false);
+        jButton7.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jButton7MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jButton7MouseExited(evt);
+            }
+        });
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -329,7 +344,9 @@ public class Tc_Betervezo extends javax.swing.JFrame {
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(25, 25, 25)
-                        .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 973, Short.MAX_VALUE))
         );
@@ -364,6 +381,8 @@ public class Tc_Betervezo extends javax.swing.JFrame {
                     .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(jTabbedPane1)
         );
@@ -404,6 +423,25 @@ public class Tc_Betervezo extends javax.swing.JFrame {
 
 
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    //gombok engedese , letiltasa
+    static void gombenged() {
+
+        //letiltjuk a gombokat ha nem planner
+        if (ablak.planner == false) {
+            //this.jButton5.setEnabled(false);
+            Tc_Betervezo.jButton2.setEnabled(false);
+            Tc_Betervezo.jButton5.setEnabled(false);
+
+        } else if (ablak.planner == true) {
+
+            Tc_Betervezo.jButton2.setEnabled(true);
+            Tc_Betervezo.jButton5.setEnabled(true);
+
+        }
+
+    }
+
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
@@ -641,7 +679,7 @@ public class Tc_Betervezo extends javax.swing.JFrame {
         planconnect pc = new planconnect();
         String Query = "update tc_users set tc_users.slides = '" + slide1 + "," + slide2 + "," + slide3 + "," + slide4 + "," + slide5 + "," + slide6 + "'" + "where tc_users.username = '" + System.getProperty("user.name") + "'";
         pc.feltolt(Query, false);
-        
+
     }//GEN-LAST:event_formWindowClosing
 
     private void jButton1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseEntered
@@ -750,10 +788,30 @@ public class Tc_Betervezo extends javax.swing.JFrame {
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
-      Tc_Segedletablak s = new Tc_Segedletablak();
-      s.setVisible(true);
-        
+        Tc_Segedletablak s = new Tc_Segedletablak();
+        s.setVisible(true);
+
     }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jButton7MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton7MouseEntered
+        // TODO add your handling code here:
+        jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/login1.png")));
+
+    }//GEN-LAST:event_jButton7MouseEntered
+
+    private void jButton7MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton7MouseExited
+        // TODO add your handling code here:
+        jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/login2.png")));
+    }//GEN-LAST:event_jButton7MouseExited
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        // TODO add your handling code here:
+
+        Tc_Bejelentkezes b = new Tc_Bejelentkezes(a);
+        b.nyit = false;
+        b.setVisible(true);
+
+    }//GEN-LAST:event_jButton7ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -800,11 +858,12 @@ public class Tc_Betervezo extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    public static javax.swing.JButton jButton2;
     public static javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
+    public static javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton7;
     public static javax.swing.JComboBox<String> jComboBox1;
     public static com.toedter.calendar.JDateChooser jDateChooser1;
     public static com.toedter.calendar.JDateChooser jDateChooser2;

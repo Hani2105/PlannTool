@@ -426,13 +426,25 @@ public class Tc_Betervezo extends javax.swing.JFrame {
             //this.jButton5.setEnabled(false);
             Tc_Betervezo.jButton2.setEnabled(false);
             Tc_Betervezo.jButton5.setEnabled(false);
-            Tc_Besheet.tilt();
+
+            for (int i = 0; i < jTabbedPane1.getTabCount(); i++) {
+
+                Besheets.get(jTabbedPane1.getTitleAt(i)).jButton11.setEnabled(true);
+                Besheets.get(jTabbedPane1.getTitleAt(i)).jButton10.setEnabled(false);
+
+            }
 
         } else if (ablak.planner == true) {
 
             Tc_Betervezo.jButton2.setEnabled(true);
             Tc_Betervezo.jButton5.setEnabled(true);
-            Tc_Besheet.tilt();
+
+            for (int i = 0; i < jTabbedPane1.getTabCount(); i++) {
+
+                Besheets.get(jTabbedPane1.getTitleAt(i)).jButton11.setEnabled(false);
+                Besheets.get(jTabbedPane1.getTitleAt(i)).jButton10.setEnabled(true);
+
+            }
 
         }
 

@@ -78,7 +78,9 @@ public class Tc_Besheet extends javax.swing.JPanel {
 
         } //letiltjuk a teny menteset ha planner van bent
         else {
+            
             jButton11.setEnabled(false);
+            
         }
     }
 
@@ -556,23 +558,8 @@ public class Tc_Besheet extends javax.swing.JPanel {
 
     }
 
-    //letiltjuk a terv mentése gombot ha a planner false
-    public static void tilt() {
-        try {
-            if (ablak.planner == false) {
-
-                jButton10.setEnabled(false);
-                jButton11.setEnabled(true);
-
-            } //letiltjuk a teny menteset ha planner van bent
-            else {
-                jButton11.setEnabled(false);
-                jButton10.setEnabled(true);
-            }
-        } catch (Exception e) {
-        }
-
-    }
+  
+ 
 
     public void workstations() throws SQLException, ClassNotFoundException {
 
@@ -1654,8 +1641,8 @@ public class Tc_Besheet extends javax.swing.JPanel {
     private javax.swing.JMenu SFDCmuveletek;
     private javax.swing.JMenuItem Termekleker;
     private javax.swing.JButton jButton1;
-    public static javax.swing.JButton jButton10;
-    public static javax.swing.JButton jButton11;
+    public javax.swing.JButton jButton10;
+    public javax.swing.JButton jButton11;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;

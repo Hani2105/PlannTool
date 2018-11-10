@@ -57,9 +57,10 @@ public class Tc_Betervezo extends javax.swing.JFrame {
     public static int slide6;
 
     //oszlopallitas valtozoi
-    public static boolean allitsuke = true;
+    public static int allitsuke = 0;
     public static int slider1 = 130;
     public static int slider2 = 130;
+    public static List<Integer> szelessegek = new ArrayList<Integer>();
 
     //kalkulátor sor vagy ossz vagy oszlopig?
     public static int calc = 3;

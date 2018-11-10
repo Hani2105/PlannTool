@@ -109,10 +109,23 @@ public class Tc_ossztervlekerszal extends Thread {
             Tc_Betervezo.jTabbedPane1.setSelectedIndex(b);
             DefaultTableModel model = new DefaultTableModel();
 
+//felvesszük az oszlopok szélességét
+            if (b == 0) {
+
+                //eltesszuk az oszlop szelessegeket
+                Tc_Betervezo.szelessegek.clear();
+                for (int i = 0; i < Tc_Betervezo.Besheets.get(neve).jTable2.getColumnCount(); i++) {
+
+                    Tc_Betervezo.szelessegek.add(Tc_Betervezo.Besheets.get(neve).jTable2.getColumnModel().getColumn(i).getWidth());
+
+                }
+
+            }
+
             //kitoroljuk az oszlopokat
             try {
                 model = (DefaultTableModel) Tc_Betervezo.Besheets.get(neve).jTable2.getModel();
-                
+
             } catch (Exception e) {
             }
 
@@ -168,7 +181,6 @@ public class Tc_ossztervlekerszal extends Thread {
 //                }
 //
 //            }
-
             //lekerdezzuk az adatbazis adatokat
             String Query = "select tc_terv.date , tc_bepns.partnumber , tc_terv.job , tc_bestations.workstation , tc_terv.qty , tc_terv.tt \n"
                     + "from tc_terv \n"

@@ -141,12 +141,12 @@ public class Tc_Calculator {
                             } catch (Exception e) {
                             }
                             //ha nem volt a pn hez ws hibát írunk
-                            if (hiba == true && model.getValueAt(i, 3).toString().equals("Terv")) {
-
-                                infobox info = new infobox();
-                                info.infoBox("Nincs mgeadva ciklusidő a \n " + pn + " -hez a " + ws + " - állomáson! \n Kérlek vidd fel az adatbázisba!", "Hiba!");
-
-                            }
+//                            if (hiba == true && model.getValueAt(i, 3).toString().equals("Terv")) {
+//
+//                                infobox info = new infobox();
+//                                info.infoBox("Nincs mgeadva ciklusidő a \n " + pn + " -hez a " + ws + " - állomáson! \n Kérlek vidd fel az adatbázisba!", "Hiba!");
+//
+//                            }
 
                             //terv vagy teny
                             if (model.getValueAt(i, 3).toString().equals("Terv")) {
@@ -203,7 +203,7 @@ public class Tc_Calculator {
 
                                 }
                             } catch (Exception e) {
-                                
+
                             }
                         }
 
@@ -249,7 +249,7 @@ public class Tc_Calculator {
 
                                     }
                                 } catch (Exception e) {
-                                    
+
                                 }
 
                             }
@@ -299,7 +299,7 @@ public class Tc_Calculator {
 
                                     }
                                 } catch (Exception e) {
-                                    
+
                                 }
 
                             }
@@ -350,7 +350,7 @@ public class Tc_Calculator {
 
                                 }
                             } catch (Exception e) {
-                                
+
                             }
                         }
 
@@ -396,7 +396,7 @@ public class Tc_Calculator {
 
                                     }
                                 } catch (Exception e) {
-                                   
+
                                 }
 
                             }
@@ -450,7 +450,7 @@ public class Tc_Calculator {
 
                                     }
                                 } catch (Exception e) {
-                                    
+
                                 }
 
                             }
@@ -479,19 +479,20 @@ public class Tc_Calculator {
 
         //szelesseg allitas ha engedelyezett
         TableColumn column = null;
-        if (Tc_Betervezo.allitsuke == true) {
+        if (Tc_Betervezo.allitsuke == 1) {
 
             for (int i = 0; i < model.getColumnCount(); i++) {
 
                 if (i != 3) {
                     column = b.jTable2.getColumnModel().getColumn(i);
+
                     column.setPreferredWidth(130);
                 }
 
             }
 
         } //ha nem engedelyezett akkor a sliderek ertekei
-        else {
+        else if (Tc_Betervezo.allitsuke == 2) {
 
             for (int i = 0; i < model.getColumnCount(); i++) {
 
@@ -505,6 +506,18 @@ public class Tc_Calculator {
 
                 }
 
+            }
+//ha manuális
+        } else if (Tc_Betervezo.allitsuke == 0) {
+
+            try {
+                for (int i = 0; i < model.getColumnCount(); i++) {
+
+                    column = b.jTable2.getColumnModel().getColumn(i);
+                    column.setPreferredWidth(Tc_Betervezo.szelessegek.get(i));
+
+                }
+            } catch (Exception e) {
             }
 
         }

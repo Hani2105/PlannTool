@@ -78,9 +78,9 @@ public class Tc_Besheet extends javax.swing.JPanel {
 
         } //letiltjuk a teny menteset ha planner van bent
         else {
-            
+
             jButton11.setEnabled(false);
-            
+
         }
     }
 
@@ -558,9 +558,6 @@ public class Tc_Besheet extends javax.swing.JPanel {
 
     }
 
-  
- 
-
     public void workstations() throws SQLException, ClassNotFoundException {
 
         planconnect pc = new planconnect();
@@ -861,6 +858,14 @@ public class Tc_Besheet extends javax.swing.JPanel {
             Logger.getLogger(Tc_Besheet.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Tc_Besheet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+//eltesszuk az oszlop szelessegeket
+        Tc_Betervezo.szelessegek.clear();
+        for (int i = 0; i < jTable2.getColumnCount(); i++) {
+
+            Tc_Betervezo.szelessegek.add(jTable2.getColumnModel().getColumn(i).getWidth());
+
         }
 
 // terv lekérése
@@ -1263,13 +1268,16 @@ public class Tc_Besheet extends javax.swing.JPanel {
                             //feltoltjuk tenykent is , ehhez kell a darabszam
 
                             String qty = "";
-                            if (t2.getValueAt(r + 1, i) != null) {
+                            try {
+                                if (t2.getValueAt(r + 1, i) != null) {
 
-                                qty = t2.getValueAt(r + 1, i).toString();
+                                    qty = t2.getValueAt(r + 1, i).toString();
 
-                            } else {
+                                } else {
 
-                                qty = "0";
+                                    qty = "0";
+                                }
+                            } catch (Exception e) {
                             }
 
                             feltoltadat += "('" + cellid + "','" + wsid + "','" + pnid + "','" + job + "','" + datum + "','" + qty + "','" + tenywtf + "'," + 1 + ",'" + System.getProperty("user.name") + "'),";
@@ -1578,13 +1586,16 @@ public class Tc_Besheet extends javax.swing.JPanel {
         Tc_Betervezo.csuk = false;
         Tc_Calculator c = new Tc_Calculator(this);
 
-        if (ablak.planner == false && jTable2.getValueAt(jTable2.getSelectedRow(), 3).toString().equals("Terv")) {
+        try {
+            if (ablak.planner == false && jTable2.getValueAt(jTable2.getSelectedRow(), 3).toString().equals("Terv")) {
 
-            infobox info = new infobox();
-            info.infoBox("Nem írhatsz a Terv sorba!", "Hiba");
-            jTable2.setColumnSelectionInterval(0, 0);
-            jTable2.setRowSelectionInterval(0, 0);
+                infobox info = new infobox();
+                info.infoBox("Nem írhatsz a Terv sorba!", "Hiba");
+                jTable2.setColumnSelectionInterval(0, 0);
+                jTable2.setRowSelectionInterval(0, 0);
 
+            }
+        } catch (Exception e) {
         }
 
 

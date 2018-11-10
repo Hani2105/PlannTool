@@ -621,6 +621,37 @@ public class Tc_Besetup extends javax.swing.JFrame {
 
         jList2.setModel(lm2);
 
+        //frissitjuk a partnumber  adatokat a sheeteken
+        for (int n = 0; n < Tc_Betervezo.jTabbedPane1.getTabCount(); n++) {
+
+            query = "select tc_bepns.partnumber from tc_bepns \n"
+                    + "left join tc_prodmatrix on tc_prodmatrix.id_tc_bepns = tc_bepns.idtc_bepns\n"
+                    + "left join tc_becells on tc_prodmatrix.id_tc_becells = tc_becells.idtc_cells\n"
+                    + "where tc_becells.cellname = '" + Tc_Betervezo.jTabbedPane1.getTitleAt(n) + "'";
+
+            //kiszedjuk a regieket
+            Tc_Betervezo.Besheets.get(Tc_Betervezo.jTabbedPane1.getTitleAt(n)).partnumbers.clear();
+
+            try {
+                pc.planconnect(query);
+            } catch (SQLException ex) {
+                Logger.getLogger(Tc_Besetup.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(Tc_Besetup.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            try {
+                while (pc.rs.next()) {
+
+                    Tc_Betervezo.Besheets.get(Tc_Betervezo.jTabbedPane1.getTitleAt(n)).partnumbers.add(pc.rs.getString(1));
+
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(Tc_Besetup.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
+
 
     }//GEN-LAST:event_jButton1ActionPerformed
 

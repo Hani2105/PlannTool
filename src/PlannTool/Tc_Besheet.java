@@ -862,9 +862,9 @@ public class Tc_Besheet extends javax.swing.JPanel {
 
 //eltesszuk az oszlop szelessegeket
         Tc_Betervezo.szelessegek.clear();
-        for (int i = 0; i < jTable2.getColumnCount(); i++) {
+        for (int i = 0; i < this.jTable2.getColumnCount(); i++) {
 
-            Tc_Betervezo.szelessegek.add(jTable2.getColumnModel().getColumn(i).getWidth());
+            Tc_Betervezo.szelessegek.add(this.jTable2.getColumnModel().getColumn(i).getWidth());
 
         }
 
@@ -982,7 +982,7 @@ public class Tc_Besheet extends javax.swing.JPanel {
                 + "left join tc_bestations on tc_bestations.idtc_bestations = tc_terv.idtc_bestations\n"
                 + "left join tc_becells on tc_becells.idtc_cells = tc_terv.idtc_becells\n"
                 + "where tc_terv.date between '" + fmt.print(dtOrg) + " 06:00:00" + "' and '" + columneve + ":00" + "' and tc_terv.active = 2 and tc_becells.cellname = '" + neve + "'  \n"
-                + "order by tc_terv.date , tc_terv.wtf";
+                + "order by tc_terv.date , tc_terv.wtf , tc_terv.tt desc";
 
         //feldolgozzuk az eredmenyt
         planconnect pc = new planconnect();
@@ -1273,9 +1273,11 @@ public class Tc_Besheet extends javax.swing.JPanel {
 
                                     qty = t2.getValueAt(r + 1, i).toString();
 
-                                } else {
+                                }
+                                if (t2.getValueAt(r + 1, 3).toString().equals("Terv")) {
 
                                     qty = "0";
+
                                 }
                             } catch (Exception e) {
                             }

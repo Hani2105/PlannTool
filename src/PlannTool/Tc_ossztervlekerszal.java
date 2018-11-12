@@ -188,7 +188,7 @@ public class Tc_ossztervlekerszal extends Thread {
                     + "left join tc_bestations on tc_bestations.idtc_bestations = tc_terv.idtc_bestations\n"
                     + "left join tc_becells on tc_becells.idtc_cells = tc_terv.idtc_becells\n"
                     + "where tc_terv.date between '" + fmt.print(dtOrg) + " 06:00:00" + "' and '" + columneve + ":00" + "' and tc_terv.active = 2 and tc_becells.cellname = '" + neve + "'  \n"
-                    + "order by   tc_terv.date , tc_terv.wtf";
+                    + "order by   tc_terv.date , tc_terv.wtf , tc_terv.tt desc";
 
             //feldolgozzuk az eredmenyt
             planconnect pc = new planconnect();

@@ -23,6 +23,15 @@ public class Tc_Calculator {
 
         this.b = b;
 
+//eltesszuk az oszlop szelessegeket
+//        Tc_Betervezo.szelessegek.clear();
+//
+//        for (int i = 0; i < this.b.jTable2.getColumnCount(); i++) {
+//
+//            Tc_Betervezo.szelessegek.add(this.b.jTable2.getColumnModel().getColumn(i).getWidth());
+//
+//        }
+
         String sheetname = "";
         try {
             sheetname = Tc_Betervezo.jTabbedPane1.getTitleAt(Tc_Betervezo.jTabbedPane1.getSelectedIndex());

@@ -21,6 +21,8 @@ public class Tc_Oszlopallito extends javax.swing.JFrame {
         this.b = b;
 
         //eltesszuk az oszlop szelessegeket
+        
+        
         Tc_Betervezo.szelessegek.clear();
 
         for (int i = 0; i < b.jTable2.getColumnCount(); i++) {

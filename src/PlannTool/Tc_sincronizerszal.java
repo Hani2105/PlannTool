@@ -250,7 +250,7 @@ public class Tc_sincronizerszal extends Thread {
                     + "left join tc_becells on tc_becells.cellname = Beterv.sht collate latin2_hungarian_ci\n"
                     + "left join tc_bestations on tc_bestations.workstation = Beterv.ws collate latin2_hungarian_ci\n"
                     + "left join tc_bepns on tc_bepns.partnumber = Beterv.pn collate latin2_hungarian_ci\n"
-                    + "where Beterv.startdate > now() - interval " + Integer.parseInt(ablak.jTextField20.getText()) + " day and Beterv.startdate > 0 and Beterv.date > 0";
+                    + "where Beterv.startdate > now() - interval " + Integer.parseInt(ablak.jTextField20.getText()) + " day and Beterv.startdate > 0 and Beterv.date > 0 and Beterv.sht = '"+ablak.jTextField21.getText()+"'";
 
 //megprobáljuk beilleszteni az eredményt , ha egyezik a kulcs , updateljük az activot
 //ehhez összeállítjuk az insert query adatait

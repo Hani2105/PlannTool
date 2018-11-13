@@ -1042,6 +1042,20 @@ public class Tc_Besheet extends javax.swing.JPanel {
 
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
         //terv mentése
+
+//ellenorizzuk , hogy minden tény felett van e terv , azaz két tény nem lehet egymás után!
+        for (int i = 0; i < jTable2.getRowCount()-1; i++) {
+
+            if (jTable2.getValueAt(i, 3).toString().equals("Tény") && jTable2.getValueAt(i + 1, 3).toString().equals("Tény")) {
+
+                infobox info = new infobox();
+                info.infoBox("Kérlek tölt fel terveket a tények fölé!", "Hiba!");
+                return;
+
+            }
+
+        }
+
         //lekerjuk az infokat (pn , cell , ws , és a tervet )
         //cellak
         String query = "select * from tc_becells";

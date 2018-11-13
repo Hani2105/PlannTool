@@ -333,7 +333,7 @@ public class Tc_Muszakjelentes extends javax.swing.JFrame {
                 + "    </body>\n"
                 + "</html>";
 //osszeallitjuk a targyat
-        subject = "Műszakjelentés: " + cellname + " " + b.jTable2.getColumnName(b.jTable2.getSelectedColumn()).substring(0, 16);
+        subject = "Muszakjelentes: " + cellname + " " + b.jTable2.getColumnName(b.jTable2.getSelectedColumn()).substring(0, 16);
 
     }//GEN-LAST:event_jButton1ActionPerformed
 

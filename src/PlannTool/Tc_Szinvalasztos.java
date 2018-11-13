@@ -10,9 +10,9 @@ package PlannTool;
  * @author gabor_hanacsek
  */
 public class Tc_Szinvalasztos extends javax.swing.JFrame {
-
+    
     Tc_Besheet b;
-
+    
     public Tc_Szinvalasztos(Tc_Besheet b) {
         initComponents();
         this.b = b;
@@ -31,8 +31,13 @@ public class Tc_Szinvalasztos extends javax.swing.JFrame {
         jColorChooser2 = new javax.swing.JColorChooser();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        jColorChooser3 = new javax.swing.JColorChooser();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Színválasztó");
 
         jButton1.setText("Nézet");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -42,11 +47,18 @@ public class Tc_Szinvalasztos extends javax.swing.JFrame {
         });
 
         jButton2.setText("Mentés");
+        jButton2.setEnabled(false);
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
             }
         });
+
+        jLabel1.setText("Terv szín");
+
+        jLabel2.setText("Tény szín");
+
+        jLabel3.setText("Megvalósulás szín");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -55,31 +67,51 @@ public class Tc_Szinvalasztos extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jColorChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 588, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jColorChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, 419, Short.MAX_VALUE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jColorChooser3, javax.swing.GroupLayout.PREFERRED_SIZE, 419, Short.MAX_VALUE)
+                                .addComponent(jColorChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 123, Short.MAX_VALUE)))
+                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton2)))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jColorChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, 588, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addGap(11, 11, 11))
+                        .addGap(164, 164, 164)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(154, 154, 154)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(139, 139, 139)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jColorChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(25, 25, 25)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
-                .addComponent(jColorChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(90, Short.MAX_VALUE)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(21, 21, 21)
+                .addComponent(jButton2)
+                .addGap(652, 652, 652))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(6, 6, 6)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jColorChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jColorChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jColorChooser3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -91,20 +123,26 @@ public class Tc_Szinvalasztos extends javax.swing.JFrame {
             Tc_Betervezo.slide4 = jColorChooser2.getColor().getRed();
             Tc_Betervezo.slide5 = jColorChooser2.getColor().getGreen();
             Tc_Betervezo.slide6 = jColorChooser2.getColor().getBlue();
-
+            Tc_Betervezo.slide7 = jColorChooser3.getColor().getRed();
+            Tc_Betervezo.slide8 = jColorChooser3.getColor().getGreen();
+            Tc_Betervezo.slide9 = jColorChooser3.getColor().getBlue();
+            
             b.repaint();
+            
+            jButton2.setEnabled(true);
         } catch (Exception e) {
         }
-
+        
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-
+        
         planconnect pc = new planconnect();
-        String Query = "update tc_users set tc_users.slides = '" + Tc_Betervezo.slide1 + "," + Tc_Betervezo.slide2 + "," + Tc_Betervezo.slide3 + "," + Tc_Betervezo.slide4 + "," + Tc_Betervezo.slide5 + "," + Tc_Betervezo.slide6 + "'" + "where tc_users.username = '" + System.getProperty("user.name") + "'";
+        String Query = "update tc_users set tc_users.slides = '" + Tc_Betervezo.slide1 + "," + Tc_Betervezo.slide2 + "," + Tc_Betervezo.slide3 + "," + Tc_Betervezo.slide4 + "," + Tc_Betervezo.slide5 + "," + Tc_Betervezo.slide6 + "," + Tc_Betervezo.slide7 + "," + Tc_Betervezo.slide8 + "," + Tc_Betervezo.slide9 + "'" + " where tc_users.username = '" + System.getProperty("user.name") + "'";
         pc.feltolt(Query, true);
-
+        this.dispose();
+        
 
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -148,5 +186,9 @@ public class Tc_Szinvalasztos extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JColorChooser jColorChooser1;
     private javax.swing.JColorChooser jColorChooser2;
+    private javax.swing.JColorChooser jColorChooser3;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     // End of variables declaration//GEN-END:variables
 }

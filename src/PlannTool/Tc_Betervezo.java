@@ -55,6 +55,9 @@ public class Tc_Betervezo extends javax.swing.JFrame {
     public static int slide4;
     public static int slide5;
     public static int slide6;
+    public static int slide7;
+    public static int slide8;
+    public static int slide9;
 
     //oszlopallitas valtozoi
     public static int allitsuke = 0;
@@ -89,12 +92,34 @@ public class Tc_Betervezo extends javax.swing.JFrame {
 
             String szamok = pc.rs.getString(1);
             String[] szamtomb = szamok.split(",");
-            slide1 = Integer.parseInt(szamtomb[0]);
-            slide2 = Integer.parseInt(szamtomb[1]);
-            slide3 = Integer.parseInt(szamtomb[2]);
-            slide4 = Integer.parseInt(szamtomb[3]);
-            slide5 = Integer.parseInt(szamtomb[4]);
-            slide6 = Integer.parseInt(szamtomb[5]);
+            try {
+                slide1 = Integer.parseInt(szamtomb[0]);
+                slide2 = Integer.parseInt(szamtomb[1]);
+                slide3 = Integer.parseInt(szamtomb[2]);
+                slide4 = Integer.parseInt(szamtomb[3]);
+                slide5 = Integer.parseInt(szamtomb[4]);
+                slide6 = Integer.parseInt(szamtomb[5]);
+            } catch (Exception e) {
+
+                slide1 = 255;
+                slide2 = 255;
+                slide3 = 255;
+                slide4 = 153;
+                slide5 = 255;
+                slide6 = 153;
+
+            }
+            try {
+                slide7 = Integer.parseInt(szamtomb[6]);
+                slide8 = Integer.parseInt(szamtomb[7]);
+                slide9 = Integer.parseInt(szamtomb[8]);
+            } catch (Exception e) {
+
+                slide7 = 51;
+                slide8 = 255;
+                slide9 = 204;
+
+            }
 
         }
 
@@ -882,15 +907,15 @@ public class Tc_Betervezo extends javax.swing.JFrame {
 
     private void jButton9MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton9MouseExited
         // TODO add your handling code here:
-         jButton9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/keszlet2.png")));
+        jButton9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/keszlet2.png")));
     }//GEN-LAST:event_jButton9MouseExited
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
-        
+
         Tc_Keszletfromterv k = new Tc_Keszletfromterv();
         k.setVisible(true);
-        
-        
+
+
     }//GEN-LAST:event_jButton9ActionPerformed
 
     /**

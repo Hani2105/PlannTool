@@ -751,9 +751,9 @@ public class Tc_Betervezo extends javax.swing.JFrame {
         // TODO add your handling code here:
 
         csuk = true;
-        planconnect pc = new planconnect();
-        String Query = "update tc_users set tc_users.slides = '" + slide1 + "," + slide2 + "," + slide3 + "," + slide4 + "," + slide5 + "," + slide6 + "'" + "where tc_users.username = '" + System.getProperty("user.name") + "'";
-        pc.feltolt(Query, false);
+        //planconnect pc = new planconnect();
+        //String Query = "update tc_users set tc_users.slides = '" + slide1 + "," + slide2 + "," + slide3 + "," + slide4 + "," + slide5 + "," + slide6 + "'" + "where tc_users.username = '" + System.getProperty("user.name") + "'";
+        //pc.feltolt(Query, false);
 
     }//GEN-LAST:event_formWindowClosing
 

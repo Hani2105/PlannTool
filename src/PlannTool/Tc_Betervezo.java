@@ -6,6 +6,7 @@
 package PlannTool;
 
 import com.mysql.jdbc.StringUtils;
+import java.awt.Color;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.sql.Array;
@@ -214,11 +215,14 @@ public class Tc_Betervezo extends javax.swing.JFrame {
         });
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Tc_Betervező");
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
             }
         });
+
+        jPanel1.setForeground(new java.awt.Color(0, 153, 153));
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/cv1.png"))); // NOI18N
         jButton1.setToolTipText("Cella választó!");

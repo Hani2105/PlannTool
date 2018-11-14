@@ -1044,7 +1044,7 @@ public class Tc_Besheet extends javax.swing.JPanel {
         //terv mentése
 
 //ellenorizzuk , hogy minden tény felett van e terv , azaz két tény nem lehet egymás után!
-        for (int i = 0; i < jTable2.getRowCount()-1; i++) {
+        for (int i = 0; i < jTable2.getRowCount() - 1; i++) {
 
             if (jTable2.getValueAt(i, 3).toString().equals("Tény") && jTable2.getValueAt(i + 1, 3).toString().equals("Tény")) {
 
@@ -1399,7 +1399,7 @@ public class Tc_Besheet extends javax.swing.JPanel {
             for (int r = 0; r < jTable2.getRowCount(); r++) {
                 String pn = "";
 
-                //ha van adat a cellaban  akkor begyűjtjük és van felette terv
+                //ha van adat a cellaban  akkor begyűjtjük 
                 if (jTable2.getValueAt(r, i) != null && !jTable2.getColumnName(i).equals("Sum: PN,JOB,WS")) {
                     String job = "";
                     String qty = "";
@@ -1570,13 +1570,16 @@ public class Tc_Besheet extends javax.swing.JPanel {
         if (jTable2.getSelectedColumn() > 3) {
             Tc_Calculator c = new Tc_Calculator(this);
         }
-        if (ablak.planner == false && jTable2.getValueAt(jTable2.getSelectedRow(), 3).toString().equals("Terv")) {
+        try {
+            if (ablak.planner == false && jTable2.getValueAt(jTable2.getSelectedRow(), 3).toString().equals("Terv")) {
 
-            infobox info = new infobox();
-            info.infoBox("Nem írhatsz a Terv sorba!", "Hiba");
-            jTable2.setColumnSelectionInterval(0, 0);
-            jTable2.setRowSelectionInterval(0, 0);
+//            infobox info = new infobox();
+//            info.infoBox("Nem írhatsz a Terv sorba!", "Hiba");
+                jTable2.setColumnSelectionInterval(jTable2.getSelectedColumn(), jTable2.getSelectedColumn());
+                jTable2.setRowSelectionInterval(jTable2.getSelectedRow() - 1, jTable2.getSelectedRow() - 1);
 
+            }
+        } catch (Exception e) {
         }
 
     }//GEN-LAST:event_jTable2MouseClicked
@@ -1605,10 +1608,10 @@ public class Tc_Besheet extends javax.swing.JPanel {
         try {
             if (ablak.planner == false && jTable2.getValueAt(jTable2.getSelectedRow(), 3).toString().equals("Terv")) {
 
-                infobox info = new infobox();
-                info.infoBox("Nem írhatsz a Terv sorba!", "Hiba");
-                jTable2.setColumnSelectionInterval(0, 0);
-                jTable2.setRowSelectionInterval(0, 0);
+//                infobox info = new infobox();
+//                info.infoBox("Nem írhatsz a Terv sorba!", "Hiba");
+                jTable2.setColumnSelectionInterval(jTable2.getSelectedColumn(), jTable2.getSelectedColumn());
+                jTable2.setRowSelectionInterval(jTable2.getSelectedRow() - 1, jTable2.getSelectedRow() - 1);
 
             }
         } catch (Exception e) {
@@ -1621,13 +1624,16 @@ public class Tc_Besheet extends javax.swing.JPanel {
 
         Tc_Betervezo.csuk = false;
         Tc_Calculator c = new Tc_Calculator(this);
-        if (ablak.planner == false && jTable2.getValueAt(jTable2.getSelectedRow(), 3).toString().equals("Terv")) {
+        try {
+            if (ablak.planner == false && jTable2.getValueAt(jTable2.getSelectedRow(), 3).toString().equals("Terv")) {
 
-            infobox info = new infobox();
-            info.infoBox("Nem írhatsz a Terv sorba!", "Hiba");
-            jTable2.setColumnSelectionInterval(0, 0);
-            jTable2.setRowSelectionInterval(0, 0);
+//            infobox info = new infobox();
+//            info.infoBox("Nem írhatsz a Terv sorba!", "Hiba");
+                jTable2.setColumnSelectionInterval(jTable2.getSelectedColumn(), jTable2.getSelectedColumn());
+                jTable2.setRowSelectionInterval(jTable2.getSelectedRow() - 1, jTable2.getSelectedRow() - 1);
 
+            }
+        } catch (Exception e) {
         }
 
 

@@ -83,6 +83,17 @@ public class Tc_Betervezo extends javax.swing.JFrame {
         //lekerjuk a szinezest
         planconnect pc = new planconnect();
 
+        //szinek alapbeallitasa
+        slide1 = 255;
+        slide2 = 255;
+        slide3 = 255;
+        slide4 = 153;
+        slide5 = 255;
+        slide6 = 153;
+        slide7 = 51;
+        slide8 = 255;
+        slide9 = 204;
+
         //szinbeallitasok lekerese
         String Query = "select tc_users.slides from tc_users where tc_users.username = '" + System.getProperty("user.name") + "'";
 
@@ -751,9 +762,7 @@ public class Tc_Betervezo extends javax.swing.JFrame {
         // TODO add your handling code here:
 
         csuk = true;
-        //planconnect pc = new planconnect();
-        //String Query = "update tc_users set tc_users.slides = '" + slide1 + "," + slide2 + "," + slide3 + "," + slide4 + "," + slide5 + "," + slide6 + "'" + "where tc_users.username = '" + System.getProperty("user.name") + "'";
-        //pc.feltolt(Query, false);
+
 
     }//GEN-LAST:event_formWindowClosing
 

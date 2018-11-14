@@ -24,6 +24,14 @@ public class Tc_TervTooltipRenderer extends DefaultTableCellRenderer {
 
         this.b = b;
 
+        //eltesszuk az oszlop szelessegeket
+        Tc_Betervezo.szelessegek.clear();
+        for (int i = 0; i < b.jTable2.getColumnCount(); i++) {
+
+            Tc_Betervezo.szelessegek.add(b.jTable2.getColumnModel().getColumn(i).getWidth());
+
+        }
+
     }
 
     ;
@@ -37,13 +45,14 @@ public class Tc_TervTooltipRenderer extends DefaultTableCellRenderer {
 
         //tooltip beállítása
         try {
+            Tc_Stringbolint si = new Tc_Stringbolint(table.getValueAt(row, column).toString());
             if (column > 3 && (table.getValueAt(row, 0) != null && table.getValueAt(row, 2) != null) && table.getValueAt(row, column) != null && !table.getValueAt(row, column).toString().equals("")) {
 
                 String komment = "";
                 try {
                     tooltiptext = ("<html>" + "Terv/Tény: " + table.getValueAt(row, 3).toString() + "<br>" + "PN: " + table.getValueAt(row, 0).toString() + "<br>" + "JOB: " + table.getValueAt(row, 1).toString() + "<br>" + "WS: " + table.getValueAt(row, 2).toString());
 
-                    komment = new Tc_Stringbolint(table.getValueAt(row, column).toString()).komment;
+                    komment = si.komment;
 
                     tooltiptext += "<br> Komment: " + komment + "</html>";
 

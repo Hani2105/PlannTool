@@ -113,27 +113,34 @@ public class Tc_Termekleker extends Thread {
             //ha egyezik a pn bejarjuk a modellt es megnezzuk hogy ezzel a ws el irtunk e már
             boolean irtunke = false;
             int beir = 0;
+            
+//ha egyezik a pn beirjuk a tablaba
             if (rowdata[i][1].toString().equals(pn)) {
+                
+               model.addRow(new Object[]{pn, rowdata[i][3].toString(), rowdata[i][0].toString(), rowdata[i][4].toString()}); 
+                
+                
+                
 
-                for (int t = 0; t < model.getRowCount(); t++) {
-
-                    //ha találunk ilyet
-                    if (rowdata[i][0].toString().equals(model.getValueAt(t, 1))) {
-                        irtunke = true;
-                        int qty = 0;
-
-                        qty = Integer.parseInt(model.getValueAt(t, 2).toString());
-                        beir += qty;
-
-                    }
-
-                }
-                //ha nem találunk akkor hozzáadunk
-                if (irtunke == false) {
-
-                    model.addRow(new Object[]{pn, rowdata[i][0].toString(), rowdata[i][4].toString()});
-
-                }
+//                for (int t = 0; t < model.getRowCount(); t++) {
+//
+//                    //ha találunk ilyet
+//                    if (rowdata[i][0].toString().equals(model.getValueAt(t, 1))) {
+//                        irtunke = true;
+//                        int qty = 0;
+//
+//                        qty = Integer.parseInt(model.getValueAt(t, 2).toString());
+//                        beir += qty;
+//
+//                    }
+//
+//                }
+//                //ha nem találunk akkor hozzáadunk
+//                if (irtunke == false) {
+//
+//                    model.addRow(new Object[]{pn, rowdata[i][0].toString(), rowdata[i][4].toString()});
+//
+//                }
 
             }
 

@@ -11,8 +11,8 @@ package PlannTool;
  */
 public class Tc_Stringbolint {
 
-    public static int db = 0;
-    public static String komment = "";
+    public  int db = 0;
+    public  String komment = "";
 
     public Tc_Stringbolint(String szoveg) {
 
@@ -20,6 +20,8 @@ public class Tc_Stringbolint {
         int eddigmenni = 1;
         boolean szovege = true;
         int innentol = 1;
+        db = 0;
+        komment = "";
 
         //kiszedjuk a stringbol az integert
         while (inte) {

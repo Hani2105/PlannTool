@@ -39,7 +39,7 @@ public class Tc_Termeklekerablak extends javax.swing.JFrame {
 
             },
             new String [] {
-                "PartNumber", "WorkStation", "Qty"
+                "PartNumber", "JOB", "WorkStation", "Qty"
             }
         ));
         jScrollPane1.setViewportView(jTable1);

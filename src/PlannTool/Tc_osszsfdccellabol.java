@@ -201,30 +201,8 @@ public class Tc_osszsfdccellabol extends Thread {
                                         if (pn.equals(b.jTable2.getValueAt(n, 0).toString()) && ws.equals(b.jTable2.getValueAt(n, 2).toString()) && !actualterv.equals("") && b.jTable2.getValueAt(n, 3).toString().equals("Tény")) {
 
                                             //kivesszuk a tobo a vizet oszt ottmarad a béka
-                                            boolean inte = true;
-                                            int eddigmenni = 1;
-                                            int db = 0;
-
-                                            while (inte) {
-                                                try {
-                                                    db = Integer.parseInt(b.jTable2.getValueAt(n, i).toString().substring(0, eddigmenni));
-                                                    eddigmenni++;
-                                                } catch (Exception e) {
-
-                                                    inte = false;
-
-                                                }
-                                            }
-
-                                            //replaceljuk a stringben a darabot semmire
-                                            try {
-                                                cellaadat = b.jTable2.getValueAt(n, i).toString().trim();
-                                            } catch (Exception e) {
-                                            }
-
-                                            cellaadat = cellaadat.replace(String.valueOf(db), "");
-
-                                            b.jTable2.setValueAt(osszeg + " " + cellaadat.trim(), n, i);
+                                            Tc_Stringbolint c = new Tc_Stringbolint(b.jTable2.getValueAt(n, i).toString());
+                                            b.jTable2.setValueAt(osszeg + " " + c.komment, n, i);
                                             //pnlist.add(pn);
                                             pnlista[n][0] = pn;
                                             pnlista[n][1] = ws;
@@ -244,30 +222,8 @@ public class Tc_osszsfdccellabol extends Thread {
                                 //ha nem irtunk irunk az utolso sorba
                                 if (irtunke == false && sorszam != 0) {
 
-                                    boolean inte = true;
-                                    int eddigmenni = 1;
-                                    int db = 0;
-
-                                    while (inte) {
-                                        try {
-                                            db = Integer.parseInt(b.jTable2.getValueAt(sorszam, i).toString().substring(0, eddigmenni));
-                                            eddigmenni++;
-                                        } catch (Exception e) {
-
-                                            inte = false;
-
-                                        }
-                                    }
-
-                                    //replaceljuk a stringben a darabot semmire
-                                    try {
-                                        cellaadat = b.jTable2.getValueAt(sorszam, i).toString().trim();
-                                    } catch (Exception e) {
-                                    }
-
-                                    cellaadat = cellaadat.replace(String.valueOf(db), "");
-
-                                    b.jTable2.setValueAt(osszeg + " " + cellaadat.trim(), sorszam, i);
+                                    Tc_Stringbolint c = new Tc_Stringbolint(b.jTable2.getValueAt(sorszam, i).toString());
+                                    b.jTable2.setValueAt(osszeg + " " + c.komment, sorszam, i);
                                     //pnlist.add(pn);
                                     pnlista[sorszam][0] = pn;
                                     pnlista[sorszam][1] = ws;

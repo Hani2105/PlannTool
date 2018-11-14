@@ -9,23 +9,50 @@ package PlannTool;
  *
  * @author gabor_hanacsek
  */
-public class Tc_AnimationSFDC extends Thread{
+public class Tc_AnimationSFDC extends Thread {
 
     public static boolean rajzole = true;
 
     public void run() {
 
-        Tc_SFDCanimationpicture a = new Tc_SFDCanimationpicture();
-        a.setVisible(true);
+        if (System.getProperty("user.name").equals("gabor_hanacsek")) {
 
-        while (rajzole == true) {
+            Tc_SFDCpony a = new Tc_SFDCpony();
+            a.setVisible(true);
 
-            a.repaint();
+            while (rajzole == true) {
 
-            //System.out.println("futok");
+                a.repaint();
+
+                //System.out.println("futok");
+            }
+
+            a.dispose();
+
+        } else {
+
+            Tc_SFDCanimationpicture a = new Tc_SFDCanimationpicture();
+            a.setVisible(true);
+
+            while (rajzole == true) {
+
+                a.repaint();
+
+                //System.out.println("futok");
+            }
+
+            a.dispose();
+
         }
 
-        a.dispose();
+//        while (rajzole == true) {
+//
+//            a.repaint();
+//
+//            //System.out.println("futok");
+//        }
+//
+//        a.dispose();
         //System.out.println("megalltam");
         rajzole = true;
 

@@ -179,8 +179,11 @@ public class Tc_SFDCszal extends Thread {
                                 try {
                                     if (pn.equals(b.jTable2.getValueAt(n, 0).toString()) && ws.equals(b.jTable2.getValueAt(n, 2).toString()) && !actualterv.equals("") && b.jTable2.getValueAt(n, 3).toString().equals("Tény")) {
 
-                                        Tc_Stringbolint c = new Tc_Stringbolint(b.jTable2.getValueAt(n, i).toString());
-                                        b.jTable2.setValueAt(osszeg + " " + c.komment, n, i);
+                                        try {
+                                            Tc_Stringbolint c = new Tc_Stringbolint(b.jTable2.getValueAt(n, i).toString());
+                                            b.jTable2.setValueAt(osszeg + " " + c.komment, n, i);
+                                        } catch (Exception e) {
+                                        }
                                         //pnlist.add(pn);
                                         pnlista[n][0] = pn;
                                         pnlista[n][1] = ws;
@@ -200,8 +203,11 @@ public class Tc_SFDCszal extends Thread {
                             //ha nem irtunk irunk az utolso sorba
                             if (irtunke == false && sorszam != 0) {
 
-                                Tc_Stringbolint c = new Tc_Stringbolint(b.jTable2.getValueAt(sorszam, i).toString());
-                                b.jTable2.setValueAt(osszeg + " " + c.komment, sorszam, i);
+                                try {
+                                    Tc_Stringbolint c = new Tc_Stringbolint(b.jTable2.getValueAt(sorszam, i).toString());
+                                    b.jTable2.setValueAt(osszeg + " " + c.komment, sorszam, i);
+                                } catch (Exception e) {
+                                }
                                 //pnlist.add(pn);
                                 pnlista[sorszam][0] = pn;
                                 pnlista[sorszam][1] = ws;

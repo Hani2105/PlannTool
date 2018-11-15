@@ -176,10 +176,54 @@ public class Tc_osszsfdccellabol extends Thread {
 
                             }
 
-//beirjuk a darabot a tablaba ha az nagyobb mint nulla es teny sorban vagyunk
-                            if (osszdarab > 0 && b.jTable2.getValueAt(r, 3).equals("Tény")) {
+//megprobalunk keresni egy olyan sort ami megfelel a pn-nek ws-nek es van felette terv
+                            int ebbeirni = 0;
+
+                            for (int m = 0; m < b.jTable2.getRowCount(); m++) {
+
+                                try {
+                                    if (b.jTable2.getValueAt(m, 0).equals(pn) && b.jTable2.getValueAt(m, 2).equals(ws) && b.jTable2.getValueAt(m - 1, i) != null && b.jTable2.getValueAt(m, 3).toString().equals("Tény") && !b.jTable2.getValueAt(m - 1, i).equals("")) {
+
+                                        ebbeirni = m;
+                                        break;
+
+                                    }
+                                } catch (Exception e) {
+                                }
+                            }
+
+//beirjuk a darabot a tablaba ha az nagyobb mint nulla van olyan sorunk amibe tudunk irni mert van felette terv
+                            if (osszdarab > 0 && ebbeirni > 0) {
 
 //hogy ottmaradjon a komment hasznaljuk a stringbolintet
+                                try {
+                                    Tc_Stringbolint c = new Tc_Stringbolint(b.jTable2.getValueAt(ebbeirni, i).toString());
+                                    b.jTable2.setValueAt(osszdarab + " " + c.komment, ebbeirni, i);
+                                } catch (Exception e) {
+//ha nem tudjuk stringe konvertalni akkor csak a darab marad
+
+                                    b.jTable2.setValueAt(osszdarab, ebbeirni, i);
+
+                                }
+
+//ha ugyan ehhez a pn hez van még beírva ebbe az oszlopba másik darab , azt nullra állítom 
+                                for (int t = ebbeirni + 1; t < b.jTable2.getRowCount(); t++) {
+
+                                    if (b.jTable2.getValueAt(t, i) != null && b.jTable2.getValueAt(t, 0).equals(pn) && b.jTable2.getValueAt(t, 2).equals(ws) && b.jTable2.getValueAt(t, 3).equals("Tény")) {
+
+                                        b.jTable2.setValueAt(null, t, i);
+
+                                    }
+
+                                }
+
+//ha irtunk elrakjuk a pn-t ws-t egy listaba , hogy lassuk , foglalkoztunk mar vele
+                                pnws.add(pn + ws);
+
+                            } //ha nincs olyan sor amibe írhatnánk de van összegünk                            
+                            else if (osszdarab > 0 && ebbeirni == 0 && b.jTable2.getValueAt(r, 0).equals(pn) && b.jTable2.getValueAt(r, 2).equals(ws) && b.jTable2.getValueAt(r, 3).equals("Tény")) {
+
+                                //hogy ottmaradjon a komment hasznaljuk a stringbolintet
                                 try {
                                     Tc_Stringbolint c = new Tc_Stringbolint(b.jTable2.getValueAt(r, i).toString());
                                     b.jTable2.setValueAt(osszdarab + " " + c.komment, r, i);
@@ -193,7 +237,7 @@ public class Tc_osszsfdccellabol extends Thread {
 //ha ugyan ehhez a pn hez van még beírva ebbe az oszlopba másik darab , azt nullra állítom 
                                 for (int t = r + 1; t < b.jTable2.getRowCount(); t++) {
 
-                                    if (b.jTable2.getValueAt(t, i) != null && b.jTable2.getValueAt(t, 0).equals(pn) && b.jTable2.getValueAt(t, 2).equals(ws)) {
+                                    if (b.jTable2.getValueAt(t, i) != null && b.jTable2.getValueAt(t, 0).equals(pn) && b.jTable2.getValueAt(t, 2).equals(ws) && b.jTable2.getValueAt(t, 3).equals("Tény")) {
 
                                         b.jTable2.setValueAt(null, t, i);
 
@@ -203,6 +247,7 @@ public class Tc_osszsfdccellabol extends Thread {
 
 //ha irtunk elrakjuk a pn-t ws-t egy listaba , hogy lassuk , foglalkoztunk mar vele
                                 pnws.add(pn + ws);
+
                             }
 
                         }

@@ -15,7 +15,7 @@ public class Tc_AnimationSFDC extends Thread {
 
     public void run() {
 
-        if (System.getProperty("user.name").equals("gabor_hanacsek")) {
+        if (System.getProperty("user.name").equals("alexandra_havelda")) {
 
             Tc_SFDCpony a = new Tc_SFDCpony();
             a.setVisible(true);

@@ -323,7 +323,6 @@ public class Tc_Segedletablak extends javax.swing.JFrame {
                         }
                         model.setValueAt(qty, r, 3);
                         irtunke = true;
-                        
 
                     } //ha tény a tvt 
                     else if (model.getValueAt(r, 0).toString().equals(cella) && model.getValueAt(r, 1).toString().equals(pn) && model.getValueAt(r, 2).toString().equals(ws) && tvt.equals("Tény") && irtunke == false) {
@@ -334,7 +333,7 @@ public class Tc_Segedletablak extends javax.swing.JFrame {
                         }
                         model.setValueAt(qty, r, 4);
                         irtunke = true;
-                        
+
                     }
 
                 }
@@ -360,20 +359,21 @@ public class Tc_Segedletablak extends javax.swing.JFrame {
 
         //miután beírtuk az adatokat kivonjuk a tényből a tervet és beírjuk varianciaként
         for (int i = 0; i < model.getRowCount(); i++) {
+            try {
+                int terv = (int) model.getValueAt(i, 3);
+                int teny = (int) model.getValueAt(i, 4);
 
-            int terv = (int) model.getValueAt(i, 3);
-            int teny = (int) model.getValueAt(i, 4);
-
-            model.setValueAt(teny - terv, i, 5);
+                model.setValueAt(teny - terv, i, 5);
+            } catch (Exception e) {
+            }
 
         }
-        
+
         //második tábla kitöltése
-        
         //a lekért dátum első időpontja , első oszlop a tervből
-        String last = Tc_Betervezo.Besheets.get(Tc_Betervezo.jTabbedPane1.getTitleAt(0)).jTable2.getColumnName(4).substring(0,Tc_Betervezo.Besheets.get(Tc_Betervezo.jTabbedPane1.getTitleAt(0)).jTable2.getColumnName(4).length()-4 );
-        
-                String query2 = "select tc_becells.cellname , tc_bepns.partnumber , tc_bestations.workstation ,cast(tc_terv.qty as unsigned) , tc_terv.tt\n"
+        String last = Tc_Betervezo.Besheets.get(Tc_Betervezo.jTabbedPane1.getTitleAt(0)).jTable2.getColumnName(4).substring(0, Tc_Betervezo.Besheets.get(Tc_Betervezo.jTabbedPane1.getTitleAt(0)).jTable2.getColumnName(4).length() - 4);
+
+        String query2 = "select tc_becells.cellname , tc_bepns.partnumber , tc_bestations.workstation ,cast(tc_terv.qty as unsigned) , tc_terv.tt\n"
                 + "from tc_terv \n"
                 + "left join tc_becells on tc_becells.idtc_cells = tc_terv.idtc_becells\n"
                 + "left join tc_bepns on tc_bepns.idtc_bepns = tc_terv.idtc_bepns\n"
@@ -382,8 +382,6 @@ public class Tc_Segedletablak extends javax.swing.JFrame {
                 + "' and '" + first + "' and tc_becells.cellname in " + cellak
                 + "and tc_terv.active = 2";
 
-                
-                 
         try {
             pc.planconnect(query2);
         } catch (SQLException ex) {
@@ -427,7 +425,6 @@ public class Tc_Segedletablak extends javax.swing.JFrame {
                         }
                         model2.setValueAt(qty, r, 3);
                         irtunke = true;
-                        
 
                     } //ha tény a tvt 
                     else if (model2.getValueAt(r, 0).toString().equals(cella) && model2.getValueAt(r, 1).toString().equals(pn) && model2.getValueAt(r, 2).toString().equals(ws) && tvt.equals("Tény") && irtunke == false) {
@@ -438,7 +435,7 @@ public class Tc_Segedletablak extends javax.swing.JFrame {
                         }
                         model2.setValueAt(qty, r, 4);
                         irtunke = true;
-                       
+
                     }
 
                 }

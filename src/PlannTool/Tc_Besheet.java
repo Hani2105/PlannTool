@@ -621,16 +621,22 @@ public class Tc_Besheet extends javax.swing.JPanel {
         DefaultTableModel model = new DefaultTableModel();
         model = (DefaultTableModel) jTable2.getModel();
 
+        if (ablak.planner == false) {
+
+            int i = jTable2.convertRowIndexToModel(jTable2.getSelectedRow());
+            model.insertRow(i, new Object[]{null, null, null, "Tény"});
+            return;
+
+        }
+
         if (jTable2.getValueAt(jTable2.getSelectedRow(), 3).equals("Terv")) {
 
             int i = jTable2.convertRowIndexToModel(jTable2.getSelectedRow());
             model.insertRow(i, new Object[]{null, null, null, "Tény"});
-            //model.insertRow(i, new Object[]{null, null, null, "Terv"});
 
         } else if (jTable2.getValueAt(jTable2.getSelectedRow(), 3).equals("Tény")) {
 
             int i = jTable2.convertRowIndexToModel(jTable2.getSelectedRow());
-            //model.insertRow(i - 1, new Object[]{null, null, null, "Tény"});
             model.insertRow(i, new Object[]{null, null, null, "Terv"});
 
         }

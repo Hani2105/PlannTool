@@ -204,7 +204,7 @@ public class Tc_sincronizerszal extends Thread {
 
 //frissítjük a prodmatrixot
 // lekerdezzuk a queryt , ebben mar benne van az összetett kulcs ami a darab/orat nem tartalmazza
-            Query = "select tc_bepns.idtc_bepns , tc_becells.idtc_cells , tc_bestations.idtc_bestations , beciklusidok.DBPO , concat(idtc_bepns , idtc_cells , idtc_bestations) as pk\n"
+            Query = "select distinct tc_bepns.idtc_bepns , tc_becells.idtc_cells , tc_bestations.idtc_bestations , beciklusidok.DBPO , concat(idtc_bepns , idtc_cells , idtc_bestations) as pk\n"
                     + "from beciklusidok\n"
                     + "left join tc_bepns on tc_bepns.partnumber = beciklusidok.PN collate latin2_hungarian_ci\n"
                     + "left join tc_becells on tc_becells.cellname = beciklusidok.CELL collate latin2_hungarian_ci\n"

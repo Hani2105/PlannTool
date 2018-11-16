@@ -289,7 +289,7 @@ public class ablak extends javax.swing.JFrame {
             jTextField21 = new javax.swing.JTextField();
 
             setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-            setTitle("PlannTool R_1.4");
+            setTitle("PlannTool R_1.5");
             setLocation(new java.awt.Point(500, 300));
 
             jPanel6.setPreferredSize(new java.awt.Dimension(1100, 550));

@@ -144,7 +144,7 @@ public class Tc_Besheet extends javax.swing.JPanel {
         MuveletekSorokkal.setActionCommand("Sor + / -");
         MuveletekSorokkal.setAutoscrolls(true);
 
-        InsertRow.setText("Sor beszúrása fölé");
+        InsertRow.setText("Sor beszúrása");
         InsertRow.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 InsertRowActionPerformed(evt);
@@ -624,7 +624,7 @@ public class Tc_Besheet extends javax.swing.JPanel {
         if (ablak.planner == false) {
 
             int i = jTable2.convertRowIndexToModel(jTable2.getSelectedRow());
-            model.insertRow(i, new Object[]{null, null, null, "Tény"});
+            model.insertRow(i+1, new Object[]{null, null, null, "Tény"});
             return;
 
         }

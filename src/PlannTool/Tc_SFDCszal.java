@@ -210,17 +210,20 @@ public class Tc_SFDCszal extends Thread {
                             int utsosor = 0;
                             for (int t = 0; t < b.jTable2.getRowCount(); t++) {
 
-                                if (b.jTable2.getValueAt(r, 0).equals(pn) && b.jTable2.getValueAt(r, 2).equals(ws) && b.jTable2.getValueAt(r, 3).equals("Tény")) {
+                                try {
+                                    if (b.jTable2.getValueAt(t, 0).equals(pn) && b.jTable2.getValueAt(t, 2).equals(ws) && b.jTable2.getValueAt(t, 3).equals("Tény")) {
 
-                                    utsosor = t;
+                                        utsosor = t;
 
+                                    }
+                                } catch (Exception e) {
                                 }
 
                             }
 
                             //hogy ottmaradjon a komment hasznaljuk a stringbolintet
                             try {
-                                Tc_Stringbolint c = new Tc_Stringbolint(b.jTable2.getValueAt(r, i).toString());
+                                Tc_Stringbolint c = new Tc_Stringbolint(b.jTable2.getValueAt(utsosor, i).toString());
                                 b.jTable2.setValueAt(osszdarab + " " + c.komment, utsosor, i);
                             } catch (Exception e) {
 //ha nem tudjuk stringe konvertalni akkor csak a darab marad
@@ -230,12 +233,15 @@ public class Tc_SFDCszal extends Thread {
                             }
 
 //ha ugyan ehhez a pn hez van még beírva ebbe az oszlopba másik darab , azt nullra állítom 
-                            for (int t = utsosor + 1; t < b.jTable2.getRowCount(); t++) {
+                            for (int t = 0; t < b.jTable2.getRowCount(); t++) {
 
-                                if (b.jTable2.getValueAt(t, i) != null && b.jTable2.getValueAt(t, 0).equals(pn) && b.jTable2.getValueAt(t, 2).equals(ws) && b.jTable2.getValueAt(t, 3).equals("Tény")) {
+                                try {
+                                    if (b.jTable2.getValueAt(t, i) != null && b.jTable2.getValueAt(t, 0).equals(pn) && b.jTable2.getValueAt(t, 2).equals(ws) && b.jTable2.getValueAt(t, 3).equals("Tény") && t != utsosor) {
 
-                                    b.jTable2.setValueAt(null, t, i);
+                                        b.jTable2.setValueAt(null, t, i);
 
+                                    }
+                                } catch (Exception e) {
                                 }
 
                             }

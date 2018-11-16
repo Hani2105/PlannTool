@@ -165,7 +165,7 @@ public class Tc_SFDCszal extends Thread {
                         for (int m = 0; m < b.jTable2.getRowCount(); m++) {
 
                             try {
-                                if (b.jTable2.getValueAt(m, 0).equals(pn) && b.jTable2.getValueAt(m, 2).equals(ws) && b.jTable2.getValueAt(m - 1, i) != null && b.jTable2.getValueAt(m, 3).toString().equals("Tény") && !b.jTable2.getValueAt(m - 1, i).equals("")) {
+                                if (b.jTable2.getValueAt(m, 0).equals(pn) && b.jTable2.getValueAt(m, 2).equals(ws) && b.jTable2.getValueAt(m - 1, i) != null && b.jTable2.getValueAt(m, 3).toString().equals("Tény") && !b.jTable2.getValueAt(m - 1, i).equals("") && b.jTable2.getValueAt(m - 1, 3).equals("Terv")) {
 
                                     ebbeirni = m;
                                     break;
@@ -206,12 +206,13 @@ public class Tc_SFDCszal extends Thread {
                         } //ha nincs olyan sor amibe írhatnánk de van összegünk                            
                         else if (osszdarab > 0 && ebbeirni == 0 && b.jTable2.getValueAt(r, 0).equals(pn) && b.jTable2.getValueAt(r, 2).equals(ws) && b.jTable2.getValueAt(r, 3).equals("Tény")) {
 
-//megkeressuk az utolso sort amibe irhatunk mert ugyan az a pn ws es teny
+//probalunk keresni egy olyan sort amibe már van írva
                             int utsosor = 0;
+
                             for (int t = 0; t < b.jTable2.getRowCount(); t++) {
 
                                 try {
-                                    if (b.jTable2.getValueAt(t, 0).equals(pn) && b.jTable2.getValueAt(t, 2).equals(ws) && b.jTable2.getValueAt(t, 3).equals("Tény")) {
+                                    if (b.jTable2.getValueAt(t, 0).equals(pn) && b.jTable2.getValueAt(t, 2).equals(ws) && b.jTable2.getValueAt(t, 3).equals("Tény") && b.jTable2.getValueAt(t, i) != null) {
 
                                         utsosor = t;
 
@@ -219,6 +220,22 @@ public class Tc_SFDCszal extends Thread {
                                 } catch (Exception e) {
                                 }
 
+                            }
+
+//megkeressuk az utolso sort amibe irhatunk mert ugyan az a pn ws es teny es meg nincs sehova írva
+                            if (utsosor == 0) {
+                                for (int t = 0; t < b.jTable2.getRowCount(); t++) {
+
+                                    try {
+                                        if (b.jTable2.getValueAt(t, 0).equals(pn) && b.jTable2.getValueAt(t, 2).equals(ws) && b.jTable2.getValueAt(t, 3).equals("Tény")) {
+
+                                            utsosor = t;
+
+                                        }
+                                    } catch (Exception e) {
+                                    }
+
+                                }
                             }
 
                             //hogy ottmaradjon a komment hasznaljuk a stringbolintet

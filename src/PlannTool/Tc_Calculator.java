@@ -121,13 +121,13 @@ public class Tc_Calculator {
                                 }
                             }
 
-                            String pn = model.getValueAt(i, 0).toString();
-
-                            //hibaüzit kiiratjuk ha nincs a pn hez ws a cellaban
-                            boolean hiba = true;
-
-                            //megkeressuk a darab/orat
                             try {
+                                String pn = model.getValueAt(i, 0).toString();
+
+                                //hibaüzit kiiratjuk ha nincs a pn hez ws a cellaban
+                                boolean hiba = true;
+
+                                //megkeressuk a darab/orat
                                 for (int n = 0; n < Tc_Betervezo.ciklusidok.get(0).length; n++) {
 
                                     if (Tc_Betervezo.ciklusidok.get(0)[n][0].equals(sheetname) && Tc_Betervezo.ciklusidok.get(0)[n][1].equals(pn) && Tc_Betervezo.ciklusidok.get(0)[n][2].equals(ws)) {

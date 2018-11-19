@@ -77,7 +77,6 @@ public class Tc_Muszakjelentes extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Műszakjelentés");
-        setAlwaysOnTop(true);
 
         jButton1.setText("Adatok összegyűjtése");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -223,10 +222,18 @@ public class Tc_Muszakjelentes extends javax.swing.JFrame {
         String ws = "";
         for (int i = 0; i < b.jTable2.getRowCount(); i++) {
 
-            if (b.jTable2.getValueAt(i, 3).toString().equals("Infó")) {
+            try {
+                if (b.jTable2.getValueAt(i, 3).toString().equals("Infó")) {
 
-                ws += "<div style=\"color:green\"> Az állomásra  tervezett terv és tény idő: " + "<span style =\"color:black\">" + b.jTable2.getValueAt(i, 2).toString() + "  " + b.jTable2.getValueAt(i, b.jTable2.getSelectedColumn()) + "</span></div>";
+                    ws += "<div style=\"color:green\"> Az állomásra  tervezett terv és tény idő: " + "<span style =\"color:black\">" + b.jTable2.getValueAt(i, 2).toString() + "  " + b.jTable2.getValueAt(i, b.jTable2.getSelectedColumn()) + "</span></div>";
 
+                }
+            } catch (Exception e) {
+
+                infobox info = new infobox();
+                info.infoBox("Nem választottál ki szakot!", "Hiba!");
+                this.dispose();
+                return;
             }
 
         }
@@ -340,8 +347,6 @@ public class Tc_Muszakjelentes extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
 
         //peldanyositunk egy levelkuldot
-        
-
         Email += "<html><div>" + jTextArea2.getText().replace("\n", "<br>") + "</div></html>";
         Tc_Levelkuldes l = new Tc_Levelkuldes(subject, Email, jTextArea1.getText());
 

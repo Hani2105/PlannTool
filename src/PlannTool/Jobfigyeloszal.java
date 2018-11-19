@@ -22,11 +22,11 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author gabor_hanacsek
  */
-public class Jobfigyeloszal extends Thread{
-    
-    public void run(){
-    
-     List<String> allomasok = new ArrayList<String>();
+public class Jobfigyeloszal extends Thread {
+
+    public void run() {
+
+        List<String> allomasok = new ArrayList<String>();
         allomasok = ablak.jList1.getSelectedValuesList();
         boolean irtunke;
 
@@ -46,7 +46,7 @@ public class Jobfigyeloszal extends Thread{
         String stol = df.format(tol);
 
         //smt lekérdezés sor , job , pn  a megadott dátumtól
-        String Query = "select distinct stations.name , terv.partnumber , terv.job , terv.startdate from stations left join terv on terv.stationid = stations.id where terv.active = 1 and terv.startdate >= '" + stol + "' and stations.name in (" + allomasokquerybe + ") group by terv.job order by stations.name asc , terv.startdate asc";
+        String Query = "select distinct stations.name , terv.partnumber , terv.job , terv.startdate , terv.qty_full from stations left join terv on terv.stationid = stations.id where terv.active = 1 and terv.startdate >= '" + stol + "' and stations.name in (" + allomasokquerybe + ") group by terv.job order by stations.name asc , terv.startdate asc";
         //vegrehajtjuk
 
         planconnect pc = new planconnect();
@@ -66,7 +66,7 @@ public class Jobfigyeloszal extends Thread{
         try {
             while (pc.rs.next()) {
 
-                model.addRow(new Object[]{pc.rs.getString(1), pc.rs.getString(2), pc.rs.getString(3).trim(), pc.rs.getString(4)});
+                model.addRow(new Object[]{pc.rs.getString(1), pc.rs.getString(2), pc.rs.getString(3).trim(), pc.rs.getString(4), pc.rs.getString(5)});
 
             }
         } catch (SQLException ex) {
@@ -74,7 +74,7 @@ public class Jobfigyeloszal extends Thread{
         }
 
         //lekerdezzuk a backendet is
-        Query = "SELECT distinct Beterv.sht , Beterv.pn , Beterv.job , Beterv.startdate from Beterv where Beterv.startdate >= '" + stol + "' and Beterv.active = 2 and Beterv.sht in (" + allomasokquerybe + ") group by Beterv.job order by Beterv.sht asc , Beterv.startdate asc";
+        Query = "SELECT distinct Beterv.sht , Beterv.pn , Beterv.job , Beterv.startdate , sum(Beterv.qty) from Beterv where Beterv.startdate >= '" + stol + "' and Beterv.active = 2 and Beterv.sht in (" + allomasokquerybe + ") group by Beterv.job , Beterv.pn order by Beterv.sht asc , Beterv.startdate asc";
 
         try {
             pc.planconnect(Query);
@@ -87,7 +87,7 @@ public class Jobfigyeloszal extends Thread{
         try {
             while (pc.rs.next()) {
 
-                model.addRow(new Object[]{pc.rs.getString(1), pc.rs.getString(2), pc.rs.getString(3), pc.rs.getString(4)});
+                model.addRow(new Object[]{pc.rs.getString(1), pc.rs.getString(2), pc.rs.getString(3), pc.rs.getString(4), pc.rs.getString(5)});
 
             }
         } catch (SQLException ex) {
@@ -135,32 +135,34 @@ public class Jobfigyeloszal extends Thread{
 
                 if (ablak.jTable14.getValueAt(i, 2).toString().equals(rowdata[n][0]) && (rowdata[n][4].equals("Traveler Printed") || rowdata[n][4].equals("Unit Skeleton"))) {
 
-                    model.setValueAt(rowdata[n][3], i, 4);
+                    model.setValueAt(rowdata[n][3], i, 5);
                     irtunke = true;
 
                 } else if (ablak.jTable14.getValueAt(i, 2).toString().equals(rowdata[n][0]) && irtunke == false) {
 
-                    model.setValueAt("Minden elindult!", i, 4);
+                    model.setValueAt("Minden elindult!", i, 5);
 
                 }
 
             }
 
-            if (model.getValueAt(i, 4) == null) {
+            try {
+                if (model.getValueAt(i, 5) == null || model.getValueAt(i, 5).toString().equals("")) {
 
-                model.setValueAt("Nem létezik SFDC-ben!", i, 4);
+                    model.setValueAt("Nem létezik SFDC-ben!", i, 5);
 
+                }
+            } catch (Exception e) {
             }
 
         }
 
         ablak.jTable14.setModel(model);
-        
+
         animation.rajzol = false;
 
         stat.beir(System.getProperty("user.name"), jTabbedPane1.getTitleAt(jTabbedPane1.getSelectedIndex()), "", "gabor.hanacsek@sanmina.com");
-    
-    
+
     }
-    
+
 }

@@ -159,17 +159,20 @@ public class Tc_Cellavalaszto extends javax.swing.JFrame {
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
 
         String querybe = "";
+        String querysorrend = "";
         DefaultListModel lm2 = new DefaultListModel();
         lm2 = (DefaultListModel) jList2.getModel();
         //osszerakjuk hogy milyen allomasok vannak a jlistben
         for (int i = 0; i < lm2.size(); i++) {
 
             querybe += "'" + lm2.getElementAt(i) + "',";
+            querysorrend += lm2.getElementAt(i) + ",";
 
         }
         querybe = querybe.substring(0, querybe.length() - 1);
+        querysorrend = querysorrend.substring(0, querysorrend.length() - 1);
         //lekerdezzuk az idjukat
-        String query = "select tc_becells.idtc_cells from tc_becells where tc_becells.cellname in (" + querybe + ")";
+        String query = "select tc_becells.idtc_cells from tc_becells where tc_becells.cellname in (" + querybe + ") order by find_in_set(tc_becells.cellname,'" + querysorrend + "')";
 
         planconnect pc = new planconnect();
         try {
@@ -236,16 +239,19 @@ public class Tc_Cellavalaszto extends javax.swing.JFrame {
 
             //atalakitjuk hasznalhato formava a queryhez
             String querybe = "";
+            String querysorrend = "";
 
             for (int i = 0; i < cellaktomb.length; i++) {
 
                 querybe += "'" + cellaktomb[i].toString() + "',";
+                querysorrend += cellaktomb[i].toString() + ",";
 
             }
             querybe = querybe.substring(0, querybe.length() - 1);
+            querysorrend = querysorrend.substring(0, querysorrend.length() - 1);
 
             //osszeqallitjuk a queryt
-            query = "SELECT tc_becells.cellname from tc_becells where tc_becells.idtc_cells in (" + querybe + ")";
+            query = "SELECT tc_becells.cellname from tc_becells where tc_becells.idtc_cells in (" + querybe + ") order by find_in_set(tc_becells.idtc_cells,'" + querysorrend + "')";
 
             try {
                 //lekerdezzuk
@@ -310,13 +316,12 @@ public class Tc_Cellavalaszto extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        
+
         Tc_CellavalsztoSzal c = new Tc_CellavalsztoSzal(this);
         c.start();
-        
+
         animation a = new animation();
         a.start();
-
 
 
     }//GEN-LAST:event_jButton3ActionPerformed

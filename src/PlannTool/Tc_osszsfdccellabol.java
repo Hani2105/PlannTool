@@ -122,7 +122,9 @@ public class Tc_osszsfdccellabol extends Thread {
 
         for (int q = 0; q < Tc_Betervezo.jTabbedPane1.getTabCount(); q++) {
 
-            //ebben fogjuk tarolni a mar beirt pn-t és ws-t
+//b legyen az aktuális sheet
+            b = Besheets.get(Tc_Betervezo.jTabbedPane1.getTitleAt(q));
+//ebben fogjuk tarolni a mar beirt pn-t és ws-t
             List<String> pnws = new ArrayList<>();
 //ez lesz a kapcsoloja
             boolean irtunke = false;
@@ -207,17 +209,16 @@ public class Tc_osszsfdccellabol extends Thread {
                                 }
 
 //ha ugyan ehhez a pn hez van még beírva ebbe az oszlopba másik darab , azt nullra állítom 
-                                for (int t = 0; t < b.jTable2.getRowCount(); t++) {
-                                    try {
-                                        if (b.jTable2.getValueAt(t, i) != null && b.jTable2.getValueAt(t, 0).equals(pn) && b.jTable2.getValueAt(t, 2).equals(ws) && b.jTable2.getValueAt(t, 3).equals("Tény") && ebbeirni != t) {
+                                for (int t = ebbeirni + 1; t < b.jTable2.getRowCount(); t++) {
 
-                                            b.jTable2.setValueAt(null, t, i);
+                                    if (b.jTable2.getValueAt(t, i) != null && b.jTable2.getValueAt(t, 0).equals(pn) && b.jTable2.getValueAt(t, 2).equals(ws) && b.jTable2.getValueAt(t, 3).equals("Tény")) {
 
-                                        }
-                                    } catch (Exception e) {
+                                        b.jTable2.setValueAt(null, t, i);
+
                                     }
 
                                 }
+
 //ha irtunk elrakjuk a pn-t ws-t egy listaba , hogy lassuk , foglalkoztunk mar vele
                                 pnws.add(pn + ws);
 
@@ -255,7 +256,8 @@ public class Tc_osszsfdccellabol extends Thread {
 
                                     }
                                 }
-//hogy ottmaradjon a komment hasznaljuk a stringbolintet
+
+                                //hogy ottmaradjon a komment hasznaljuk a stringbolintet
                                 try {
                                     Tc_Stringbolint c = new Tc_Stringbolint(b.jTable2.getValueAt(utsosor, i).toString());
                                     b.jTable2.setValueAt(osszdarab + " " + c.komment, utsosor, i);
@@ -268,6 +270,7 @@ public class Tc_osszsfdccellabol extends Thread {
 
 //ha ugyan ehhez a pn hez van még beírva ebbe az oszlopba másik darab , azt nullra állítom 
                                 for (int t = 0; t < b.jTable2.getRowCount(); t++) {
+
                                     try {
                                         if (b.jTable2.getValueAt(t, i) != null && b.jTable2.getValueAt(t, 0).equals(pn) && b.jTable2.getValueAt(t, 2).equals(ws) && b.jTable2.getValueAt(t, 3).equals("Tény") && t != utsosor) {
 
@@ -278,6 +281,7 @@ public class Tc_osszsfdccellabol extends Thread {
                                     }
 
                                 }
+
 //ha irtunk elrakjuk a pn-t ws-t egy listaba , hogy lassuk , foglalkoztunk mar vele
                                 pnws.add(pn + ws);
 

@@ -317,51 +317,7 @@ public class Tc_Cellavalaszto extends javax.swing.JFrame {
         animation a = new animation();
         a.start();
 
-//        //kiuritjuk a cellak konténerét
-//        Tc_Betervezo.Besheets.clear();
-//        //lekérjük a sheeteket
-//        for (int i = 0; i < jList2.getModel().getSize(); i++) {
-//
-//            //megnezzuk hogy van e már ilyen tab
-//            boolean vanemar = false;
-//            for (int t = 0; t < Tc_Betervezo.jTabbedPane1.getTabCount(); t++) {
-//
-//                if (Tc_Betervezo.jTabbedPane1.getTitleAt(t).equals(jList2.getModel().getElementAt(i))) {
-//
-//                    vanemar = true;
-//
-//                }
-//
-//            }
-//
-//            if (vanemar == false) {
-//
-//                Tc_Besheet sheet = null;
-//                try {
-//                    sheet = new Tc_Besheet(bt);
-//                } catch (SQLException ex) {
-//                    Logger.getLogger(Tc_Cellavalaszto.class.getName()).log(Level.SEVERE, null, ex);
-//                } catch (ClassNotFoundException ex) {
-//                    Logger.getLogger(Tc_Cellavalaszto.class.getName()).log(Level.SEVERE, null, ex);
-//                }
-//                Tc_Betervezo.jTabbedPane1.addTab(jList2.getModel().getElementAt(i), sheet);
-//                neve = jList2.getModel().getElementAt(i);
-//                Tc_Betervezo.Besheets.put(jList2.getModel().getElementAt(i), sheet);
-//                try {
-//                    sheet.parts();
-//                    sheet.workstations();
-//                } catch (SQLException ex) {
-//                    Logger.getLogger(Tc_Cellavalaszto.class.getName()).log(Level.SEVERE, null, ex);
-//                } catch (ClassNotFoundException ex) {
-//                    Logger.getLogger(Tc_Cellavalaszto.class.getName()).log(Level.SEVERE, null, ex);
-//                }
-//            }
-//
-//        }
-//
-//        //bt.jButton1.setFocusable(false);
-//        //bt.jButton3.requestFocus();
-//        this.setVisible(false);
+
 
     }//GEN-LAST:event_jButton3ActionPerformed
 

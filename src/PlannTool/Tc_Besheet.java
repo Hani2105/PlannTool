@@ -620,7 +620,7 @@ public class Tc_Besheet extends javax.swing.JPanel {
         if (ablak.planner == false) {
 
             int i = jTable2.convertRowIndexToModel(jTable2.getSelectedRow());
-            model.insertRow(i+1, new Object[]{null, null, null, "Tény"});
+            model.insertRow(i + 1, new Object[]{null, null, null, "Tény"});
             return;
 
         }
@@ -1048,12 +1048,15 @@ public class Tc_Besheet extends javax.swing.JPanel {
 //ellenorizzuk , hogy minden tény felett van e terv , azaz két tény nem lehet egymás után!
         for (int i = 0; i < jTable2.getRowCount() - 1; i++) {
 
-            if (jTable2.getValueAt(i, 3).toString().equals("Tény") && jTable2.getValueAt(i + 1, 3).toString().equals("Tény")) {
+            try {
+                if (jTable2.getValueAt(i, 3).toString().equals("Tény") && jTable2.getValueAt(i + 1, 3).toString().equals("Tény")) {
 
-                infobox info = new infobox();
-                info.infoBox("Kérlek tölt fel terveket a tények fölé!", "Hiba!");
-                return;
+                    infobox info = new infobox();
+                    info.infoBox("Kérlek tölt fel terveket a tények fölé!", "Hiba!");
+                    return;
 
+                }
+            } catch (Exception e) {
             }
 
         }

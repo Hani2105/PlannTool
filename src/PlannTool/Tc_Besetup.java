@@ -651,6 +651,14 @@ public class Tc_Besetup extends javax.swing.JFrame {
             }
 
         }
+//letezik e a pn ellenorzeshez
+        try {
+            Tc_Betervezo.pncheck();
+        } catch (SQLException ex) {
+            Logger.getLogger(Tc_Besetup.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Tc_Besetup.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
 
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -730,6 +738,14 @@ public class Tc_Besetup extends javax.swing.JFrame {
         }
 
         jList4.setModel(lm3);
+
+        try {
+            Tc_Betervezo.wscheck();
+        } catch (SQLException ex) {
+            Logger.getLogger(Tc_Besetup.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Tc_Besetup.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
     }//GEN-LAST:event_jButton3ActionPerformed
 

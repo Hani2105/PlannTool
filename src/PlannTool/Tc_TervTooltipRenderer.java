@@ -66,15 +66,27 @@ public class Tc_TervTooltipRenderer extends DefaultTableCellRenderer {
         } catch (Exception e) {
         }
 
-        //pn szinezes , piros ha nincs az adatbazisban+
+//pn szinezes , narancs ha nincs az adott cellahoz
         try {
             if (column == 0 && (table.getValueAt(row, 0) != null && !table.getValueAt(row, 0).toString().equals(""))) {
 
-                boolean piros = true;
+                boolean narancs = true;
 
                 for (int i = 0; i < b.partnumbers.size(); i++) {
 
                     if (table.getValueAt(row, 0).toString().equals(b.partnumbers.get(i))) {
+
+                        narancs = false;
+
+                    }
+
+                }
+
+//pn szinezese pirosra ha nincs az adatbazisban!
+                boolean piros = true;
+                for (int i = 0; i < Tc_Betervezo.partn.size(); i++) {
+
+                    if (table.getValueAt(row, 0).toString().equals(Tc_Betervezo.partn.get(i))) {
 
                         piros = false;
 
@@ -82,9 +94,28 @@ public class Tc_TervTooltipRenderer extends DefaultTableCellRenderer {
 
                 }
 
+//ha nincs ciklusido szurke
+                boolean cian = true;
+
+                for (int n = 0; n < Tc_Betervezo.ciklusidok.get(0).length; n++) {
+
+                    if (Tc_Betervezo.ciklusidok.get(0)[n][0].equals(Tc_Betervezo.jTabbedPane1.getTitleAt(Tc_Betervezo.jTabbedPane1.getSelectedIndex())) && Tc_Betervezo.ciklusidok.get(0)[n][1].equals(table.getValueAt(row, 0).toString()) && Tc_Betervezo.ciklusidok.get(0)[n][2].equals(table.getValueAt(row, 2).toString())) {
+
+                        cian = false;
+
+                    }
+
+                }
+
                 if (piros == true) {
 
-                    c.setBackground(Color.red);
+                    c.setBackground(Color.RED);
+                } else if (narancs == true) {
+                    c.setBackground(Color.ORANGE);
+                } else if (cian == true) {
+
+                    c.setBackground(Color.LIGHT_GRAY);
+
                 } else {
 
                     //ha terv a sor
@@ -100,14 +131,26 @@ public class Tc_TervTooltipRenderer extends DefaultTableCellRenderer {
 
                 }
 
-            } //ws szinezes , piros ha nincs az adatbazisban
+            } //ws szinezes , narancs ha nincs az adott cellaban
             else if (column == 2 && (table.getValueAt(row, 2) != null && !table.getValueAt(row, 2).toString().equals(""))) {
 
-                boolean piros = true;
+                boolean narancs = true;
 
                 for (int i = 0; i < b.workstations.size(); i++) {
 
                     if (table.getValueAt(row, 2).toString().equals(b.workstations.get(i))) {
+
+                        narancs = false;
+
+                    }
+
+                }
+// ha nem letezik a ws egyaltalan piros
+
+                boolean piros = true;
+                for (int i = 0; i < Tc_Betervezo.works.size(); i++) {
+
+                    if (table.getValueAt(row, 2).toString().equals(Tc_Betervezo.works.get(i))) {
 
                         piros = false;
 
@@ -115,9 +158,30 @@ public class Tc_TervTooltipRenderer extends DefaultTableCellRenderer {
 
                 }
 
+//ha nincs ciklusido szurke
+                boolean cian = true;
+
+                for (int n = 0; n < Tc_Betervezo.ciklusidok.get(0).length; n++) {
+
+                    if (Tc_Betervezo.ciklusidok.get(0)[n][0].equals(Tc_Betervezo.jTabbedPane1.getTitleAt(Tc_Betervezo.jTabbedPane1.getSelectedIndex())) && Tc_Betervezo.ciklusidok.get(0)[n][1].equals(table.getValueAt(row, 0).toString()) && Tc_Betervezo.ciklusidok.get(0)[n][2].equals(table.getValueAt(row, 2).toString())) {
+
+                        cian = false;
+
+                    }
+
+                }
+
                 if (piros == true) {
 
-                    c.setBackground(Color.red);
+                    c.setBackground(Color.RED);
+                } else if (narancs == true) {
+
+                    c.setBackground(Color.ORANGE);
+
+                } else if (cian == true) {
+
+                    c.setBackground(Color.LIGHT_GRAY);
+
                 }
 
             } //infó sorok színezése

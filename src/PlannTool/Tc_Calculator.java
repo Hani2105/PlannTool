@@ -139,6 +139,7 @@ public class Tc_Calculator {
 
                                 }
                             } catch (Exception e) {
+
                             }
                             //ha nem volt a pn hez ws hibát írunk
 //                            if (hiba == true && model.getValueAt(i, 3).toString().equals("Terv")) {
@@ -148,13 +149,13 @@ public class Tc_Calculator {
 //
 //                            }
 
-                            //terv vagy teny
-                            if (model.getValueAt(i, 3).toString().equals("Terv")) {
+                            //terv vagy teny es a dbo nagyobb nulla
+                            if (model.getValueAt(i, 3).toString().equals("Terv") && dbo > 0) {
 
                                 tervido += db / dbo;
 
                             }
-                            if (model.getValueAt(i, 3).toString().equals("Tény")) {
+                            if (model.getValueAt(i, 3).toString().equals("Tény") && dbo > 0) {
 
                                 tenyido += db / dbo;
 

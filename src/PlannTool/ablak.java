@@ -3733,7 +3733,8 @@ public class ablak extends javax.swing.JFrame {
 
             File fileToSave = fileChooser.getSelectedFile();
             ExcelExporter exp = new ExcelExporter();
-            exp.fillData(jTable1, new File(fileToSave.getAbsolutePath() + ".xls"));
+            exp.fillData(jTable1, new File(fileToSave.getAbsolutePath() +"_WIP" + ".xls"));         
+            exp.fillData(jTable2, new File(fileToSave.getAbsolutePath()+ "_OH" + ".xls"));
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 

@@ -45,7 +45,7 @@ public class Tc_Betervezo extends javax.swing.JFrame {
      */
     public String[][] pns;
     public static List<String> partn = new ArrayList<String>();
-    public static List<String> workstations = new ArrayList<String>();
+    public static List<String> works = new ArrayList<String>();
     public static Map<String, Tc_Besheet> Besheets = new TreeMap();
     public static List<String[][]> ciklusidok = new ArrayList<String[][]>();
 
@@ -77,7 +77,7 @@ public class Tc_Betervezo extends javax.swing.JFrame {
 
     public Tc_Betervezo(ablak a) throws SQLException, ClassNotFoundException {
         setExtendedState(MAXIMIZED_BOTH);
-        
+
         initComponents();
 
         seticon();
@@ -165,6 +165,9 @@ public class Tc_Betervezo extends javax.swing.JFrame {
         Tc_Cellavalaszto c = new Tc_Cellavalaszto(this);
         c.setVisible(true);
         this.a = a;
+//lekerjuk a pn-eket es ws eket hogy le tudjuk ellenorizni , hogy leteznek e
+        pncheck();
+        wscheck();
 
     }
 
@@ -485,6 +488,38 @@ public class Tc_Betervezo extends javax.swing.JFrame {
     private void seticon() {
 
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("kepek/2.jpg")));
+
+    }
+
+    public static void pncheck() throws SQLException, ClassNotFoundException {
+
+        //lekerdezzuk a letezo PN -eket , hogy meg tudjuk vizsgalni , hogy el fog e veszni feltoltes utan (piros)
+        String query = "select tc_bepns.partnumber from tc_bepns";
+        planconnect pc = new planconnect();
+        pc.planconnect(query);
+        partn.clear();
+
+        while (pc.rs.next()) {
+
+            partn.add(pc.rs.getString(1));
+
+        }
+
+    }
+
+    public static void wscheck() throws SQLException, ClassNotFoundException {
+
+        //lekerdezzuk a letezo PN -eket , hogy meg tudjuk vizsgalni , hogy el fog e veszni feltoltes utan (piros)
+        String query = "select tc_bestations.workstation from tc_bestations";
+        planconnect pc = new planconnect();
+        pc.planconnect(query);
+        works.clear();
+
+        while (pc.rs.next()) {
+
+            works.add(pc.rs.getString(1));
+
+        }
 
     }
 

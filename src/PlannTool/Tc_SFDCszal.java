@@ -105,7 +105,7 @@ public class Tc_SFDCszal extends Thread {
 
         }
 
-        //ebben fogjuk tarolni a mar beirt pn-t és ws-t
+//ebben fogjuk tarolni a mar beirt pn-t és ws-t
         List<String> pnws = new ArrayList<>();
 //ez lesz a kapcsoloja
         boolean irtunke = false;

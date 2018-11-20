@@ -1316,8 +1316,8 @@ public class Tc_Besheet extends javax.swing.JPanel {
             feltoltadat = feltoltadat.substring(0, feltoltadat.length() - 1);
 
             //delet query
-            String deletequery = "delete from tc_terv where tc_terv.active = 0 and tc_terv.idtc_becells = '" + cellid + "'";
-            pc.feltolt(deletequery, false);
+//            String deletequery = "delete from tc_terv where tc_terv.active = 0 and tc_terv.idtc_becells = '" + cellid + "'";
+//            pc.feltolt(deletequery, false);
 
             //update 2-->1-->0
             String updatequery = "update tc_terv set active = CASE when tc_terv.active = 2 then 1 when tc_terv.active = 1 then 0 end where tc_terv.active in (2,1) and tc_terv.date between '" + tol + "' and '" + ig + "' and tc_terv.idtc_becells = '" + cellid + "'";

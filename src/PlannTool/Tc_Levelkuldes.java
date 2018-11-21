@@ -5,6 +5,8 @@
  */
 package PlannTool;
 
+import static PlannTool.ablak.jTabbedPane1;
+import static PlannTool.ablak.stat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Properties;
@@ -61,7 +63,7 @@ public class Tc_Levelkuldes extends Thread {
             //System.out.println("message sent successfully....");
 
         } catch (MessagingException mex) {
-            mex.printStackTrace();
+            stat.beir(System.getProperty("user.name"), jTabbedPane1.getTitleAt(jTabbedPane1.getSelectedIndex()), "Elhasaltunk a Tc levelkuldes reszen" + mex, "gabor.hanacsek@sanmina.com");
         }
 
     }

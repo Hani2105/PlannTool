@@ -36,6 +36,7 @@ import javax.swing.Action;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -1045,6 +1046,82 @@ public class Tc_Besheet extends javax.swing.JPanel {
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
         //terv mentése
 
+//leellenőrizzük , hogy van e olyan pn vagy ws a tervben ami nincs az adatbázisban , és ha van figyelmeztetünk , hogy az el fog veszni
+//ebben taroljuk le a hibas adatokat
+        String hibalista = "";
+//vegigporgetjuk a sorokat
+        for (int i = 0; i < jTable2.getRowCount(); i++) {
+// ha terv sorban vagyunk és van is bele írva valami
+            if (jTable2.getValueAt(i, 3).toString().equals("Terv") && jTable2.getValueAt(i, 0) != null && !jTable2.getValueAt(i, 0).toString().equals("")) {
+
+                String pn = jTable2.getValueAt(i, 0).toString();
+                String ws = jTable2.getValueAt(i, 2).toString();
+                boolean vanepn = false;
+                boolean vanews = false;
+
+//vegigporgetjuk a pn listet
+                for (int r = 0; r < Tc_Betervezo.partn.size(); r++) {
+
+//ha megtalaljuk kiugrunk a ciklusbol
+                    if (Tc_Betervezo.partn.get(r).equals(pn)) {
+
+                        vanepn = true;
+                        break;
+
+                    } else {
+
+                    }
+
+                }
+
+                if (vanepn == false) {
+
+                    hibalista += pn + ",";
+
+                }
+
+//vegigporgetjuk a ws listát is
+                vanews = false;
+                for (int r = 0; r < Tc_Betervezo.works.size(); r++) {
+
+//ha megtalaljuk kiugrunk a ciklusbol
+                    if (Tc_Betervezo.works.get(r).equals(ws)) {
+
+                        vanews = true;
+                        break;
+
+                    } else {
+
+                    }
+
+                }
+
+                if (vanews == false) {
+
+                    hibalista += ws + ",";
+
+                }
+
+            }
+
+        }
+
+        // ha a hibalista nagyobb mint nulla akkor baj van , cselekszunk
+        if (hibalista.length() > 0) {
+
+            hibalista = hibalista.substring(0, hibalista.length() - 1);
+
+            String[] buttons = {"Jóvanazúgy!", "Pótolom a setupban!"};
+            int rc = JOptionPane.showOptionDialog(null, "A tervben szereplő , de adatbázisban nem fellelhető tételek: " + hibalista + " Ezek nem kerülnek elmentésre!", "Figyelem!",
+                    JOptionPane.WARNING_MESSAGE, 0, null, buttons, buttons[1]);
+
+            if (rc == 1) {
+
+                return;
+            }
+
+        }
+
 //ellenorizzuk , hogy minden tény felett van e terv , azaz két tény nem lehet egymás után!
         for (int i = 0; i < jTable2.getRowCount() - 1; i++) {
 
@@ -1318,7 +1395,6 @@ public class Tc_Besheet extends javax.swing.JPanel {
             //delet query
 //            String deletequery = "delete from tc_terv where tc_terv.active = 0 and tc_terv.idtc_becells = '" + cellid + "'";
 //            pc.feltolt(deletequery, false);
-
             //update 2-->1-->0
             String updatequery = "update tc_terv set active = CASE when tc_terv.active = 2 then 1 when tc_terv.active = 1 then 0 end where tc_terv.active in (2,1) and tc_terv.date between '" + tol + "' and '" + ig + "' and tc_terv.idtc_becells = '" + cellid + "'";
             pc.feltolt(updatequery, false);

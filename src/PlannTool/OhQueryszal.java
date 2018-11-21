@@ -271,7 +271,7 @@ public class OhQueryszal extends Thread {
 
         animation.rajzol = false;
 
-        stat.beir(user, jTabbedPane1.getTitleAt(jTabbedPane1.getSelectedIndex()), levelbe, "gabor.hanacsek@sanmina.com,roland.bognar@sanmina.com,gina.gerecz@sanmina.com,eva.inczedi@sanmina.com");
+        stat.beir(user, jTabbedPane1.getTitleAt(jTabbedPane1.getSelectedIndex()), levelbe, "gabor.hanacsek@sanmina.com,roland.bognar@sanmina.com,gina.gerecz@sanmina.com,eva.inczedi@sanmina.com,paloma.pal@sanmina.com");
 
     }
 

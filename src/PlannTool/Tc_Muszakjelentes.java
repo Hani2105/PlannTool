@@ -5,6 +5,8 @@
  */
 package PlannTool;
 
+import static PlannTool.ablak.jTabbedPane1;
+import static PlannTool.ablak.stat;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -345,16 +347,23 @@ public class Tc_Muszakjelentes extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+//kuldok egy levelet magamnak hogy mirol akartak jelentest kuldeni
 
         //peldanyositunk egy levelkuldot
-        Email += "<html><div>" + jTextArea2.getText().replace("\n", "<br>") + "</div></html>";
-        Tc_Levelkuldes l = new Tc_Levelkuldes(subject, Email, jTextArea1.getText());
+        try {
+            stat.beir(System.getProperty("user.name"), jTabbedPane1.getTitleAt(jTabbedPane1.getSelectedIndex()), "Mjelenteskartlenni", "gabor.hanacsek@sanmina.com");
+            Email += "<html><div>" + jTextArea2.getText().replace("\n", "<br>") + "</div></html>";
+            Tc_Levelkuldes l = new Tc_Levelkuldes(subject, Email, jTextArea1.getText());
+            l.start();
+            DateFormat df = new SimpleDateFormat("HH:mm");
+            Date dateobj = new Date();
+            b.jLabel1.setText("Elküldve: " + df.format(dateobj));
+            this.dispose();
+        } catch (Exception e) {
 
-        l.start();
-        DateFormat df = new SimpleDateFormat("HH:mm");
-        Date dateobj = new Date();
-        b.jLabel1.setText("Elküldve: " + df.format(dateobj));
-        this.dispose();
+            stat.beir(System.getProperty("user.name"), jTabbedPane1.getTitleAt(jTabbedPane1.getSelectedIndex()), "Elhasaltunk a peldanyositasnal" + e, "gabor.hanacsek@sanmina.com");
+
+        }
 
     }//GEN-LAST:event_jButton2ActionPerformed
 

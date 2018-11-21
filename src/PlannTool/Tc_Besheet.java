@@ -1106,7 +1106,7 @@ public class Tc_Besheet extends javax.swing.JPanel {
 
         }
 
-        // ha a hibalista nagyobb mint nulla akkor baj van , cselekszunk
+// ha a hibalista nagyobb mint nulla akkor baj van , cselekszunk
         if (hibalista.length() > 0) {
 
             hibalista = hibalista.substring(0, hibalista.length() - 1);
@@ -1138,10 +1138,56 @@ public class Tc_Besheet extends javax.swing.JPanel {
 
         }
 
-        //lekerjuk az infokat (pn , cell , ws , és a tervet )
-        //cellak
-        String query = "select * from tc_becells";
+//leellenörizzuk hogy mas modositotta e a tervet mikozben mi is mokoltunk benne
+        //le kell ellenőrizni , hogy változott e a terv az eddigiekhez képest?
+        //lekerjuk a cellahoz tartozo utolso id-t
+        String query = "select max(tc_terv.idtc_terv) as id , tc_becells.cellname  \n"
+                + "from tc_terv \n"
+                + "left join tc_becells on tc_becells.idtc_cells = tc_terv.idtc_becells \n"
+                + "where tc_becells.cellname = '" + Tc_Betervezo.jTabbedPane1.getTitleAt(Tc_Betervezo.jTabbedPane1.getSelectedIndex()) + "' and tc_terv.tt = 0";
+
+        //az eredmenyt összevetjuk a tervellenorrel
+        //ez lesz a valtozonk hogy irhatunk e
+        boolean valtozott = true;
         planconnect pc = new planconnect();
+        String id = "";
+        try {
+            pc.planconnect(query);
+            while (pc.rs.next()) {
+
+                id = pc.rs.getString(1);
+
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(Tc_Besheet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Tc_Besheet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        //osszenezzuk a tervellenor adatat a most lekertel
+        for (int i = 0; i < Tc_Tervvaltozasellenor.tervellenor.get(0)[0].length; i++) {
+
+            if (Tc_Tervvaltozasellenor.tervellenor.get(0)[0][i].toString().equals(id)) {
+
+                valtozott = false;
+
+            }
+
+        }
+
+        //ha valtozott kiirjuk az uzit es megszakitjuk a metodus futását
+        if (valtozott == true) {
+
+            infobox info = new infobox();
+            info.infoBox("Változott a terv! Kérd le újból!", "Terv változás!");
+            return;
+        }
+
+//lekerjuk az infokat (pn , cell , ws , és a tervet )
+//cellak
+        query = "select * from tc_becells";
+        pc = new planconnect();
         List<String[][]> gyujto = new ArrayList<String[][]>();
 
         try {

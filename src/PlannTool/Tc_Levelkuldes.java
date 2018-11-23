@@ -36,21 +36,20 @@ public class Tc_Levelkuldes extends Thread {
     }
 
     public void run() {
-
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        LocalDateTime now = LocalDateTime.now();
-
-        String to = cimzett;//change accordingly  
-        String from = "Muszakjelentes@sanmina.com"; //change accordingly  
-        String host = "mailhub.sanmina.com";//or IP address  
-
-        //Get the session object  
-        Properties properties = System.getProperties();
-        properties.setProperty("mail.smtp.host", host);
-        Session session = Session.getDefaultInstance(properties);
-
-        //compose the message
         try {
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            LocalDateTime now = LocalDateTime.now();
+
+            String to = cimzett;//change accordingly  
+            String from = "Muszakjelentes@sanmina.com"; //change accordingly  
+            String host = "mailhub.sanmina.com";//or IP address  
+
+            //Get the session object  
+            Properties properties = System.getProperties();
+            properties.setProperty("mail.smtp.host", host);
+            Session session = Session.getDefaultInstance(properties);
+
+            //compose the message
             MimeMessage message = new MimeMessage(session);
             message.setFrom(new InternetAddress(from));
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));

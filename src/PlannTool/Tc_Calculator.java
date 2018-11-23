@@ -25,7 +25,7 @@ public class Tc_Calculator {
 
         String sheetname = "";
         try {
-            sheetname = Tc_Betervezo.jTabbedPane1.getTitleAt(Tc_Betervezo.jTabbedPane1.getSelectedIndex());
+            sheetname = Tc_Betervezo.Tervezotabbed.getTitleAt(Tc_Betervezo.Tervezotabbed.getSelectedIndex());
         } catch (Exception e) {
         }
 
@@ -44,6 +44,8 @@ public class Tc_Calculator {
                 model.removeRow(i);
 
                 i = i - 1;
+                this.b.jTable2.setColumnSelectionInterval(this.b.jTable2.getSelectedColumn(), this.b.jTable2.getSelectedColumn());
+                this.b.jTable2.setRowSelectionInterval(this.b.jTable2.getSelectedRow() + 1, this.b.jTable2.getSelectedRow() + 1);
 
             }
 
@@ -73,6 +75,8 @@ public class Tc_Calculator {
 
                         wsek.add(ws);
                         model.insertRow(0, new Object[]{null, null, ws, "Infó"});
+                        this.b.jTable2.setColumnSelectionInterval(this.b.jTable2.getSelectedColumn(), this.b.jTable2.getSelectedColumn());
+                        this.b.jTable2.setRowSelectionInterval(this.b.jTable2.getSelectedRow() - 1, this.b.jTable2.getSelectedRow() - 1);
 
                     }
 

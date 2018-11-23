@@ -99,7 +99,7 @@ public class Tc_TervTooltipRenderer extends DefaultTableCellRenderer {
 
                 for (int n = 0; n < Tc_Betervezo.ciklusidok.get(0).length; n++) {
 
-                    if (Tc_Betervezo.ciklusidok.get(0)[n][0].equals(Tc_Betervezo.jTabbedPane1.getTitleAt(Tc_Betervezo.jTabbedPane1.getSelectedIndex())) && Tc_Betervezo.ciklusidok.get(0)[n][1].equals(table.getValueAt(row, 0).toString()) && Tc_Betervezo.ciklusidok.get(0)[n][2].equals(table.getValueAt(row, 2).toString())) {
+                    if (Tc_Betervezo.ciklusidok.get(0)[n][0].equals(Tc_Betervezo.Tervezotabbed.getTitleAt(Tc_Betervezo.Tervezotabbed.getSelectedIndex())) && Tc_Betervezo.ciklusidok.get(0)[n][1].equals(table.getValueAt(row, 0).toString()) && Tc_Betervezo.ciklusidok.get(0)[n][2].equals(table.getValueAt(row, 2).toString())) {
 
                         cian = false;
 
@@ -163,7 +163,7 @@ public class Tc_TervTooltipRenderer extends DefaultTableCellRenderer {
 
                 for (int n = 0; n < Tc_Betervezo.ciklusidok.get(0).length; n++) {
 
-                    if (Tc_Betervezo.ciklusidok.get(0)[n][0].equals(Tc_Betervezo.jTabbedPane1.getTitleAt(Tc_Betervezo.jTabbedPane1.getSelectedIndex())) && Tc_Betervezo.ciklusidok.get(0)[n][1].equals(table.getValueAt(row, 0).toString()) && Tc_Betervezo.ciklusidok.get(0)[n][2].equals(table.getValueAt(row, 2).toString())) {
+                    if (Tc_Betervezo.ciklusidok.get(0)[n][0].equals(Tc_Betervezo.Tervezotabbed.getTitleAt(Tc_Betervezo.Tervezotabbed.getSelectedIndex())) && Tc_Betervezo.ciklusidok.get(0)[n][1].equals(table.getValueAt(row, 0).toString()) && Tc_Betervezo.ciklusidok.get(0)[n][2].equals(table.getValueAt(row, 2).toString())) {
 
                         cian = false;
 

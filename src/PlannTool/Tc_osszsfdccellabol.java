@@ -6,7 +6,6 @@
 package PlannTool;
 
 import static PlannTool.Tc_Betervezo.Besheets;
-import static PlannTool.Tc_Betervezo.jTabbedPane1;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -18,6 +17,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
+import static PlannTool.Tc_Betervezo.Tervezotabbed;
 
 /**
  *
@@ -85,11 +85,11 @@ public class Tc_osszsfdccellabol extends Thread {
         //ciklust indítunk és végrehajtjuk a lekért cellákon a dátum beállítást
         //bepakoljuk a maptree be a sheeteket ujból
         Besheets.clear();
-        for (int i = 0; i < jTabbedPane1.getTabCount(); i++) {
+        for (int i = 0; i < Tervezotabbed.getTabCount(); i++) {
 
-            String name = jTabbedPane1.getTitleAt(i);
+            String name = Tervezotabbed.getTitleAt(i);
 
-            Besheets.put(name, (Tc_Besheet) jTabbedPane1.getComponentAt(i));
+            Besheets.put(name, (Tc_Besheet) Tervezotabbed.getComponentAt(i));
 
         }
 
@@ -120,10 +120,10 @@ public class Tc_osszsfdccellabol extends Thread {
         }
         //inditjuk a nagy ciklus amiben vegigporgetjuk a sheeteket
 
-        for (int q = 0; q < Tc_Betervezo.jTabbedPane1.getTabCount(); q++) {
+        for (int q = 0; q < Tc_Betervezo.Tervezotabbed.getTabCount(); q++) {
 
 //b legyen az aktuális sheet
-            b = Besheets.get(Tc_Betervezo.jTabbedPane1.getTitleAt(q));
+            b = Besheets.get(Tc_Betervezo.Tervezotabbed.getTitleAt(q));
 //ebben fogjuk tarolni a mar beirt pn-t és ws-t
             List<String> pnws = new ArrayList<>();
 //ez lesz a kapcsoloja

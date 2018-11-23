@@ -34,9 +34,9 @@ public class Tc_CellavalsztoSzal extends Thread {
 
             //megnezzuk hogy van e már ilyen tab
             boolean vanemar = false;
-            for (int t = 0; t < Tc_Betervezo.jTabbedPane1.getTabCount(); t++) {
+            for (int t = 0; t < Tc_Betervezo.Tervezotabbed.getTabCount(); t++) {
 
-                if (Tc_Betervezo.jTabbedPane1.getTitleAt(t).equals(Tc_Cellavalaszto.jList2.getModel().getElementAt(i))) {
+                if (Tc_Betervezo.Tervezotabbed.getTitleAt(t).equals(Tc_Cellavalaszto.jList2.getModel().getElementAt(i))) {
 
                     vanemar = true;
 
@@ -54,7 +54,7 @@ public class Tc_CellavalsztoSzal extends Thread {
                 } catch (ClassNotFoundException ex) {
                     Logger.getLogger(Tc_Cellavalaszto.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                Tc_Betervezo.jTabbedPane1.addTab(Tc_Cellavalaszto.jList2.getModel().getElementAt(i), sheet);
+                Tc_Betervezo.Tervezotabbed.addTab(Tc_Cellavalaszto.jList2.getModel().getElementAt(i), sheet);
                 neve = Tc_Cellavalaszto.jList2.getModel().getElementAt(i);
                 Tc_Betervezo.Besheets.put(Tc_Cellavalaszto.jList2.getModel().getElementAt(i), sheet);
                 try {

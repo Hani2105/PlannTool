@@ -7,7 +7,6 @@ package PlannTool;
 
 import static PlannTool.Tc_Betervezo.Besheets;
 import static PlannTool.Tc_Betervezo.jComboBox1;
-import static PlannTool.Tc_Betervezo.jTabbedPane1;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -19,6 +18,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
+import static PlannTool.Tc_Betervezo.Tervezotabbed;
 
 /**
  *
@@ -170,11 +170,11 @@ public class Tc_Visszaallito extends javax.swing.JFrame {
 
 // terv lekérése
         Besheets.clear();
-        for (int i = 0; i < jTabbedPane1.getTabCount(); i++) {
+        for (int i = 0; i < Tervezotabbed.getTabCount(); i++) {
 
-            String name = jTabbedPane1.getTitleAt(i);
+            String name = Tervezotabbed.getTitleAt(i);
 
-            Besheets.put(name, (Tc_Besheet) jTabbedPane1.getComponentAt(i));
+            Besheets.put(name, (Tc_Besheet) Tervezotabbed.getComponentAt(i));
 
         }
 
@@ -211,8 +211,8 @@ public class Tc_Visszaallito extends javax.swing.JFrame {
 
         //System.out.println(napok);
         //hozzaadjuk a napok es a muszakhossznak megfelelo oszlopok szamat a tablahoz
-        int n = jTabbedPane1.getSelectedIndex();
-        String neve = jTabbedPane1.getTitleAt(n);
+        int n = Tervezotabbed.getSelectedIndex();
+        String neve = Tervezotabbed.getTitleAt(n);
 
         //kitoroljuk az oszlopokat
         DefaultTableModel model = (DefaultTableModel) Besheets.get(neve).jTable2.getModel();

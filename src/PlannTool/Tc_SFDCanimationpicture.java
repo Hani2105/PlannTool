@@ -21,7 +21,7 @@ public class Tc_SFDCanimationpicture extends javax.swing.JFrame {
     public Tc_SFDCanimationpicture() {
         initComponents();
         setBackground(new Color(0, 0, 0, 0));
-        this.setLocation(MouseInfo.getPointerInfo().getLocation());
+       // this.setLocation(MouseInfo.getPointerInfo().getLocation());
         jLabel1.setHorizontalAlignment(SwingConstants.CENTER);
         
     }
@@ -59,6 +59,7 @@ public class Tc_SFDCanimationpicture extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     /**

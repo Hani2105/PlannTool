@@ -282,7 +282,7 @@ public class Tc_Segedletablak extends javax.swing.JFrame {
         String cellak = "('";
         for (int i = 0; i < Tc_Betervezo.Besheets.size(); i++) {
 
-            cellak += Tc_Betervezo.jTabbedPane1.getTitleAt(i) + "','";
+            cellak += Tc_Betervezo.Tervezotabbed.getTitleAt(i) + "','";
 
         }
 
@@ -391,7 +391,7 @@ public class Tc_Segedletablak extends javax.swing.JFrame {
 
         //második tábla kitöltése
         //a lekért dátum első időpontja , első oszlop a tervből
-        String last = Tc_Betervezo.Besheets.get(Tc_Betervezo.jTabbedPane1.getTitleAt(0)).jTable2.getColumnName(4).substring(0, Tc_Betervezo.Besheets.get(Tc_Betervezo.jTabbedPane1.getTitleAt(0)).jTable2.getColumnName(4).length() - 4);
+        String last = Tc_Betervezo.Besheets.get(Tc_Betervezo.Tervezotabbed.getTitleAt(0)).jTable2.getColumnName(4).substring(0, Tc_Betervezo.Besheets.get(Tc_Betervezo.Tervezotabbed.getTitleAt(0)).jTable2.getColumnName(4).length() - 4);
 
         String query2 = "select tc_becells.cellname , tc_bepns.partnumber , tc_bestations.workstation ,cast(tc_terv.qty as unsigned) , tc_terv.tt\n"
                 + "from tc_terv \n"

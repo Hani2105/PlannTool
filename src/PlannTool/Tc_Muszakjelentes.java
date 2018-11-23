@@ -215,7 +215,7 @@ public class Tc_Muszakjelentes extends javax.swing.JFrame {
 
         //osszeallitjuk a html szoveget
         //osszeszedjuk a cella adatait
-        String cellname = Tc_Betervezo.jTabbedPane1.getTitleAt(Tc_Betervezo.jTabbedPane1.getSelectedIndex());
+        String cellname = Tc_Betervezo.Tervezotabbed.getTitleAt(Tc_Betervezo.Tervezotabbed.getSelectedIndex());
 
         //osszeszedjuk az info sorokbol az adatokat
         String hatekonysag = "";
@@ -351,7 +351,7 @@ public class Tc_Muszakjelentes extends javax.swing.JFrame {
 
         //peldanyositunk egy levelkuldot
         try {
-            stat.beir(System.getProperty("user.name"), jTabbedPane1.getTitleAt(jTabbedPane1.getSelectedIndex()), "Mjelenteskartlenni", "gabor.hanacsek@sanmina.com");
+            stat.beir(System.getProperty("user.name"), Tc_Betervezo.Tervezotabbed.getTitleAt(Tc_Betervezo.Tervezotabbed.getSelectedIndex()), "Mjelenteskartlenni", "gabor.hanacsek@sanmina.com");
             Email += "<html><div>" + jTextArea2.getText().replace("\n", "<br>") + "</div></html>";
             Tc_Levelkuldes l = new Tc_Levelkuldes(subject, Email, jTextArea1.getText());
             l.start();
@@ -361,7 +361,7 @@ public class Tc_Muszakjelentes extends javax.swing.JFrame {
             this.dispose();
         } catch (Exception e) {
 
-            stat.beir(System.getProperty("user.name"), jTabbedPane1.getTitleAt(jTabbedPane1.getSelectedIndex()), "Elhasaltunk a peldanyositasnal" + e, "gabor.hanacsek@sanmina.com");
+            stat.beir(System.getProperty("user.name"), Tc_Betervezo.Tervezotabbed.getTitleAt(Tc_Betervezo.Tervezotabbed.getSelectedIndex()), "Elhasaltunk a peldanyositasnal" + e, "gabor.hanacsek@sanmina.com");
 
         }
 

@@ -622,15 +622,15 @@ public class Tc_Besetup extends javax.swing.JFrame {
         jList2.setModel(lm2);
 
         //frissitjuk a partnumber  adatokat a sheeteken
-        for (int n = 0; n < Tc_Betervezo.jTabbedPane1.getTabCount(); n++) {
+        for (int n = 0; n < Tc_Betervezo.Tervezotabbed.getTabCount(); n++) {
 
             query = "select tc_bepns.partnumber from tc_bepns \n"
                     + "left join tc_prodmatrix on tc_prodmatrix.id_tc_bepns = tc_bepns.idtc_bepns\n"
                     + "left join tc_becells on tc_prodmatrix.id_tc_becells = tc_becells.idtc_cells\n"
-                    + "where tc_becells.cellname = '" + Tc_Betervezo.jTabbedPane1.getTitleAt(n) + "'";
+                    + "where tc_becells.cellname = '" + Tc_Betervezo.Tervezotabbed.getTitleAt(n) + "'";
 
             //kiszedjuk a regieket
-            Tc_Betervezo.Besheets.get(Tc_Betervezo.jTabbedPane1.getTitleAt(n)).partnumbers.clear();
+            Tc_Betervezo.Besheets.get(Tc_Betervezo.Tervezotabbed.getTitleAt(n)).partnumbers.clear();
 
             try {
                 pc.planconnect(query);
@@ -643,7 +643,7 @@ public class Tc_Besetup extends javax.swing.JFrame {
             try {
                 while (pc.rs.next()) {
 
-                    Tc_Betervezo.Besheets.get(Tc_Betervezo.jTabbedPane1.getTitleAt(n)).partnumbers.add(pc.rs.getString(1));
+                    Tc_Betervezo.Besheets.get(Tc_Betervezo.Tervezotabbed.getTitleAt(n)).partnumbers.add(pc.rs.getString(1));
 
                 }
             } catch (SQLException ex) {
@@ -955,14 +955,14 @@ public class Tc_Besetup extends javax.swing.JFrame {
         Tc_Betervezo.ciklusidok.add(ciklusidok);
 
         //frissitjuk a workstation adatokat
-        for (int n = 0; n < Tc_Betervezo.jTabbedPane1.getTabCount(); n++) {
+        for (int n = 0; n < Tc_Betervezo.Tervezotabbed.getTabCount(); n++) {
 
             //kiszedjuk a regieket
-            Tc_Betervezo.Besheets.get(Tc_Betervezo.jTabbedPane1.getTitleAt(n)).workstations.clear();
+            Tc_Betervezo.Besheets.get(Tc_Betervezo.Tervezotabbed.getTitleAt(n)).workstations.clear();
 
             query = "SELECT tc_bestations.workstation  from tc_bestations where tc_bestations.idtc_bestations in \n"
                     + "(select distinct tc_prodmatrix.id_tc_bestations from tc_prodmatrix where tc_prodmatrix.id_tc_becells  = \n"
-                    + "(SELECT tc_becells.idtc_cells FROM planningdb.tc_becells where tc_becells.cellname = '" + Tc_Betervezo.jTabbedPane1.getTitleAt(n) + "'))";
+                    + "(SELECT tc_becells.idtc_cells FROM planningdb.tc_becells where tc_becells.cellname = '" + Tc_Betervezo.Tervezotabbed.getTitleAt(n) + "'))";
 
             try {
                 pc.planconnect(query);
@@ -975,7 +975,7 @@ public class Tc_Besetup extends javax.swing.JFrame {
             try {
                 while (pc.rs.next()) {
 
-                    Tc_Betervezo.Besheets.get(Tc_Betervezo.jTabbedPane1.getTitleAt(n)).workstations.add(pc.rs.getString(1));
+                    Tc_Betervezo.Besheets.get(Tc_Betervezo.Tervezotabbed.getTitleAt(n)).workstations.add(pc.rs.getString(1));
 
                 }
             } catch (SQLException ex) {
@@ -985,15 +985,15 @@ public class Tc_Besetup extends javax.swing.JFrame {
         }
 
         //frissitjuk a partnumber  adatokat a sheeteken
-        for (int n = 0; n < Tc_Betervezo.jTabbedPane1.getTabCount(); n++) {
+        for (int n = 0; n < Tc_Betervezo.Tervezotabbed.getTabCount(); n++) {
 
             query = "select tc_bepns.partnumber from tc_bepns \n"
                     + "left join tc_prodmatrix on tc_prodmatrix.id_tc_bepns = tc_bepns.idtc_bepns\n"
                     + "left join tc_becells on tc_prodmatrix.id_tc_becells = tc_becells.idtc_cells\n"
-                    + "where tc_becells.cellname = '" + Tc_Betervezo.jTabbedPane1.getTitleAt(n) + "'";
+                    + "where tc_becells.cellname = '" + Tc_Betervezo.Tervezotabbed.getTitleAt(n) + "'";
 
             //kiszedjuk a regieket
-            Tc_Betervezo.Besheets.get(Tc_Betervezo.jTabbedPane1.getTitleAt(n)).partnumbers.clear();
+            Tc_Betervezo.Besheets.get(Tc_Betervezo.Tervezotabbed.getTitleAt(n)).partnumbers.clear();
 
             try {
                 pc.planconnect(query);
@@ -1006,7 +1006,7 @@ public class Tc_Besetup extends javax.swing.JFrame {
             try {
                 while (pc.rs.next()) {
 
-                    Tc_Betervezo.Besheets.get(Tc_Betervezo.jTabbedPane1.getTitleAt(n)).partnumbers.add(pc.rs.getString(1));
+                    Tc_Betervezo.Besheets.get(Tc_Betervezo.Tervezotabbed.getTitleAt(n)).partnumbers.add(pc.rs.getString(1));
 
                 }
             } catch (SQLException ex) {

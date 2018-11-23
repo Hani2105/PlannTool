@@ -8,6 +8,7 @@ package PlannTool;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.logging.Level;
@@ -25,7 +26,13 @@ import org.joda.time.format.DateTimeFormat;
  */
 public class Tc_ossztervlekerszal extends Thread {
 
+    String columneve = "";
+    String napneve = "";
+    DefaultTableModel model = new DefaultTableModel();
+
     public void run() {
+
+        Tc_Betervezo.jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/dall1.png")));
 
         int comboertek = Tc_Betervezo.jComboBox1.getSelectedIndex();
         //eltesszuk az adatokat az ellenorzeshez , hogy valtozott e a terv
@@ -46,11 +53,11 @@ public class Tc_ossztervlekerszal extends Thread {
         //ciklust indítunk és végrehajtjuk a lekért cellákon a dátum beállítást
         //bepakoljuk a maptree be a sheeteket ujból
         Tc_Betervezo.Besheets.clear();
-        for (int i = 0; i < Tc_Betervezo.jTabbedPane1.getTabCount(); i++) {
+        for (int i = 0; i < Tc_Betervezo.Tervezotabbed.getTabCount(); i++) {
 
-            String name = Tc_Betervezo.jTabbedPane1.getTitleAt(i);
+            String name = Tc_Betervezo.Tervezotabbed.getTitleAt(i);
 
-            Tc_Betervezo.Besheets.put(name, (Tc_Besheet) Tc_Betervezo.jTabbedPane1.getComponentAt(i));
+            Tc_Betervezo.Besheets.put(name, (Tc_Besheet) Tc_Betervezo.Tervezotabbed.getComponentAt(i));
 
         }
 
@@ -95,19 +102,18 @@ public class Tc_ossztervlekerszal extends Thread {
         org.joda.time.format.DateTimeFormatter fmtnap = DateTimeFormat.forPattern("E");
 
         DateTime dtOrg = new DateTime(dt);
-        String columneve = "";
+
         String szak = "";
-        String napneve = "";
+
         TableColumn column = null;
 
-        //letrehozunk egy megfelelo jtablet
-        //most indítjuk a nagy ciklust amiben végigpörgetjük a sheeteket
-        for (int b = 0; b < Tc_Betervezo.jTabbedPane1.getTabCount(); b++) {
+//letrehozunk egy megfelelo jtablet
+//most indítjuk a nagy ciklust amiben végigpörgetjük a sheeteket
+        for (int b = 0; b < Tc_Betervezo.Tervezotabbed.getTabCount(); b++) {
 
             //ez már az eredeti sheetenkénti kód
-            String neve = Tc_Betervezo.jTabbedPane1.getTitleAt(b);
-            Tc_Betervezo.jTabbedPane1.setSelectedIndex(b);
-            DefaultTableModel model = new DefaultTableModel();
+            String neve = Tc_Betervezo.Tervezotabbed.getTitleAt(b);
+            Tc_Betervezo.Tervezotabbed.setSelectedIndex(b);
 
 //felvesszük az oszlopok szélességét
             if (b == 0) {
@@ -123,27 +129,32 @@ public class Tc_ossztervlekerszal extends Thread {
             }
 
             //kitoroljuk az oszlopokat
-            try {
-                model = (DefaultTableModel) Tc_Betervezo.Besheets.get(neve).jTable2.getModel();
-
-            } catch (Exception e) {
-            }
-
+            model = (DefaultTableModel) Tc_Betervezo.Besheets.get(neve).jTable2.getModel();
             model.setColumnCount(4);
 
-            //napok szamaszor futtatjuk
-            for (int i = 0; i < napok; i++) {
+//letrehozunk egy arraylistet a napon nevenek es egy szamolot , hogy hany columot adjunk a modellhez
+            ArrayList<String> napokneve = new ArrayList<>();
 
+//napok szamaszor futtatjuk
+            for (int i = 0; i < napok; i++) {
+//itt a bibi!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 //ha 12 órás a műszakrend 2 szer
                 if (comboertek == 0) {
                     for (int k = 0; k < 2; k++) {
 
-                        szak = (k == 0) ? " 06:00" : " 18:00";
+                        if (k == 0) {
+
+                            szak = " 06:00";
+
+                        } else {
+
+                            szak = " 18:00";
+
+                        }
+
                         columneve = fmt.print(dtOrg.plusDays(i)) + szak;
                         napneve = fmtnap.print(dtOrg.plusDays(i));
-
                         model.addColumn(columneve + " " + napneve);
-
                     }
                 }
 
@@ -171,16 +182,7 @@ public class Tc_ossztervlekerszal extends Thread {
                 }
 
             }
-            //col szelesseg allitas
 
-//            for (int i = 0; i < Tc_Betervezo.Besheets.get(neve).jTable2.getModel().getColumnCount(); i++) {
-//
-//                if (i != 3) {
-//                    column = Tc_Betervezo.Besheets.get(neve).jTable2.getColumnModel().getColumn(i);
-//                    column.setPreferredWidth(130);
-//                }
-//
-//            }
             //lekerdezzuk az adatbazis adatokat
             String Query = "select tc_terv.date , tc_bepns.partnumber , tc_terv.job , tc_bestations.workstation , tc_terv.qty , tc_terv.tt \n"
                     + "from tc_terv \n"
@@ -230,14 +232,15 @@ public class Tc_ossztervlekerszal extends Thread {
                 Logger.getLogger(Tc_Betervezo.class.getName()).log(Level.SEVERE, null, ex);
             }
 
+            //Tc_Betervezo.tablarajzolo(model, Tc_Betervezo.Besheets.get(neve).jTable2);
             Tc_Betervezo.Besheets.get(neve).jTable2.setModel(model);
-
             //Tc_Betervezo.jTabbedPane1.setSelectedIndex(b);
             Tc_Calculator calc = new Tc_Calculator(Tc_Betervezo.Besheets.get(neve));
 
         }
 
-        Tc_Betervezo.jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/dall1.png")));
+        animation.rajzol = false;
 
     }
+
 }

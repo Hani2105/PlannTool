@@ -554,6 +554,8 @@ public class Tc_Betervezo extends javax.swing.JFrame {
 
                 Besheets.get(Tervezotabbed.getTitleAt(i)).jButton11.setEnabled(true);
                 Besheets.get(Tervezotabbed.getTitleAt(i)).jButton10.setEnabled(false);
+                Besheets.get(Tervezotabbed.getTitleAt(i)).DeleteRow.setEnabled(false);
+                
 
             }
 
@@ -566,6 +568,7 @@ public class Tc_Betervezo extends javax.swing.JFrame {
 
                 Besheets.get(Tervezotabbed.getTitleAt(i)).jButton11.setEnabled(false);
                 Besheets.get(Tervezotabbed.getTitleAt(i)).jButton10.setEnabled(true);
+                Besheets.get(Tervezotabbed.getTitleAt(i)).DeleteRow.setEnabled(true);
 
             }
 

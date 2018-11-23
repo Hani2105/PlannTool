@@ -50,6 +50,7 @@ import javax.swing.table.TableRowSorter;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import static PlannTool.Tc_Betervezo.Tervezotabbed;
+import java.util.concurrent.ExecutionException;
 
 /**
  *
@@ -151,6 +152,7 @@ public class Tc_Besheet extends javax.swing.JPanel {
         MuveletekSorokkal.add(InsertRow);
 
         DeleteRow.setText("Sor törlése");
+        DeleteRow.setEnabled(false);
         DeleteRow.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 DeleteRowActionPerformed(evt);
@@ -1571,8 +1573,24 @@ public class Tc_Besheet extends javax.swing.JPanel {
 
                         //beirjuk a terv sorokat es ala mindenkeppen tenykent felvisszuk ugyanazon adatokat
                         if (t2.getValueAt(r, 3).toString().equals("Terv") && t2.getValueAt(r, 0) != null && t2.getValueAt(r, 2) != null && !t2.getValueAt(r, 0).toString().equals("") && t2.getValueAt(r, i) != null && !t2.getValueAt(r, i).toString().equals("") && !jTable2.getColumnName(i).equals("Sum: PN,JOB,WS")) {
-                            int tervwtf = (r * i);
-                            int tenywtf = ((r + 1) * i);
+                            //a tervwtf megahatarozasa
+                            int tervwtf = 0;
+                            for (int sor = 0; sor <= r; sor++) {
+
+//ha van írva az adott cellába akkor hozzáadunk egyet a wtf hez
+                                try {
+                                    if (jTable2.getValueAt(sor, i).toString().length() >= 0) {
+
+                                        tervwtf++;
+
+                                    }
+                                } catch (Exception e) {
+                                }
+
+                            }
+
+                            //int tervwtf = (r * i);
+                            int tenywtf = tervwtf + 1;
                             datum = t2.getColumnName(i).substring(0, 10) + ora;
                             feltoltadat += "('" + cellid + "','" + wsid + "','" + pnid + "','" + job + "','" + datum + "','" + t2.getValueAt(r, i) + "','" + tervwtf + "'," + 0 + ",'" + System.getProperty("user.name") + "'),";
                             //feltoltjuk tenykent is , ehhez kell a darabszam
@@ -1694,11 +1712,28 @@ public class Tc_Besheet extends javax.swing.JPanel {
             for (int r = 0; r < jTable2.getRowCount(); r++) {
                 String pn = "";
 
-                //ha van adat a cellaban  akkor begyűjtjük 
-                if (jTable2.getValueAt(r, i) != null && !jTable2.getColumnName(i).equals("Sum: PN,JOB,WS")) {
+                //ha van adat a cellaban es teny sorban vagyunk  akkor begyűjtjük 
+                if (jTable2.getValueAt(r, i) != null && !jTable2.getColumnName(i).equals("Sum: PN,JOB,WS") && jTable2.getValueAt(r, 3).toString().equals("Tény")) {
                     String job = "";
                     String qty = "";
-                    int tenywtf = (r * i);
+
+//a wtf meghatarozasa , bejarjuk a sorokat es megszamoljuk , hogy amig elerunk r ig hany olyan sor van amiben van iras
+                    int wtf = 0;
+                    for (int sor = 0; sor <= r; sor++) {
+
+//ha van írva az adott cellába akkor hozzáadunk egyet a wtf hez
+                        try {
+                            if (jTable2.getValueAt(sor, i).toString().length() >= 0) {
+
+                                wtf++;
+
+                            }
+                        } catch (Exception e) {
+                        }
+
+                    }
+
+                    //int tenywtf = (r * i);
                     int tervteny;
 
                     //terv vagy teny?
@@ -1720,7 +1755,7 @@ public class Tc_Besheet extends javax.swing.JPanel {
                     } catch (Exception e) {
                     }
                     try {
-                        adat += "('" + jTable2.getColumnName(i).substring(0, 16) + ":00',(select tc_becells.idtc_cells from tc_becells where tc_becells.cellname = '" + Tc_Betervezo.Tervezotabbed.getTitleAt(Tc_Betervezo.Tervezotabbed.getSelectedIndex()) + "'),(select tc_bestations.idtc_bestations from tc_bestations where tc_bestations.workstation = '" + jTable2.getValueAt(r, 2).toString() + "'),(select tc_bepns.idtc_bepns from tc_bepns where tc_bepns.partnumber = '" + jTable2.getValueAt(r, 0).toString() + "'),'" + qty + "','" + tenywtf + "','2','" + tervteny + "','" + System.getProperty("user.name") + "','" + job + "'),";
+                        adat += "('" + jTable2.getColumnName(i).substring(0, 16) + ":00',(select tc_becells.idtc_cells from tc_becells where tc_becells.cellname = '" + Tc_Betervezo.Tervezotabbed.getTitleAt(Tc_Betervezo.Tervezotabbed.getSelectedIndex()) + "'),(select tc_bestations.idtc_bestations from tc_bestations where tc_bestations.workstation = '" + jTable2.getValueAt(r, 2).toString() + "'),(select tc_bepns.idtc_bepns from tc_bepns where tc_bepns.partnumber = '" + jTable2.getValueAt(r, 0).toString() + "'),'" + qty + "','" + wtf + "','2','" + tervteny + "','" + System.getProperty("user.name") + "','" + job + "'),";
                     } catch (Exception e) {
                     }
                 }
@@ -1755,7 +1790,7 @@ public class Tc_Besheet extends javax.swing.JPanel {
         }
 
         //update 2-->1-->0!!
-        String updatequery = "update tc_terv set active = CASE when tc_terv.active = 2 then 1 when tc_terv.active = 1 then 0 end where tc_terv.active in (2,1) and tc_terv.date between '" + tol + "' and '" + ig + "' and tc_terv.idtc_becells = (select tc_becells.idtc_cells from tc_becells where tc_becells.cellname = '" + Tc_Betervezo.Tervezotabbed.getTitleAt(Tc_Betervezo.Tervezotabbed.getSelectedIndex()) + "')";
+        String updatequery = "update tc_terv set active = CASE when tc_terv.active = 2 then 1 when tc_terv.active = 1 then 0 end where tc_terv.active in (2,1) and tc_terv.date between '" + tol + "' and '" + ig + "' and tc_terv.idtc_becells = (select tc_becells.idtc_cells from tc_becells where tc_becells.cellname = '" + Tc_Betervezo.Tervezotabbed.getTitleAt(Tc_Betervezo.Tervezotabbed.getSelectedIndex()) + "'  and tc_terv.tt = '1' )";
         pc.feltolt(updatequery, false);
 
         //feltoltjuk az uj adatokat!
@@ -1864,15 +1899,7 @@ public class Tc_Besheet extends javax.swing.JPanel {
         if (jTable2.getSelectedColumn() > 3) {
             Tc_Calculator c = new Tc_Calculator(this);
         }
-        try {
-            if (ablak.planner == false && jTable2.getValueAt(jTable2.getSelectedRow(), 3).toString().equals("Terv")) {
-
-                jTable2.setColumnSelectionInterval(jTable2.getSelectedColumn(), jTable2.getSelectedColumn());
-                jTable2.setRowSelectionInterval(jTable2.getSelectedRow() - 1, jTable2.getSelectedRow() - 1);
-
-            }
-        } catch (Exception e) {
-        }
+       
 
     }//GEN-LAST:event_jTable2MouseClicked
 
@@ -1897,17 +1924,7 @@ public class Tc_Besheet extends javax.swing.JPanel {
         Tc_Betervezo.csuk = false;
         Tc_Calculator c = new Tc_Calculator(this);
 
-        try {
-            if (ablak.planner == false && jTable2.getValueAt(jTable2.getSelectedRow(), 3).toString().equals("Terv")) {
-
-//                infobox info = new infobox();
-//                info.infoBox("Nem írhatsz a Terv sorba!", "Hiba");
-                jTable2.setColumnSelectionInterval(jTable2.getSelectedColumn(), jTable2.getSelectedColumn());
-                jTable2.setRowSelectionInterval(jTable2.getSelectedRow() - 1, jTable2.getSelectedRow() - 1);
-
-            }
-        } catch (Exception e) {
-        }
+      
 
 
     }//GEN-LAST:event_jTable2KeyPressed
@@ -1916,19 +1933,7 @@ public class Tc_Besheet extends javax.swing.JPanel {
 
         Tc_Betervezo.csuk = false;
         Tc_Calculator c = new Tc_Calculator(this);
-        try {
-            if (ablak.planner == false && jTable2.getValueAt(jTable2.getSelectedRow(), 3).toString().equals("Terv")) {
-
-//            infobox info = new infobox();
-//            info.infoBox("Nem írhatsz a Terv sorba!", "Hiba");
-                jTable2.setColumnSelectionInterval(jTable2.getSelectedColumn(), jTable2.getSelectedColumn());
-                jTable2.setRowSelectionInterval(jTable2.getSelectedRow() - 1, jTable2.getSelectedRow() - 1);
-
-            }
-        } catch (Exception e) {
-        }
-
-
+   
     }//GEN-LAST:event_jTable2KeyReleased
 
     private void jTable2PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jTable2PropertyChange
@@ -1957,7 +1962,7 @@ public class Tc_Besheet extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem CellaAdatok;
     private javax.swing.JMenuItem DeleteArea;
-    private javax.swing.JMenuItem DeleteRow;
+    public javax.swing.JMenuItem DeleteRow;
     private javax.swing.JMenuItem InsertRow;
     public javax.swing.JPopupMenu JPopupMenu1;
     private javax.swing.JMenu MuveletekSorokkal;

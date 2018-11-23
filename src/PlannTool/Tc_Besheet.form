@@ -45,10 +45,14 @@
             <MenuItem class="javax.swing.JMenuItem" name="DeleteRow">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Sor t&#xf6;rl&#xe9;se"/>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="DeleteRowActionPerformed"/>
               </Events>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+              </AuxValues>
             </MenuItem>
           </SubComponents>
         </Menu>

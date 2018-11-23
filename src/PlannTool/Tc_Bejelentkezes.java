@@ -217,9 +217,6 @@ public class Tc_Bejelentkezes extends javax.swing.JFrame {
                 } else {
 //sikertelen bejelentkezes
                     ablak.planner = false;
-//Tc_Betervezo b = new Tc_Betervezo();
-//b.setVisible(true);
-//this.dispose();
                     infobox info = new infobox();
                     info.infoBox("Nem jó jelszó vagy felh. név!", "Hiba!");
 
@@ -230,9 +227,6 @@ public class Tc_Bejelentkezes extends javax.swing.JFrame {
             } else {
 //sikertelen bejelentkezes
                 ablak.planner = false;
-//Tc_Betervezo b = new Tc_Betervezo();
-//b.setVisible(true);
-//this.dispose();
                 infobox info = new infobox();
                 info.infoBox("Nem jó jelszó vagy felh. név!", "Hiba!");
                 this.setVisible(true);

@@ -1,5 +1,6 @@
 package PlannTool;
 
+import static PlannTool.Riporter.Riporter;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.HeadlessException;
@@ -335,9 +336,10 @@ public class ablak extends javax.swing.JFrame {
             jLabel51 = new javax.swing.JLabel();
             jTextField24 = new javax.swing.JTextField();
             jButton24 = new javax.swing.JButton();
+            jButton25 = new javax.swing.JButton();
 
             setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-            setTitle("PlannTool R_1.8");
+            setTitle("PlannTool R_1.9");
             setLocation(new java.awt.Point(500, 300));
 
             jPanel6.setPreferredSize(new java.awt.Dimension(1100, 550));
@@ -2949,6 +2951,13 @@ public class ablak extends javax.swing.JFrame {
                 }
             });
 
+            jButton25.setText("proba");
+            jButton25.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    jButton25ActionPerformed(evt);
+                }
+            });
+
             javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
             jPanel12.setLayout(jPanel12Layout);
             jPanel12Layout.setHorizontalGroup(
@@ -3052,7 +3061,9 @@ public class ablak extends javax.swing.JFrame {
                                     .addGap(185, 185, 185))
                                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel12Layout.createSequentialGroup()
                                     .addComponent(jButton24, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(220, 220, 220))))))
+                                    .addGap(47, 47, 47)
+                                    .addComponent(jButton25)
+                                    .addGap(94, 94, 94))))))
             );
             jPanel12Layout.setVerticalGroup(
                 jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -3082,7 +3093,9 @@ public class ablak extends javax.swing.JFrame {
                                 .addComponent(jScrollPane20, javax.swing.GroupLayout.DEFAULT_SIZE, 337, Short.MAX_VALUE)
                                 .addComponent(jScrollPane21, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jButton24)
+                            .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jButton24)
+                                .addComponent(jButton25))
                             .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGroup(jPanel12Layout.createSequentialGroup()
                             .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -4296,11 +4309,46 @@ public class ablak extends javax.swing.JFrame {
 //osszeallitjuk az insert queryt 
         query = "insert into tc_riport_email (email) values " + adatok;
         pc.feltolt(query, false);
-        
+
 //eddig tartott az emailes
+//a prefixes tabla mentese
+//truncateljuk a tablat es beillesztjuk ujbol az adatot a prefixes tablaba
+        query = "truncate table tc_riport_prefix";
+        pc = new planconnect();
+        pc.feltolt(query, false);
+
+//összeszedjuk az emaileket a tablabol
+        adatok = "";
+
+        for (int i = 0; i < jTable17.getRowCount(); i++) {
+//ha van írva a sorba
+
+            if (jTable17.getValueAt(i, 0) != null && !jTable17.getValueAt(i, 0).toString().equals("")) {
+
+                adatok += "('" + jTable17.getValueAt(i, 0).toString() + "'),";
+
+            }
+
+        }
+
+        adatok = adatok.substring(0, adatok.length() - 1);
+
+//osszeallitjuk az insert queryt 
+        query = "insert into tc_riport_prefix (prefix) values " + adatok;
+        pc.feltolt(query, false);
+
+//eddig tartott a prefixes
+//days in wip updatje , beszurjuk az uj adatokat
+        query = "insert into tc_riport_ido  (idopont , age) values ('" + jTextField24.getText() + "','" + jTextField23.getText() + "')";
+        pc.feltolt(query, true);
 
 
     }//GEN-LAST:event_jButton24ActionPerformed
+
+    private void jButton25ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton25ActionPerformed
+
+        Riporter.Riporter();
+    }//GEN-LAST:event_jButton25ActionPerformed
 
     public void gombenged() {
 
@@ -4446,6 +4494,7 @@ public class ablak extends javax.swing.JFrame {
     private javax.swing.JButton jButton22;
     private javax.swing.JButton jButton23;
     private javax.swing.JButton jButton24;
+    private javax.swing.JButton jButton25;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;

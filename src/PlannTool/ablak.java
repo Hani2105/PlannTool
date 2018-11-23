@@ -339,7 +339,7 @@ public class ablak extends javax.swing.JFrame {
             jButton25 = new javax.swing.JButton();
 
             setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-            setTitle("PlannTool R_1.9");
+            setTitle("PlannTool R_2.0");
             setLocation(new java.awt.Point(500, 300));
 
             jPanel6.setPreferredSize(new java.awt.Dimension(1100, 550));

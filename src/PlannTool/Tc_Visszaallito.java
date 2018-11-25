@@ -333,7 +333,7 @@ public class Tc_Visszaallito extends javax.swing.JFrame {
         }
 
         Besheets.get(neve).jTable2.setModel(model);
-        Tc_Calculator calc = new Tc_Calculator(Besheets.get(neve));
+        Tc_Calculator calc = new Tc_Calculator(Besheets.get(neve),false,0);
         this.setVisible(false);
 
 

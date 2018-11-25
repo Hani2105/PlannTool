@@ -801,7 +801,7 @@ public class Tc_Betervezo extends javax.swing.JFrame {
             Tc_Betervezo.Besheets.get(neve).jTable2.setModel(model);
 
             //Tc_Betervezo.jTabbedPane1.setSelectedIndex(b);
-            Tc_Calculator calc = new Tc_Calculator(Tc_Betervezo.Besheets.get(neve));
+            Tc_Calculator calc = new Tc_Calculator(Tc_Betervezo.Besheets.get(neve),false,0);
 
         }
 
@@ -1020,7 +1020,7 @@ public class Tc_Betervezo extends javax.swing.JFrame {
             }
 
             Besheets.get(neve).jTable2.setModel(model);
-            Tc_Calculator calc = new Tc_Calculator(Besheets.get(neve));
+            Tc_Calculator calc = new Tc_Calculator(Besheets.get(neve),false,0);
 
         }
     }//GEN-LAST:event_jButton3KeyPressed

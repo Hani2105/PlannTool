@@ -266,7 +266,6 @@ public class Tc_Bejelentkezes extends javax.swing.JFrame {
             String truee = "";
             try {
                 while ((inputLine = in.readLine()) != null) {
-                    //System.out.println(inputLine);
                     truee = inputLine;
                 }
             } catch (IOException ex) {
@@ -295,8 +294,6 @@ public class Tc_Bejelentkezes extends javax.swing.JFrame {
 
                     String poz = "";
                     poz = rs.getString(1);
-//            String pass = rs.getString(2);
-//            char[] correctpass = pass.toCharArray();
 
                     if (truee.equals("true") && (Integer.parseInt(poz) == 1 || Integer.parseInt(poz) == 2 || Integer.parseInt(poz) == 4)) {
 //sikeres bejelentkezes
@@ -313,9 +310,6 @@ public class Tc_Bejelentkezes extends javax.swing.JFrame {
                     } else {
 //sikertelen bejelentkezes
                         ablak.planner = false;
-//Tc_Betervezo b = new Tc_Betervezo();
-//b.setVisible(true);
-//this.dispose();
                         infobox info = new infobox();
                         info.infoBox("Nem jó jelszó vagy felh. név!", "Hiba!");
 
@@ -326,9 +320,6 @@ public class Tc_Bejelentkezes extends javax.swing.JFrame {
                 } else {
 //sikertelen bejelentkezes
                     ablak.planner = false;
-//Tc_Betervezo b = new Tc_Betervezo();
-//b.setVisible(true);
-//this.dispose();
                     infobox info = new infobox();
                     info.infoBox("Nem jó jelszó vagy felh. név!", "Hiba!");
 

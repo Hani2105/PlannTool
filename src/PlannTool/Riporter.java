@@ -37,6 +37,9 @@ public class Riporter {
                 idopont = pc.rs.getString(2);
 
             }
+            
+            idopont= idopont.substring(0, idopont.length()-10);
+            idopont = idopont.trim();
 
         } catch (SQLException ex) {
             Logger.getLogger(Riporter.class.getName()).log(Level.SEVERE, null, ex);
@@ -52,6 +55,8 @@ public class Riporter {
                 kuldesora = pc.rs.getString(2);
 
             }
+            
+            kuldesora = kuldesora.substring(0, kuldesora.length()-1);
 
         } catch (SQLException ex) {
             Logger.getLogger(Riporter.class.getName()).log(Level.SEVERE, null, ex);
@@ -62,15 +67,15 @@ public class Riporter {
         //akkor kell tovabbmenni a koddal ha elmult a kuldesi ido es meg ma nem kuldtunk
         //aktualisido
         LocalTime localTime = new LocalTime();
-        DateTimeFormatter parseFormat = new DateTimeFormatterBuilder().appendPattern("h:mm:ss a").toFormatter();
+        DateTimeFormatter parseFormat = new DateTimeFormatterBuilder().appendPattern("hh:mm:ss").toFormatter();
         LocalTime kuldesiido = LocalTime.parse(kuldesora, parseFormat);
         //az utolso kuldott datum atalakitasa
         parseFormat = new DateTimeFormatterBuilder().appendPattern("yyyy-MM-dd").toFormatter();
         LocalDate kuldesdatum = LocalDate.parse(idopont, parseFormat);
-        //aktualisdtaum
+        //aktualisdatum
         LocalDate localDate = new LocalDate();
         
-        if(kuldesiido.isAfter(localTime)){
+        if(kuldesiido.isAfter(localTime) && localDate.isAfter(kuldesdatum)){
         
            
         

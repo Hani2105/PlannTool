@@ -66,7 +66,7 @@ public class planconnect {
         try {
 
             String driver = "com.mysql.jdbc.driver";
-            String url = "jdbc:mysql://143.116.140.114:3306/planningdb";
+            String url = "jdbc:mysql://143.116.140.114:3306/planningdb?characterEncoding=utf8";
             String username = "plan";
             String password = "plan500";
             Class.forName("com.mysql.jdbc.Driver");

@@ -4347,7 +4347,7 @@ public class ablak extends javax.swing.JFrame {
 
     private void jButton25ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton25ActionPerformed
 
-        Riporter.Riporter();
+        Riporter();
     }//GEN-LAST:event_jButton25ActionPerformed
 
     public void gombenged() {

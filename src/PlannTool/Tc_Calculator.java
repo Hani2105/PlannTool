@@ -19,7 +19,7 @@ public class Tc_Calculator {
 
     Tc_Besheet b;
 
-    public Tc_Calculator(Tc_Besheet b) {
+    public Tc_Calculator(Tc_Besheet b , boolean selection , int cella) {
 
         this.b = b;
 
@@ -34,7 +34,7 @@ public class Tc_Calculator {
 
         //felvesszuk a tabla adatait
         DefaultTableModel model = new DefaultTableModel();
-        model = (DefaultTableModel) b.jTable2.getModel();
+        model = (DefaultTableModel) this.b.jTable2.getModel();
 
         //kiszedjuk az info sorokat
         for (int i = 0; i < model.getRowCount(); i++) {
@@ -42,9 +42,10 @@ public class Tc_Calculator {
             if (model.getValueAt(i, 3).toString().equals("Infó")) {
 
                 model.removeRow(i);
+                //this.b.jTable2.changeSelection(i+1,this.b.jTable2.getSelectedColumn(),false,false);
+               
 
                 i = i - 1;
-               
 
             }
 
@@ -74,8 +75,8 @@ public class Tc_Calculator {
 
                         wsek.add(ws);
                         model.insertRow(0, new Object[]{null, null, ws, "Infó"});
-
-                       
+                        
+                        //this.b.jTable2.changeSelection(i,this.b.jTable2.getSelectedColumn(),false,false);
 
                     }
 
@@ -391,6 +392,14 @@ public class Tc_Calculator {
             }
 
         }
+        
+        if(selection == true){
+        
+        this.b.jTable2.changeSelection(cella, this.b.jTable2.getSelectedColumn(), false, false);
+        
+        }
     }
+    
+    
 
 }

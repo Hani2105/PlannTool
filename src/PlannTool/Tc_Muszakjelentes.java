@@ -353,7 +353,7 @@ public class Tc_Muszakjelentes extends javax.swing.JFrame {
         try {
             stat.beir(System.getProperty("user.name"), Tc_Betervezo.Tervezotabbed.getTitleAt(Tc_Betervezo.Tervezotabbed.getSelectedIndex()), "Mjelenteskartlenni", "gabor.hanacsek@sanmina.com");
             Email += "<html><div>" + jTextArea2.getText().replace("\n", "<br>") + "</div></html>";
-            Tc_Levelkuldes l = new Tc_Levelkuldes(subject, Email, jTextArea1.getText());
+            Tc_Levelkuldes l = new Tc_Levelkuldes(subject, Email, jTextArea1.getText(),"Muszakjelentes@sanmina.com");
             l.start();
             DateFormat df = new SimpleDateFormat("HH:mm");
             Date dateobj = new Date();

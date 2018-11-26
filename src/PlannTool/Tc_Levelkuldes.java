@@ -26,12 +26,14 @@ public class Tc_Levelkuldes extends Thread {
     String Subject;
     String szoveg;
     String cimzett;
+    String kuldo;
 
-    public Tc_Levelkuldes(String Subject, String szoveg, String cimzett) {
+    public Tc_Levelkuldes(String Subject, String szoveg, String cimzett , String kuldo) {
 
         this.Subject = Subject;
         this.szoveg = szoveg;
         this.cimzett = cimzett;
+        this.kuldo = kuldo;
 
     }
 
@@ -40,8 +42,8 @@ public class Tc_Levelkuldes extends Thread {
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
             LocalDateTime now = LocalDateTime.now();
 
-            String to = cimzett;//change accordingly  
-            String from = "Muszakjelentes@sanmina.com"; //change accordingly  
+            String to = this.cimzett;//change accordingly  
+            String from = this.kuldo; //change accordingly  
             String host = "mailhub.sanmina.com";//or IP address  
 
             //Get the session object  
@@ -53,9 +55,9 @@ public class Tc_Levelkuldes extends Thread {
             MimeMessage message = new MimeMessage(session);
             message.setFrom(new InternetAddress(from));
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
-            message.setSubject(Subject);
+            message.setSubject(this.Subject);
             //message.setText(szoveg);
-            message.setContent(szoveg, "text/html; charset=utf-8");
+            message.setContent(this.szoveg, "text/html; charset=utf-8");
 
             // Send message  
             Transport.send(message);

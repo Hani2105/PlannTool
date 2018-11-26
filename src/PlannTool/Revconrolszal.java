@@ -73,7 +73,7 @@ public class Revconrolszal extends Thread {
             }
 
             try {
-                Thread.sleep(1 * 60 * 1000);
+                Thread.sleep(5 * 60 * 1000);
             } catch (InterruptedException ex) {
                 Logger.getLogger(Revconrolszal.class.getName()).log(Level.SEVERE, null, ex);
             }

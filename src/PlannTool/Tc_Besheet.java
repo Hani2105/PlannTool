@@ -288,6 +288,11 @@ public class Tc_Besheet extends javax.swing.JPanel {
                 jButton4MouseExited(evt);
             }
         });
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         jTextField1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -635,12 +640,12 @@ public class Tc_Besheet extends javax.swing.JPanel {
         if (this.jTable2.getValueAt(this.jTable2.getSelectedRow(), 3).equals("Terv")) {
 
             int i = this.jTable2.convertRowIndexToModel(this.jTable2.getSelectedRow());
-            model.insertRow(i, new Object[]{null, null, null, "Terv"});
+            model.insertRow(i, new Object[]{null, null, null, "Tény"});
 
         } else if (this.jTable2.getValueAt(this.jTable2.getSelectedRow(), 3).equals("Tény")) {
 
             int i = this.jTable2.convertRowIndexToModel(this.jTable2.getSelectedRow());
-            model.insertRow(i - 1, new Object[]{null, null, null, "Terv"});
+            model.insertRow(i, new Object[]{null, null, null, "Terv"});
 
         }
 
@@ -1052,6 +1057,16 @@ public class Tc_Besheet extends javax.swing.JPanel {
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
 //terv mentése
 
+//kitoroljuk a szurot
+        DefaultTableModel model = new DefaultTableModel();
+        model = (DefaultTableModel) jTable2.getModel();
+        TableRowSorter<DefaultTableModel> tr = new TableRowSorter<DefaultTableModel>(model);
+
+        jTable2.setRowSorter(tr);
+
+        tr.setRowFilter(RowFilter.regexFilter(""));
+        jTextField1.setText("");
+
 //leellenőrizzük , hogy változtatta e valaki a tervet (nem egyezik a getproperty az adatbazisban szereplo nevvel)
         planconnect pc = new planconnect();
 
@@ -1143,7 +1158,7 @@ public class Tc_Besheet extends javax.swing.JPanel {
                         String neve = Tc_Betervezo.Tervezotabbed.getTitleAt(n);
 
                         //kitoroljuk az oszlopokat
-                        DefaultTableModel model = (DefaultTableModel) Besheets.get(neve).jTable2.getModel();
+                        model = (DefaultTableModel) Besheets.get(neve).jTable2.getModel();
                         model.setColumnCount(4);
 
                         //oszlopok neve a datumbol
@@ -1707,7 +1722,7 @@ public class Tc_Besheet extends javax.swing.JPanel {
         neve = Tc_Betervezo.Tervezotabbed.getTitleAt(n);
 
         //kitoroljuk az oszlopokat
-        DefaultTableModel model = (DefaultTableModel) Besheets.get(neve).jTable2.getModel();
+        model = (DefaultTableModel) Besheets.get(neve).jTable2.getModel();
         model.setColumnCount(4);
 
         //oszlopok neve a datumbol
@@ -1832,6 +1847,16 @@ public class Tc_Besheet extends javax.swing.JPanel {
 
     private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
 
+        //kitoroljuk a szurot
+        DefaultTableModel model = new DefaultTableModel();
+        model = (DefaultTableModel) jTable2.getModel();
+        TableRowSorter<DefaultTableModel> tr = new TableRowSorter<DefaultTableModel>(model);
+
+        jTable2.setRowSorter(tr);
+
+        tr.setRowFilter(RowFilter.regexFilter(""));
+        jTextField1.setText("");
+
         //le kell ellenőrizni , hogy változott e a terv az eddigiekhez képesT
         //lekerjuk a cellahoz tartozo utolso id-t
         String query = "select max(tc_terv.idtc_terv) as id , tc_becells.cellname  \n"
@@ -1886,8 +1911,8 @@ public class Tc_Besheet extends javax.swing.JPanel {
             for (int r = 0; r < jTable2.getRowCount(); r++) {
                 String pn = "";
 
-                //ha van adat a cellaban es teny sorban vagyunk  akkor begyűjtjük 
-                if (jTable2.getValueAt(r, i) != null && !jTable2.getValueAt(r, i).equals("")&& !jTable2.getColumnName(i).equals("Sum: PN,JOB,WS") && jTable2.getValueAt(r, 3).toString().equals("Tény")) {
+//ha van adat a cellaban es teny sorban vagyunk  akkor begyűjtjük 
+                if (jTable2.getValueAt(r, i) != null && !jTable2.getValueAt(r, i).toString().equals("") && !jTable2.getColumnName(i).equals("Sum: PN,JOB,WS") && jTable2.getValueAt(r, 3).toString().equals("Tény")) {
                     String job = "";
                     String qty = "";
 
@@ -2050,7 +2075,7 @@ public class Tc_Besheet extends javax.swing.JPanel {
         neve = Tc_Betervezo.Tervezotabbed.getTitleAt(n);
 
         //kitoroljuk az oszlopokat
-        DefaultTableModel model = (DefaultTableModel) Besheets.get(neve).jTable2.getModel();
+        model = (DefaultTableModel) Besheets.get(neve).jTable2.getModel();
         model.setColumnCount(4);
 
         //oszlopok neve a datumbol
@@ -2298,6 +2323,10 @@ public class Tc_Besheet extends javax.swing.JPanel {
 
 
     }//GEN-LAST:event_jTable2PropertyChange
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     private void filter(String query) {
 

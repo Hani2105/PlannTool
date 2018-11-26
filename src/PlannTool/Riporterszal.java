@@ -141,22 +141,22 @@ public class Riporterszal extends Thread {
                 }
 
                 String tablaadat = "";
+                int szamlalo = 0;
 //vegigporgetjuk a rowdatát és ha nagyobb a days in loc mint a beállított és stimmel a prefix akkor berakjuk a html táblába
                 for (int i = 0; i < rowdata.length; i++) {
-                    int k = 0;
+
 //ha nagyobb a days in loc minbt ami be van allitva
                     if (Integer.parseInt(rowdata[i][3].toString()) >= age) {
 
                         for (int n = 0; n < prefixek.size(); n++) {
 
 //ha benne van a prefix a pn ben
-                            if (rowdata[i][1].toString().toLowerCase().contains(prefixek.get(k).toLowerCase())) {
+                            if (rowdata[i][1].toString().toLowerCase().contains(prefixek.get(n).toLowerCase())) {
 
                                 tablaadat += "<tr><td>" + rowdata[i][0].toString() + "</td><td>" + rowdata[i][1].toString() + "</td><td>" + rowdata[i][2].toString() + "</td><td>" + rowdata[i][3].toString() + "</td><td>" + rowdata[i][4].toString() + "</td></tr>";
-
+                                szamlalo++;
                             }
 
-                            k++;
                         }
 
                     }
@@ -185,6 +185,7 @@ public class Riporterszal extends Thread {
                         + "        <div>Days in loc nagyobb vagy egyenlő: " + age + " nap</div>\n"
                         + "        <div>Figyelt prefixek: " + prefixstzring + "</div>\n"
                         + "        <div>Küldés időpontja nagyobb mint: " + kuldesiido.toString().substring(0, kuldesiido.toString().length() - 4) + " óra</div></br></br>\n"
+                        + "        <div>Ezen beállítások szerint " + szamlalo + " db egység van a WIP-en!</div></br></br>\n"
                         + "<table border = \"5\"><th>Serial N</th><th>Part N</th><th>Location N</th><th>Days in Loc</th><th>Shop Order</th>";
 
                 level += tablaadat + "</table></body></html>";

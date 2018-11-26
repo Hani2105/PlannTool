@@ -1606,14 +1606,14 @@ public class Tc_Besheet extends javax.swing.JPanel {
                         //beirjuk a terv sorokat es ala mindenkeppen tenykent felvisszuk ugyanazon adatokat
                         if (t2.getValueAt(r, 3).toString().equals("Terv") && t2.getValueAt(r, 0) != null && t2.getValueAt(r, 2) != null && !t2.getValueAt(r, 0).toString().equals("") && t2.getValueAt(r, i) != null && !t2.getValueAt(r, i).toString().equals("") && !jTable2.getColumnName(i).equals("Sum: PN,JOB,WS")) {
                             //a tervwtf megahatarozasa
-                            int tervwtf = 0;
+                            int wtf = 0;
                             for (int sor = 0; sor <= r; sor++) {
 
 //ha van írva az adott cellába akkor hozzáadunk egyet a wtf hez
                                 try {
-                                    if (jTable2.getValueAt(sor, i).toString().length() >= 0) {
+                                    if (jTable2.getValueAt(sor, i).toString().length() >= 0 && jTable2.getValueAt(sor, 3).toString().equals("Terv") ) {
 
-                                        tervwtf++;
+                                        wtf++;
 
                                     }
                                 } catch (Exception e) {
@@ -1621,9 +1621,9 @@ public class Tc_Besheet extends javax.swing.JPanel {
 
                             }
 
-                            int tenywtf = tervwtf;
+                            
                             datum = t2.getColumnName(i).substring(0, 10) + ora;
-                            feltoltadat += "('" + cellid + "','" + wsid + "','" + pnid + "','" + job + "','" + datum + "','" + t2.getValueAt(r, i) + "','" + tervwtf + "'," + 0 + ",'" + System.getProperty("user.name") + "'),";
+                            feltoltadat += "('" + cellid + "','" + wsid + "','" + pnid + "','" + job + "','" + datum + "','" + t2.getValueAt(r, i) + "','" + wtf + "'," + 0 + ",'" + System.getProperty("user.name") + "'),";
 //feltoltjuk tenykent is , ehhez kell a darabszam
 
                             String qty = "0";
@@ -1637,7 +1637,7 @@ public class Tc_Besheet extends javax.swing.JPanel {
                             } catch (Exception e) {
                             }
 
-                            feltoltadat += "('" + cellid + "','" + wsid + "','" + pnid + "','" + job + "','" + datum + "','" + qty + "','" + tenywtf + "'," + 1 + ",'" + System.getProperty("user.name") + "'),";
+                            feltoltadat += "('" + cellid + "','" + wsid + "','" + pnid + "','" + job + "','" + datum + "','" + qty + "','" + wtf + "'," + 1 + ",'" + System.getProperty("user.name") + "'),";
 
                         }
 
@@ -1919,14 +1919,14 @@ public class Tc_Besheet extends javax.swing.JPanel {
                     if (jTable2.getValueAt(r, i) != null && !jTable2.getValueAt(r, i).toString().equals("") && !jTable2.getColumnName(i).equals("Sum: PN,JOB,WS") && jTable2.getValueAt(r, 3).toString().equals("Tény")) {
                         String job = "";
                         String qty = "";
-                        int tervwtf = 0;
+                        int wtf = 0;
                         for (int sor = 0; sor <= r; sor++) {
 
 //ha van írva az adott cellába akkor hozzáadunk egyet a wtf hez
                             try {
-                                if (jTable2.getValueAt(sor, i).toString().length() >= 0) {
+                                if (jTable2.getValueAt(sor, i).toString().length() >= 0 && jTable2.getValueAt(sor, 3).toString().equals("Tény") ) {
 
-                                    tervwtf++;
+                                    wtf++;
 
                                 }
                             } catch (Exception e) {
@@ -1943,7 +1943,7 @@ public class Tc_Besheet extends javax.swing.JPanel {
                         } catch (Exception e) {
                         }
                         try {
-                            adat += "('" + jTable2.getColumnName(i).substring(0, 16) + ":00',(select tc_becells.idtc_cells from tc_becells where tc_becells.cellname = '" + Tc_Betervezo.Tervezotabbed.getTitleAt(Tc_Betervezo.Tervezotabbed.getSelectedIndex()) + "'),(select tc_bestations.idtc_bestations from tc_bestations where tc_bestations.workstation = '" + jTable2.getValueAt(r, 2).toString() + "'),(select tc_bepns.idtc_bepns from tc_bepns where tc_bepns.partnumber = '" + jTable2.getValueAt(r, 0).toString() + "'),'" + qty + "','" + tervwtf + "','2','1','" + System.getProperty("user.name") + "','" + job + "'),";
+                            adat += "('" + jTable2.getColumnName(i).substring(0, 16) + ":00',(select tc_becells.idtc_cells from tc_becells where tc_becells.cellname = '" + Tc_Betervezo.Tervezotabbed.getTitleAt(Tc_Betervezo.Tervezotabbed.getSelectedIndex()) + "'),(select tc_bestations.idtc_bestations from tc_bestations where tc_bestations.workstation = '" + jTable2.getValueAt(r, 2).toString() + "'),(select tc_bepns.idtc_bepns from tc_bepns where tc_bepns.partnumber = '" + jTable2.getValueAt(r, 0).toString() + "'),'" + qty + "','" + wtf + "','2','1','" + System.getProperty("user.name") + "','" + job + "'),";
                         } catch (Exception e) {
                         }
 
@@ -1951,7 +1951,7 @@ public class Tc_Besheet extends javax.swing.JPanel {
                         try {
                             if (jTable2.getValueAt(r - 1, 3).equals("Tény")) {
 
-                                adat += "('" + jTable2.getColumnName(i).substring(0, 16) + ":00',(select tc_becells.idtc_cells from tc_becells where tc_becells.cellname = '" + Tc_Betervezo.Tervezotabbed.getTitleAt(Tc_Betervezo.Tervezotabbed.getSelectedIndex()) + "'),(select tc_bestations.idtc_bestations from tc_bestations where tc_bestations.workstation = '" + jTable2.getValueAt(r, 2).toString() + "'),(select tc_bepns.idtc_bepns from tc_bepns where tc_bepns.partnumber = '" + jTable2.getValueAt(r, 0).toString() + "'),'0','" + tervwtf + "','2','0','" + System.getProperty("user.name") + "','" + job + "'),";
+                                adat += "('" + jTable2.getColumnName(i).substring(0, 16) + ":00',(select tc_becells.idtc_cells from tc_becells where tc_becells.cellname = '" + Tc_Betervezo.Tervezotabbed.getTitleAt(Tc_Betervezo.Tervezotabbed.getSelectedIndex()) + "'),(select tc_bestations.idtc_bestations from tc_bestations where tc_bestations.workstation = '" + jTable2.getValueAt(r, 2).toString() + "'),(select tc_bepns.idtc_bepns from tc_bepns where tc_bepns.partnumber = '" + jTable2.getValueAt(r, 0).toString() + "'),'0','" + wtf + "','2','0','" + System.getProperty("user.name") + "','" + job + "'),";
 
                             }
                         } catch (Exception e) {

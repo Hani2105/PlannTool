@@ -68,29 +68,8 @@ public class ablak extends javax.swing.JFrame {
 
         initComponents();
 
-//revizio beallitas , lekerdezes
-        String query = "SELECT revizio FROM planningdb.tc_rev order by tc_rev.idtc_rev desc limit 1";
-
-        planconnect pc = new planconnect();
-        try {
-            pc.planconnect(query);
-
-            while (pc.rs.next()) {
-
-                rev = pc.rs.getString(1);
-
-            }
-
-        } catch (Exception e) {
-        }
-
-//osszehasonlitjuk a frame nevet a revizioval
-        if (!this.getTitle().equals(rev)) {
-
-            infobox info = new infobox();
-            info.infoBox("Nem a legfrisebb programot használod! Kérlek innen indítsd: S:\\SiteData\\BUD1\\EMS\\Manufacturing\\Gyártástervek\\Report\\keszlet\\PlannTool.bat", "Hiba!");
-            System.exit(0);
-        }
+        Revconrolszal r = new Revconrolszal(this);
+        r.start();
 
         seticon();
 
@@ -154,6 +133,7 @@ public class ablak extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel6 = new javax.swing.JPanel();
         jScrollPane7 = new javax.swing.JScrollPane();
         jTabbedPane1 = new javax.swing.JTabbedPane();
@@ -337,9 +317,12 @@ public class ablak extends javax.swing.JFrame {
             jTextField24 = new javax.swing.JTextField();
             jButton24 = new javax.swing.JButton();
             jButton25 = new javax.swing.JButton();
+            jRadioButton1 = new javax.swing.JRadioButton();
+            jLabel52 = new javax.swing.JLabel();
+            jRadioButton2 = new javax.swing.JRadioButton();
 
             setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-            setTitle("PlannTool R_2.0");
+            setTitle("PlannTool R_2.2");
             setLocation(new java.awt.Point(500, 300));
 
             jPanel6.setPreferredSize(new java.awt.Dimension(1100, 550));
@@ -2958,6 +2941,20 @@ public class ablak extends javax.swing.JFrame {
                 }
             });
 
+            buttonGroup1.add(jRadioButton1);
+            jRadioButton1.setSelected(true);
+            jRadioButton1.setText("Not Need");
+
+            jLabel52.setText("Restart:");
+
+            buttonGroup1.add(jRadioButton2);
+            jRadioButton2.setText("Needed");
+            jRadioButton2.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    jRadioButton2ActionPerformed(evt);
+                }
+            });
+
             javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
             jPanel12.setLayout(jPanel12Layout);
             jPanel12Layout.setHorizontalGroup(
@@ -2968,24 +2965,26 @@ public class ablak extends javax.swing.JFrame {
                         .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel12Layout.createSequentialGroup()
+                                    .addGap(37, 37, 37)
                                     .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                         .addGroup(jPanel12Layout.createSequentialGroup()
-                                            .addGap(57, 57, 57)
                                             .addComponent(jLabel40, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGap(162, 162, 162))
-                                        .addGroup(jPanel12Layout.createSequentialGroup()
+                                            .addGap(162, 162, 162)
                                             .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                 .addGroup(jPanel12Layout.createSequentialGroup()
                                                     .addGap(12, 12, 12)
-                                                    .addComponent(jButton23, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                .addComponent(jTextField22, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addGap(156, 156, 156)))
-                                    .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(jLabel43, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addComponent(jLabel45))
+                                            .addGap(204, 204, 204))
                                         .addGroup(jPanel12Layout.createSequentialGroup()
-                                            .addGap(12, 12, 12)
-                                            .addComponent(jLabel43, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addComponent(jLabel45))
-                                    .addGap(204, 204, 204))
+                                            .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                .addGroup(jPanel12Layout.createSequentialGroup()
+                                                    .addComponent(jTextField22, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addGap(18, 18, 18))
+                                                .addGroup(jPanel12Layout.createSequentialGroup()
+                                                    .addComponent(jButton23, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addGap(35, 35, 35)))
+                                            .addComponent(jScrollPane19, javax.swing.GroupLayout.PREFERRED_SIZE, 428, javax.swing.GroupLayout.PREFERRED_SIZE))))
                                 .addGroup(jPanel12Layout.createSequentialGroup()
                                     .addContainerGap()
                                     .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -3024,12 +3023,16 @@ public class ablak extends javax.swing.JFrame {
                                 .addGap(273, 273, 273)
                                 .addComponent(jLabel46, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel12Layout.createSequentialGroup()
-                                .addGap(167, 167, 167)
+                                .addContainerGap()
+                                .addComponent(jRadioButton1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jScrollPane19, javax.swing.GroupLayout.PREFERRED_SIZE, 428, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(jPanel12Layout.createSequentialGroup()
                                         .addGap(12, 12, 12)
-                                        .addComponent(jLabel44, javax.swing.GroupLayout.PREFERRED_SIZE, 373, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                        .addComponent(jRadioButton2))
+                                    .addComponent(jLabel52, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(83, 83, 83)
+                                .addComponent(jLabel44, javax.swing.GroupLayout.PREFERRED_SIZE, 373, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel12Layout.createSequentialGroup()
                             .addGap(47, 47, 47)
@@ -3052,7 +3055,7 @@ public class ablak extends javax.swing.JFrame {
                                     .addComponent(jLabel49, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel51, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addComponent(jTextField24, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addContainerGap(59, Short.MAX_VALUE))
+                            .addContainerGap(39, Short.MAX_VALUE))
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel12Layout.createSequentialGroup()
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -3125,10 +3128,16 @@ public class ablak extends javax.swing.JFrame {
                                 .addComponent(jLabel45)
                                 .addComponent(jLabel40, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addGroup(jPanel12Layout.createSequentialGroup()
                                     .addComponent(jTextField22, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel52)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(jRadioButton1)
+                                        .addComponent(jRadioButton2))
+                                    .addGap(30, 30, 30)
                                     .addComponent(jButton23))
                                 .addGroup(jPanel12Layout.createSequentialGroup()
                                     .addComponent(jLabel43, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -4274,7 +4283,14 @@ public class ablak extends javax.swing.JFrame {
         planconnect pc = new planconnect();
 // az insert query
 
-        String query = "insert into tc_rev (revizio , megjegyzes) values ('" + jTextField22.getText() + "','" + jTextArea2.getText() + "')";
+        int resi = 0;
+        
+        if(jRadioButton2.isSelected()){
+        
+        resi = 1;
+        
+        }
+        String query = "insert into tc_rev (revizio , megjegyzes , restart) values ('" + jTextField22.getText() + "','" + jTextArea2.getText() + "','" + resi + "')";
 
         pc.feltolt(query, true);
 
@@ -4349,6 +4365,10 @@ public class ablak extends javax.swing.JFrame {
 
         Riporter();
     }//GEN-LAST:event_jButton25ActionPerformed
+
+    private void jRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jRadioButton2ActionPerformed
 
     public void gombenged() {
 
@@ -4477,6 +4497,7 @@ public class ablak extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton11;
@@ -4555,6 +4576,7 @@ public class ablak extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel50;
     private javax.swing.JLabel jLabel51;
+    private javax.swing.JLabel jLabel52;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
@@ -4572,6 +4594,8 @@ public class ablak extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
+    private javax.swing.JRadioButton jRadioButton1;
+    private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane10;
     private javax.swing.JScrollPane jScrollPane11;

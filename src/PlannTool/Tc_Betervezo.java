@@ -555,7 +555,6 @@ public class Tc_Betervezo extends javax.swing.JFrame {
                 Besheets.get(Tervezotabbed.getTitleAt(i)).jButton11.setEnabled(true);
                 Besheets.get(Tervezotabbed.getTitleAt(i)).jButton10.setEnabled(false);
                 Besheets.get(Tervezotabbed.getTitleAt(i)).DeleteRow.setEnabled(false);
-                
 
             }
 
@@ -567,6 +566,20 @@ public class Tc_Betervezo extends javax.swing.JFrame {
             for (int i = 0; i < Tervezotabbed.getTabCount(); i++) {
 
                 Besheets.get(Tervezotabbed.getTitleAt(i)).jButton11.setEnabled(false);
+                Besheets.get(Tervezotabbed.getTitleAt(i)).jButton10.setEnabled(true);
+                Besheets.get(Tervezotabbed.getTitleAt(i)).DeleteRow.setEnabled(true);
+
+            }
+
+        }
+
+        if (System.getProperty("user.name").equals("gabor_hanacsek")) {
+
+            Tc_Betervezo.jButton2.setEnabled(true);
+            Tc_Betervezo.jButton5.setEnabled(true);
+            for (int i = 0; i < Tervezotabbed.getTabCount(); i++) {
+
+                Besheets.get(Tervezotabbed.getTitleAt(i)).jButton11.setEnabled(true);
                 Besheets.get(Tervezotabbed.getTitleAt(i)).jButton10.setEnabled(true);
                 Besheets.get(Tervezotabbed.getTitleAt(i)).DeleteRow.setEnabled(true);
 
@@ -756,7 +769,7 @@ public class Tc_Betervezo extends javax.swing.JFrame {
                     + "left join tc_bestations on tc_bestations.idtc_bestations = tc_terv.idtc_bestations\n"
                     + "left join tc_becells on tc_becells.idtc_cells = tc_terv.idtc_becells\n"
                     + "where tc_terv.date between '" + fmt.print(dtOrg) + " 06:00:00" + "' and '" + columneve + ":00" + "' and tc_terv.active = 2 and tc_becells.cellname = '" + neve + "'  \n"
-                    + "order by   tc_terv.date , tc_terv.wtf , tc_terv.tt desc";
+                    + "order by   tc_terv.date asc, tc_terv.wtf asc, tc_terv.tt asc";
 
             //feldolgozzuk az eredmenyt
             planconnect pc = new planconnect();
@@ -801,7 +814,7 @@ public class Tc_Betervezo extends javax.swing.JFrame {
             Tc_Betervezo.Besheets.get(neve).jTable2.setModel(model);
 
             //Tc_Betervezo.jTabbedPane1.setSelectedIndex(b);
-            Tc_Calculator calc = new Tc_Calculator(Tc_Betervezo.Besheets.get(neve),false,0);
+            Tc_Calculator calc = new Tc_Calculator(Tc_Betervezo.Besheets.get(neve), false, 0);
 
         }
 
@@ -1020,7 +1033,7 @@ public class Tc_Betervezo extends javax.swing.JFrame {
             }
 
             Besheets.get(neve).jTable2.setModel(model);
-            Tc_Calculator calc = new Tc_Calculator(Besheets.get(neve),false,0);
+            Tc_Calculator calc = new Tc_Calculator(Besheets.get(neve), false, 0);
 
         }
     }//GEN-LAST:event_jButton3KeyPressed

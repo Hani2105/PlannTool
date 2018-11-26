@@ -1906,69 +1906,59 @@ public class Tc_Besheet extends javax.swing.JPanel {
         //bejarjuk az oszlopokat 4 től
         query = "insert into tc_terv (date , idtc_becells , idtc_bestations , idtc_bepns , qty , wtf , active , tt , user , job ) values";
         String adat = "";
+
+//elinditjuk az oszlopok bejarasat
         for (int i = 4; i < jTable2.getColumnCount(); i++) {
+
             //elinditjuk a sorok bejarasat is
             for (int r = 0; r < jTable2.getRowCount(); r++) {
-                String pn = "";
 
+//ha nem infó a sor 
+                if (!jTable2.getValueAt(r, 3).equals("Infó")) {
 //ha van adat a cellaban es teny sorban vagyunk  akkor begyűjtjük 
-                if (jTable2.getValueAt(r, i) != null && !jTable2.getValueAt(r, i).toString().equals("") && !jTable2.getColumnName(i).equals("Sum: PN,JOB,WS") && jTable2.getValueAt(r, 3).toString().equals("Tény")) {
-                    String job = "";
-                    String qty = "";
-
-//a wtf meghatarozasa , bejarjuk a sorokat es megszamoljuk , hogy amig elerunk r ig hany olyan sor van amiben van iras
-                    int wtf = 0;
-                    for (int sor = 0; sor <= r; sor++) {
+                    if (jTable2.getValueAt(r, i) != null && !jTable2.getValueAt(r, i).toString().equals("") && !jTable2.getColumnName(i).equals("Sum: PN,JOB,WS") && jTable2.getValueAt(r, 3).toString().equals("Tény")) {
+                        String job = "";
+                        String qty = "";
+                        int tervwtf = 0;
+                        for (int sor = 0; sor <= r; sor++) {
 
 //ha van írva az adott cellába akkor hozzáadunk egyet a wtf hez
-                        try {
-                            if (jTable2.getValueAt(sor, i).toString().length() >= 0) {
+                            try {
+                                if (jTable2.getValueAt(sor, i).toString().length() >= 0) {
 
-                                wtf++;
+                                    tervwtf++;
+
+                                }
+                            } catch (Exception e) {
+                            }
+
+                        }
+
+                        try {
+                            job = jTable2.getValueAt(r, 1).toString();
+                        } catch (Exception e) {
+                        }
+                        try {
+                            qty = jTable2.getValueAt(r, i).toString();
+                        } catch (Exception e) {
+                        }
+                        try {
+                            adat += "('" + jTable2.getColumnName(i).substring(0, 16) + ":00',(select tc_becells.idtc_cells from tc_becells where tc_becells.cellname = '" + Tc_Betervezo.Tervezotabbed.getTitleAt(Tc_Betervezo.Tervezotabbed.getSelectedIndex()) + "'),(select tc_bestations.idtc_bestations from tc_bestations where tc_bestations.workstation = '" + jTable2.getValueAt(r, 2).toString() + "'),(select tc_bepns.idtc_bepns from tc_bepns where tc_bepns.partnumber = '" + jTable2.getValueAt(r, 0).toString() + "'),'" + qty + "','" + tervwtf + "','2','1','" + System.getProperty("user.name") + "','" + job + "'),";
+                        } catch (Exception e) {
+                        }
+
+//megvizsgaljuk , hogy a felette levo sor is teny e , ha igen akkor beszurunk nulla darabbal egy terv sort a wtf el fölé
+                        try {
+                            if (jTable2.getValueAt(r - 1, 3).equals("Tény")) {
+
+                                adat += "('" + jTable2.getColumnName(i).substring(0, 16) + ":00',(select tc_becells.idtc_cells from tc_becells where tc_becells.cellname = '" + Tc_Betervezo.Tervezotabbed.getTitleAt(Tc_Betervezo.Tervezotabbed.getSelectedIndex()) + "'),(select tc_bestations.idtc_bestations from tc_bestations where tc_bestations.workstation = '" + jTable2.getValueAt(r, 2).toString() + "'),(select tc_bepns.idtc_bepns from tc_bepns where tc_bepns.partnumber = '" + jTable2.getValueAt(r, 0).toString() + "'),'0','" + tervwtf + "','2','0','" + System.getProperty("user.name") + "','" + job + "'),";
 
                             }
                         } catch (Exception e) {
                         }
-
                     }
 
-                    //int tenywtf = (r * i);
-                    int tervteny;
-
-                    //terv vagy teny?
-                    if (jTable2.getValueAt(r, 3).toString().equals("Terv")) {
-
-                        tervteny = 0;
-
-                    } else {
-
-                        tervteny = 1;
-                    }
-
-                    try {
-                        job = jTable2.getValueAt(r, 1).toString();
-                    } catch (Exception e) {
-                    }
-                    try {
-                        qty = jTable2.getValueAt(r, i).toString();
-                    } catch (Exception e) {
-                    }
-                    try {
-                        adat += "('" + jTable2.getColumnName(i).substring(0, 16) + ":00',(select tc_becells.idtc_cells from tc_becells where tc_becells.cellname = '" + Tc_Betervezo.Tervezotabbed.getTitleAt(Tc_Betervezo.Tervezotabbed.getSelectedIndex()) + "'),(select tc_bestations.idtc_bestations from tc_bestations where tc_bestations.workstation = '" + jTable2.getValueAt(r, 2).toString() + "'),(select tc_bepns.idtc_bepns from tc_bepns where tc_bepns.partnumber = '" + jTable2.getValueAt(r, 0).toString() + "'),'" + qty + "','" + wtf + "','2','1','" + System.getProperty("user.name") + "','" + job + "'),";
-                    } catch (Exception e) {
-                    }
-
-//megvizsgaljuk , hogy a felette levo sor is teny e , ha igen akkor beszurunk nulla darabbal egy terv sort a wtf el fölé
-                    try {
-                        if (jTable2.getValueAt(r - 1, 3).equals("Tény")) {
-
-                            adat += "('" + jTable2.getColumnName(i).substring(0, 16) + ":00',(select tc_becells.idtc_cells from tc_becells where tc_becells.cellname = '" + Tc_Betervezo.Tervezotabbed.getTitleAt(Tc_Betervezo.Tervezotabbed.getSelectedIndex()) + "'),(select tc_bestations.idtc_bestations from tc_bestations where tc_bestations.workstation = '" + jTable2.getValueAt(r, 2).toString() + "'),(select tc_bepns.idtc_bepns from tc_bepns where tc_bepns.partnumber = '" + jTable2.getValueAt(r, 0).toString() + "'),'0','" + wtf + "','2','0','" + System.getProperty("user.name") + "','" + job + "'),";
-
-                        }
-                    } catch (Exception e) {
-                    }
                 }
-
             }
 
         }

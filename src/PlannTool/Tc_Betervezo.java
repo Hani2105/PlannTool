@@ -138,6 +138,8 @@ public class Tc_Betervezo extends javax.swing.JFrame {
 
         }
 
+        pc.kinyir();
+
         //lekerdezzuk a ciklusidoket
         String query = "select tc_becells.cellname , tc_bepns.partnumber , tc_bestations.workstation , tc_prodmatrix.ciklusido from tc_prodmatrix \n"
                 + "left join tc_becells on tc_becells.idtc_cells = tc_prodmatrix.id_tc_becells \n"
@@ -161,6 +163,8 @@ public class Tc_Betervezo extends javax.swing.JFrame {
 
             i++;
         }
+
+        pc.kinyir();
 
         this.ciklusidok.add(ciklusidok);
 
@@ -507,6 +511,8 @@ public class Tc_Betervezo extends javax.swing.JFrame {
 
         }
 
+        pc.kinyir();
+
     }
 
     public static void wscheck() throws SQLException, ClassNotFoundException {
@@ -522,6 +528,8 @@ public class Tc_Betervezo extends javax.swing.JFrame {
             works.add(pc.rs.getString(1));
 
         }
+
+        pc.kinyir();
 
     }
 
@@ -769,7 +777,7 @@ public class Tc_Betervezo extends javax.swing.JFrame {
                     + "left join tc_bestations on tc_bestations.idtc_bestations = tc_terv.idtc_bestations\n"
                     + "left join tc_becells on tc_becells.idtc_cells = tc_terv.idtc_becells\n"
                     + "where tc_terv.date between '" + fmt.print(dtOrg) + " 06:00:00" + "' and '" + columneve + ":00" + "' and tc_terv.active = 2 and tc_becells.cellname = '" + neve + "'  \n"
-                    + "order by   tc_terv.date asc, tc_terv.wtf asc, tc_terv.tt asc";
+                    + "order by   tc_terv.date asc, tc_terv.wtf asc, tc_terv.tt asc , tc_terv.timestamp desc";
 
             //feldolgozzuk az eredmenyt
             planconnect pc = new planconnect();
@@ -811,6 +819,7 @@ public class Tc_Betervezo extends javax.swing.JFrame {
                 Logger.getLogger(Tc_Betervezo.class.getName()).log(Level.SEVERE, null, ex);
             }
 
+            pc.kinyir();
             Tc_Betervezo.Besheets.get(neve).jTable2.setModel(model);
 
             //Tc_Betervezo.jTabbedPane1.setSelectedIndex(b);
@@ -833,8 +842,14 @@ public class Tc_Betervezo extends javax.swing.JFrame {
 
         for (int i = 0; i < Integer.parseInt(jTextField1.getText()); i++) {
 
-            t2.addRow(new Object[]{null, null, null, "Terv"});
-            t2.addRow(new Object[]{null, null, null, "Tény"});
+            if (ablak.planner == true) {
+                t2.addRow(new Object[]{null, null, null, "Terv"});
+                t2.addRow(new Object[]{null, null, null, "Tény"});
+            } else {
+
+                t2.addRow(new Object[]{null, null, null, "Tény"});
+
+            }
 
         }
 
@@ -1032,6 +1047,7 @@ public class Tc_Betervezo extends javax.swing.JFrame {
                         .getName()).log(Level.SEVERE, null, ex);
             }
 
+            pc.kinyir();
             Besheets.get(neve).jTable2.setModel(model);
             Tc_Calculator calc = new Tc_Calculator(Besheets.get(neve), false, 0);
 

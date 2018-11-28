@@ -433,6 +433,8 @@ public class Tc_Segedletablak extends javax.swing.JFrame {
                     tvt = "Tény";
 
                 }
+                
+                
 
                 //bejarjuk a tabla sorait es megnezzuk hogy irtunk e mar ilyen pn-t , ws-t es cellat es megenzzuk h terv vagy teny
                 for (int r = 0; r < model2.getRowCount(); r++) {
@@ -475,6 +477,8 @@ public class Tc_Segedletablak extends javax.swing.JFrame {
                 }
 
             }
+            
+        pc.kinyir();
         } catch (SQLException ex) {
             Logger.getLogger(Tc_Segedletablak.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -13,6 +13,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
@@ -23,6 +25,7 @@ import javax.swing.table.TableModel;
 public class planconnect {
 
     public ResultSet rs;
+    public Connection conn;
 
     public Object planconnect(String startQuery) throws SQLException, ClassNotFoundException {
 
@@ -32,8 +35,9 @@ public class planconnect {
         String password = "plan500";
         Class.forName("com.mysql.jdbc.Driver");
 
-        Connection conn = (Connection) DriverManager.getConnection(url, username, password);
+        this.conn = (Connection) DriverManager.getConnection(url, username, password);
         Statement st = conn.createStatement();
+
         rs = st.executeQuery(startQuery);
 
         return rs;
@@ -107,6 +111,20 @@ public class planconnect {
             } catch (SQLException se) {
                 se.printStackTrace();
             }
+        }
+
+    }
+
+    public void kinyir() {
+
+        try {
+            if (conn != null) {
+                this.rs.close();
+                this.conn.close();
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(planconnect.class.getName()).log(Level.SEVERE, null, ex);
+
         }
 
     }

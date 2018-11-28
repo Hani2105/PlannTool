@@ -153,11 +153,9 @@ public class Tc_Visszaallito extends javax.swing.JFrame {
                 + "set tc_terv.active = '1' \n"
                 + "where tc_terv.active = 3 and tc_terv.date between '" + tol + "' and '" + ig + "' and tc_becells.cellname = '" + sheetname + "'";
         pc.feltolt(updatequery, false);
-        
-        
+
         //lekerjuk az oldal adatai ujbol
-        
-         //eltesszuk az adatokat az ellenorzeshez , hogy valtozott e a terv
+        //eltesszuk az adatokat az ellenorzeshez , hogy valtozott e a terv
         Tc_Tervvaltozasellenor.tervellenor.clear();
         Tc_Tervvaltozasellenor t = new Tc_Tervvaltozasellenor();
         try {
@@ -293,7 +291,7 @@ public class Tc_Visszaallito extends javax.swing.JFrame {
                 + "order by tc_terv.date , tc_terv.wtf";
 
         //feldolgozzuk az eredmenyt
-       pc = new planconnect();
+        pc = new planconnect();
         try {
             pc.planconnect(Query);
             model.setRowCount(0);
@@ -331,9 +329,9 @@ public class Tc_Visszaallito extends javax.swing.JFrame {
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Tc_Betervezo.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        pc.kinyir();
         Besheets.get(neve).jTable2.setModel(model);
-        Tc_Calculator calc = new Tc_Calculator(Besheets.get(neve),false,0);
+        Tc_Calculator calc = new Tc_Calculator(Besheets.get(neve), false, 0);
         this.setVisible(false);
 
 

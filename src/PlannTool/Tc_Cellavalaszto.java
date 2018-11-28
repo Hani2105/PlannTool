@@ -43,6 +43,8 @@ public class Tc_Cellavalaszto extends javax.swing.JFrame {
             lm1.addElement(rs.getString(2));
 
         }
+        
+        pc.kinyir();
 
         jList1.setModel(lm1);
 
@@ -55,6 +57,8 @@ public class Tc_Cellavalaszto extends javax.swing.JFrame {
             jComboBox1.addItem(pc.rs.getString(2));
 
         }
+        
+        pc.kinyir();
 
         jComboBox1.setSelectedIndex(-1);
 
@@ -184,6 +188,8 @@ public class Tc_Cellavalaszto extends javax.swing.JFrame {
                 querybe += pc.rs.getString(1) + ",";
 
             }
+            
+            pc.kinyir();
 
             querybe = querybe.substring(0, querybe.length() - 1);
 
@@ -260,6 +266,8 @@ public class Tc_Cellavalaszto extends javax.swing.JFrame {
                 while (pc.rs.next()) {
                     lm2.addElement(pc.rs.getString(1));
                 }
+                
+                pc.kinyir();
 
                 jList2.setModel(lm2);
 
@@ -273,6 +281,8 @@ public class Tc_Cellavalaszto extends javax.swing.JFrame {
             lm2.removeAllElements();
             jList2.setModel(lm2);
         }
+        
+        
 
 
     }//GEN-LAST:event_jComboBox1ActionPerformed

@@ -205,7 +205,7 @@ public class Tc_Bejelentkezes extends javax.swing.JFrame {
                 if (truee.equals("true") && (Integer.parseInt(poz) == 1 || Integer.parseInt(poz) == 2 || Integer.parseInt(poz) == 4)) {
 //sikeres bejelentkezes
                     ablak.planner = true;
-                    
+
                     if (nyit == true) {
                         Tc_Betervezo b = new Tc_Betervezo(az);
                         b.setVisible(true);
@@ -283,6 +283,7 @@ public class Tc_Bejelentkezes extends javax.swing.JFrame {
             ResultSet rs = null;
             try {
                 rs = (ResultSet) pc.planconnect(query);
+
             } catch (SQLException ex) {
                 Logger.getLogger(Tc_Bejelentkezes.class.getName()).log(Level.SEVERE, null, ex);
             } catch (ClassNotFoundException ex) {
@@ -298,7 +299,7 @@ public class Tc_Bejelentkezes extends javax.swing.JFrame {
                     if (truee.equals("true") && (Integer.parseInt(poz) == 1 || Integer.parseInt(poz) == 2 || Integer.parseInt(poz) == 4)) {
 //sikeres bejelentkezes
                         ablak.planner = true;
-                        
+
                         if (nyit == true) {
                             Tc_Betervezo b = new Tc_Betervezo(az);
                             b.setVisible(true);
@@ -331,6 +332,8 @@ public class Tc_Bejelentkezes extends javax.swing.JFrame {
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(Tc_Bejelentkezes.class.getName()).log(Level.SEVERE, null, ex);
             }
+
+            pc.kinyir();
 
         }
 

@@ -28,12 +28,17 @@ public class Riporterszal extends Thread {
     //ez az ora ami utan kuldhetjuk
     private static String kuldesora = "";
 
+    
+
     public void run() {
+        
+        planconnect pc = new planconnect();
 
         while (true) {
+
 //megvizsgaljuk hogy kell e futtatni a riportert , lekerdezzuk a tc_riport_kuldest es a tc riport idot
             String query = "SELECT * FROM planningdb.tc_riport_kuldes order by idtc_riport_kuldes desc limit 1";
-            planconnect pc = new planconnect();
+
             try {
                 pc.planconnect(query);
                 while (pc.rs.next()) {
@@ -41,6 +46,8 @@ public class Riporterszal extends Thread {
                     idopont = pc.rs.getString(2);
 
                 }
+                
+                pc.kinyir();
 
                 idopont = idopont.substring(0, idopont.length() - 10);
                 idopont = idopont.trim();
@@ -59,6 +66,8 @@ public class Riporterszal extends Thread {
                     kuldesora = pc.rs.getString(2);
 
                 }
+
+                pc.kinyir();
 
                 kuldesora = kuldesora.substring(0, kuldesora.length() - 1);
 
@@ -115,6 +124,8 @@ public class Riporterszal extends Thread {
                         prefixek.add(pc.rs.getString(2));
 
                     }
+                    
+                    pc.kinyir();
 
                 } catch (SQLException ex) {
                     Logger.getLogger(Riporterszal.class.getName()).log(Level.SEVERE, null, ex);
@@ -133,6 +144,8 @@ public class Riporterszal extends Thread {
                         age = pc.rs.getInt(3);
 
                     }
+                    
+                    pc.kinyir();
 
                 } catch (SQLException ex) {
                     Logger.getLogger(Riporterszal.class.getName()).log(Level.SEVERE, null, ex);
@@ -203,6 +216,8 @@ public class Riporterszal extends Thread {
                         cimzettek += pc.rs.getString(1) + ",";
 
                     }
+                    
+                    pc.kinyir();
 
 //kikuldjuk a levelet
                 } catch (SQLException ex) {
@@ -229,13 +244,16 @@ public class Riporterszal extends Thread {
 // itt van az if vége , amit ciklusban szeretnenk futtatni
             }
 
+            pc.kinyir();
+
             try {
-                Thread.sleep(30 * 60 * 1000);
+                Thread.sleep(30 *60 * 1000);
             } catch (InterruptedException ex) {
                 Logger.getLogger(Riporterszal.class.getName()).log(Level.SEVERE, null, ex);
             }
 
         }
+
     }
 
 }

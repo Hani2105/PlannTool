@@ -46,6 +46,8 @@ public class nincskeszoh extends javax.swing.JFrame {
         
         }
         
+        pc.kinyir();
+        
         jTable1.setModel(model);
         jTable2.setModel(model1);
         

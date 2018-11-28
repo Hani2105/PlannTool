@@ -93,6 +93,8 @@ public class OhQueryszal extends Thread {
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
             }
+            
+            planconnection_temp.kinyir();
 
             for (int x = 0; x < api_array.length; x++) {
 

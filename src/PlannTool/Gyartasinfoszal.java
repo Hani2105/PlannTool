@@ -17,7 +17,7 @@ import javax.swing.table.DefaultTableModel;
  * @author gabor_hanacsek
  */
 public class Gyartasinfoszal extends Thread {
-    
+
     public void run() {
 
         //felvesszuk a query változóját
@@ -26,11 +26,11 @@ public class Gyartasinfoszal extends Thread {
 
             //ha van írva valami a pn oszlopba
             if (ablak.jTable15.getValueAt(i, 0) != null && !ablak.jTable15.getValueAt(i, 0).toString().equals("")) {
-                
+
                 valtozo += " terv.partnumber like '%" + ablak.jTable15.getValueAt(i, 0).toString() + "%' or";
-                
+
             }
-            
+
         }
 
         //levagjuk az utolso or-t
@@ -61,19 +61,19 @@ public class Gyartasinfoszal extends Thread {
 
         //kitoroljuk a modell adatait
         for (int o = 0; o < ablak.jTable15.getColumnCount(); o++) {
-            
+
             for (int r = 0; r < ablak.jTable15.getRowCount(); r++) {
-                
+
                 model.setValueAt("", r, o);
-                
+
             }
-            
+
         }
-        
+
         try {
             //betesszuk az eredmenyt tablaba
             while (pc.rs.next()) {
-                
+
                 model.setValueAt(pc.rs.getString(1), i, 0);
                 model.setValueAt(pc.rs.getString(2), i, 1);
                 model.setValueAt(pc.rs.getString(3), i, 2);
@@ -81,21 +81,24 @@ public class Gyartasinfoszal extends Thread {
                 model.setValueAt(pc.rs.getString(5), i, 4);
                 model.setValueAt(pc.rs.getString(6), i, 5);
                 i++;
-                
+
                 if (i > 30) {
-                    
+
                     model.addRow(new Object[6]);
-                    
+
                 }
-                
+
             }
+
         } catch (Exception ex) {
-            
+
         }
-        
+
         stat.beir(System.getProperty("user.name"), jTabbedPane1.getTitleAt(jTabbedPane1.getSelectedIndex()), "", "gabor.hanacsek@sanmina.com");
         animation.rajzol = false;
         
+        pc.kinyir();
+
     }
-    
+
 }

@@ -45,9 +45,14 @@ public class Revconrolszal extends Thread {
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Revconrolszal.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        pc.kinyir();
 
         //revizio beallitas , lekerdezes
         while (1 == 1) {
+            
+            
+            
             query = "SELECT revizio , restart FROM planningdb.tc_rev order by tc_rev.idtc_rev desc limit 1";
 
             pc = new planconnect();
@@ -71,6 +76,8 @@ public class Revconrolszal extends Thread {
                 info.infoBox("A programot újra kell indítani!", "Figyelem!");
                 System.exit(0);
             }
+            
+            pc.kinyir();
 
             try {
                 Thread.sleep(5 * 60 * 1000);

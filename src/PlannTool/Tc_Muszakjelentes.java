@@ -45,6 +45,8 @@ public class Tc_Muszakjelentes extends javax.swing.JFrame {
 
             cimlista += pc.rs.getString(1) + ",\n";
         }
+        
+        pc.kinyir();
 
         //levagjuk az utolso biszbaszt
         cimlista = cimlista.substring(0, cimlista.length() - 1);
@@ -305,6 +307,8 @@ public class Tc_Muszakjelentes extends javax.swing.JFrame {
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Tc_Muszakjelentes.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        pc.kinyir();
 
         ellenorzoadat = "Ezek az adatok kerülnek elküldésre! \nMódosításhoz változtasd meg az elmentett adatokat! \n \n" + ellenorzo + "\n\n" + "Műszakvezetői komment:\n";
 

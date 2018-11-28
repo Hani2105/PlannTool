@@ -280,6 +280,8 @@ public class Tc_sincronizerszal extends Thread {
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(Tc_sincronizerszal.class.getName()).log(Level.SEVERE, null, ex);
             }
+            
+            pc.kinyir();
 
             cellaklog += "Updateljük a tervet " + szamlalo + " sorral" + LocalDateTime.now() + " \n";
             ablak.jTextArea1.setText(cellaklog);

@@ -93,6 +93,8 @@ public class Jobfigyeloszal extends Thread {
         } catch (SQLException ex) {
             Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        pc.kinyir();
 
         ablak.jTable14.setModel(model);
 

@@ -231,11 +231,11 @@ public class Tc_ossztervlekerszal extends Thread {
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(Tc_Betervezo.class.getName()).log(Level.SEVERE, null, ex);
             }
-
+            pc.kinyir();
             //Tc_Betervezo.tablarajzolo(model, Tc_Betervezo.Besheets.get(neve).jTable2);
             Tc_Betervezo.Besheets.get(neve).jTable2.setModel(model);
             //Tc_Betervezo.jTabbedPane1.setSelectedIndex(b);
-            Tc_Calculator calc = new Tc_Calculator(Tc_Betervezo.Besheets.get(neve),false,0);
+            Tc_Calculator calc = new Tc_Calculator(Tc_Betervezo.Besheets.get(neve), false, 0);
 
         }
 

@@ -98,6 +98,7 @@ public class Tc_Besetup extends javax.swing.JFrame {
 
         }
 
+        pc.kinyir();
         jList4.setModel(lm3);
 
     }
@@ -650,6 +651,8 @@ public class Tc_Besetup extends javax.swing.JFrame {
                 Logger.getLogger(Tc_Besetup.class.getName()).log(Level.SEVERE, null, ex);
             }
 
+            pc.kinyir();
+
         }
 //letezik e a pn ellenorzeshez
         try {
@@ -686,6 +689,7 @@ public class Tc_Besetup extends javax.swing.JFrame {
             Logger.getLogger(Tc_Besetup.class.getName()).log(Level.SEVERE, null, ex);
         }
         DefaultListModel lm1 = new DefaultListModel();
+        
 
         try {
             while (rs.next()) {
@@ -699,6 +703,7 @@ public class Tc_Besetup extends javax.swing.JFrame {
         }
 
         jList1.setModel(lm1);
+        pc.kinyir();
 
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -725,7 +730,7 @@ public class Tc_Besetup extends javax.swing.JFrame {
             Logger.getLogger(Tc_Besetup.class.getName()).log(Level.SEVERE, null, ex);
         }
         DefaultListModel lm3 = new DefaultListModel();
-
+        
         try {
             while (rs.next()) {
 
@@ -746,6 +751,8 @@ public class Tc_Besetup extends javax.swing.JFrame {
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Tc_Besetup.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        pc.kinyir();
 
     }//GEN-LAST:event_jButton3ActionPerformed
 
@@ -1014,6 +1021,8 @@ public class Tc_Besetup extends javax.swing.JFrame {
             }
 
         }
+        
+        pc.kinyir();
 
     }//GEN-LAST:event_jButton4ActionPerformed
 

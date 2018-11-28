@@ -155,6 +155,7 @@ public class bejelentkezes extends javax.swing.JFrame {
 
         try {
             ResultSet rs = (ResultSet) pc.planconnect(query);
+            
 
             if (rs.next()) {
                 String poz = rs.getString(1);
@@ -180,7 +181,7 @@ public class bejelentkezes extends javax.swing.JFrame {
             ex.printStackTrace();
         }
 
-
+        pc.kinyir();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void formWindowDeactivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowDeactivated

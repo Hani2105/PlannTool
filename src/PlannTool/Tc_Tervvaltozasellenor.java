@@ -35,6 +35,8 @@ public class Tc_Tervvaltozasellenor {
             n++;
 
         }
+        
+        pc.kinyir();
 
         tervellenor.add(adatok);
 

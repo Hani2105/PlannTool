@@ -251,6 +251,7 @@ public class Tc_Behuzos extends javax.swing.JFrame {
             Logger.getLogger(Tc_Behuzos.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+        pc.kinyir();
         jTable1.setModel(model);
 
     }//GEN-LAST:event_jButton2ActionPerformed

@@ -551,6 +551,8 @@ public class Tc_Besheet extends javax.swing.JPanel {
 
         }
 
+        pc.kinyir();
+
     }
 
     public void workstations() throws SQLException, ClassNotFoundException {
@@ -567,6 +569,8 @@ public class Tc_Besheet extends javax.swing.JPanel {
             workstations.add(pc.rs.getString(1));
 
         }
+
+        pc.kinyir();
 
     }
 
@@ -616,42 +620,52 @@ public class Tc_Besheet extends javax.swing.JPanel {
         DefaultTableModel model = new DefaultTableModel();
         model = (DefaultTableModel) this.jTable2.getModel();
 
+        int r = this.jTable2.convertRowIndexToModel(this.jTable2.getSelectedRow());
+
         if (ablak.planner == false) {
 
-            int r = this.jTable2.convertRowIndexToModel(this.jTable2.getSelectedRow());
+            if (this.jTable2.getValueAt(r, 3).toString().equals("Terv")) {
 
-            while (jTable2.getValueAt(r, 3).toString().equals("Terv")) {
-
-                r++;
-
-                if (r == jTable2.getRowCount()) {
-
-                    break;
+                try {
+                    model.insertRow(r, new Object[]{null, null, null, "Tény"});
+                } catch (Exception e) {
                 }
+                return;
 
             }
 
-            //int i = this.jTable2.convertRowIndexToModel(this.jTable2.getSelectedRow());
-            model.insertRow(r + 1, new Object[]{null, null, null, "Tény"});
-            return;
+            if (this.jTable2.getValueAt(r, 3).toString().equals("Tény")) {
+
+                try {
+                    model.insertRow(r + 1, new Object[]{null, null, null, "Tény"});
+                } catch (Exception e) {
+                }
+                return;
+
+            }
 
         }
 
-        if (this.jTable2.getValueAt(this.jTable2.getSelectedRow(), 3).equals("Terv")) {
+        if (ablak.planner == true) {
 
-            int i = this.jTable2.convertRowIndexToModel(this.jTable2.getSelectedRow());
-            model.insertRow(i, new Object[]{null, null, null, "Tény"});
+            if (this.jTable2.getValueAt(r, 3).equals("Terv")) {
 
-        } else if (this.jTable2.getValueAt(this.jTable2.getSelectedRow(), 3).equals("Tény")) {
+                
+                model.insertRow(r, new Object[]{null, null, null, "Tény"});
+                model.insertRow(r , new Object[]{null, null, null, "Terv"});
 
-            int i = this.jTable2.convertRowIndexToModel(this.jTable2.getSelectedRow());
-            model.insertRow(i, new Object[]{null, null, null, "Terv"});
+            } else  {
+
+                model.insertRow(r+1, new Object[]{null, null, null, "Tény"});
+                model.insertRow(r + 1 , new Object[]{null, null, null, "Terv"});
+                
+
+            }
 
         }
 
         this.jTable2.setModel(model);
         Tc_Calculator calc = new Tc_Calculator(this, false, 0);
-
     }//GEN-LAST:event_InsertRowActionPerformed
 
     private void jButton1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseEntered
@@ -996,7 +1010,7 @@ public class Tc_Besheet extends javax.swing.JPanel {
                 + "left join tc_bestations on tc_bestations.idtc_bestations = tc_terv.idtc_bestations\n"
                 + "left join tc_becells on tc_becells.idtc_cells = tc_terv.idtc_becells\n"
                 + "where tc_terv.date between '" + fmt.print(dtOrg) + " 06:00:00" + "' and '" + columneve + ":00" + "' and tc_terv.active = 2 and tc_becells.cellname = '" + neve + "'  \n"
-                + "order by tc_terv.date asc , tc_terv.wtf asc, tc_terv.tt asc";
+                + "order by tc_terv.date asc , tc_terv.wtf asc, tc_terv.tt asc , tc_terv.timestamp desc";
 
         //feldolgozzuk az eredmenyt
         planconnect pc = new planconnect();
@@ -1038,6 +1052,7 @@ public class Tc_Besheet extends javax.swing.JPanel {
             Logger.getLogger(Tc_Betervezo.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+        pc.kinyir();
         Besheets.get(neve).jTable2.setModel(model);
         Tc_Calculator calc = new Tc_Calculator(Besheets.get(neve), false, 0);
 
@@ -1386,7 +1401,7 @@ public class Tc_Besheet extends javax.swing.JPanel {
 
         }
 
-//lekerjuk az infokat (pn , cell , ws , és a tervet )
+//lekerjuk az infokat (pn , cell , ws , és a tervet )-------------------------------------------------------
 //cellak
         query = "select * from tc_becells";
         pc = new planconnect();
@@ -1611,7 +1626,7 @@ public class Tc_Besheet extends javax.swing.JPanel {
 
 //ha van írva az adott cellába akkor hozzáadunk egyet a wtf hez
                                 try {
-                                    if (jTable2.getValueAt(sor, i).toString().length() >= 0 && jTable2.getValueAt(sor, 3).toString().equals("Terv") ) {
+                                    if (jTable2.getValueAt(sor, i).toString().length() >= 0 && jTable2.getValueAt(sor, 3).toString().equals("Terv")) {
 
                                         wtf++;
 
@@ -1621,9 +1636,8 @@ public class Tc_Besheet extends javax.swing.JPanel {
 
                             }
 
-                            
                             datum = t2.getColumnName(i).substring(0, 10) + ora;
-                            feltoltadat += "('" + cellid + "','" + wsid + "','" + pnid + "','" + job + "','" + datum + "','" + t2.getValueAt(r, i) + "','" + wtf + "'," + 0 + ",'" + System.getProperty("user.name") + "'),";
+                            feltoltadat += "('" + cellid + "','" + wsid + "','" + pnid + "','" + job + "','" + datum + "','" + t2.getValueAt(r, i) + "','" + wtf + "'," + 0 + ",'" + System.getProperty("user.name") + "','" + datum + cellid + wsid + pnid + "0" + job + "'),";
 //feltoltjuk tenykent is , ehhez kell a darabszam
 
                             String qty = "0";
@@ -1637,7 +1651,7 @@ public class Tc_Besheet extends javax.swing.JPanel {
                             } catch (Exception e) {
                             }
 
-                            feltoltadat += "('" + cellid + "','" + wsid + "','" + pnid + "','" + job + "','" + datum + "','" + qty + "','" + wtf + "'," + 1 + ",'" + System.getProperty("user.name") + "'),";
+                            feltoltadat += "('" + cellid + "','" + wsid + "','" + pnid + "','" + job + "','" + datum + "','" + qty + "','" + wtf + "'," + 1 + ",'" + System.getProperty("user.name") + "','" + datum + cellid + wsid + pnid + "1" + job + "'),";
 
                         }
 
@@ -1656,7 +1670,7 @@ public class Tc_Besheet extends javax.swing.JPanel {
             pc.feltolt(updatequery, false);
 
             //feltoltjuk az adatokat
-            String feltoltquery = "insert ignore tc_terv (tc_terv.idtc_becells , tc_terv.idtc_bestations , tc_terv.idtc_bepns , tc_terv.job , tc_terv.date , tc_terv.qty , tc_terv.wtf , tc_terv.tt , tc_terv.user) values" + feltoltadat;
+            String feltoltquery = "insert ignore tc_terv (tc_terv.idtc_becells , tc_terv.idtc_bestations , tc_terv.idtc_bepns , tc_terv.job , tc_terv.date , tc_terv.qty , tc_terv.wtf , tc_terv.tt , tc_terv.user , tc_terv.pktomig) values" + feltoltadat + "on duplicate key update qty = values (qty) , wtf = (wtf) , active = (2)";
             pc.feltolt(feltoltquery, true);
 
         }
@@ -1788,7 +1802,7 @@ public class Tc_Besheet extends javax.swing.JPanel {
                 + "left join tc_bestations on tc_bestations.idtc_bestations = tc_terv.idtc_bestations\n"
                 + "left join tc_becells on tc_becells.idtc_cells = tc_terv.idtc_becells\n"
                 + "where tc_terv.date between '" + fmt.print(dtOrg) + " 06:00:00" + "' and '" + columneve + ":00" + "' and tc_terv.active = 2 and tc_becells.cellname = '" + neve + "'  \n"
-                + "order by tc_terv.date asc, tc_terv.wtf asc , tc_terv.tt asc";
+                + "order by tc_terv.date asc, tc_terv.wtf asc , tc_terv.tt asc , tc_terv.timestamp desc";
 
         //feldolgozzuk az eredmenyt
         pc = new planconnect();
@@ -1830,6 +1844,7 @@ public class Tc_Besheet extends javax.swing.JPanel {
             Logger.getLogger(Tc_Betervezo.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+        pc.kinyir();
         Besheets.get(neve).jTable2.setModel(model);
         Tc_Calculator calc = new Tc_Calculator(Besheets.get(neve), false, 0);
 
@@ -1904,8 +1919,12 @@ public class Tc_Besheet extends javax.swing.JPanel {
 
         //mentjuk a tervet , összeallitjuk az adat queryt
         //bejarjuk az oszlopokat 4 től
-        query = "insert into tc_terv (date , idtc_becells , idtc_bestations , idtc_bepns , qty , wtf , active , tt , user , job ) values";
         String adat = "";
+//lefutatjuk az id kereso adatgyujtojet
+
+        Tc_Idkereso idkereso = new Tc_Idkereso();
+
+        idkereso.adatleker();
 
 //elinditjuk az oszlopok bejarasat
         for (int i = 4; i < jTable2.getColumnCount(); i++) {
@@ -1919,12 +1938,13 @@ public class Tc_Besheet extends javax.swing.JPanel {
                     if (jTable2.getValueAt(r, i) != null && !jTable2.getValueAt(r, i).toString().equals("") && !jTable2.getColumnName(i).equals("Sum: PN,JOB,WS") && jTable2.getValueAt(r, 3).toString().equals("Tény")) {
                         String job = "";
                         String qty = "";
+                        String datum = jTable2.getColumnName(i).substring(0, 16) + ":00";
                         int wtf = 0;
                         for (int sor = 0; sor <= r; sor++) {
 
 //ha van írva az adott cellába akkor hozzáadunk egyet a wtf hez
                             try {
-                                if (jTable2.getValueAt(sor, i).toString().length() >= 0 && jTable2.getValueAt(sor, 3).toString().equals("Tény") ) {
+                                if (jTable2.getValueAt(sor, i).toString().length() >= 0 && jTable2.getValueAt(sor, 3).toString().equals("Tény")) {
 
                                     wtf++;
 
@@ -1943,18 +1963,20 @@ public class Tc_Besheet extends javax.swing.JPanel {
                         } catch (Exception e) {
                         }
                         try {
-                            adat += "('" + jTable2.getColumnName(i).substring(0, 16) + ":00',(select tc_becells.idtc_cells from tc_becells where tc_becells.cellname = '" + Tc_Betervezo.Tervezotabbed.getTitleAt(Tc_Betervezo.Tervezotabbed.getSelectedIndex()) + "'),(select tc_bestations.idtc_bestations from tc_bestations where tc_bestations.workstation = '" + jTable2.getValueAt(r, 2).toString() + "'),(select tc_bepns.idtc_bepns from tc_bepns where tc_bepns.partnumber = '" + jTable2.getValueAt(r, 0).toString() + "'),'" + qty + "','" + wtf + "','2','1','" + System.getProperty("user.name") + "','" + job + "'),";
+                            adat += "('" + datum + "','" + idkereso.cellakereso(Tc_Betervezo.Tervezotabbed.getTitleAt(Tc_Betervezo.Tervezotabbed.getSelectedIndex())) + "','" + idkereso.allomaskereso(jTable2, r, 2) + "','" + idkereso.partnumberkereso(jTable2, r, 0) + "','" + qty + "','" + wtf + "','2','1','" + System.getProperty("user.name") + "','" + job + "','" + datum + idkereso.cellakereso(Tc_Betervezo.Tervezotabbed.getTitleAt(Tc_Betervezo.Tervezotabbed.getSelectedIndex())) + idkereso.allomaskereso(jTable2, r, 2) + idkereso.partnumberkereso(jTable2, r, 0) + "1" + job + "'),";
                         } catch (Exception e) {
                         }
 
-//megvizsgaljuk , hogy a felette levo sor is teny e , ha igen akkor beszurunk nulla darabbal egy terv sort a wtf el fölé
-                        try {
-                            if (jTable2.getValueAt(r - 1, 3).equals("Tény")) {
+//mindenkeppen beszurjuk tervkent is , ha letezik a pk akkor updateljuk az active -ot 2 re
+//ha a felette levő is teny
+                        if (jTable2.getValueAt(r - 1, 3).toString().equals("Tény")) {
+                            try {
 
-                                adat += "('" + jTable2.getColumnName(i).substring(0, 16) + ":00',(select tc_becells.idtc_cells from tc_becells where tc_becells.cellname = '" + Tc_Betervezo.Tervezotabbed.getTitleAt(Tc_Betervezo.Tervezotabbed.getSelectedIndex()) + "'),(select tc_bestations.idtc_bestations from tc_bestations where tc_bestations.workstation = '" + jTable2.getValueAt(r, 2).toString() + "'),(select tc_bepns.idtc_bepns from tc_bepns where tc_bepns.partnumber = '" + jTable2.getValueAt(r, 0).toString() + "'),'0','" + wtf + "','2','0','" + System.getProperty("user.name") + "','" + job + "'),";
+                                adat += "('" + datum + "','" + idkereso.cellakereso(Tc_Betervezo.Tervezotabbed.getTitleAt(Tc_Betervezo.Tervezotabbed.getSelectedIndex())) + "','" + idkereso.allomaskereso(jTable2, r, 2) + "','" + idkereso.partnumberkereso(jTable2, r, 0) + "','0','" + wtf + "','2','0','" + System.getProperty("user.name") + "','" + job + "','" + datum + idkereso.cellakereso(Tc_Betervezo.Tervezotabbed.getTitleAt(Tc_Betervezo.Tervezotabbed.getSelectedIndex())) + idkereso.allomaskereso(jTable2, r, 2) + idkereso.partnumberkereso(jTable2, r, 0) + "0" + job + "'),";
 
+                            } catch (Exception e) {
                             }
-                        } catch (Exception e) {
+
                         }
                     }
 
@@ -1962,11 +1984,6 @@ public class Tc_Besheet extends javax.swing.JPanel {
             }
 
         }
-
-        adat = adat.substring(0, adat.length() - 1);
-        //összerakjuk a két queryt
-
-        query += adat;
 
         //a tol és ig adatok kitalalasa
         String neve = Tc_Betervezo.Tervezotabbed.getTitleAt(Tc_Betervezo.Tervezotabbed.getSelectedIndex());
@@ -1984,11 +2001,14 @@ public class Tc_Besheet extends javax.swing.JPanel {
 
         }
 
-        //update 2-->1-->0!!
+        //update 2-->1-->0 de csak ha tény!
         String updatequery = "update tc_terv set active = CASE when tc_terv.active = 2 then 1 when tc_terv.active = 1 then 0 end where tc_terv.active in (2,1) and tc_terv.date between '" + tol + "' and '" + ig + "' and tc_terv.idtc_becells = (select tc_becells.idtc_cells from tc_becells where tc_becells.cellname = '" + Tc_Betervezo.Tervezotabbed.getTitleAt(Tc_Betervezo.Tervezotabbed.getSelectedIndex()) + "'  and tc_terv.tt = '1' )";
         pc.feltolt(updatequery, false);
 
         //feltoltjuk az uj adatokat!
+        adat = adat.substring(0, adat.length() - 1);
+        //összerakjuk a két queryt
+        query = "insert into tc_terv (date , idtc_becells , idtc_bestations , idtc_bepns , qty , wtf , active , tt , user , job , pktomig ) values " + adat + " on duplicate key update qty = values (qty) , wtf = (wtf) , active = (2)";
         pc.feltolt(query, true);
 
         //beirjuk az infot a jlabelbe hogy mikor lett mentve
@@ -2131,7 +2151,7 @@ public class Tc_Besheet extends javax.swing.JPanel {
                 + "left join tc_bestations on tc_bestations.idtc_bestations = tc_terv.idtc_bestations\n"
                 + "left join tc_becells on tc_becells.idtc_cells = tc_terv.idtc_becells\n"
                 + "where tc_terv.date between '" + fmt.print(dtOrg) + " 06:00:00" + "' and '" + columneve + ":00" + "' and tc_terv.active = 2 and tc_becells.cellname = '" + neve + "'  \n"
-                + "order by tc_terv.date asc , tc_terv.wtf asc , tc_terv.tt asc";
+                + "order by tc_terv.date asc , tc_terv.wtf asc , tc_terv.tt asc , tc_terv.timestamp desc";
 
         //feldolgozzuk az eredmenyt
         pc = new planconnect();
@@ -2173,6 +2193,7 @@ public class Tc_Besheet extends javax.swing.JPanel {
             Logger.getLogger(Tc_Betervezo.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+        pc.kinyir();
         Besheets.get(neve).jTable2.setModel(model);
         Tc_Calculator calc = new Tc_Calculator(Besheets.get(neve), false, 0);
 
@@ -2323,7 +2344,6 @@ public class Tc_Besheet extends javax.swing.JPanel {
         DefaultTableModel model = new DefaultTableModel();
         model = (DefaultTableModel) jTable2.getModel();
         TableRowSorter<DefaultTableModel> tr = new TableRowSorter<DefaultTableModel>(model);
-
         jTable2.setRowSorter(tr);
 
         tr.setRowFilter(RowFilter.regexFilter(query));

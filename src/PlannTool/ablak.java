@@ -67,12 +67,11 @@ public class ablak extends javax.swing.JFrame {
 
         initComponents();
 
-        
         Revconrolszal r = new Revconrolszal(this);
         r.start();
 
         seticon();
-        
+
         Riporterszal riporter = new Riporterszal();
         riporter.start();
 
@@ -3214,6 +3213,8 @@ public class ablak extends javax.swing.JFrame {
 
                 }
 
+                pc.kinyir();
+
             } catch (SQLException ex) {
                 Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
             } catch (ClassNotFoundException ex) {
@@ -3279,7 +3280,7 @@ public class ablak extends javax.swing.JFrame {
             } catch (SQLException ex) {
                 Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
             }
-
+            pc.kinyir();
             jList1.setModel(lm);
 
         }
@@ -3355,6 +3356,8 @@ public class ablak extends javax.swing.JFrame {
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
             }
+
+            pc.kinyir();
 
 //itt a sheet vege
         }
@@ -3437,6 +3440,8 @@ public class ablak extends javax.swing.JFrame {
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
             }
+
+            pc.kinyir();
 
             jTable13.setModel(model1);
 
@@ -3549,6 +3554,7 @@ public class ablak extends javax.swing.JFrame {
 
         try {
             ResultSet rs = (ResultSet) pc.planconnect(query);
+            pc.kinyir();
             int sor = 0;
 
             while (rs.next()) {
@@ -3759,6 +3765,7 @@ public class ablak extends javax.swing.JFrame {
                     Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
+                pc.kinyir();
                 query = "SELECT ifnull(sum(oracle_backup_subinv.quantity),0) as qty from oracle_backup_subinv where oracle_backup_subinv.item ='" + pcbtabla.getValueAt(0, 1).toString().trim() + "'";
 
                 connect con = new connect(query);
@@ -3780,6 +3787,7 @@ public class ablak extends javax.swing.JFrame {
                 planconnect con = new planconnect();
                 try {
                     ResultSet rs = (ResultSet) con.planconnect(query);
+                    con.kinyir();
                     pcbtabla.setValueAt(jTextField11.getText(), 0, 1);
                     if (rs.next()) {
                         pcbtabla.setValueAt(rs.getString("Part"), 0, 0);
@@ -4269,11 +4277,11 @@ public class ablak extends javax.swing.JFrame {
 // az insert query
 
         int resi = 0;
-        
-        if(jRadioButton2.isSelected()){
-        
-        resi = 1;
-        
+
+        if (jRadioButton2.isSelected()) {
+
+            resi = 1;
+
         }
         String query = "insert into tc_rev (revizio , megjegyzes , restart) values ('" + jTextField22.getText() + "','" + jTextArea2.getText() + "','" + resi + "')";
 

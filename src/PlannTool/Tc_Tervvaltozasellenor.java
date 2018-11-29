@@ -16,10 +16,10 @@ public class Tc_Tervvaltozasellenor {
     public void leker() throws SQLException, ClassNotFoundException {
 
         //lekerdezzuk a tervet es minden cellahoz elrakjuk az utolso terv id-t
-        String query = "select max(tc_terv.idtc_terv) as id , tc_becells.cellname  \n"
+        String query = "select max(tc_terv.timestamp) as id , tc_becells.cellname  \n"
                 + "from tc_terv \n"
                 + "left join tc_becells on tc_becells.idtc_cells = tc_terv.idtc_becells \n"
-                + "where (select distinct  tc_becells.idtc_cells) and tc_terv.tt = 0 group by cellname ";
+                + "where (select distinct  tc_becells.idtc_cells) and tc_terv.tt = 3 group by cellname ";
 
         planconnect pc = new planconnect();
         pc.planconnect(query);

@@ -246,7 +246,7 @@ public class Tc_Muszakjelentes extends javax.swing.JFrame {
         String terv = "";
 
         //lekerdezzuk adatbazisbol az adatokat
-        String query = "select if(tc_terv.tt =0,\"Terv\",\"Tény\") as tt , tc_bestations.workstation, sum(tc_terv.qty) as sum \n"
+        String query = "select  tc_bestations.workstation, sum(tc_terv.qty) as sum , sum(tc_terv.qty_teny) as sumteny \n"
                 + "from tc_terv \n"
                 + "left join tc_bestations on tc_bestations.idtc_bestations = tc_terv.idtc_bestations \n"
                 + "where tc_terv.date = '" + b.jTable2.getColumnName(b.jTable2.getSelectedColumn()).substring(0, 16) + "' and tc_terv.idtc_becells = \n"
@@ -263,13 +263,13 @@ public class Tc_Muszakjelentes extends javax.swing.JFrame {
         }
 
         //az osszesitett adatok formazasa , osszeallitasa
-        String osszesitett1 = "<tr align=\"center\"><td>Terv/Tény</td><td align=\"center\">Állomás</td><td align=\"center\">Summa</td></tr>";
+        String osszesitett1 = "<tr align=\"center\"><td align=\"center\">Állomás</td><td>Terv</td><td>Tény</td></tr>";
         String osszesitett = "";
 
         try {
             while (pc.rs.next()) {
 
-                osszesitett += "<tr><td align=\"center\">" + pc.rs.getString(1) + "</td><td align=\"center\">" + pc.rs.getString(2) + "</td><td align=\"center\">" + pc.rs.getString(3) + "</td></tr>";
+                osszesitett += "<tr align=\"center\">" + pc.rs.getString(1) + "</td><td align=\"center\">" + pc.rs.getString(2) + "</td><td align=\"center\">" + pc.rs.getString(3) + "</td></tr>";
 
             }
         } catch (SQLException ex) {
@@ -277,7 +277,7 @@ public class Tc_Muszakjelentes extends javax.swing.JFrame {
         }
 
         //lekerezzuk a reszletes adatokat
-        query = "select if(tc_terv.tt =0,\"Terv\",\"Tény\") as tt ,tc_bepns.partnumber ,tc_terv.job,  tc_bestations.workstation , tc_terv.qty \n"
+        query = "select tc_bepns.partnumber ,tc_terv.job,  tc_bestations.workstation , tc_terv.qty  , tc_terv.qty_teny \n"
                 + "from tc_terv \n"
                 + "left join tc_bestations on tc_bestations.idtc_bestations = tc_terv.idtc_bestations \n"
                 + "left join tc_bepns on tc_bepns.idtc_bepns = tc_terv.idtc_bepns\n"
@@ -285,7 +285,7 @@ public class Tc_Muszakjelentes extends javax.swing.JFrame {
                 + "(select tc_becells.idtc_cells from tc_becells where tc_becells.cellname = '" + cellname + "') and tc_terv.active = 2\n"
                 + "order by tc_terv.wtf, tc_bepns.partnumber , workstation ,   tt desc";
 
-        String reszletes1 = "<tr><td align=\"center\">Terv/Tény</td><td align=\"center\">Partnumber</td><td>JOB</td><td align=\"center\">Állomás</td><td align=\"center\">Darab/Komment</td></tr>";
+        String reszletes1 = "<tr><td align=\"center\">Partnumber</td><td>JOB</td><td align=\"center\">Állomás</td><td align=\"center\">Terv/Komment</td><td align=\"center\">Tény/Komment</td></tr>";
         String reszletes = "";
 
         String ellenorzo = "";
@@ -297,7 +297,7 @@ public class Tc_Muszakjelentes extends javax.swing.JFrame {
 
             while (pc.rs.next()) {
 
-                ellenorzo += pc.rs.getString(1) + "  " + pc.rs.getString(2) + "  " + pc.rs.getString(3) + "  " + pc.rs.getString(4) + "  " + pc.rs.getString(5) + "\n";
+                ellenorzo += pc.rs.getString(1) + "  " + pc.rs.getString(2) + "  " + pc.rs.getString(3) + " Terv: " + pc.rs.getString(4) + " Tény: " + pc.rs.getString(5) + "\n";
                 reszletes += "<tr><td align=\"center\">" + pc.rs.getString(1) + "</td><td align=\"center\">" + pc.rs.getString(2) + "</td><td align=\"center\">" + pc.rs.getString(3) + "</td><td align=\"center\">" + pc.rs.getString(4) + "</td><td align=\"center\">" + pc.rs.getString(5) + "</td></tr>";
 
             }

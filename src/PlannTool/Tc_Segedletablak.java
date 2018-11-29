@@ -290,7 +290,7 @@ public class Tc_Segedletablak extends javax.swing.JFrame {
         cellak += ")";
 
         //System.out.println(cellak);
-        String query1 = "select tc_becells.cellname , tc_bepns.partnumber , tc_bestations.workstation ,cast(tc_terv.qty as unsigned) , tc_terv.tt\n"
+        String query1 = "select tc_becells.cellname , tc_bepns.partnumber , tc_bestations.workstation ,cast(tc_terv.qty as unsigned) , tc_terv.tt , cast(tc_terv.qty_teny as unsigned) \n"
                 + "from tc_terv \n"
                 + "left join tc_becells on tc_becells.idtc_cells = tc_terv.idtc_becells\n"
                 + "left join tc_bepns on tc_bepns.idtc_bepns = tc_terv.idtc_bepns\n"
@@ -320,57 +320,11 @@ public class Tc_Segedletablak extends javax.swing.JFrame {
                 String pn = pc.rs.getString(2);
                 String ws = pc.rs.getString(3);
                 int qty = new Tc_Stringbolint(pc.rs.getString(4)).db;
-                Boolean irtunke = false;
-
-                if (pc.rs.getString(5).equals("0")) {
-
-                    tvt = "Terv";
-
-                } else if (pc.rs.getString(5).equals("1")) {
-
-                    tvt = "Tény";
-
-                }
+                int tenyqty = new Tc_Stringbolint(pc.rs.getString(6)).db;
 
                 //bejarjuk a tabla sorait es megnezzuk hogy irtunk e mar ilyen pn-t , ws-t es cellat es megenzzuk h terv vagy teny
-                for (int r = 0; r < model.getRowCount(); r++) {
-
-                    //ha terv a tvt 
-                    if (model.getValueAt(r, 0).toString().equals(cella) && model.getValueAt(r, 1).toString().equals(pn) && model.getValueAt(r, 2).toString().equals(ws) && tvt.equals("Terv") && irtunke == false) {
-                        try {
-                            qty += Integer.parseInt(model.getValueAt(r, 3).toString());
-                        } catch (Exception e) {
-                        }
-                        model.setValueAt(qty, r, 3);
-                        irtunke = true;
-
-                    } //ha tény a tvt 
-                    else if (model.getValueAt(r, 0).toString().equals(cella) && model.getValueAt(r, 1).toString().equals(pn) && model.getValueAt(r, 2).toString().equals(ws) && tvt.equals("Tény") && irtunke == false) {
-
-                        try {
-                            qty += Integer.parseInt(model.getValueAt(r, 4).toString());
-                        } catch (Exception e) {
-                        }
-                        model.setValueAt(qty, r, 4);
-                        irtunke = true;
-
-                    }
-
-                }
-
                 //ha nem írtunk még , és terv  , hozzáadunk egy sort a modellhez
-                if (irtunke == false && tvt.equals("Terv")) {
-
-                    model.addRow(new Object[]{cella, pn, ws, qty,});
-
-                }
-
-                //ha nem írtunk még , és tény  , hozzáadunk egy sort a modellhez
-                if (irtunke == false && tvt.equals("Tény")) {
-
-                    model.addRow(new Object[]{cella, pn, ws, null, qty,});
-
-                }
+                model.addRow(new Object[]{cella, pn, ws, qty, tenyqty});
 
             }
         } catch (SQLException ex) {
@@ -393,7 +347,7 @@ public class Tc_Segedletablak extends javax.swing.JFrame {
         //a lekért dátum első időpontja , első oszlop a tervből
         String last = Tc_Betervezo.Besheets.get(Tc_Betervezo.Tervezotabbed.getTitleAt(0)).jTable2.getColumnName(4).substring(0, Tc_Betervezo.Besheets.get(Tc_Betervezo.Tervezotabbed.getTitleAt(0)).jTable2.getColumnName(4).length() - 4);
 
-        String query2 = "select tc_becells.cellname , tc_bepns.partnumber , tc_bestations.workstation ,cast(tc_terv.qty as unsigned) , tc_terv.tt\n"
+        String query2 = "select tc_becells.cellname , tc_bepns.partnumber , tc_bestations.workstation ,cast(tc_terv.qty as unsigned) , tc_terv.tt , cast(tc_terv.qty_teny as unsigned)\n"
                 + "from tc_terv \n"
                 + "left join tc_becells on tc_becells.idtc_cells = tc_terv.idtc_becells\n"
                 + "left join tc_bepns on tc_bepns.idtc_bepns = tc_terv.idtc_bepns\n"
@@ -422,63 +376,13 @@ public class Tc_Segedletablak extends javax.swing.JFrame {
                 String pn = pc.rs.getString(2);
                 String ws = pc.rs.getString(3);
                 int qty = new Tc_Stringbolint(pc.rs.getString(4)).db;
-                Boolean irtunke = false;
+                int tenyqty = new Tc_Stringbolint(pc.rs.getString(6)).db;
 
-                if (pc.rs.getString(5).equals("0")) {
-
-                    tvt = "Terv";
-
-                } else if (pc.rs.getString(5).equals("1")) {
-
-                    tvt = "Tény";
-
-                }
-                
-                
-
-                //bejarjuk a tabla sorait es megnezzuk hogy irtunk e mar ilyen pn-t , ws-t es cellat es megenzzuk h terv vagy teny
-                for (int r = 0; r < model2.getRowCount(); r++) {
-
-                    //ha terv a tvt 
-                    if (model2.getValueAt(r, 0).toString().equals(cella) && model2.getValueAt(r, 1).toString().equals(pn) && model2.getValueAt(r, 2).toString().equals(ws) && tvt.equals("Terv") && irtunke == false) {
-                        try {
-                            qty += Integer.parseInt(model2.getValueAt(r, 3).toString());
-                        } catch (Exception e) {
-                        }
-                        model2.setValueAt(qty, r, 3);
-                        irtunke = true;
-
-                    } //ha tény a tvt 
-                    else if (model2.getValueAt(r, 0).toString().equals(cella) && model2.getValueAt(r, 1).toString().equals(pn) && model2.getValueAt(r, 2).toString().equals(ws) && tvt.equals("Tény") && irtunke == false) {
-
-                        try {
-                            qty += Integer.parseInt(model2.getValueAt(r, 4).toString());
-                        } catch (Exception e) {
-                        }
-                        model2.setValueAt(qty, r, 4);
-                        irtunke = true;
-
-                    }
-
-                }
-
-                //ha nem írtunk még , és terv  , hozzáadunk egy sort a modellhez
-                if (irtunke == false && tvt.equals("Terv")) {
-
-                    model2.addRow(new Object[]{cella, pn, ws, qty,});
-
-                }
-
-                //ha nem írtunk még , és tény  , hozzáadunk egy sort a modellhez
-                if (irtunke == false && tvt.equals("Tény")) {
-
-                    model2.addRow(new Object[]{cella, pn, ws, null, qty,});
-
-                }
+                model2.addRow(new Object[]{cella, pn, ws, qty, tenyqty});
 
             }
-            
-        pc.kinyir();
+
+            pc.kinyir();
         } catch (SQLException ex) {
             Logger.getLogger(Tc_Segedletablak.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -486,8 +390,8 @@ public class Tc_Segedletablak extends javax.swing.JFrame {
         //miután beírtuk az adatokat kivonjuk a tényből a tervet és beírjuk varianciaként
         for (int i = 0; i < model2.getRowCount(); i++) {
             try {
-                int terv = (int) model2.getValueAt(i, 3);
-                int teny = (int) model2.getValueAt(i, 4);
+                int terv = Integer.parseInt(model2.getValueAt(i, 3).toString());
+                int teny = Integer.parseInt(model2.getValueAt(i, 4).toString());
 
                 model2.setValueAt(teny - terv, i, 5);
             } catch (Exception e) {

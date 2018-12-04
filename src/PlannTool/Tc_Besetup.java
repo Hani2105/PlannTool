@@ -1266,26 +1266,223 @@ public class Tc_Besetup extends javax.swing.JFrame {
 
         String input = JOptionPane.showInputDialog("A törlés megerősítése , írd be , DELETE!");
 //ha stimmel a szoveg
-        if (input.equals("DELETE!")) {
+        try {
+            if (input.equals("DELETE!")) {
 
 //összeszedjük , hogy miket kell törölni
-            String pn = "";
-            String ws = "";
-            String cell = "";
-            try {
-                pn = jList2.getSelectedValue().toString();
-            } catch (Exception e) {
-            }
+                String pn = "";
+                String ws = "";
+                String cell = "";
+                String cellid = "";
+                String wsid = "";
+                String pnid = "";
+                try {
+                    pn = jList2.getSelectedValue().toString();
+                } catch (Exception e) {
+                }
 
-            try {
-                ws = jList4.getSelectedValue().toString();
-            } catch (Exception e) {
-            }
-            try {
-                cell = jList4.getSelectedValue().toString();
-            } catch (Exception e) {
-            }
+                try {
+                    ws = jList4.getSelectedValue().toString();
+                } catch (Exception e) {
+                }
+                try {
+                    cell = jList1.getSelectedValue().toString();
+                } catch (Exception e) {
+                }
 
+                planconnect pc = new planconnect();
+
+//töröljük azokat a tételeket a prodmatrixbol amik ezzel kapcsolatba hozhatóak , ehhez kell az id-jük
+//cella
+                if (cell.length() > 0) {
+
+                    String query = "select * from tc_becells where tc_becells.cellname = '" + cell + "'";
+                    try {
+                        pc.planconnect(query);
+                        while (pc.rs.next()) {
+
+                            cellid = pc.rs.getString(1);
+//kitoroljuk a prodmatrixbol az ehez kapcsolodo teteleket
+                            query = "delete from tc_prodmatrix where tc_prodmatrix.id_tc_becells = '" + cellid + "'";
+                            pc.feltolt(query, false);
+//kitoroljuk a tablabol is
+                            query = "delete from tc_becells where tc_becells.cellname = '" + cell + "';";
+                            pc.feltolt(query, false);
+
+                        }
+
+                    } catch (SQLException ex) {
+                        Logger.getLogger(Tc_Besetup.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (ClassNotFoundException ex) {
+                        Logger.getLogger(Tc_Besetup.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+
+                }
+
+//ws
+                if (ws.length() > 0) {
+
+                    String query = "SELECT * FROM planningdb.tc_bestations where tc_bestations.workstation = '" + ws + "';";
+                    try {
+                        pc.planconnect(query);
+                        while (pc.rs.next()) {
+
+                            wsid = pc.rs.getString(1);
+//kitoroljuk a prodmatrixbol az ehez kapcsolodo teteleket
+                            query = "delete from tc_prodmatrix where tc_prodmatrix.id_tc_bestations= '" + wsid + "'";
+                            pc.feltolt(query, false);
+//kitoroljuk a tablabol is
+                            query = "delete from tc_bestations where tc_bestations.workstation = '" + ws + "';";
+                            pc.feltolt(query, false);
+
+                        }
+
+                    } catch (SQLException ex) {
+                        Logger.getLogger(Tc_Besetup.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (ClassNotFoundException ex) {
+                        Logger.getLogger(Tc_Besetup.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+
+                }
+
+//pn       
+                if (pn.length() > 0) {
+
+                    String query = "SELECT * FROM planningdb.tc_bepns where tc_bepns.partnumber = '" + pn + "';";
+                    try {
+                        pc.planconnect(query);
+                        while (pc.rs.next()) {
+
+                            pnid = pc.rs.getString(1);
+//kitoroljuk a prodmatrixbol az ehez kapcsolodo teteleket
+                            query = "delete from tc_prodmatrix where tc_prodmatrix.id_tc_bepns = '" + pnid + "'";
+                            pc.feltolt(query, false);
+//kitoroljuk a tablabol is
+                            query = "delete from tc_bepns where tc_bepns.partnumber = '" + pn + "'";
+                            pc.feltolt(query, false);
+
+                        }
+
+                    } catch (SQLException ex) {
+                        Logger.getLogger(Tc_Besetup.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (ClassNotFoundException ex) {
+                        Logger.getLogger(Tc_Besetup.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+
+                }
+
+//frissitjuk a listakat-----------------------------
+//pn feltoltese a jlistbe
+                defaultadat1.clear();
+                String query = "SELECT * FROM planningdb.tc_bepns";
+                ResultSet rs = null;
+                try {
+                    rs = (ResultSet) pc.planconnect(query);
+                } catch (SQLException ex) {
+                    Logger.getLogger(Tc_Besetup.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(Tc_Besetup.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                DefaultListModel lm2 = new DefaultListModel();
+                lm2.clear();
+
+                try {
+                    while (rs.next()) {
+
+                        lm2.addElement(rs.getString(2));
+                        defaultadat1.add(rs.getString(2));
+
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(Tc_Besetup.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+                jList2.setModel(lm2);
+
+                //cella feltoltese
+                defaultadat2.clear();
+                query = "SELECT * FROM planningdb.tc_becells;";
+                try {
+                    rs = (ResultSet) pc.planconnect(query);
+                } catch (SQLException ex) {
+                    Logger.getLogger(Tc_Besetup.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(Tc_Besetup.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                DefaultListModel lm1 = new DefaultListModel();
+                lm1.clear();
+
+                try {
+                    while (rs.next()) {
+
+                        lm1.addElement(rs.getString(2));
+                        defaultadat2.add(rs.getString(2));
+
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(Tc_Besetup.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+                jList1.setModel(lm1);
+
+                //workstation feltoltese
+                defaultadat3.clear();
+                query = "SELECT * FROM planningdb.tc_bestations;";
+                try {
+                    rs = (ResultSet) pc.planconnect(query);
+                } catch (SQLException ex) {
+                    Logger.getLogger(Tc_Besetup.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(Tc_Besetup.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                DefaultListModel lm3 = new DefaultListModel();
+                lm3.clear();
+
+                try {
+                    while (rs.next()) {
+
+                        lm3.addElement(rs.getString(2));
+                        defaultadat3.add(rs.getString(2));
+
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(Tc_Besetup.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+                jList4.setModel(lm3);
+
+//prodmatrix tábla frissitese
+                //tabla tesszuk a meglevo setup beallitasokat
+                DefaultTableModel model = new DefaultTableModel();
+                model = (DefaultTableModel) jTable1.getModel();
+                model.setRowCount(0);
+                query = "select  tc_prodmatrix.idtc_prodmatrix , tc_bepns.partnumber , tc_becells.cellname , tc_bestations.workstation , tc_prodmatrix.ciklusido ,tc_bepns.smt_pn from tc_prodmatrix left join tc_bepns on tc_prodmatrix.id_tc_bepns = tc_bepns.idtc_bepns  left join tc_becells on tc_becells.idtc_cells = tc_prodmatrix.id_tc_becells left join tc_bestations on tc_bestations.idtc_bestations = tc_prodmatrix.id_tc_bestations";
+                
+                pc = new planconnect();
+
+                rs = (ResultSet) pc.planconnect(query);
+
+                while (rs.next()) {
+
+                    model.addRow(new Object[]{rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getDouble(5), rs.getString(6)});
+
+                }
+
+                TableCellRenderer rendererFromHeader = jTable1.getTableHeader().getDefaultRenderer();
+                JLabel headerLabel = (JLabel) rendererFromHeader;
+                headerLabel.setHorizontalAlignment(JLabel.CENTER);
+                DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+                centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+                jTable1.setDefaultRenderer(Object.class, centerRenderer);
+                jTable1.setModel(model);
+
+//ez itt az if vége ha törlünk egyáltalán
+                pc.kinyir();
+                infobox info = new infobox();
+                info.infoBox("Sikeres törlés!", "Törlés!");
+
+            }
+        } catch (Exception e) {
         }
 
     }//GEN-LAST:event_jButton8ActionPerformed

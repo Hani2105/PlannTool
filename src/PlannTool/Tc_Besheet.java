@@ -1092,58 +1092,61 @@ public class Tc_Besheet extends javax.swing.JPanel {
             while (pc.rs.next()) {
 
 //ha nem egyezik a rendszernev a tervben szereplo nevvel es planneri joga van
-                if (!pc.rs.getString(1).equals(System.getProperty("user.name")) && (pc.rs.getString(2).equals("1") || pc.rs.getString(2).equals("2") || pc.rs.getString(2).equals("4"))) {
+                try {
+                    if (!pc.rs.getString(1).equals(System.getProperty("user.name")) && (pc.rs.getString(2).equals("1") || pc.rs.getString(2).equals("2") || pc.rs.getString(2).equals("4"))) {
 
 //kiirjuk az infot hogy ki változtatta a tervét utoljára és felajánljuk hogy letöltsük a változást vagy figyelmen kívül hagyjuk és akkor az a változtatás elvész
-                    String[] buttons = {"Lekérem a változást!  :) ", "Felülírom azt a tervet!  :( "};
-                    int rc = JOptionPane.showOptionDialog(null, "A tervet utoljára " + pc.rs.getString(1) + " módosította ekkor: " + pc.rs.getString(4) + "! Ha rámentesz az ő módosításai elvesznek!", "Figyelem!",
-                            JOptionPane.WARNING_MESSAGE, 0, null, buttons, buttons[0]);
+                        String[] buttons = {"Lekérem a változást!  :) ", "Felülírom azt a tervet!  :( "};
+                        int rc = JOptionPane.showOptionDialog(null, "A tervet utoljára " + pc.rs.getString(1) + " módosította ekkor: " + pc.rs.getString(4) + "! Ha rámentesz az ő módosításai elvesznek!", "Figyelem!",
+                                JOptionPane.WARNING_MESSAGE, 0, null, buttons, buttons[0]);
 
-                    if (rc == 0) {
+                        if (rc == 0) {
 
 // ez itt a terv lekeres
 //eltesszuk az adatokat az ellenorzeshez , hogy valtozott e a terv
-                        Tc_Tervvaltozasellenor.tervellenor.clear();
-                        Tc_Tervvaltozasellenor t = new Tc_Tervvaltozasellenor();
-                        try {
-                            t.leker();
-                        } catch (SQLException ex) {
-                            Logger.getLogger(Tc_Besheet.class.getName()).log(Level.SEVERE, null, ex);
-                        } catch (ClassNotFoundException ex) {
-                            Logger.getLogger(Tc_Besheet.class.getName()).log(Level.SEVERE, null, ex);
-                        }
+                            Tc_Tervvaltozasellenor.tervellenor.clear();
+                            Tc_Tervvaltozasellenor t = new Tc_Tervvaltozasellenor();
+                            try {
+                                t.leker();
+                            } catch (SQLException ex) {
+                                Logger.getLogger(Tc_Besheet.class.getName()).log(Level.SEVERE, null, ex);
+                            } catch (ClassNotFoundException ex) {
+                                Logger.getLogger(Tc_Besheet.class.getName()).log(Level.SEVERE, null, ex);
+                            }
 
 //eltesszuk az oszlop szelessegeket
-                        Tc_Betervezo.szelessegek.clear();
-                        for (int i = 0; i < this.jTable2.getColumnCount(); i++) {
+                            Tc_Betervezo.szelessegek.clear();
+                            for (int i = 0; i < this.jTable2.getColumnCount(); i++) {
 
-                            Tc_Betervezo.szelessegek.add(this.jTable2.getColumnModel().getColumn(i).getWidth());
+                                Tc_Betervezo.szelessegek.add(this.jTable2.getColumnModel().getColumn(i).getWidth());
 
-                        }
+                            }
 
 // terv lekérése
-                        Besheets.clear();
-                        for (int i = 0; i < Tc_Betervezo.Tervezotabbed.getTabCount(); i++) {
+                            Besheets.clear();
+                            for (int i = 0; i < Tc_Betervezo.Tervezotabbed.getTabCount(); i++) {
 
-                            String name = Tc_Betervezo.Tervezotabbed.getTitleAt(i);
+                                String name = Tc_Betervezo.Tervezotabbed.getTitleAt(i);
 
-                            Besheets.put(name, (Tc_Besheet) Tc_Betervezo.Tervezotabbed.getComponentAt(i));
+                                Besheets.put(name, (Tc_Besheet) Tc_Betervezo.Tervezotabbed.getComponentAt(i));
+
+                            }
+
+                            Tc_Leker leker = new Tc_Leker(Tc_Betervezo.Tervezotabbed.getTitleAt(Tc_Betervezo.Tervezotabbed.getSelectedIndex()));
+
+//updateljuk a nevet a tervben , hogy ne legyen legkozelebb ilyen gond
+                            query = "update tc_terv set tc_terv.user = '" + System.getProperty("user.name") + "' where tc_terv.idtc_becells = (select tc_becells.idtc_cells from tc_becells \n"
+                                    + "where tc_becells.cellname = '" + Tc_Betervezo.Tervezotabbed.getTitleAt(Tc_Betervezo.Tervezotabbed.getSelectedIndex()) + "') and tc_terv.active = 2 and tc_terv.tt = '3' \n"
+                                    + "order by tc_terv.timestamp desc , tc_terv.idtc_terv desc limit 1";
+                            pc.feltolt(query, false);
+
+//es vegül megszakítjuk a futást
+                            return;
 
                         }
 
-                        Tc_Leker leker = new Tc_Leker(Tc_Betervezo.Tervezotabbed.getTitleAt(Tc_Betervezo.Tervezotabbed.getSelectedIndex()));
-
-//updateljuk a nevet a tervben , hogy ne legyen legkozelebb ilyen gond
-                        query = "update tc_terv set tc_terv.user = '" + System.getProperty("user.name") + "' where tc_terv.idtc_becells = (select tc_becells.idtc_cells from tc_becells \n"
-                                + "where tc_becells.cellname = '" + Tc_Betervezo.Tervezotabbed.getTitleAt(Tc_Betervezo.Tervezotabbed.getSelectedIndex()) + "') and tc_terv.active = 2 and tc_terv.tt = '3' \n"
-                                + "order by tc_terv.timestamp desc , tc_terv.idtc_terv desc limit 1";
-                        pc.feltolt(query, false);
-
-//es vegül megszakítjuk a futást
-                        return;
-
                     }
-
+                } catch (Exception e) {
                 }
 
             }

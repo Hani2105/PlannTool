@@ -276,7 +276,7 @@ public class Tc_sincronizerszal extends Thread {
 
                 String insertadatstring = insertadat.toString();
                 insertadatstring = insertadatstring.substring(0, insertadatstring.length() - 1);
-                Query = Query = "insert into tc_terv (date , idtc_becells , idtc_bestations , idtc_bepns , qty , wtf , active , tt , timestamp , user ,job , pktomig , qty_teny) values " + insertadatstring + "";
+                Query = Query = "insert ignore tc_terv (date , idtc_becells , idtc_bestations , idtc_bepns , qty , wtf , active , tt , timestamp , user ,job , pktomig , qty_teny) values " + insertadatstring + "";
                 pc.createtemp(Query, false);
 
             }

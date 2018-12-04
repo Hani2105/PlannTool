@@ -325,6 +325,7 @@ public class Tc_Betervezo extends javax.swing.JFrame {
         jButton5.setToolTipText("Előző verzió visszaállítása!");
         jButton5.setBorderPainted(false);
         jButton5.setContentAreaFilled(false);
+        jButton5.setEnabled(false);
         jButton5.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 jButton5MouseEntered(evt);
@@ -573,7 +574,7 @@ public class Tc_Betervezo extends javax.swing.JFrame {
         } else if (ablak.planner == true) {
 
             Tc_Betervezo.jButton2.setEnabled(true);
-            Tc_Betervezo.jButton5.setEnabled(true);
+            Tc_Betervezo.jButton5.setEnabled(false);
 
             for (int i = 0; i < Tervezotabbed.getTabCount(); i++) {
 

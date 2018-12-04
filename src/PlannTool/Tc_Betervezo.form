@@ -298,6 +298,7 @@
                 <Property name="toolTipText" type="java.lang.String" value="El&#x151;z&#x151; verzi&#xf3; vissza&#xe1;ll&#xed;t&#xe1;sa!"/>
                 <Property name="borderPainted" type="boolean" value="false"/>
                 <Property name="contentAreaFilled" type="boolean" value="false"/>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
               <Events>
                 <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jButton5MouseEntered"/>

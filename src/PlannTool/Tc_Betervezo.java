@@ -24,10 +24,12 @@ import java.util.TreeMap;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
 import javax.swing.JPopupMenu;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
+import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import org.joda.time.DateTime;
@@ -45,6 +47,8 @@ public class Tc_Betervezo extends javax.swing.JFrame {
 
     /**
      */
+    //nem engedjuk csukni amig megy a levelkuldes
+    public static boolean level = false;
     public String[][] pns;
     public static List<String> partn = new ArrayList<String>();
     public static List<String> works = new ArrayList<String>();
@@ -692,18 +696,11 @@ public class Tc_Betervezo extends javax.swing.JFrame {
         //hozzaadjuk a sorokat
         DefaultTableModel t2 = new DefaultTableModel();
         t2 = (DefaultTableModel) Besheets.get(neve).jTable2.getModel();
-        int rownumber = t2.getRowCount();
 
         for (int i = 0; i < Integer.parseInt(jTextField1.getText()); i++) {
 
-            if (ablak.planner == true) {
-                t2.addRow(new Object[]{null, null, null, "Terv"});
-                t2.addRow(new Object[]{null, null, null, "Tény"});
-            } else {
-
-                t2.addRow(new Object[]{null, null, null, "Tény"});
-
-            }
+            t2.addRow(new Object[]{null, null, null, "Terv"});
+            t2.addRow(new Object[]{null, null, null, "Tény"});
 
         }
 
@@ -911,6 +908,10 @@ public class Tc_Betervezo extends javax.swing.JFrame {
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         // TODO add your handling code here:
 
+      
+        
+        
+        
         csuk = true;
 
 

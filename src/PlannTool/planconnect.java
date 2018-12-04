@@ -44,6 +44,16 @@ public class planconnect {
 
     }
 
+    public Object templekerdez(String startQuery) throws SQLException, ClassNotFoundException {
+
+        Class.forName("com.mysql.jdbc.Driver");
+        Statement st = conn.createStatement();
+
+        rs = st.executeQuery(startQuery);
+        return rs;
+
+    }
+
     public static TableModel resultSetToTableModel(ResultSet rs, DefaultTableModel tm, int colnum) {
         try {
 
@@ -111,6 +121,42 @@ public class planconnect {
             } catch (SQLException se) {
                 se.printStackTrace();
             }
+        }
+
+    }
+
+    public void createtemp(String query, boolean infobox) {
+
+        Statement stmt = null;
+        try {
+
+            String driver = "com.mysql.jdbc.driver";
+            String url = "jdbc:mysql://143.116.140.114:3306/planningdb?characterEncoding=utf8";
+            String username = "plan";
+            String password = "plan500";
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, username, password);
+            stmt = conn.createStatement();
+            stmt.executeUpdate(query);
+
+            if (infobox == true) {
+                infobox info = new infobox();
+                info.infoBox("Sikeres feltöltés!", "Mentés!");
+            }
+
+        } catch (SQLException se) {
+            //Handle errors for JDBC
+            se.printStackTrace();
+
+            infobox info = new infobox();
+            info.infoBox("Sikertelen feltöltés!", "Hiba!");
+
+        } catch (Exception e) {
+            //Handle errors for Class.forName
+            e.printStackTrace();
+            infobox info = new infobox();
+            info.infoBox("Sikertelen feltöltés!", "Hiba!");
+
         }
 
     }

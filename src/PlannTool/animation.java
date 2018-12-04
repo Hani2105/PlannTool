@@ -12,25 +12,43 @@ import javax.swing.JFrame;
  * @author gabor_hanacsek
  */
 public class animation extends Thread {
-    
-    public static boolean rajzol = true;
-    
-    public void run() {
-        
-        animationpicture a = new animationpicture();
-        a.setVisible(true);
-        
-        while (rajzol == true) {
-            
-            a.repaint();
 
-            //System.out.println("futok");
+    public static boolean rajzol = true;
+
+    public void run() {
+
+        if (System.getProperty("user.name").equals("paloma_pal")) {
+
+            animationsziv a = new animationsziv();
+            a.setVisible(true);
+
+            while (rajzol == true) {
+
+                a.repaint();
+
+                //System.out.println("futok");
+            }
+
+            a.dispose();
+            //System.out.println("megalltam");
+            rajzol = true;
+
+        } else {
+
+            animationpicture a = new animationpicture();
+            a.setVisible(true);
+
+            while (rajzol == true) {
+
+                a.repaint();
+
+                //System.out.println("futok");
+            }
+
+            a.dispose();
+            //System.out.println("megalltam");
+            rajzol = true;
         }
-        
-        a.dispose();
-        //System.out.println("megalltam");
-        rajzol = true;
-        
     }
-    
+
 }

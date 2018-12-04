@@ -218,6 +218,9 @@ public class Tc_Besheet extends javax.swing.JPanel {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTable2MouseClicked(evt);
             }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jTable2MouseReleased(evt);
+            }
         });
         jTable2.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
@@ -1501,6 +1504,15 @@ public class Tc_Besheet extends javax.swing.JPanel {
     private void jTable2PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jTable2PropertyChange
 
         Tc_Betervezo.csuk = true;
+
+        Tc_Betervezo.szelessegek.clear();
+
+        for (int i = 0; i < jTable2.getColumnCount(); i++) {
+
+            Tc_Betervezo.szelessegek.add(jTable2.getColumnModel().getColumn(i).getWidth());
+
+        }
+
         if (Tc_Betervezo.csuk == false) {
             Tc_Calculator c = new Tc_Calculator(this, false, 0);
         }
@@ -1511,6 +1523,19 @@ public class Tc_Besheet extends javax.swing.JPanel {
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jTable2MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable2MouseReleased
+        // TODO add your handling code here:
+
+        Tc_Betervezo.szelessegek.clear();
+
+        for (int i = 0; i < jTable2.getColumnCount(); i++) {
+
+            Tc_Betervezo.szelessegek.add(jTable2.getColumnModel().getColumn(i).getWidth());
+
+        }
+
+    }//GEN-LAST:event_jTable2MouseReleased
 
     private void filter(String query) {
 

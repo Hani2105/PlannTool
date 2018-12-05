@@ -1,5 +1,6 @@
 package PlannTool;
 
+import com.mysql.jdbc.RowData;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.HeadlessException;
@@ -136,6 +137,8 @@ public class ablak extends javax.swing.JFrame {
     private void initComponents() {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
+        jPopupMenu2 = new javax.swing.JPopupMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
         jPanel6 = new javax.swing.JPanel();
         jScrollPane7 = new javax.swing.JScrollPane();
         jTabbedPane1 = new javax.swing.JTabbedPane();
@@ -317,6 +320,14 @@ public class ablak extends javax.swing.JFrame {
             jLabel52 = new javax.swing.JLabel();
             jRadioButton2 = new javax.swing.JRadioButton();
 
+            jMenuItem1.setText("Bontás SN-re!");
+            jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    jMenuItem1ActionPerformed(evt);
+                }
+            });
+            jPopupMenu2.add(jMenuItem1);
+
             setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
             setTitle("PlannTool R_2.2");
             setLocation(new java.awt.Point(500, 300));
@@ -374,6 +385,7 @@ public class ablak extends javax.swing.JFrame {
                     return types [columnIndex];
                 }
             });
+            jTable1.setComponentPopupMenu(jPopupMenu2);
             jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
                 public void mouseClicked(java.awt.event.MouseEvent evt) {
                     jTable1MouseClicked(evt);
@@ -3078,7 +3090,7 @@ public class ablak extends javax.swing.JFrame {
                                     .addGap(44, 44, 44))
                                 .addGroup(jPanel12Layout.createSequentialGroup()
                                     .addComponent(jScrollPane18, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                             .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -4319,6 +4331,59 @@ public class ablak extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jRadioButton2ActionPerformed
 
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+//seria számra lebontása a wip nek
+
+//ha jó helyen vagyunk , azaz a kijelölés jó ablakban történt
+        if (!jTable1.getSelectionModel().isSelectionEmpty()) {
+
+            String pn = jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString();
+            String loc = jTable1.getValueAt(jTable1.getSelectedRow(), 1).toString();
+
+//lekérdezzük a wip et a PN re
+            xmlfeldolg xxx = new xmlfeldolg();
+            Object rowdata[][] = null;
+
+            try {
+
+                URL url = new URL("http://143.116.140.120/rest/request.php?page=planning_iswip&product=" + pn + "&format=xml");
+                ArrayList<String> lista = new ArrayList();
+
+                String nodelist = "planning_iswip";
+                lista.add("Serial_Number");
+                lista.add("Part_Number");
+                lista.add("SFDC_Location_Name");
+                lista.add("Days_in_Location");
+                lista.add("Shop_Order");
+
+                rowdata = (Object[][]) xxx.xmlfeldolg(url, nodelist, lista);
+
+            } catch (MalformedURLException ex) {
+                Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            //feldolgozzuk a row datát
+//peldanyositunk egy snrebontost
+            Snrebontoswip s = new Snrebontoswip();
+            DefaultTableModel model = new DefaultTableModel();
+            model = (DefaultTableModel) s.jTable1.getModel();
+
+            for (int i = 0; i < rowdata.length; i++) {
+                if(rowdata[i][2].toString().equals(loc)){
+                model.addRow(new Object[]{rowdata[i][0],rowdata[i][1],rowdata[i][2],rowdata[i][3],rowdata[i][4]});}
+                
+            }
+            
+            s.jTable1.setModel(model);
+            s.setVisible(true);
+            
+            
+ // ez az if vége
+        }
+
+
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
     public void gombenged() {
 
         try {
@@ -4526,6 +4591,7 @@ public class ablak extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     public static javax.swing.JList<String> jList1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
@@ -4538,6 +4604,7 @@ public class ablak extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
+    private javax.swing.JPopupMenu jPopupMenu2;
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JScrollPane jScrollPane1;

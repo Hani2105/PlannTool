@@ -4,6 +4,22 @@
   <NonVisualComponents>
     <Component class="javax.swing.ButtonGroup" name="buttonGroup1">
     </Component>
+    <Container class="javax.swing.JPopupMenu" name="jPopupMenu2">
+
+      <Layout class="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout">
+        <Property name="useNullLayout" type="boolean" value="true"/>
+      </Layout>
+      <SubComponents>
+        <MenuItem class="javax.swing.JMenuItem" name="jMenuItem1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Bont&#xe1;s SN-re!"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem1ActionPerformed"/>
+          </Events>
+        </MenuItem>
+      </SubComponents>
+    </Container>
   </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
@@ -233,6 +249,9 @@
                                 <Column editable="true" title="Workstation" type="java.lang.String"/>
                                 <Column editable="true" title="Qty" type="java.lang.String"/>
                               </Table>
+                            </Property>
+                            <Property name="componentPopupMenu" type="javax.swing.JPopupMenu" editor="org.netbeans.modules.form.ComponentChooserEditor">
+                              <ComponentRef name="jPopupMenu2"/>
                             </Property>
                           </Properties>
                           <Events>
@@ -2479,7 +2498,7 @@
                                           </Group>
                                           <Group type="102" attributes="0">
                                               <Component id="jScrollPane18" min="-2" pref="193" max="-2" attributes="0"/>
-                                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                              <EmptySpace type="unrelated" max="32767" attributes="0"/>
                                           </Group>
                                       </Group>
                                       <Component id="jSeparator1" min="-2" pref="10" max="-2" attributes="0"/>

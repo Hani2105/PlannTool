@@ -216,7 +216,7 @@ public class Tc_sincronizerszal extends Thread {
 
                 adatok = adatok.substring(0, adatok.length() - 1);
 
-                Query = "insert into tc_prodmatrix (id_tc_bepns , id_tc_becells , id_tc_bestations , ciklusido , pk) values " + adatok + " on duplicate key update ciklusido = values (ciklusido)";
+                Query = "insert ignore tc_prodmatrix (id_tc_bepns , id_tc_becells , id_tc_bestations , ciklusido , pk) values " + adatok ; /*on duplicate key update ciklusido = values (ciklusido)";*/
                 pc.feltolt(Query, false);
 
             }

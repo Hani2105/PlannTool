@@ -212,10 +212,7 @@ public class Tc_Muszakjelentes extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        //email kuldese
 
-        //osszeallitjuk a html szoveget
         //osszeszedjuk a cella adatait
         String cellname = Tc_Betervezo.Tervezotabbed.getTitleAt(Tc_Betervezo.Tervezotabbed.getSelectedIndex());
 

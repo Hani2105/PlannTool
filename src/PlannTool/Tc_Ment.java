@@ -24,6 +24,7 @@ public class Tc_Ment {
         String query = "select * from tc_becells";
         planconnect pc = new planconnect();
         List<String[][]> gyujto = new ArrayList<String[][]>();
+        gyujto.clear();
 
         try {
             int i = 0;
@@ -156,6 +157,15 @@ public class Tc_Ment {
                     if (t2.getValueAt(r, 1) != null) {
                         job = t2.getValueAt(r, 1).toString();
                     }
+
+                    if (job.equals("") && t2.getValueAt(r, 3).toString().equals("Tény")) {
+                        try {
+                            job = t2.getValueAt(r - 1, 1).toString();
+                        } catch (Exception e) {
+                        }
+
+                    }
+
                     if (t2.getValueAt(r, 2) != null) {
                         ws = t2.getValueAt(r, 2).toString();
                     }
@@ -236,7 +246,7 @@ public class Tc_Ment {
                             ora = " 22:00:00";
                         }
 
-                        //bejarjuk az osszes sort es osszeállitjuk egy querysorba az adatokat ha van pn és van ws és van valami a darabszámos cellában 
+//bejarjuk az osszes sort es osszeállitjuk egy querysorba az adatokat ha van pn és van ws és van valami a darabszámos cellában 
                         if (t2.getValueAt(r, 0) != null && t2.getValueAt(r, 2) != null && !t2.getValueAt(r, 0).toString().equals("") && !t2.getValueAt(r, 2).toString().equals("") && t2.getValueAt(r, i) != null && !t2.getValueAt(r, i).toString().equals("") && !t2.getColumnName(i).equals("Sum: PN,JOB,WS")) {
 
 //meghatarozzuk a darabokat
@@ -307,11 +317,11 @@ public class Tc_Ment {
             //ámde ha nem planner akkor nem updatelunk , hogy ne torlodjenek a tervek
             if (ablak.planner == false) {
                 //feltoltjuk az adatokat , es egyezoseg eseten csak a teny qty update no meg a wtf
-                String feltoltquery = "insert ignore tc_terv (tc_terv.idtc_becells , tc_terv.idtc_bestations , tc_terv.idtc_bepns , tc_terv.job , tc_terv.date , tc_terv.qty , tc_terv.wtf , tc_terv.tt , tc_terv.user , tc_terv.pktomig , qty_teny) values" + feltoltadat + "on duplicate key update  qty_teny = values (qty_teny) , wtf = values (wtf) ";
+                String feltoltquery = "insert ignore tc_terv (tc_terv.idtc_becells , tc_terv.idtc_bestations , tc_terv.idtc_bepns , tc_terv.job , tc_terv.date , tc_terv.qty , tc_terv.wtf , tc_terv.tt , tc_terv.user , tc_terv.pktomig , qty_teny) values" + feltoltadat + "on duplicate key update  qty_teny = values (qty_teny) , wtf = values (wtf) , active = (2) ";
                 pc.feltolt(feltoltquery, true);
             }
 
-        }
+        }   
 
     }
 }

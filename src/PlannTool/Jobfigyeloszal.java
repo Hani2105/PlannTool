@@ -73,9 +73,10 @@ public class Jobfigyeloszal extends Thread {
             Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        //lekerdezzuk a backendet is
-        Query = "SELECT distinct Beterv.sht , Beterv.pn , Beterv.job , Beterv.startdate , sum(Beterv.qty) from Beterv where Beterv.startdate >= '" + stol + "' and Beterv.active = 2 and Beterv.sht in (" + allomasokquerybe + ") group by Beterv.job , Beterv.pn order by Beterv.sht asc , Beterv.startdate asc";
-
+        Query = "Select distinct tc_becells.cellname , tc_bepns.partnumber , tc_terv.job ,tc_terv.date , sum(tc_terv.qty) from tc_becells\n"
+                + "left join tc_terv on tc_terv.idtc_becells = tc_becells.idtc_cells\n"
+                + "left join tc_bepns on tc_bepns.idtc_bepns = tc_terv.idtc_bepns\n"
+                + "where tc_terv.date >= '" + stol + "' and tc_terv.active = 2 and tc_becells.cellname in (" + allomasokquerybe + ") group by tc_terv.job , tc_bepns.partnumber order by tc_becells.cellname asc , tc_terv.date asc;";
         try {
             pc.planconnect(Query);
         } catch (SQLException ex) {
@@ -93,7 +94,7 @@ public class Jobfigyeloszal extends Thread {
         } catch (SQLException ex) {
             Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         pc.kinyir();
 
         ablak.jTable14.setModel(model);
@@ -106,7 +107,11 @@ public class Jobfigyeloszal extends Thread {
 
         }
 
-        jobszamok = jobszamok.substring(0, jobszamok.length() - 1);
+        try {
+
+            jobszamok = jobszamok.substring(0, jobszamok.length() - 1);
+        } catch (Exception e) {
+        }
 
         xmlfeldolg xxx = new xmlfeldolg();
         Object rowdata[][] = null;

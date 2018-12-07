@@ -43,7 +43,16 @@ public class Tc_JTabbedPaneWithCloseIcons extends JTabbedPane implements MouseLi
             //the tab is being closed
             Tc_Betervezo.csuk = false;
             this.removeTabAt(tabNumber);
+//frissitjuk a tabszamot a tabgyujtoben
+            Tc_Betervezo.Besheets.clear();
 
+            for (int i = 0; i < Tc_Betervezo.Tervezotabbed.getTabCount(); i++) {
+
+                String name = Tc_Betervezo.Tervezotabbed.getTitleAt(i);
+
+                Tc_Betervezo.Besheets.put(name, (Tc_Besheet) Tc_Betervezo.Tervezotabbed.getComponentAt(i));
+
+            }
         }
     }
 
@@ -99,7 +108,7 @@ class CloseTabIcon implements Icon {
         g.drawLine(x + 9, y_p + 3, x + 3, y_p + 9);
         g.setColor(col);
         if (fileIcon != null) {
-            fileIcon.paintIcon(c, g, x + width , y_p);
+            fileIcon.paintIcon(c, g, x + width, y_p);
         }
     }
 

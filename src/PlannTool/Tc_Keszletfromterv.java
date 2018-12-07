@@ -459,8 +459,8 @@ public class Tc_Keszletfromterv extends javax.swing.JFrame {
     public static javax.swing.JTable jTable1;
     public static javax.swing.JTable jTable2;
     public static javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField13;
+    public static javax.swing.JTextField jTextField13;
     public static javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField6;
+    public static javax.swing.JTextField jTextField6;
     // End of variables declaration//GEN-END:variables
 }

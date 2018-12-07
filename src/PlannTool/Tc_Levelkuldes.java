@@ -28,7 +28,7 @@ public class Tc_Levelkuldes extends Thread {
     String cimzett;
     String kuldo;
 
-    public Tc_Levelkuldes(String Subject, String szoveg, String cimzett , String kuldo) {
+    public Tc_Levelkuldes(String Subject, String szoveg, String cimzett, String kuldo) {
 
         this.Subject = Subject;
         this.szoveg = szoveg;
@@ -38,20 +38,18 @@ public class Tc_Levelkuldes extends Thread {
     }
 
     public void run() {
+
+        String to = this.cimzett;//change accordingly  
+        String from = this.kuldo; //change accordingly  
+        String host = "mailhub.sanmina.com";//or IP address  
+
+        //Get the session object  
+        Properties properties = System.getProperties();
+        properties.setProperty("mail.smtp.host", host);
+        Session session = Session.getDefaultInstance(properties);
+
+        //compose the message
         try {
-            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-            LocalDateTime now = LocalDateTime.now();
-
-            String to = this.cimzett;//change accordingly  
-            String from = this.kuldo; //change accordingly  
-            String host = "mailhub.sanmina.com";//or IP address  
-
-            //Get the session object  
-            Properties properties = System.getProperties();
-            properties.setProperty("mail.smtp.host", host);
-            Session session = Session.getDefaultInstance(properties);
-
-            //compose the message
             MimeMessage message = new MimeMessage(session);
             message.setFrom(new InternetAddress(from));
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
@@ -62,6 +60,7 @@ public class Tc_Levelkuldes extends Thread {
             // Send message  
             Transport.send(message);
             //System.out.println("message sent successfully....");
+            stat.beir(System.getProperty("user.name"), jTabbedPane1.getTitleAt(jTabbedPane1.getSelectedIndex()), "Elkuldtuk a levelet" + cimzett + szoveg, "gabor.hanacsek@sanmina.com");
 
         } catch (MessagingException mex) {
             stat.beir(System.getProperty("user.name"), jTabbedPane1.getTitleAt(jTabbedPane1.getSelectedIndex()), "Elhasaltunk a Tc levelkuldes reszen" + mex, "gabor.hanacsek@sanmina.com");

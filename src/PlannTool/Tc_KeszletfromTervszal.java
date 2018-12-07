@@ -31,6 +31,14 @@ public class Tc_KeszletfromTervszal extends Thread {
     }
 
     public void run() {
+        
+//kinullazzuk a keresoket
+
+        k.jTextField1.setText("");
+        k.jTextField13.setText("");
+        k.jTextField6.setText("");
+        k.jTable1.setRowSorter(null);
+        k.jTable2.setRowSorter(null);
 
         DefaultTableModel model = (DefaultTableModel) k.jTable1.getModel();
         DefaultTableModel model1 = (DefaultTableModel) k.jTable2.getModel();
@@ -83,8 +91,7 @@ public class Tc_KeszletfromTervszal extends Thread {
 
             }
         } catch (SQLException ex) {
-            Logger.getLogger(ablak.class
-                    .getName()).log(Level.SEVERE, null, ex);
+           
         }
 
         k.jTable2.setModel(model1);
@@ -97,7 +104,7 @@ public class Tc_KeszletfromTervszal extends Thread {
             try {
                 Thread.sleep(2000);
             } catch (InterruptedException ex) {
-                Logger.getLogger(keszletszal.class.getName()).log(Level.SEVERE, null, ex);
+               
             }
 
             s.dispose();

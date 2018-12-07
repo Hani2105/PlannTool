@@ -31,6 +31,13 @@ public class keszletszal extends Thread {
 
     public void run() {
 
+//kitoroljuk a szűrő ablakokat
+        ablak.jTextField1.setText("");
+        ablak.jTextField13.setText("");
+        ablak.jTextField6.setText("");
+        ablak.jTable1.setRowSorter(null);
+        ablak.jTable2.setRowSorter(null);
+
         ablak.model = (DefaultTableModel) ablak.jTable1.getModel();
 
         URL url = null;
@@ -58,7 +65,6 @@ public class keszletszal extends Thread {
         }
 
         ablak.model = (DefaultTableModel) xxx.totable(ablak.model, rowdata);
-
         ablak.jTable1.setModel(ablak.model);
 
         // OH tábla
@@ -81,12 +87,11 @@ public class keszletszal extends Thread {
 
             }
         } catch (SQLException ex) {
-            Logger.getLogger(ablak.class
-                    .getName()).log(Level.SEVERE, null, ex);
+           
         }
 
         ablak.jTable2.setModel(ablak.model1);
-        
+
         //fun
         if (System.getProperty("user.name").toString().equals("eva_istenes")) {
 
@@ -95,7 +100,7 @@ public class keszletszal extends Thread {
             try {
                 Thread.sleep(2000);
             } catch (InterruptedException ex) {
-                Logger.getLogger(keszletszal.class.getName()).log(Level.SEVERE, null, ex);
+               
             }
 
             s.dispose();

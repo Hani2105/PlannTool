@@ -3133,6 +3133,7 @@ public class ablak extends javax.swing.JFrame {
 
         if (i == 5) {
 
+            //oh query
             jButton12.setEnabled(false);
             jButton11.setEnabled(false);
             jButton13.setEnabled(false);
@@ -3221,8 +3222,9 @@ public class ablak extends javax.swing.JFrame {
 
         if (i == 8) {
 
+//job figyelő
             DefaultListModel lm = new DefaultListModel();
-
+//smt állomások
             String Query = "select distinct stations.name from stations left join terv on terv.stationid = stations.id where terv.active = 1 and terv.startdate >= '2018-01-01 06:00:00' order by stations.name asc";
             planconnect pc = new planconnect();
             try {
@@ -3243,8 +3245,8 @@ public class ablak extends javax.swing.JFrame {
             } catch (SQLException ex) {
                 Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
             }
-
-            Query = "SELECT distinct Beterv.sht from Beterv where Beterv.startdate >= '2018-01-01 06:00:00' and Beterv.active = 2 order by Beterv.sht asc";
+//beterv állomások
+            Query = "SELECT * FROM planningdb.tc_becells order by cellname asc";
 
             try {
                 pc.planconnect(Query);
@@ -3257,7 +3259,7 @@ public class ablak extends javax.swing.JFrame {
             try {
                 while (pc.rs.next()) {
 
-                    lm.addElement(pc.rs.getString(1));
+                    lm.addElement(pc.rs.getString(2));
 
                 }
             } catch (SQLException ex) {
@@ -4610,7 +4612,7 @@ public class ablak extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField10;
     private javax.swing.JTextField jTextField11;
     public static javax.swing.JTextField jTextField12;
-    private javax.swing.JTextField jTextField13;
+    public static javax.swing.JTextField jTextField13;
     private javax.swing.JTextField jTextField14;
     private javax.swing.JTextField jTextField15;
     private javax.swing.JTextField jTextField17;
@@ -4625,7 +4627,7 @@ public class ablak extends javax.swing.JFrame {
     public static javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
+    public static javax.swing.JTextField jTextField6;
     public static javax.swing.JTextField jTextField7;
     public static javax.swing.JTextField jTextField8;
     public static javax.swing.JTextField jTextField9;

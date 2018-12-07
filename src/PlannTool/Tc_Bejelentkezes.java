@@ -9,8 +9,10 @@ import java.awt.event.KeyEvent;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Arrays;
@@ -151,11 +153,21 @@ public class Tc_Bejelentkezes extends javax.swing.JFrame {
         // TODO add your handling code here:
         planconnect pc = new planconnect();
         char[] password = jPasswordField1.getPassword();
+        String pass = "";
+
+        try {
+            pass = String.valueOf(password);
+            //pass = pass.replace("+", "%2B");
+        } catch (Exception e) {
+
+        }
 
         //proba universal login
         URL oracle = null;
         try {
-            oracle = new URL("http://143.116.140.120/api/auth/authlib.php?username=" + jTextField1.getText() + "&password=" + String.valueOf(password) + "");
+            oracle = new URL("http://143.116.140.120/api/auth/authlib.php?username=" + jTextField1.getText() + "&password=" + URLEncoder.encode(pass, "UTF-8") + "");
+        } catch (UnsupportedEncodingException ex) {
+            Logger.getLogger(Tc_Bejelentkezes.class.getName()).log(Level.SEVERE, null, ex);
         } catch (MalformedURLException ex) {
             Logger.getLogger(Tc_Bejelentkezes.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -244,12 +256,22 @@ public class Tc_Bejelentkezes extends javax.swing.JFrame {
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             planconnect pc = new planconnect();
             char[] password = jPasswordField1.getPassword();
+            String pass = "";
+
+            try {
+                pass = String.valueOf(password);
+                //pass = pass.replace("+", "%2B");
+            } catch (Exception e) {
+
+            }
 
             //proba universal login
             URL oracle = null;
             try {
-                oracle = new URL("http://143.116.140.120/api/auth/authlib.php?username=" + jTextField1.getText() + "&password=" + String.valueOf(password) + "");
+                oracle = new URL("http://143.116.140.120/api/auth/authlib.php?username=" + jTextField1.getText() + "&password=" + URLEncoder.encode(pass, "UTF-8") + "");
             } catch (MalformedURLException ex) {
+                Logger.getLogger(Tc_Bejelentkezes.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (UnsupportedEncodingException ex) {
                 Logger.getLogger(Tc_Bejelentkezes.class.getName()).log(Level.SEVERE, null, ex);
             }
 

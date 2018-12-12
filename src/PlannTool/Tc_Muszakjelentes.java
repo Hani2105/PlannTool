@@ -352,7 +352,7 @@ public class Tc_Muszakjelentes extends javax.swing.JFrame {
 
         //peldanyositunk egy levelkuldot
         try {
-            stat.beir(System.getProperty("user.name"), Tc_Betervezo.Tervezotabbed.getTitleAt(Tc_Betervezo.Tervezotabbed.getSelectedIndex()), "Mjelenteskartlenni", "gabor.hanacsek@sanmina.com");
+            //stat.beir(System.getProperty("user.name"), Tc_Betervezo.Tervezotabbed.getTitleAt(Tc_Betervezo.Tervezotabbed.getSelectedIndex()), "Mjelenteskartlenni", "gabor.hanacsek@sanmina.com");
             Email += "<html><div>" + jTextArea2.getText().replace("\n", "<br>") + "</div></html>";
             Tc_Levelkuldes l = new Tc_Levelkuldes(subject, Email,  jTextArea1.getText() ,"Muszakjelentes@sanmina.com");
             l.start();
@@ -362,7 +362,7 @@ public class Tc_Muszakjelentes extends javax.swing.JFrame {
             this.dispose();
         } catch (Exception e) {
 
-            stat.beir(System.getProperty("user.name"), Tc_Betervezo.Tervezotabbed.getTitleAt(Tc_Betervezo.Tervezotabbed.getSelectedIndex()), "Elhasaltunk a peldanyositasnal" + e, "gabor.hanacsek@sanmina.com");
+            //stat.beir(System.getProperty("user.name"), Tc_Betervezo.Tervezotabbed.getTitleAt(Tc_Betervezo.Tervezotabbed.getSelectedIndex()), "Elhasaltunk a peldanyositasnal" + e, "gabor.hanacsek@sanmina.com");
 
         }
 

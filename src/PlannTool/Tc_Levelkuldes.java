@@ -60,10 +60,10 @@ public class Tc_Levelkuldes extends Thread {
             // Send message  
             Transport.send(message);
             //System.out.println("message sent successfully....");
-            stat.beir(System.getProperty("user.name"), jTabbedPane1.getTitleAt(jTabbedPane1.getSelectedIndex()), "Elkuldtuk a levelet" + cimzett + szoveg, "gabor.hanacsek@sanmina.com");
+            //stat.beir(System.getProperty("user.name"), jTabbedPane1.getTitleAt(jTabbedPane1.getSelectedIndex()), "Elkuldtuk a levelet" + cimzett + szoveg, "gabor.hanacsek@sanmina.com");
 
         } catch (MessagingException mex) {
-            stat.beir(System.getProperty("user.name"), jTabbedPane1.getTitleAt(jTabbedPane1.getSelectedIndex()), "Elhasaltunk a Tc levelkuldes reszen" + mex, "gabor.hanacsek@sanmina.com");
+            //stat.beir(System.getProperty("user.name"), jTabbedPane1.getTitleAt(jTabbedPane1.getSelectedIndex()), "Elhasaltunk a Tc levelkuldes reszen" + mex, "gabor.hanacsek@sanmina.com");
         }
 
     }

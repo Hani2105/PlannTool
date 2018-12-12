@@ -1142,7 +1142,7 @@ public class Tc_Besetup extends javax.swing.JFrame {
             model = (DefaultTableModel) jTable2.getModel();
             model.setRowCount(0);
             model3.setRowCount(0);
-            String query = "SELECT Muszakjelentes.Cím FROM planningdb.Muszakjelentes";
+            String query = "SELECT Muszakjelentes.Cím FROM planningdb.Muszakjelentes order by Cím";
             planconnect pc = new planconnect();
 
             try {

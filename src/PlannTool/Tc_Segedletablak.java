@@ -297,7 +297,7 @@ public class Tc_Segedletablak extends javax.swing.JFrame {
                 + "left join tc_bestations on tc_bestations.idtc_bestations = tc_terv.idtc_bestations\n"
                 + "where tc_terv.date = '" + first
                 + "' and tc_becells.cellname in " + cellak
-                + "and tc_terv.active = 2";
+                + "and tc_terv.active = 2 order by tc_becells.cellname";
 
         planconnect pc = new planconnect();
         try {
@@ -354,7 +354,7 @@ public class Tc_Segedletablak extends javax.swing.JFrame {
                 + "left join tc_bestations on tc_bestations.idtc_bestations = tc_terv.idtc_bestations\n"
                 + "where tc_terv.date between '" + last
                 + "' and '" + first + "' and tc_becells.cellname in " + cellak
-                + "and tc_terv.active = 2";
+                + "and tc_terv.active = 2 order by tc_becells.cellname";
 
         try {
             pc.planconnect(query2);

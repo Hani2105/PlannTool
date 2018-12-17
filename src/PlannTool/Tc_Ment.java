@@ -301,11 +301,11 @@ public class Tc_Ment {
         if (feltoltadat.length() > 0) {
             feltoltadat = feltoltadat.substring(0, feltoltadat.length() - 1);
 
-            // ha planner akkor updatelunk , ezzel torlunk ki a tervbol teteleket
+            // ha planner akkor updatelunk , ezzel torlunk ki a tervbol teteleket , a tervezett darabszamot nullara allitjuk , hogy ha visszaupdatelodik mert a termeles megis csinalja ne legyen bebne a terv darabszam
             if (ablak.planner == true) {
 
                 //update 2-->1-->0
-                String updatequery = "update tc_terv set active = CASE when tc_terv.active = 2 then 1 when tc_terv.active = 1 then 0 end where tc_terv.active in (2,1) and tc_terv.date between '" + tol + "' and '" + ig + "' and tc_terv.idtc_becells = '" + cellid + "'";
+                String updatequery = "update tc_terv set active = CASE when tc_terv.active = 2 then 1 when tc_terv.active = 1 then 0 end , tc_terv.qty = 0 where tc_terv.active in (2,1) and tc_terv.date between '" + tol + "' and '" + ig + "' and tc_terv.idtc_becells = '" + cellid + "'";
                 pc.feltolt(updatequery, false);
 
                 //feltoltjuk az adatokat 

@@ -160,6 +160,8 @@ public class Tc_Besetup extends javax.swing.JFrame {
         jScrollPane6 = new javax.swing.JScrollPane();
         jTable3 = new javax.swing.JTable();
         jButton7 = new javax.swing.JButton();
+        jButton9 = new javax.swing.JButton();
+        jButton10 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Setup!");
@@ -557,6 +559,20 @@ public class Tc_Besetup extends javax.swing.JFrame {
             }
         });
 
+        jButton9.setText("+ sor");
+        jButton9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton9ActionPerformed(evt);
+            }
+        });
+
+        jButton10.setText("+ sor");
+        jButton10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton10ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -564,24 +580,32 @@ public class Tc_Besetup extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton6)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jButton6)
+                    .addComponent(jButton9))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 554, Short.MAX_VALUE)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 552, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton7)
-                .addGap(25, 25, 25))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton7)
+                    .addComponent(jButton10))
+                .addGap(23, 23, 23))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 635, Short.MAX_VALUE)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 577, Short.MAX_VALUE)
                     .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 635, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jButton7)
                             .addComponent(jButton6))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButton9)
+                            .addComponent(jButton10))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -1206,9 +1230,7 @@ public class Tc_Besetup extends javax.swing.JFrame {
 
         queryvalues = queryvalues.substring(0, queryvalues.length() - 2);
         String query = "insert into Muszakjelentes (cím) values" + queryvalues + ")";
-
         String truncate = "truncate Muszakjelentes";
-
         planconnect pc = new planconnect();
         pc.feltolt(truncate, false);
         pc.feltolt(query, true);
@@ -1457,7 +1479,7 @@ public class Tc_Besetup extends javax.swing.JFrame {
                 model = (DefaultTableModel) jTable1.getModel();
                 model.setRowCount(0);
                 query = "select  tc_prodmatrix.idtc_prodmatrix , tc_bepns.partnumber , tc_becells.cellname , tc_bestations.workstation , tc_prodmatrix.ciklusido ,tc_bepns.smt_pn from tc_prodmatrix left join tc_bepns on tc_prodmatrix.id_tc_bepns = tc_bepns.idtc_bepns  left join tc_becells on tc_becells.idtc_cells = tc_prodmatrix.id_tc_becells left join tc_bestations on tc_bestations.idtc_bestations = tc_prodmatrix.id_tc_bestations";
-                
+
                 pc = new planconnect();
 
                 rs = (ResultSet) pc.planconnect(query);
@@ -1486,6 +1508,27 @@ public class Tc_Besetup extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_jButton8ActionPerformed
+
+    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+
+        DefaultTableModel model = new DefaultTableModel();
+        model = (DefaultTableModel) jTable2.getModel();
+
+        model.addRow(new Object[]{});
+        jTable2.setModel(model);
+
+
+    }//GEN-LAST:event_jButton9ActionPerformed
+
+    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
+        // TODO add your handling code here:
+
+        DefaultTableModel model = new DefaultTableModel();
+        model = (DefaultTableModel) jTable3.getModel();
+        model.addRow(new Object[]{});
+        jTable3.setModel(model);
+        
+    }//GEN-LAST:event_jButton10ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1519,6 +1562,7 @@ public class Tc_Besetup extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
@@ -1526,6 +1570,7 @@ public class Tc_Besetup extends javax.swing.JFrame {
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
+    private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

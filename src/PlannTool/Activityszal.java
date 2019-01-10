@@ -21,11 +21,11 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author gabor_hanacsek
  */
-public class Activityszal extends Thread{
-    
-    public void run(){
-    
-     String part;
+public class Activityszal extends Thread {
+
+    public void run() {
+
+        String part;
         part = ablak.jTextField3.getText();
         Date tol = ablak.jDateChooser1.getDate();
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd%20HH:mm:ss");
@@ -66,8 +66,31 @@ public class Activityszal extends Thread{
 
         ablak.jTable3.setModel(ablak.modelacti);
 
+        ablak.modelactilist.clear();
+        String[][] listaba = new String[ablak.modelacti.getRowCount()][7];
+        for (int i = 0; i < ablak.modelacti.getRowCount(); i++) {
+
+            listaba[i][0] = ablak.modelacti.getValueAt(i, 0).toString();
+            listaba[i][1] = ablak.modelacti.getValueAt(i, 1).toString();
+            listaba[i][2] = ablak.modelacti.getValueAt(i, 2).toString();
+            listaba[i][3] = ablak.modelacti.getValueAt(i, 3).toString();
+            listaba[i][4] = ablak.modelacti.getValueAt(i, 4).toString();
+            listaba[i][5] = ablak.modelacti.getValueAt(i, 5).toString();
+            listaba[i][6] = ablak.modelacti.getValueAt(i, 6).toString();
+
+        }
+
+        ablak.modelactilist.add(listaba);
+
+        activityszuro sz = new activityszuro();
+
+//        sz.listabolszurokprefixet();
+//        sz.listabolszurokallomast();
+        sz.listabolszurok();
+        sz.activitygroup();
+
         stat.beir(System.getProperty("user.name"), jTabbedPane1.getTitleAt(jTabbedPane1.getSelectedIndex()), "", "gabor.hanacsek@sanmina.com");
-        animation.rajzol=false;
+        animation.rajzol = false;
     }
-    
+
 }

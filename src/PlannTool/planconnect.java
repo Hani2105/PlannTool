@@ -30,10 +30,11 @@ public class planconnect {
     public Object planconnect(String startQuery) throws SQLException, ClassNotFoundException {
 
         String driver = "com.mysql.jdbc.driver";
-        String url = "jdbc:mysql://143.116.140.114/planningdb";
+        String url = "jdbc:mysql://143.116.140.114/planningdb?zeroDateTimeBehavior=convertToNull";
         String username = "plan";
         String password = "plan500";
         Class.forName("com.mysql.jdbc.Driver");
+        
 
         this.conn = (Connection) DriverManager.getConnection(url, username, password);
         Statement st = conn.createStatement();
@@ -98,7 +99,7 @@ public class planconnect {
             se.printStackTrace();
 
             infobox info = new infobox();
-            info.infoBox("Sikertelen feltöltés!", "Hiba!");
+            info.infoBox("Sikertelen feltöltés! " + se.getMessage(), "Hiba!");
 
         } catch (Exception e) {
             //Handle errors for Class.forName

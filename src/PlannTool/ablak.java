@@ -122,7 +122,7 @@ public class ablak extends javax.swing.JFrame {
         new ExcelAdapter(jTable4);
         new ExcelAdapter(jTable18);
         new ExcelAdapter(jTable19);
-        
+
         jTable11.getColumnModel().getColumn(0).setCellRenderer(new Tooltiprenderer());
 
         //beillesztehtővé tétele a gyártás infónak
@@ -194,6 +194,7 @@ public class ablak extends javax.swing.JFrame {
         jScrollPane23 = new javax.swing.JScrollPane();
         jTable19 = new javax.swing.JTable();
         jCheckBox2 = new javax.swing.JCheckBox();
+        jCheckBox3 = new javax.swing.JCheckBox();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
         jTable4 = new javax.swing.JTable();
@@ -329,6 +330,8 @@ public class ablak extends javax.swing.JFrame {
             jRadioButton1 = new javax.swing.JRadioButton();
             jLabel52 = new javax.swing.JLabel();
             jRadioButton2 = new javax.swing.JRadioButton();
+            jPanel13 = new javax.swing.JPanel();
+            jButton22 = new javax.swing.JButton();
 
             jMenuItem1.setText("Bontás SN-re!");
             jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
@@ -707,6 +710,13 @@ public class ablak extends javax.swing.JFrame {
                 }
             });
 
+            jCheckBox3.setText("Pirst Pass O..");
+            jCheckBox3.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    jCheckBox3ActionPerformed(evt);
+                }
+            });
+
             javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
             jPanel2.setLayout(jPanel2Layout);
             jPanel2Layout.setHorizontalGroup(
@@ -763,7 +773,9 @@ public class ablak extends javax.swing.JFrame {
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                     .addComponent(jScrollPane23, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jCheckBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jCheckBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jCheckBox3, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addComponent(jScrollPane3))))
                     .addContainerGap(2345, Short.MAX_VALUE))
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -814,7 +826,9 @@ public class ablak extends javax.swing.JFrame {
                                 .addComponent(jScrollPane23, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGroup(jPanel2Layout.createSequentialGroup()
                             .addGap(42, 42, 42)
-                            .addComponent(jCheckBox2)))
+                            .addComponent(jCheckBox2)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(jCheckBox3)))
                     .addGap(17, 17, 17)
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(18, 18, 18)
@@ -3199,6 +3213,31 @@ public class ablak extends javax.swing.JFrame {
 
             jTabbedPane1.addTab("Sincronizer & Setup", jPanel12);
 
+            jButton22.setText("Anyagoló");
+            jButton22.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    jButton22ActionPerformed(evt);
+                }
+            });
+
+            javax.swing.GroupLayout jPanel13Layout = new javax.swing.GroupLayout(jPanel13);
+            jPanel13.setLayout(jPanel13Layout);
+            jPanel13Layout.setHorizontalGroup(
+                jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel13Layout.createSequentialGroup()
+                    .addComponent(jButton22)
+                    .addGap(0, 1021, Short.MAX_VALUE))
+            );
+            jPanel13Layout.setVerticalGroup(
+                jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel13Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(jButton22)
+                    .addContainerGap(490, Short.MAX_VALUE))
+            );
+
+            jTabbedPane1.addTab("Master module", jPanel13);
+
             jScrollPane7.setViewportView(jTabbedPane1);
 
             jPanel6.add(jScrollPane7, java.awt.BorderLayout.CENTER);
@@ -3357,7 +3396,7 @@ public class ablak extends javax.swing.JFrame {
             String username = System.getProperty("user.name");
             ablak.stat.beir(System.getProperty("user.name"), ablak.jTabbedPane1.getTitleAt(ablak.jTabbedPane1.getSelectedIndex()), "", "gabor.hanacsek@sanmina.com");
 
-            if (!username.equals("gabor_hanacsek") || !username.equals("gabor_hanacsek")) {
+            if (!username.equals("gabor_hanacsek") || !username.equals("roland_bognar")) {
 
                 jTabbedPane1.setSelectedIndex(0);
                 infobox info = new infobox();
@@ -3429,7 +3468,23 @@ public class ablak extends javax.swing.JFrame {
 //itt a sheet vege
         }
 
+        if (i == 11) {
 
+            String username = System.getProperty("user.name");
+            ablak.stat.beir(System.getProperty("user.name"), ablak.jTabbedPane1.getTitleAt(ablak.jTabbedPane1.getSelectedIndex()), "", "gabor.hanacsek@sanmina.com");
+
+            if (!username.equals("gabor_hanacsek")) {
+
+                jTabbedPane1.setSelectedIndex(0);
+                infobox info = new infobox();
+
+                info.infoBox("Hanié!", "Hiba!");
+
+            }
+
+        }
+
+//ez a legvége a change tabbedpainnek
     }//GEN-LAST:event_jTabbedPane1StateChanged
 
     private void jButton18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton18ActionPerformed
@@ -4448,6 +4503,7 @@ public class ablak extends javax.swing.JFrame {
         sz.visszaallit();
         sz.listabolszurok();
         sz.activitygroup();
+        sz.firstpass();
 
 
     }//GEN-LAST:event_jTable18KeyReleased
@@ -4460,6 +4516,7 @@ public class ablak extends javax.swing.JFrame {
         sz.visszaallit();
         sz.listabolszurok();
         sz.activitygroup();
+        sz.firstpass();
     }//GEN-LAST:event_jTable19KeyReleased
 
     private void jCheckBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox2ActionPerformed
@@ -4469,9 +4526,36 @@ public class ablak extends javax.swing.JFrame {
         sz.visszaallit();
         sz.listabolszurok();
         sz.activitygroup();
+        sz.firstpass();
 
 
     }//GEN-LAST:event_jCheckBox2ActionPerformed
+
+    private void jButton22ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton22ActionPerformed
+        // az anyagoló meghívása
+
+        Anyagelados m = null;
+        try {
+            m = new Anyagelados();
+        } catch (SQLException ex) {
+            Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        m.setExtendedState(m.getExtendedState() | m.MAXIMIZED_BOTH);
+        m.setVisible(true);
+
+
+    }//GEN-LAST:event_jButton22ActionPerformed
+
+    private void jCheckBox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox3ActionPerformed
+        // TODO add your handling code here:
+        activityszuro sz = new activityszuro();
+        sz.visszaallit();
+        sz.listabolszurok();
+        sz.activitygroup();
+        sz.firstpass();
+    }//GEN-LAST:event_jCheckBox3ActionPerformed
 
     public void gombenged() {
 
@@ -4616,6 +4700,7 @@ public class ablak extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton20;
     public static javax.swing.JButton jButton21;
+    private javax.swing.JButton jButton22;
     private javax.swing.JButton jButton23;
     private javax.swing.JButton jButton24;
     private javax.swing.JButton jButton3;
@@ -4627,6 +4712,7 @@ public class ablak extends javax.swing.JFrame {
     private javax.swing.JButton jButton9;
     private javax.swing.JCheckBox jCheckBox1;
     public static javax.swing.JCheckBox jCheckBox2;
+    public static javax.swing.JCheckBox jCheckBox3;
     public static com.toedter.calendar.JDateChooser jDateChooser1;
     public static com.toedter.calendar.JDateChooser jDateChooser2;
     public static com.toedter.calendar.JDateChooser jDateChooser3;
@@ -4687,6 +4773,7 @@ public class ablak extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
+    private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;

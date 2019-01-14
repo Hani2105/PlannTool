@@ -11,6 +11,7 @@ import static PlannTool.ablak.model;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
+import org.apache.poi.util.DocumentFormatException;
 
 /**
  *
@@ -138,7 +139,8 @@ public class activityszuro {
     public void activitygroup() {
 
         if (jCheckBox2.isSelected()) {
-
+//kikapcsoljuk a 3 as checkboxot mert logikailag nem fér össze
+            ablak.jCheckBox3.setEnabled(false);
             //lefuttatjuk a szűrőket
             //kiszedjuk a modelbol az adatokat
             DefaultTableModel model = new DefaultTableModel();
@@ -197,13 +199,47 @@ public class activityszuro {
 
             for (int i = 0; i < grouplist.size(); i++) {
 
-                model.addRow(new Object[]{grouplist.get(i)[0],grouplist.get(i)[1],grouplist.get(i)[2],"Nem értelmezhető",grouplist.get(i)[4],grouplist.get(i)[5],grouplist.get(i)[6]});
-                
-            }
-            
-//beállítjuk a táblának a modellt
-         jTable3.setModel(model);
+                model.addRow(new Object[]{grouplist.get(i)[0], grouplist.get(i)[1], "Nem értelmezhető", "Nem értelmezhető", grouplist.get(i)[4], grouplist.get(i)[5], grouplist.get(i)[6]});
 
+            }
+
+//beállítjuk a táblának a modellt
+            jTable3.setModel(model);
+
+        } else {
+
+            //kikapcsoljuk a 3 as checkboxot mert logikailag nem fér össze
+            ablak.jCheckBox3.setEnabled(true);
+        }
+
+    }
+
+    public void firstpass() {
+
+        if (ablak.jCheckBox3.isSelected()) {
+
+            //kikapcsoljuk a grouppot
+            ablak.jCheckBox2.setEnabled(false);
+            DefaultTableModel model = new DefaultTableModel();
+            model = (DefaultTableModel) jTable3.getModel();
+
+            for (int i = 0; i < model.getRowCount(); i++) {
+
+                if (!model.getValueAt(i, 2).toString().equals("1")) {
+
+                    model.removeRow(i);
+                    i--;
+
+                }
+
+            }
+
+            jTable3.setModel(model);
+
+        }
+        
+        else{
+        jCheckBox2.setEnabled(true);
         }
 
     }

@@ -41,7 +41,7 @@ public class Anyaglistakibontas {
 //a pn ünk 
         String pn = "";
         try {
-            pn = Anyagelados.jTable3.getValueAt(Anyagelados.jTable3.getSelectedRow(), Anyagelados.jTable3.getSelectedColumn()).toString();
+            pn = Anyagelados.jTable3.getValueAt(Anyagelados.jTable3.getSelectedRow(),4).toString();
         } catch (Exception e) {
         }
 //megkeressuk a listankban
@@ -50,8 +50,9 @@ public class Anyaglistakibontas {
 //ha egyezik a pn akkor összeadjuk a darabszamot es betesszuk az egesz sort a jtable2 modelljébe
             if (Anyagelados.eladaslista.get(i)[4].toString().contains(pn) && !pn.equals("")) {
                 try {
-                    model2.addRow(new Object[]{Anyagelados.eladaslista.get(i)[4].toString(), Anyagelados.eladaslista.get(i)[2].toString(), Anyagelados.eladaslista.get(i)[9].toString(), Anyagelados.eladaslista.get(i)[8].toString(), osszdarab});
                     osszdarab += Integer.parseInt(Anyagelados.eladaslista.get(i)[2]);
+                    model2.addRow(new Object[]{Anyagelados.eladaslista.get(i)[4].toString(), Anyagelados.eladaslista.get(i)[2].toString(), Anyagelados.eladaslista.get(i)[9].toString(), Anyagelados.eladaslista.get(i)[8].toString(), osszdarab});
+
                 } catch (Exception e) {
                 }
             }
@@ -59,6 +60,31 @@ public class Anyaglistakibontas {
         }
 
         Anyagelados.jTable2.setModel(model2);
+
+// itt inditjuk a horizontal adatok kitolteset
+        //bejarjuk a horizontal gyujtot
+        DefaultTableModel model = new DefaultTableModel();
+        model = (DefaultTableModel) Anyagelados.jTable1.getModel();
+        model.setRowCount(0);
+        int szamlalo = 0;
+        for (int i = 0; i < Anyagelados.horizontal.size(); i++) {
+
+            if (Anyagelados.horizontal.get(i)[3].contains(pn) || Anyagelados.horizontal.get(i)[2].contains("Extra Comment")) {
+
+                model.addRow(new Object[54]);
+                for (int n = 1; n < 54; n++) {
+
+                    model.setValueAt(Anyagelados.horizontal.get(i)[n], szamlalo, n);
+
+                    //Anyagelados.jTable1.setValueAt(Anyagelados.horizontal.get(i)[n], 0, n);
+                }
+                szamlalo++;
+
+            }
+
+        }
+
+        Anyagelados.jTable1.setModel(model);
 
     }
 
@@ -78,26 +104,26 @@ public class Anyaglistakibontas {
         // declare a Cell object
         Cell cell = null;
         // Access the cell first to update the value
-        cell = my_worksheet.getRow(Anyagelados.jTable3.getSelectedRow()).getCell(Anyagelados.jTable3.getSelectedColumn());
+        cell = my_worksheet.getRow(Anyagelados.jTable3.getSelectedRow()).getCell(Anyagelados.jTable3.getSelectedColumn()-1);
         // Get current value and then add 5 to it 
         if (cell != null) {
             String eztirjukbele = "";
             try {
                 eztirjukbele = Anyagelados.jTable3.getValueAt(Anyagelados.jTable3.getSelectedRow(), Anyagelados.jTable3.getSelectedColumn()).toString();
             } catch (Exception e) {
-                eztirjukbele = "nem jó valami";
+
             }
             cell.setCellValue(eztirjukbele);
         } else {
 
             Row row = my_worksheet.getRow(Anyagelados.jTable3.getSelectedRow());
 
-            cell = row.createCell(Anyagelados.jTable3.getSelectedColumn());
+            cell = row.createCell(Anyagelados.jTable3.getSelectedColumn()-1);
             String eztirjukbele = "";
             try {
                 eztirjukbele = Anyagelados.jTable3.getValueAt(Anyagelados.jTable3.getSelectedRow(), Anyagelados.jTable3.getSelectedColumn()).toString();
             } catch (Exception e) {
-                eztirjukbele = "nem jó valami";
+
             }
             cell.setCellValue(eztirjukbele);
 
@@ -121,7 +147,10 @@ public class Anyaglistakibontas {
         } catch (Exception e) {
         }
         //close the stream
-        output_file.close();
+        try {
+            output_file.close();
+        } catch (Exception e) {
+        }
 
     }
 

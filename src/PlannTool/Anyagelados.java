@@ -7,31 +7,25 @@ package PlannTool;
 
 import java.awt.Toolkit;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
-import javax.swing.JTable;
-import javax.swing.table.TableColumn;
-import jxl.Cell;
-import jxl.Sheet;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
 import java.util.Iterator;
 import java.util.List;
-import javax.swing.JOptionPane;
-import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import org.apache.poi.EncryptedDocumentException;
+import org.apache.poi.ss.usermodel.CellValue;
 import org.apache.poi.ss.usermodel.DataFormatter;
+import org.apache.poi.ss.usermodel.FormulaEvaluator;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 
 /**
@@ -45,19 +39,25 @@ public class Anyagelados extends javax.swing.JFrame {
      */
     //ebbe a tömbbe fogjuk tárolni az adatokat
     public static List<String[]> eladaslista = new ArrayList<>();
+    public static List<String[]> horizontal = new ArrayList<>();
     public static Workbook workbook = null;
     public static JFileChooser fileChooser = new JFileChooser();
-
+    
     public Anyagelados() throws SQLException, ClassNotFoundException {
         initComponents();
+        jTable1.setAutoResizeMode(jTable1.AUTO_RESIZE_OFF);
+        
+        this.jTable1.setDefaultRenderer(Object.class, new Anyageladosrenderer());
+        
         seticon();
-//amikor megnyilik az ablak lequeryzzuk az adatokat es eltesszuk egy tombbe
+        Anyagelados.eladaslista.clear();
+//amikor megnyilik az ablak lequeryzzuk az adatokat es eltesszuk egy tombbe (kriszti excelbol felmentetteket)
 
         String query = "select * from M_anyageladas";
-
+        
         planconnect pc = new planconnect();
         pc.planconnect(query);
-
+        
         while (pc.rs.next()) {
             String[] lista = new String[10];
             lista[0] = pc.rs.getString(1);
@@ -70,30 +70,61 @@ public class Anyagelados extends javax.swing.JFrame {
             lista[7] = pc.rs.getString(8);
             lista[8] = pc.rs.getString(9);
             lista[9] = pc.rs.getString(10);
-
+            
             eladaslista.add(lista);
-
+            
         }
-
+        
         pc.kinyir();
-
+        
         Anyagelados.jTable3.setCellSelectionEnabled(true);
-
+        
         Anyagelados.jTable3.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-
+            
             public void valueChanged(ListSelectionEvent e) {
                 //I want something to happen before the row change is triggered on the UI.  
                 Anyaglistakibontas a = new Anyaglistakibontas();
                 //ha pn oszlopban vagyunk ráadásul
-                if (Anyagelados.jTable3.getSelectedColumn() == 3) {
-
-                    a.tablabair();
-
-                }
-
+                a.tablabair();
+                
             }
         });
 
+        //eltesszuk a horizontal adatokat is tombbe
+        query = "select * from horizontal";
+        pc.planconnect(query);
+        
+        while (pc.rs.next()) {
+            
+            String[] adat = new String[54];
+            
+            for (int i = 0; i < 54; i++) {
+                
+                adat[i] = pc.rs.getString(i + 1);
+                
+            }
+            
+            horizontal.add(adat);
+            
+        }
+        
+        pc.kinyir();
+
+        //a horizontalok datumait berakom a legordulobe
+        query = "SELECT horizontal.nev from horizontal group by nev";
+        
+        pc.planconnect(query);
+        
+        while (pc.rs.next()) {
+            
+            jComboBox1.addItem(pc.rs.getString(1));
+            
+        }
+        
+        pc.kinyir();
+        
+        jComboBox1.setSelectedIndex(-1);
+        
     }
 
     /**
@@ -113,18 +144,25 @@ public class Anyagelados extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         jTable3 = new javax.swing.JTable();
         jTextField1 = new javax.swing.JTextField();
+        jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        jComboBox1 = new javax.swing.JComboBox<>();
+        jButton5 = new javax.swing.JButton();
+        jButton6 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Anyag eladás");
 
-        jButton1.setText("Igény beolvasása");
+        jButton1.setText("Excel igény beolvasása");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Új adatok feltöltése");
+        jButton2.setText("Adatok feltöltése");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -159,15 +197,75 @@ public class Anyagelados extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Other Organization", "QTY", "item prefix nélkül", "PartNumber", "Item material status 2", "LT", "Buyer name", "Comment"
+                "ID", "Other Organization", "QTY", "item prefix nélkül", "PartNumber", "Item material status 2", "LT", "Buyer name", "Comment"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, true, true, true, true, true, true, true, true
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jTable3.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTable3KeyPressed(evt);
+            }
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 jTable3KeyReleased(evt);
             }
         });
         jScrollPane3.setViewportView(jTable3);
+        if (jTable3.getColumnModel().getColumnCount() > 0) {
+            jTable3.getColumnModel().getColumn(0).setResizable(false);
+            jTable3.getColumnModel().getColumn(0).setPreferredWidth(20);
+        }
+
+        jTextField1.setEditable(false);
+
+        jButton3.setText("Adatok újra töltése");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
+        jButton4.setText("Horizontal feltöltése");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4", "Title 5", "Title 6", "Title 7", "Title 8", "Title 9", "Title 10", "Title 11", "Title 12", "Title 13", "Title 14", "Title 15", "Title 16", "Title 17", "Title 18", "Title 19", "Title 20", "Title 21", "Title 22", "Title 23", "Title 24", "Title 25", "Title 26", "Title 27", "Title 28", "Title 29", "Title 30", "Title 31", "Title 32", "Title 33", "Title 34", "Title 35", "Title 36", "Title 37", "Title 38", "Title 39", "Title 40", "Title 41", "Title 42", "Title 43", "Title 44", "Title 45", "Title 46", "Title 47", "Title 48", "Title 49", "Title 50", "Title 51", "Title 52", "Title 53", "Title 54"
+            }
+        ));
+        jScrollPane1.setViewportView(jTable1);
+
+        jButton5.setText("Kiválasztott Horizontal törlése");
+        jButton5.setToolTipText("A kiválasztott Horizontal törlése!");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+
+        jButton6.setText("Adatok lekérése adatbázisból");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -177,36 +275,56 @@ public class Anyagelados extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButton1)
-                        .addGap(18, 18, 18)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton2)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 662, Short.MAX_VALUE)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 885, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE))))
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 435, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton3)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1)))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jButton1)
-                    .addComponent(jButton2)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jTextField1)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton2)
+                            .addComponent(jButton3)
+                            .addComponent(jButton4)
+                            .addComponent(jButton5)
+                            .addComponent(jComboBox1))
+                        .addComponent(jButton6)))
+                .addGap(12, 12, 12)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 436, Short.MAX_VALUE)
-                    .addComponent(jScrollPane3)))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 310, Short.MAX_VALUE)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -217,15 +335,15 @@ public class Anyagelados extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-
+        
         fileChooser.setCurrentDirectory(new File("C:\\Users\\gabor_hanacsek\\Desktop\\anyag eladás"));
         int result = fileChooser.showOpenDialog(this);
-
+        
         if (result == JFileChooser.APPROVE_OPTION) {
 
             // Creating a Workbook from an Excel file (.xls or .xlsx)
             try {
-
+                
                 workbook = WorkbookFactory.create(new File(fileChooser.getSelectedFile().toString()));
                 jTextField1.setText(fileChooser.getSelectedFile().getName());
             } catch (EncryptedDocumentException ex) {
@@ -255,96 +373,364 @@ public class Anyagelados extends javax.swing.JFrame {
                 model.addRow(new Object[]{});
                 // Now let's iterate over the columns of the current row
                 Iterator<org.apache.poi.ss.usermodel.Cell> cellIterator = row.cellIterator();
-
+                
                 while (cellIterator.hasNext()) {
                     org.apache.poi.ss.usermodel.Cell cell = cellIterator.next();
                     String cellValue = dataFormatter.formatCellValue((org.apache.poi.ss.usermodel.Cell) cell);
                     //hozzaadjuk a cellahoz a cellvalue erteket , ha nem sikerül hozzáadunk egy uj oszlopot
                     try {
-                        model.setValueAt(cellValue, row.getRowNum(), cell.getColumnIndex());
+                        model.setValueAt(cellValue, row.getRowNum(), cell.getColumnIndex() + 1);
                     } catch (Exception e) {
-
+                        
                         model.addColumn("");
-                        model.setValueAt(cellValue, row.getRowNum(), cell.getColumnIndex());
-
+                        model.setValueAt(cellValue, row.getRowNum(), cell.getColumnIndex() + 1);
+                        
                     }
-
+                    
                 }
-
+                
             }
-
+            
             try {
                 workbook.close();
             } catch (IOException ex) {
                 Logger.getLogger(Anyagelados.class.getName()).log(Level.SEVERE, null, ex);
             }
-
+            
             Anyagelados.jTable3.setModel(model);
-
+            
         }
-
+        
 
     }//GEN-LAST:event_jButton1ActionPerformed
-
+    
     private void seticon() {
-
+        
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("kepek/anyagos2.png")));
-
+        
     }
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // feltöltjük az adatbázisba az új adatokat
 
-        String Query = "insert ignore M_anyageladas (OO,QTY,IPN,PartNumber,IStatus,LT,Buyername,Komment) values ";
+        String Query = "insert ignore M_anyageladas (idM_anyageladas,OO,QTY,IPN,PartNumber,IStatus,LT,Buyername,Komment) values ";
 
         //bejarjuk a jtablet es osszeszedjuk az adatokat , ahol nem nulla az oo és a pn
         String feltoltadat = "";
-
+        
         for (int i = 0; i < jTable3.getRowCount(); i++) {
-
-            if (jTable3.getValueAt(i, 0) != null && !jTable3.getValueAt(i, 3).toString().equals("") && jTable3.getValueAt(i, 3) != null) {
-
-                String a = "'" + jTable3.getValueAt(i, 0).toString() + "'";
-                String b = "'" + jTable3.getValueAt(i, 1).toString() + "'";
-                String c = "'" + jTable3.getValueAt(i, 2).toString() + "'";
-                String d = "'" + jTable3.getValueAt(i, 3).toString() + "'";
-                String e = "'" + jTable3.getValueAt(i, 4).toString() + "'";
-                String f = "'" + jTable3.getValueAt(i, 5).toString() + "'";
-                String g = "'" + jTable3.getValueAt(i, 6).toString() + "'";
+            
+            String id = "''";
+            if (jTable3.getValueAt(i, 1) != null && !jTable3.getValueAt(i, 4).toString().equals("") && jTable3.getValueAt(i, 4) != null) {
+                
+                try {
+                    id = "'" + jTable3.getValueAt(i, 0).toString() + "'";
+                } catch (Exception e) {
+                }
+                String a = "'" + jTable3.getValueAt(i, 1).toString() + "'";
+                String b = "'" + jTable3.getValueAt(i, 2).toString() + "'";
+                String c = "'" + jTable3.getValueAt(i, 3).toString() + "'";
+                String d = "'" + jTable3.getValueAt(i, 4).toString() + "'";
+                String e = "'" + jTable3.getValueAt(i, 5).toString() + "'";
+                String f = "'" + jTable3.getValueAt(i, 6).toString() + "'";
+                String g = "'" + jTable3.getValueAt(i, 7).toString() + "'";
                 String h = "''";
                 try {
-                    h = "'" + jTable3.getValueAt(i, 7).toString() + "'";
+                    h = "'" + jTable3.getValueAt(i, 8).toString() + "'";
                 } catch (Exception ex) {
-
+                    
                 }
-
-                feltoltadat += "(" + a + "," + b + "," + c + "," + d + "," + e + "," + f + "," + g + "," + h + "),";
-
+                
+                feltoltadat += "(" + id + "," + a + "," + b + "," + c + "," + d + "," + e + "," + f + "," + g + "," + h + "),";
+                
             }
-
+            
         }
-
+        
         feltoltadat = feltoltadat.substring(0, feltoltadat.length() - 1);
-
-        Query += feltoltadat;
+        
+        Query += feltoltadat + "on duplicate key update Komment = values (Komment)";
 
         //feltoltjuk
         planconnect pc = new planconnect();
-
+        
         pc.feltolt(Query, true);
-
+        
 
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jTable3KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTable3KeyReleased
         // TODO add your handling code here:
-        Anyaglistakibontas a = new Anyaglistakibontas();
+
+    }//GEN-LAST:event_jTable3KeyReleased
+
+    private void jTable3KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTable3KeyPressed
+        // TODO add your handling code here:
+
+        if (!jTextField1.getText().equals("")) {
+            Anyaglistakibontas a = new Anyaglistakibontas();
+            try {
+                a.celleditor();
+            } catch (IOException ex) {
+                Logger.getLogger(Anyagelados.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_jTable3KeyPressed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        //adatok ujratoltese
+        Anyagelados.eladaslista.clear();
+        String query = "select * from M_anyageladas";
+        
+        planconnect pc = new planconnect();
         try {
-            a.celleditor();
-        } catch (IOException ex) {
+            pc.planconnect(query);
+        } catch (SQLException ex) {
+            Logger.getLogger(Anyagelados.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
             Logger.getLogger(Anyagelados.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_jTable3KeyReleased
+        
+        try {
+            while (pc.rs.next()) {
+                String[] lista = new String[10];
+                lista[0] = pc.rs.getString(1);
+                lista[1] = pc.rs.getString(2);
+                lista[2] = pc.rs.getString(3);
+                lista[3] = pc.rs.getString(4);
+                lista[4] = pc.rs.getString(5);
+                lista[5] = pc.rs.getString(6);
+                lista[6] = pc.rs.getString(7);
+                lista[7] = pc.rs.getString(8);
+                lista[8] = pc.rs.getString(9);
+                lista[9] = pc.rs.getString(10);
+                
+                eladaslista.add(lista);
+                
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Anyagelados.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        pc.kinyir();
+
+        //eltesszuk a horizontal adatokat is tombbe
+        horizontal.clear();
+        query = "select * from horizontal";
+        try {
+            pc.planconnect(query);
+        } catch (SQLException ex) {
+            Logger.getLogger(Anyagelados.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Anyagelados.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        try {
+            while (pc.rs.next()) {
+                
+                String[] adat = new String[54];
+                
+                for (int i = 1; i < 54; i++) {
+                    
+                    adat[i] = pc.rs.getString(i + 1);
+                    
+                }
+                
+                horizontal.add(adat);
+                
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Anyagelados.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        pc.kinyir();
+
+        //a horizontalok datumait berakom a legordulobe
+        jComboBox1.removeAllItems();
+        query = "SELECT horizontal.nev from horizontal group by nev";
+        
+        try {
+            pc.planconnect(query);
+        } catch (SQLException ex) {
+            Logger.getLogger(Anyagelados.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Anyagelados.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        try {
+            while (pc.rs.next()) {
+                
+                jComboBox1.addItem(pc.rs.getString(1));
+                
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Anyagelados.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        pc.kinyir();
+        
+        jComboBox1.setSelectedIndex(-1);
+        
+
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        
+        JFileChooser fc = new JFileChooser();
+        Workbook wb = null;
+        FormulaEvaluator evaluator = null;
+        
+        fc.setCurrentDirectory(new File("S:\\SiteData\\BUD1\\EMS\\Common Programs\\ALU_Tiger\\02 - Purchasing"));
+        int result = fc.showOpenDialog(this);
+        
+        if (result == JFileChooser.APPROVE_OPTION) {
+
+            // Creating a Workbook from an Excel file (.xls or .xlsx)
+            try {
+                
+                wb = WorkbookFactory.create(new File(fc.getSelectedFile().toString()));
+                evaluator = wb.getCreationHelper().createFormulaEvaluator();
+                
+            } catch (EncryptedDocumentException ex) {
+                Logger.getLogger(Anyagelados.class.getName()).log(Level.SEVERE, null, ex);
+                infobox info = new infobox();
+                info.infoBox(ex.getMessage(), "Hiba!");
+            } catch (IOException ex) {
+                Logger.getLogger(Anyagelados.class.getName()).log(Level.SEVERE, null, ex);
+                infobox info = new infobox();
+                info.infoBox(ex.getMessage(), "Hiba!");
+            }
+            
+            org.apache.poi.ss.usermodel.Sheet sheet = wb.getSheetAt(0);
+            // Create a DataFormatter to format and get each cell's value as String
+            DataFormatter dataFormatter = new DataFormatter();
+            Iterator<Row> rowIterator = sheet.rowIterator();
+            String query = "insert into horizontal(horizontalcol,horizontalcol1,horizontalcol2,horizontalcol3,horizontalcol4,horizontalcol5,horizontalcol6,horizontalcol7,horizontalcol8,horizontalcol9,horizontalcol10,horizontalcol11,horizontalcol12,horizontalcol13,horizontalcol14,horizontalcol15,horizontalcol16,horizontalcol17,horizontalcol18,horizontalcol19,horizontalcol20,horizontalcol21,horizontalcol22,horizontalcol23,horizontalcol24,horizontalcol25,horizontalcol26,horizontalcol27,horizontalcol28,horizontalcol29,horizontalcol30,horizontalcol31,horizontalcol32,horizontalcol33,horizontalcol34,horizontalcol35,horizontalcol36,horizontalcol37,horizontalcol38,horizontalcol39,horizontalcol40,horizontalcol41,horizontalcol42,horizontalcol43,horizontalcol44,horizontalcol45,horizontalcol46,horizontalcol47,horizontalcol48,horizontalcol49,horizontalcol50,horizontalcol51,horizontalcol52,nev) values ";
+            StringBuffer adatok = new StringBuffer();
+            String adatokstring = "";
+            while (rowIterator.hasNext()) {
+                Row row = rowIterator.next();
+                adatok.append("(");
+
+                //ha van kovetkezo sor hozzaadunk egyet a modellhez is
+                // Now let's iterate over the columns of the current row
+                Iterator<org.apache.poi.ss.usermodel.Cell> cellIterator = row.cellIterator();
+
+//                while (cellIterator.hasNext()) {
+                for (int i = 0; i < 53; i++) {
+                    // org.apache.poi.ss.usermodel.Cell cell = cellIterator.next();
+
+                    Cell cell = row.getCell(i);
+                    String value = "";
+
+                    //String cellValue = dataFormatter.formatCellValue((org.apache.poi.ss.usermodel.Cell) cell);
+                    if (cell != null) {
+                        switch (cell.getCellType()) {
+                            case STRING:
+                                value = cell.getStringCellValue();
+                                break;
+                            case NUMERIC:
+                                
+                                value = dataFormatter.formatCellValue(cell);
+                                break;
+                            
+                            case FORMULA:
+                                
+                                switch (cell.getCachedFormulaResultType()) {
+                                    
+                                    case STRING:
+                                        value = cell.getRichStringCellValue().toString();
+                                        break;
+                                    case NUMERIC:
+                                        value = String.valueOf(cell.getNumericCellValue());
+                                        break;
+                                    
+                                }
+                            
+                        }
+                    }
+                    
+                    if (value.contains("'")) {
+                        
+                        value = value.replace("'", "");
+                    }
+                    
+                    value = value.replace("[^a-zA-Z0-9]", "");
+                    
+                    if (value.length() > 500) {
+                        
+                        value = value.substring(0, 470);
+                        value = "Nem fért ki a teljes adat!" + value;
+                        
+                    }
+                    adatok.append("'");
+                    adatok.append(value);
+                    adatok.append("',");
+                    
+                }
+                
+                adatok.append("'" + fc.getSelectedFile().getName() + "'");
+                //adatok.setLength(adatok.length() - 1);
+
+                adatok.append("),");
+                
+            }
+            
+            adatokstring = adatok.toString();
+            
+            adatokstring = adatokstring.substring(0, adatokstring.length() - 1);
+            query = query + adatokstring;
+            
+            planconnect pc = new planconnect();
+            pc.feltolt1(query, true);
+            
+            try {
+                wb.close();
+            } catch (IOException ex) {
+                Logger.getLogger(Anyagelados.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+        }
+        
+
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        //a kiválasztott horizontal törlése az adatbázisból
+
+        String query = "delete from horizontal where horizontal.nev = '" + jComboBox1.getSelectedItem().toString() + "';";
+        planconnect pc = new planconnect();
+        pc.feltolt(query, true);
+        pc.kinyir();
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        
+        jTextField1.setText("");
+        String query = "SELECT * FROM planningdb.M_anyageladas;";
+        
+        planconnect pc = new planconnect();
+        DefaultTableModel model = new DefaultTableModel();
+        model = (DefaultTableModel) Anyagelados.jTable3.getModel();
+        model.setRowCount(0);
+        try {
+            pc.planconnect(query);
+            while (pc.rs.next()) {
+                
+                model.addRow(new Object[]{pc.rs.getString(1), pc.rs.getString(2), pc.rs.getString(3), pc.rs.getString(4), pc.rs.getString(5), pc.rs.getString(6), pc.rs.getString(7), pc.rs.getString(8), pc.rs.getString(9)});
+                
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Anyagelados.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Anyagelados.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        pc.kinyir();
+        
+        Anyagelados.jTable3.setModel(model);
+    }//GEN-LAST:event_jButton6ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -385,9 +771,16 @@ public class Anyagelados extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    public static javax.swing.JTable jTable1;
     public static javax.swing.JTable jTable2;
     public static javax.swing.JTable jTable3;
     private javax.swing.JTextField jTextField1;

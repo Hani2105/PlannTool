@@ -169,13 +169,18 @@ public class Tc_osszsfdccellabol extends Thread {
                             Long osszdarab = (long) 0;
                             for (int data = 0; data < rowdata.length; data++) {
 
-//ha egyezik a pn és a ws osszeadjuk az osszegeket
-                                if (rowdata[data][1].equals(pn) && rowdata[data][0].toString().contains(ws)) {
+//ha egyezik a pn és a ws osszeadjuk az osszegeket (ha nincs kipipalva a checkbox)
+                                if (rowdata[data][1].equals(pn) && rowdata[data][0].toString().contains(ws) && b.jCheckBox1.isSelected() == false) {
 
                                     osszdarab += Long.parseLong(rowdata[data][4].toString());
 
                                 }
+//ha egyezik a pn és a ws osszeadjuk az osszegeket (ha ki van pipálva)
+                                if (rowdata[data][1].equals(pn) && rowdata[data][0].toString().contains(ws) && b.jCheckBox1.isSelected() == true && rowdata[data][2].toString().equals("1")) {
 
+                                    osszdarab += Long.parseLong(rowdata[data][4].toString());
+
+                                }
                             }
 
 //megprobalunk keresni egy olyan sort ami megfelel a pn-nek ws-nek es van felette terv

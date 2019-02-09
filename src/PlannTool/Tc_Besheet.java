@@ -222,6 +222,8 @@ public class Tc_Besheet extends javax.swing.JPanel {
         setComponentPopupMenu(JPopupMenu1);
         setPreferredSize(new java.awt.Dimension(1800, 700));
 
+        jScrollPane2.setPreferredSize(new java.awt.Dimension(453, 453));
+
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -489,20 +491,27 @@ public class Tc_Besheet extends javax.swing.JPanel {
         });
 
         jCheckBox1.setText("First pass only");
+        jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBox1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 1812, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(1137, Short.MAX_VALUE)
+                .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(4, 4, 4)
                 .addComponent(jButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jCheckBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(346, 346, 346))
+                .addGap(982, 982, 982))
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addContainerGap()
@@ -531,25 +540,26 @@ public class Tc_Besheet extends javax.swing.JPanel {
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                     .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(18, 18, 18)
-                    .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(585, Short.MAX_VALUE)))
+                    .addContainerGap(1294, Short.MAX_VALUE)))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(12, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(26, 26, 26))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(9, 9, 9)
+                                .addComponent(jCheckBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jCheckBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)))
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 956, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(25, 25, 25)))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 688, Short.MAX_VALUE)
+                .addContainerGap())
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addContainerGap()
@@ -576,9 +586,8 @@ public class Tc_Besheet extends javax.swing.JPanel {
                         .addGroup(jPanel1Layout.createSequentialGroup()
                             .addGap(17, 17, 17)
                             .addComponent(jLabel3))
-                        .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addContainerGap(962, Short.MAX_VALUE)))
+                    .addContainerGap(705, Short.MAX_VALUE)))
         );
 
         jScrollPane1.setViewportView(jPanel1);
@@ -587,7 +596,7 @@ public class Tc_Besheet extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1800, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -957,156 +966,9 @@ public class Tc_Besheet extends javax.swing.JPanel {
 
         }
 
-        Tc_Leker leker = new Tc_Leker(Tc_Betervezo.Tervezotabbed.getTitleAt(Tc_Betervezo.Tervezotabbed.getSelectedIndex()));
+        Tc_Leker leker = new Tc_Leker(Tc_Betervezo.Tervezotabbed.getTitleAt(Tc_Betervezo.Tervezotabbed.getSelectedIndex()) , "leker");
 
-//        SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd");
-//        String first = "";
-//        String second = "";
-//
-//        try {
-//            first = df.format(Tc_Betervezo.jDateChooser1.getDate());
-//            second = df.format(Tc_Betervezo.jDateChooser2.getDate());
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//
-//        Date one = null;
-//        Date two = null;
-//        int napok = 0;
-//        if (!first.equals("") && !second.equals("")) {
-//            try {
-//                one = df.parse(first);
-//            } catch (ParseException ex) {
-//                Logger.getLogger(Tc_Betervezo.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//            try {
-//                two = df.parse(second);
-//            } catch (ParseException ex) {
-//                Logger.getLogger(Tc_Betervezo.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//        }
-//        Tc_Napszamolo nap = new Tc_Napszamolo();
-//        if (!first.equals("") && !second.equals("")) {
-//            napok = nap.daysBetweenUsingJoda(one, two);
-//        }
-//
-//        //System.out.println(napok);
-//        //hozzaadjuk a napok es a muszakhossznak megfelelo oszlopok szamat a tablahoz
-//        int n = Tc_Betervezo.Tervezotabbed.getSelectedIndex();
-//        String neve = Tc_Betervezo.Tervezotabbed.getTitleAt(n);
-//
-//        //kitoroljuk az oszlopokat
-//        DefaultTableModel model = (DefaultTableModel) Besheets.get(neve).jTable2.getModel();
-//        model.setColumnCount(4);
-//
-//        //oszlopok neve a datumbol
-//        Calendar c = Calendar.getInstance();
-//        c.setTime(Tc_Betervezo.jDateChooser1.getDate());
-//        Date dt = new Date();
-//        dt = c.getTime();
-//        org.joda.time.format.DateTimeFormatter fmt = DateTimeFormat.forPattern("yyyy-MM-dd");
-//        org.joda.time.format.DateTimeFormatter fmtnap = DateTimeFormat.forPattern("E");
-//
-//        DateTime dtOrg = new DateTime(dt);
-//        String columneve = "";
-//        String szak = "";
-//        String napneve = "";
-//        TableColumn column = null;
-//
-//        //napok szamaszor futtatjuk
-//        for (int i = 0; i < napok; i++) {
-//
-//            //ha 12 órás a műszakrend 2 szer
-//            if (jComboBox1.getSelectedIndex() == 0) {
-//                for (int k = 0; k < 2; k++) {
-//
-//                    szak = (k == 0) ? " 06:00" : " 18:00";
-//                    columneve = fmt.print(dtOrg.plusDays(i)) + szak;
-//
-//                    napneve = fmtnap.print(dtOrg.plusDays(i));
-//                    model.addColumn(columneve + " " + napneve);
-//
-//                }
-//            }
-//
-//            //ha 8 órás 3 szor
-//            if (jComboBox1.getSelectedIndex() == 1) {
-//                for (int k = 0; k < 3; k++) {
-//
-//                    if (k == 0) {
-//
-//                        szak = " 06:00";
-//
-//                    } else if (k == 1) {
-//
-//                        szak = " 14:00";
-//                    } else {
-//
-//                        szak = " 22:00";
-//
-//                    }
-//                    columneve = fmt.print(dtOrg.plusDays(i)) + szak;
-//                    napneve = fmtnap.print(dtOrg.plusDays(i));
-//                    model.addColumn(columneve + " " + napneve);
-//
-//                }
-//            }
-//
-//        }
-//        //col szelesseg allitas
-//
-//        //lekerdezzuk az adatbazis adatokat
-//        String Query = "select tc_terv.date , tc_bepns.partnumber , tc_terv.job , tc_bestations.workstation , tc_terv.qty , tc_terv.tt \n"
-//                + "from tc_terv \n"
-//                + "left join tc_bepns on tc_bepns.idtc_bepns = tc_terv.idtc_bepns \n"
-//                + "left join tc_bestations on tc_bestations.idtc_bestations = tc_terv.idtc_bestations\n"
-//                + "left join tc_becells on tc_becells.idtc_cells = tc_terv.idtc_becells\n"
-//                + "where tc_terv.date between '" + fmt.print(dtOrg) + " 06:00:00" + "' and '" + columneve + ":00" + "' and tc_terv.active = 2 and tc_becells.cellname = '" + neve + "'  \n"
-//                + "order by tc_terv.date asc , tc_terv.wtf asc, tc_terv.tt asc , tc_terv.timestamp desc";
-//
-//        //feldolgozzuk az eredmenyt
-//        planconnect pc = new planconnect();
-//        try {
-//            pc.planconnect(Query);
-//            model.setRowCount(0);
-//            int r = 0;
-//            String terv = "";
-//
-//            //vegigporgetjuk a resultsetet
-//            while (pc.rs.next()) {
-//
-//                //porgetjuk az oszlopokat
-//                for (int i = 4; i < model.getColumnCount(); i++) {
-//
-//                    //h egyezik a query datuma az oszlop datumaval akkor 
-//                    if (pc.rs.getString(1).equals(model.getColumnName(i).substring(0, model.getColumnName(i).length() - 4) + ":00.0")) {
-//
-//                        // hozzaadunk egy terv vagy teny sort
-//                        if (pc.rs.getString(6).equals("0")) {
-//
-//                            terv = "Terv";
-//                        } else {
-//                            terv = "Tény";
-//                        }
-//                        model.addRow(new Object[]{pc.rs.getString(2), pc.rs.getString(3), pc.rs.getString(4), terv});
-//                        model.setValueAt(pc.rs.getString(5), r, i);
-//                        r++;
-//
-//                    }
-//
-//                }
-//
-//            }
-//
-//        } catch (SQLException ex) {
-//            Logger.getLogger(Tc_Betervezo.class.getName()).log(Level.SEVERE, null, ex);
-//        } catch (ClassNotFoundException ex) {
-//            Logger.getLogger(Tc_Betervezo.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//
-//        pc.kinyir();
-//        Besheets.get(neve).jTable2.setModel(model);
-//        Tc_Calculator calc = new Tc_Calculator(Besheets.get(neve), false, 0);
+
 
     }//GEN-LAST:event_jButton8ActionPerformed
 
@@ -1188,7 +1050,7 @@ public class Tc_Besheet extends javax.swing.JPanel {
 
                             }
 
-                            Tc_Leker leker = new Tc_Leker(Tc_Betervezo.Tervezotabbed.getTitleAt(Tc_Betervezo.Tervezotabbed.getSelectedIndex()));
+                            Tc_Leker leker = new Tc_Leker(Tc_Betervezo.Tervezotabbed.getTitleAt(Tc_Betervezo.Tervezotabbed.getSelectedIndex()), "mentes");
 
 //updateljuk a nevet a tervben , hogy ne legyen legkozelebb ilyen gond
                             query = "update tc_terv set tc_terv.user = '" + System.getProperty("user.name") + "' where tc_terv.idtc_becells = (select tc_becells.idtc_cells from tc_becells \n"
@@ -1319,7 +1181,7 @@ public class Tc_Besheet extends javax.swing.JPanel {
 
         }
 
-        Tc_Leker leker = new Tc_Leker(Tc_Betervezo.Tervezotabbed.getTitleAt(Tc_Betervezo.Tervezotabbed.getSelectedIndex()));
+        Tc_Leker leker = new Tc_Leker(Tc_Betervezo.Tervezotabbed.getTitleAt(Tc_Betervezo.Tervezotabbed.getSelectedIndex()),"mentes");
 
 
     }//GEN-LAST:event_jButton10ActionPerformed
@@ -1430,7 +1292,7 @@ public class Tc_Besheet extends javax.swing.JPanel {
 
         }
 
-        Tc_Leker leker = new Tc_Leker(Tc_Betervezo.Tervezotabbed.getTitleAt(Tc_Betervezo.Tervezotabbed.getSelectedIndex()));
+        Tc_Leker leker = new Tc_Leker(Tc_Betervezo.Tervezotabbed.getTitleAt(Tc_Betervezo.Tervezotabbed.getSelectedIndex()),"termelesment");
 
 
     }//GEN-LAST:event_jButton11ActionPerformed
@@ -1629,6 +1491,10 @@ public class Tc_Besheet extends javax.swing.JPanel {
 
 
     }//GEN-LAST:event_jButton12ActionPerformed
+
+    private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jCheckBox1ActionPerformed
 
     private void filter(String query) {
 

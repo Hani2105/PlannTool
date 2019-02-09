@@ -74,8 +74,8 @@ public class ablak extends javax.swing.JFrame {
 
         seticon();
 
-        Riporterszal riporter = new Riporterszal();
-        riporter.start();
+//        Riporterszal riporter = new Riporterszal();
+//        riporter.start();
 
         jTextField4.getDocument().addDocumentListener(new DocumentListener() {
             @Override

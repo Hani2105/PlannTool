@@ -162,6 +162,11 @@ public class Tc_Besetup extends javax.swing.JFrame {
         jButton7 = new javax.swing.JButton();
         jButton9 = new javax.swing.JButton();
         jButton10 = new javax.swing.JButton();
+        jPanel3 = new javax.swing.JPanel();
+        jScrollPane7 = new javax.swing.JScrollPane();
+        jTable4 = new javax.swing.JTable();
+        jButton11 = new javax.swing.JButton();
+        jButton12 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Setup!");
@@ -610,7 +615,59 @@ public class Tc_Besetup extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jTabbedPane1.addTab("E-mail és hozzáférés beállítások", jPanel2);
+        jTabbedPane1.addTab("Műszakjelentés és hozzáférés beállítások", jPanel2);
+
+        jTable4.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "E-mail cím"
+            }
+        ));
+        jScrollPane7.setViewportView(jTable4);
+
+        jButton11.setText("Ment");
+        jButton11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton11ActionPerformed(evt);
+            }
+        });
+
+        jButton12.setText("+ sor");
+        jButton12.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton12ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton11)
+                    .addComponent(jButton12))
+                .addGap(0, 663, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 577, Short.MAX_VALUE)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jButton11)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton12)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+
+        jTabbedPane1.addTab("Tervváltozás címlista", jPanel3);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -1158,7 +1215,7 @@ public class Tc_Besetup extends javax.swing.JFrame {
     private void jTabbedPane1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabbedPane1StateChanged
         // TODO add your handling code here:
 
-        if (jTabbedPane1.getTitleAt(jTabbedPane1.getSelectedIndex()).equals("E-mail és hozzáférés beállítások")) {
+        if (jTabbedPane1.getTitleAt(jTabbedPane1.getSelectedIndex()).equals("Műszakjelentés és hozzáférés beállítások")) {
             //lekerdezzuk a cimlistat
             DefaultTableModel model = new DefaultTableModel();
             DefaultTableModel model3 = new DefaultTableModel();
@@ -1204,6 +1261,34 @@ public class Tc_Besetup extends javax.swing.JFrame {
             }
 
             model3.addRow(new Object[]{null, null, null});
+
+        } else if (jTabbedPane1.getTitleAt(jTabbedPane1.getSelectedIndex()).equals("Tervváltozás címlista")) {
+
+//lekerdezzuk a már meglévőeket
+            String query = "select * from tc_tervvaltozas_cimlista order by email";
+            DefaultTableModel model = new DefaultTableModel();
+            model = (DefaultTableModel) jTable4.getModel();
+            model.setRowCount(0);
+
+            planconnect pc = new planconnect();
+            try {
+                pc.planconnect(query);
+
+                while (pc.rs.next()) {
+
+                    model.addRow(new Object[]{pc.rs.getString(2)});
+
+                }
+                model.addRow(new Object[]{});
+                jTable4.setModel(model);
+
+            } catch (SQLException ex) {
+                Logger.getLogger(Tc_Besetup.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(Tc_Besetup.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            pc.kinyir();
 
         }
 
@@ -1527,8 +1612,57 @@ public class Tc_Besetup extends javax.swing.JFrame {
         model = (DefaultTableModel) jTable3.getModel();
         model.addRow(new Object[]{});
         jTable3.setModel(model);
-        
+
     }//GEN-LAST:event_jButton10ActionPerformed
+
+    private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
+        //tervváltozás cimlista mentése
+        //mentjük a címlistát
+
+        //String query = "insert into muszakjelentes (cim) values ";
+        String queryvalues = "";
+        emailellenorzo ch = new emailellenorzo();
+        boolean mentunke = true;
+        for (int i = 0; i < jTable4.getRowCount(); i++) {
+
+            try {
+                if (!jTable4.getValueAt(i, 0).toString().equals("") && jTable4.getValueAt(i, 0) != null) {
+
+                    if (ch.check(jTable4.getValueAt(i, 0).toString()) == true) {
+                        queryvalues += "('" + jTable4.getValueAt(i, 0).toString() + "'),";
+
+                    } else {
+
+                        mentunke = false;
+
+                    }
+
+                }
+            } catch (Exception e) {
+            }
+
+        }
+
+        if (mentunke) {
+            queryvalues = queryvalues.substring(0, queryvalues.length() - 2);
+            String query = "insert into tc_tervvaltozas_cimlista (email) values" + queryvalues + ")";
+            String truncate = "truncate tc_tervvaltozas_cimlista";
+            planconnect pc = new planconnect();
+            pc.feltolt(truncate, false);
+            pc.feltolt(query, true);
+        }
+
+
+    }//GEN-LAST:event_jButton11ActionPerformed
+
+    private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
+        // sor hozzáadása a tervváltozás táblához
+
+        DefaultTableModel model = new DefaultTableModel();
+        model = (DefaultTableModel) jTable4.getModel();
+        model.addRow(new Object[]{});
+        jTable4.setModel(model);
+    }//GEN-LAST:event_jButton12ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1563,6 +1697,8 @@ public class Tc_Besetup extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
+    private javax.swing.JButton jButton11;
+    private javax.swing.JButton jButton12;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
@@ -1590,16 +1726,19 @@ public class Tc_Besetup extends javax.swing.JFrame {
     private javax.swing.JList<String> jList4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
     private javax.swing.JTable jTable3;
+    private javax.swing.JTable jTable4;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;

@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -312,6 +314,8 @@ public class Tc_Ment {
                 String feltoltquery = "insert ignore tc_terv (tc_terv.idtc_becells , tc_terv.idtc_bestations , tc_terv.idtc_bepns , tc_terv.job , tc_terv.date , tc_terv.qty , tc_terv.wtf , tc_terv.tt , tc_terv.user , tc_terv.pktomig , qty_teny) values" + feltoltadat + "on duplicate key update qty = values  (qty) , wtf = values (wtf) , active = (2) , qty_teny = values (qty_teny) , timestamp = now() , user = '" + System.getProperty("user.name") + "'";
                 pc.feltolt(feltoltquery, true);
 
+               
+
             }
 
             //ámde ha nem planner akkor nem updatelunk , hogy ne torlodjenek a tervek
@@ -321,7 +325,7 @@ public class Tc_Ment {
                 pc.feltolt(feltoltquery, true);
             }
 
-        }   
+        }
 
     }
 }

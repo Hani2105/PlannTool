@@ -14,6 +14,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
@@ -26,7 +28,7 @@ import org.joda.time.format.DateTimeFormat;
  */
 public class Tc_Leker {
 
-    public Tc_Leker(String sheetname) {
+    public Tc_Leker(String sheetname , String miindit) {
 
         SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd");
         String first = "";
@@ -61,7 +63,6 @@ public class Tc_Leker {
 
         //System.out.println(napok);
         //hozzaadjuk a napok es a muszakhossznak megfelelo oszlopok szamat a tablahoz
-        
         String neve = sheetname;
 
         //kitoroljuk az oszlopokat
@@ -168,7 +169,7 @@ public class Tc_Leker {
                         }
 
                         if (teny.equals("")) {
-                            teny ="0";
+                            teny = "0";
                         }
 
                         // hozzaadunk ket sort (tervet es tenyt)
@@ -195,6 +196,25 @@ public class Tc_Leker {
         pc.kinyir();
         Besheets.get(neve).jTable2.setModel(model);
         Tc_Calculator calc = new Tc_Calculator(Besheets.get(neve), false, 0);
+
+        if (ablak.planner == true && miindit.equals("mentes")) {
+
+            //megkérdezzük , hogy akarunk e levelet küldeni a terv változásról
+            JDialog.setDefaultLookAndFeelDecorated(true);
+            int response = JOptionPane.showConfirmDialog(null, "Küldjünk levelet a terv változásról?", "Levélküldés",
+                    JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if (response == JOptionPane.NO_OPTION) {
+                //System.out.println("No button clicked");
+            } else if (response == JOptionPane.YES_OPTION) {
+                //System.out.println("Yes button clicked");
+                Tc_Tervváltozásszál t = new Tc_Tervváltozásszál(Besheets.get(neve).jTable2, neve);
+                t.start();
+
+            } else if (response == JOptionPane.CLOSED_OPTION) {
+                System.out.println("JOptionPane closed");
+            }
+
+        }
 
     }
 

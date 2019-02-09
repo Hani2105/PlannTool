@@ -9,7 +9,10 @@ import java.awt.Toolkit;
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
@@ -23,8 +26,10 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import org.apache.poi.EncryptedDocumentException;
+import org.apache.poi.hssf.usermodel.HSSFDateUtil;
 import org.apache.poi.ss.usermodel.CellValue;
 import org.apache.poi.ss.usermodel.DataFormatter;
+import org.apache.poi.ss.usermodel.DateUtil;
 import org.apache.poi.ss.usermodel.FormulaEvaluator;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 
@@ -42,22 +47,22 @@ public class Anyagelados extends javax.swing.JFrame {
     public static List<String[]> horizontal = new ArrayList<>();
     public static Workbook workbook = null;
     public static JFileChooser fileChooser = new JFileChooser();
-    
+
     public Anyagelados() throws SQLException, ClassNotFoundException {
         initComponents();
         jTable1.setAutoResizeMode(jTable1.AUTO_RESIZE_OFF);
-        
+
         this.jTable1.setDefaultRenderer(Object.class, new Anyageladosrenderer());
-        
+
         seticon();
         Anyagelados.eladaslista.clear();
 //amikor megnyilik az ablak lequeryzzuk az adatokat es eltesszuk egy tombbe (kriszti excelbol felmentetteket)
 
         String query = "select * from M_anyageladas";
-        
+
         planconnect pc = new planconnect();
         pc.planconnect(query);
-        
+
         while (pc.rs.next()) {
             String[] lista = new String[10];
             lista[0] = pc.rs.getString(1);
@@ -70,61 +75,61 @@ public class Anyagelados extends javax.swing.JFrame {
             lista[7] = pc.rs.getString(8);
             lista[8] = pc.rs.getString(9);
             lista[9] = pc.rs.getString(10);
-            
+
             eladaslista.add(lista);
-            
+
         }
-        
+
         pc.kinyir();
-        
+
         Anyagelados.jTable3.setCellSelectionEnabled(true);
-        
+
         Anyagelados.jTable3.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-            
+
             public void valueChanged(ListSelectionEvent e) {
                 //I want something to happen before the row change is triggered on the UI.  
                 Anyaglistakibontas a = new Anyaglistakibontas();
                 //ha pn oszlopban vagyunk ráadásul
                 a.tablabair();
-                
+
             }
         });
 
         //eltesszuk a horizontal adatokat is tombbe
         query = "select * from horizontal";
         pc.planconnect(query);
-        
+
         while (pc.rs.next()) {
-            
+
             String[] adat = new String[54];
-            
+
             for (int i = 0; i < 54; i++) {
-                
+
                 adat[i] = pc.rs.getString(i + 1);
-                
+
             }
-            
+
             horizontal.add(adat);
-            
+
         }
-        
+
         pc.kinyir();
 
         //a horizontalok datumait berakom a legordulobe
         query = "SELECT horizontal.nev from horizontal group by nev";
-        
+
         pc.planconnect(query);
-        
+
         while (pc.rs.next()) {
-            
+
             jComboBox1.addItem(pc.rs.getString(1));
-            
+
         }
-        
+
         pc.kinyir();
-        
+
         jComboBox1.setSelectedIndex(-1);
-        
+
     }
 
     /**
@@ -231,7 +236,7 @@ public class Anyagelados extends javax.swing.JFrame {
             }
         });
 
-        jButton4.setText("Horizontal feltöltése");
+        jButton4.setText("Horizontal beolvasása");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton4ActionPerformed(evt);
@@ -303,15 +308,16 @@ public class Anyagelados extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jButton1)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jTextField1)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButton2)
                             .addComponent(jButton3)
                             .addComponent(jButton4)
                             .addComponent(jButton5)
                             .addComponent(jComboBox1))
-                        .addComponent(jButton6)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jTextField1)
+                            .addComponent(jButton6))))
                 .addGap(12, 12, 12)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 310, Short.MAX_VALUE)
@@ -335,15 +341,15 @@ public class Anyagelados extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        
+
         fileChooser.setCurrentDirectory(new File("C:\\Users\\gabor_hanacsek\\Desktop\\anyag eladás"));
         int result = fileChooser.showOpenDialog(this);
-        
+
         if (result == JFileChooser.APPROVE_OPTION) {
 
             // Creating a Workbook from an Excel file (.xls or .xlsx)
             try {
-                
+
                 workbook = WorkbookFactory.create(new File(fileChooser.getSelectedFile().toString()));
                 jTextField1.setText(fileChooser.getSelectedFile().getName());
             } catch (EncryptedDocumentException ex) {
@@ -373,7 +379,7 @@ public class Anyagelados extends javax.swing.JFrame {
                 model.addRow(new Object[]{});
                 // Now let's iterate over the columns of the current row
                 Iterator<org.apache.poi.ss.usermodel.Cell> cellIterator = row.cellIterator();
-                
+
                 while (cellIterator.hasNext()) {
                     org.apache.poi.ss.usermodel.Cell cell = cellIterator.next();
                     String cellValue = dataFormatter.formatCellValue((org.apache.poi.ss.usermodel.Cell) cell);
@@ -381,33 +387,33 @@ public class Anyagelados extends javax.swing.JFrame {
                     try {
                         model.setValueAt(cellValue, row.getRowNum(), cell.getColumnIndex() + 1);
                     } catch (Exception e) {
-                        
+
                         model.addColumn("");
                         model.setValueAt(cellValue, row.getRowNum(), cell.getColumnIndex() + 1);
-                        
+
                     }
-                    
+
                 }
-                
+
             }
-            
+
             try {
                 workbook.close();
             } catch (IOException ex) {
                 Logger.getLogger(Anyagelados.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
+
             Anyagelados.jTable3.setModel(model);
-            
+
         }
-        
+
 
     }//GEN-LAST:event_jButton1ActionPerformed
-    
+
     private void seticon() {
-        
+
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("kepek/anyagos2.png")));
-        
+
     }
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -417,12 +423,12 @@ public class Anyagelados extends javax.swing.JFrame {
 
         //bejarjuk a jtablet es osszeszedjuk az adatokat , ahol nem nulla az oo és a pn
         String feltoltadat = "";
-        
+
         for (int i = 0; i < jTable3.getRowCount(); i++) {
-            
+
             String id = "''";
             if (jTable3.getValueAt(i, 1) != null && !jTable3.getValueAt(i, 4).toString().equals("") && jTable3.getValueAt(i, 4) != null) {
-                
+
                 try {
                     id = "'" + jTable3.getValueAt(i, 0).toString() + "'";
                 } catch (Exception e) {
@@ -438,24 +444,24 @@ public class Anyagelados extends javax.swing.JFrame {
                 try {
                     h = "'" + jTable3.getValueAt(i, 8).toString() + "'";
                 } catch (Exception ex) {
-                    
+
                 }
-                
+
                 feltoltadat += "(" + id + "," + a + "," + b + "," + c + "," + d + "," + e + "," + f + "," + g + "," + h + "),";
-                
+
             }
-            
+
         }
-        
+
         feltoltadat = feltoltadat.substring(0, feltoltadat.length() - 1);
-        
+
         Query += feltoltadat + "on duplicate key update Komment = values (Komment)";
 
         //feltoltjuk
         planconnect pc = new planconnect();
-        
+
         pc.feltolt(Query, true);
-        
+
 
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -482,7 +488,7 @@ public class Anyagelados extends javax.swing.JFrame {
         //adatok ujratoltese
         Anyagelados.eladaslista.clear();
         String query = "select * from M_anyageladas";
-        
+
         planconnect pc = new planconnect();
         try {
             pc.planconnect(query);
@@ -491,7 +497,7 @@ public class Anyagelados extends javax.swing.JFrame {
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Anyagelados.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         try {
             while (pc.rs.next()) {
                 String[] lista = new String[10];
@@ -505,14 +511,14 @@ public class Anyagelados extends javax.swing.JFrame {
                 lista[7] = pc.rs.getString(8);
                 lista[8] = pc.rs.getString(9);
                 lista[9] = pc.rs.getString(10);
-                
+
                 eladaslista.add(lista);
-                
+
             }
         } catch (SQLException ex) {
             Logger.getLogger(Anyagelados.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         pc.kinyir();
 
         //eltesszuk a horizontal adatokat is tombbe
@@ -525,31 +531,31 @@ public class Anyagelados extends javax.swing.JFrame {
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Anyagelados.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         try {
             while (pc.rs.next()) {
-                
+
                 String[] adat = new String[54];
-                
+
                 for (int i = 1; i < 54; i++) {
-                    
+
                     adat[i] = pc.rs.getString(i + 1);
-                    
+
                 }
-                
+
                 horizontal.add(adat);
-                
+
             }
         } catch (SQLException ex) {
             Logger.getLogger(Anyagelados.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         pc.kinyir();
 
         //a horizontalok datumait berakom a legordulobe
         jComboBox1.removeAllItems();
         query = "SELECT horizontal.nev from horizontal group by nev";
-        
+
         try {
             pc.planconnect(query);
         } catch (SQLException ex) {
@@ -557,41 +563,39 @@ public class Anyagelados extends javax.swing.JFrame {
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Anyagelados.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         try {
             while (pc.rs.next()) {
-                
+
                 jComboBox1.addItem(pc.rs.getString(1));
-                
+
             }
         } catch (SQLException ex) {
             Logger.getLogger(Anyagelados.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         pc.kinyir();
-        
+
         jComboBox1.setSelectedIndex(-1);
-        
+
 
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        
+
         JFileChooser fc = new JFileChooser();
         Workbook wb = null;
-        FormulaEvaluator evaluator = null;
-        
+
         fc.setCurrentDirectory(new File("S:\\SiteData\\BUD1\\EMS\\Common Programs\\ALU_Tiger\\02 - Purchasing"));
         int result = fc.showOpenDialog(this);
-        
+
         if (result == JFileChooser.APPROVE_OPTION) {
 
             // Creating a Workbook from an Excel file (.xls or .xlsx)
             try {
-                
+
                 wb = WorkbookFactory.create(new File(fc.getSelectedFile().toString()));
-                evaluator = wb.getCreationHelper().createFormulaEvaluator();
-                
+
             } catch (EncryptedDocumentException ex) {
                 Logger.getLogger(Anyagelados.class.getName()).log(Level.SEVERE, null, ex);
                 infobox info = new infobox();
@@ -601,10 +605,10 @@ public class Anyagelados extends javax.swing.JFrame {
                 infobox info = new infobox();
                 info.infoBox(ex.getMessage(), "Hiba!");
             }
-            
+
             org.apache.poi.ss.usermodel.Sheet sheet = wb.getSheetAt(0);
             // Create a DataFormatter to format and get each cell's value as String
-            DataFormatter dataFormatter = new DataFormatter();
+            DataFormatter df = new DataFormatter();
             Iterator<Row> rowIterator = sheet.rowIterator();
             String query = "insert into horizontal(horizontalcol,horizontalcol1,horizontalcol2,horizontalcol3,horizontalcol4,horizontalcol5,horizontalcol6,horizontalcol7,horizontalcol8,horizontalcol9,horizontalcol10,horizontalcol11,horizontalcol12,horizontalcol13,horizontalcol14,horizontalcol15,horizontalcol16,horizontalcol17,horizontalcol18,horizontalcol19,horizontalcol20,horizontalcol21,horizontalcol22,horizontalcol23,horizontalcol24,horizontalcol25,horizontalcol26,horizontalcol27,horizontalcol28,horizontalcol29,horizontalcol30,horizontalcol31,horizontalcol32,horizontalcol33,horizontalcol34,horizontalcol35,horizontalcol36,horizontalcol37,horizontalcol38,horizontalcol39,horizontalcol40,horizontalcol41,horizontalcol42,horizontalcol43,horizontalcol44,horizontalcol45,horizontalcol46,horizontalcol47,horizontalcol48,horizontalcol49,horizontalcol50,horizontalcol51,horizontalcol52,nev) values ";
             StringBuffer adatok = new StringBuffer();
@@ -612,87 +616,126 @@ public class Anyagelados extends javax.swing.JFrame {
             while (rowIterator.hasNext()) {
                 Row row = rowIterator.next();
                 adatok.append("(");
+                Cell cella = row.getCell(16);
 
                 //ha van kovetkezo sor hozzaadunk egyet a modellhez is
                 // Now let's iterate over the columns of the current row
-                Iterator<org.apache.poi.ss.usermodel.Cell> cellIterator = row.cellIterator();
-
+//                Iterator<org.apache.poi.ss.usermodel.Cell> cellIterator = row.cellIterator();
 //                while (cellIterator.hasNext()) {
                 for (int i = 0; i < 53; i++) {
                     // org.apache.poi.ss.usermodel.Cell cell = cellIterator.next();
 
                     Cell cell = row.getCell(i);
+
                     String value = "";
 
                     //String cellValue = dataFormatter.formatCellValue((org.apache.poi.ss.usermodel.Cell) cell);
                     if (cell != null) {
-                        switch (cell.getCellType()) {
-                            case STRING:
-                                value = cell.getStringCellValue();
-                                break;
-                            case NUMERIC:
-                                
-                                value = dataFormatter.formatCellValue(cell);
-                                break;
-                            
-                            case FORMULA:
-                                
-                                switch (cell.getCachedFormulaResultType()) {
+                        if (String.valueOf(cella).equals("Type")) {
+
+                            switch (cell.getCellType()) {
+                                case STRING:
+                                    value = cell.getStringCellValue();
+                                    break;
+                                case NUMERIC:
+                                    DateFormat datef = new SimpleDateFormat("MM/dd/yyyy");
+
                                     
-                                    case STRING:
-                                        value = cell.getRichStringCellValue().toString();
-                                        break;
-                                    case NUMERIC:
+                                    value = datef.format(cell.getDateCellValue());
+                                    
+                                    System.out.println(value + " " + row.getRowNum() + " " + i);
+                                    
+
+                                    break;
+
+                                case FORMULA:
+
+                                    switch (cell.getCachedFormulaResultType()) {
+
+                                        case STRING:
+                                            value = cell.getRichStringCellValue().toString();
+                                            break;
+                                        case NUMERIC:
+                                            value = String.valueOf(cell.getNumericCellValue());
+                                            break;
+
+                                    }
+
+                            }
+
+                        } else {
+                            switch (cell.getCellType()) {
+                                case STRING:
+                                    value = cell.getStringCellValue();
+                                    break;
+                                case NUMERIC:
+
+                                    if (HSSFDateUtil.isCellDateFormatted(cell)) {
+                                        value = cell.getDateCellValue().toString();
+                                    } else {
                                         value = String.valueOf(cell.getNumericCellValue());
-                                        break;
-                                    
-                                }
-                            
+                                    }
+                                    break;
+
+                                case FORMULA:
+
+                                    switch (cell.getCachedFormulaResultType()) {
+
+                                        case STRING:
+                                            value = cell.getRichStringCellValue().toString();
+                                            break;
+                                        case NUMERIC:
+                                            value = String.valueOf(cell.getNumericCellValue());
+                                            break;
+
+                                    }
+
+                            }
                         }
                     }
-                    
+
                     if (value.contains("'")) {
-                        
+
                         value = value.replace("'", "");
                     }
-                    
+
                     value = value.replace("[^a-zA-Z0-9]", "");
-                    
+
                     if (value.length() > 500) {
-                        
+
                         value = value.substring(0, 470);
                         value = "Nem fért ki a teljes adat!" + value;
-                        
+
                     }
                     adatok.append("'");
                     adatok.append(value);
                     adatok.append("',");
-                    
+
                 }
-                
+
                 adatok.append("'" + fc.getSelectedFile().getName() + "'");
                 //adatok.setLength(adatok.length() - 1);
 
                 adatok.append("),");
-                
+
             }
-            
+
             adatokstring = adatok.toString();
-            
+
             adatokstring = adatokstring.substring(0, adatokstring.length() - 1);
             query = query + adatokstring;
-            
+
             planconnect pc = new planconnect();
             pc.feltolt1(query, true);
-            
+
             try {
                 wb.close();
             } catch (IOException ex) {
                 Logger.getLogger(Anyagelados.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
+
         }
-        
+
 
     }//GEN-LAST:event_jButton4ActionPerformed
 
@@ -706,10 +749,10 @@ public class Anyagelados extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        
+
         jTextField1.setText("");
         String query = "SELECT * FROM planningdb.M_anyageladas;";
-        
+
         planconnect pc = new planconnect();
         DefaultTableModel model = new DefaultTableModel();
         model = (DefaultTableModel) Anyagelados.jTable3.getModel();
@@ -717,18 +760,18 @@ public class Anyagelados extends javax.swing.JFrame {
         try {
             pc.planconnect(query);
             while (pc.rs.next()) {
-                
+
                 model.addRow(new Object[]{pc.rs.getString(1), pc.rs.getString(2), pc.rs.getString(3), pc.rs.getString(4), pc.rs.getString(5), pc.rs.getString(6), pc.rs.getString(7), pc.rs.getString(8), pc.rs.getString(9)});
-                
+
             }
         } catch (SQLException ex) {
             Logger.getLogger(Anyagelados.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Anyagelados.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         pc.kinyir();
-        
+
         Anyagelados.jTable3.setModel(model);
     }//GEN-LAST:event_jButton6ActionPerformed
 

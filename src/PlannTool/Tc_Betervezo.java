@@ -682,7 +682,7 @@ public class Tc_Betervezo extends javax.swing.JFrame {
 //most indítjuk a nagy ciklust amiben végigpörgetjük a sheeteket
         for (int b = 0; b < Tc_Betervezo.Tervezotabbed.getTabCount(); b++) {
 
-            Tc_Leker leker = new Tc_Leker(Tc_Betervezo.Tervezotabbed.getTitleAt(b));
+            Tc_Leker leker = new Tc_Leker(Tc_Betervezo.Tervezotabbed.getTitleAt(b), "groupleker");
 
         }
 
@@ -908,7 +908,7 @@ public class Tc_Betervezo extends javax.swing.JFrame {
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         // TODO add your handling code here:
-  
+
         csuk = true;
 
 

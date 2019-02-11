@@ -24,12 +24,12 @@ import org.joda.time.format.DateTimeFormatter;
  *
  * @author gabor_hanacsek
  */
-public class Tc_Tervváltozásszál extends Thread {
+public class Tc_Tervvaltozasszal extends Thread {
 
     JTable m = null;
     String neve = null;
 
-    public Tc_Tervváltozásszál(JTable m, String neve) {
+    public Tc_Tervvaltozasszal(JTable m, String neve) {
         this.m = m;
         this.neve = neve;
     }
@@ -93,9 +93,9 @@ public class Tc_Tervváltozásszál extends Thread {
         try {
             pc.planconnect(query);
         } catch (SQLException ex) {
-            Logger.getLogger(Tc_Tervváltozásszál.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Tc_Tervvaltozasszal.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Tc_Tervváltozásszál.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Tc_Tervvaltozasszal.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         //cimlista string
@@ -107,7 +107,7 @@ public class Tc_Tervváltozásszál extends Thread {
                 cimlista += pc.rs.getString(1) + ",\n";
             }
         } catch (SQLException ex) {
-            Logger.getLogger(Tc_Tervváltozásszál.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Tc_Tervvaltozasszal.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         pc.kinyir();

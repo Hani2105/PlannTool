@@ -207,7 +207,7 @@ public class Tc_Leker {
                 //System.out.println("No button clicked");
             } else if (response == JOptionPane.YES_OPTION) {
                 //System.out.println("Yes button clicked");
-                Tc_Tervváltozásszál t = new Tc_Tervváltozásszál(Besheets.get(neve).jTable2, neve);
+                Tc_Tervvaltozasszal t = new Tc_Tervvaltozasszal(Besheets.get(neve).jTable2, neve);
                 t.start();
 
             } else if (response == JOptionPane.CLOSED_OPTION) {

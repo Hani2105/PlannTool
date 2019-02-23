@@ -28,7 +28,7 @@ import org.joda.time.format.DateTimeFormat;
  */
 public class Tc_Leker {
 
-    public Tc_Leker(String sheetname , String miindit) {
+    public Tc_Leker(String sheetname, String miindit) {
 
         SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd");
         String first = "";

@@ -103,7 +103,7 @@ public class Tc_Tervvaltozasszal extends Thread {
 
         try {
             while (pc.rs.next()) {
-                
+
                 cimlista += pc.rs.getString(1) + ",\n";
             }
         } catch (SQLException ex) {

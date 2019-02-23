@@ -227,7 +227,6 @@ public class Tc_TervTooltipRenderer extends DefaultTableCellRenderer {
         c.setBorder(BorderFactory.createEtchedBorder(1));
         c.setToolTipText(tooltiptext);
         c.setHorizontalAlignment(CENTER);
-        
 
         return c;
 

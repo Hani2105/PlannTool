@@ -28,10 +28,8 @@ public class Riporterszal extends Thread {
     //ez az ora ami utan kuldhetjuk
     private static String kuldesora = "";
 
-    
-
     public void run() {
-        
+
         planconnect pc = new planconnect();
 
         while (true) {
@@ -46,7 +44,7 @@ public class Riporterszal extends Thread {
                     idopont = pc.rs.getString(2);
 
                 }
-                
+
                 pc.kinyir();
 
                 idopont = idopont.substring(0, idopont.length() - 10);
@@ -124,7 +122,7 @@ public class Riporterszal extends Thread {
                         prefixek.add(pc.rs.getString(2));
 
                     }
-                    
+
                     pc.kinyir();
 
                 } catch (SQLException ex) {
@@ -144,7 +142,7 @@ public class Riporterszal extends Thread {
                         age = pc.rs.getInt(3);
 
                     }
-                    
+
                     pc.kinyir();
 
                 } catch (SQLException ex) {
@@ -216,7 +214,7 @@ public class Riporterszal extends Thread {
                         cimzettek += pc.rs.getString(1) + ",";
 
                     }
-                    
+
                     pc.kinyir();
 
 //kikuldjuk a levelet
@@ -247,7 +245,7 @@ public class Riporterszal extends Thread {
             pc.kinyir();
 
             try {
-                Thread.sleep(30 *60 * 1000);
+                Thread.sleep(30 * 60 * 1000);
             } catch (InterruptedException ex) {
                 Logger.getLogger(Riporterszal.class.getName()).log(Level.SEVERE, null, ex);
             }

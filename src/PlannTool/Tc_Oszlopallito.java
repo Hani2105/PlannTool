@@ -21,8 +21,6 @@ public class Tc_Oszlopallito extends javax.swing.JFrame {
         this.b = b;
 
         //eltesszuk az oszlop szelessegeket
-        
-        
         Tc_Betervezo.szelessegek.clear();
 
         for (int i = 0; i < b.jTable2.getColumnCount(); i++) {
@@ -205,13 +203,11 @@ public class Tc_Oszlopallito extends javax.swing.JFrame {
 
         Tc_Betervezo.allitsuke = 0;
 
-
     }//GEN-LAST:event_jRadioButton1ActionPerformed
 
     private void jRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton2ActionPerformed
         // TODO add your handling code here:
         Tc_Betervezo.allitsuke = 1;
-
 
     }//GEN-LAST:event_jRadioButton2ActionPerformed
 

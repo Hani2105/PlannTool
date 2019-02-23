@@ -642,7 +642,6 @@ public class Tc_Besheet extends javax.swing.JPanel {
 
     }
 
-
     private void DeleteRowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteRowActionPerformed
 
         this.jTable2.revalidate();
@@ -667,7 +666,6 @@ public class Tc_Besheet extends javax.swing.JPanel {
         this.jTable2.setModel(model);
         Tc_Calculator calc = new Tc_Calculator(this, false, 0);
 
-
     }//GEN-LAST:event_DeleteRowActionPerformed
 
     private void DeleteAreaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteAreaActionPerformed
@@ -684,7 +682,6 @@ public class Tc_Besheet extends javax.swing.JPanel {
             }
 
         }
-
 
     }//GEN-LAST:event_DeleteAreaActionPerformed
 
@@ -768,7 +765,6 @@ public class Tc_Besheet extends javax.swing.JPanel {
         a.start();
         Tc_SFDCszal sz = new Tc_SFDCszal(this);
         sz.start();
-
 
     }//GEN-LAST:event_SFDClekeresActionPerformed
 
@@ -901,7 +897,6 @@ public class Tc_Besheet extends javax.swing.JPanel {
         // TODO add your handling code here:
         jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/email.png")));
 
-
     }//GEN-LAST:event_jButton7MouseEntered
 
     private void jButton7MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton7MouseExited
@@ -921,7 +916,6 @@ public class Tc_Besheet extends javax.swing.JPanel {
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Tc_Besheet.class.getName()).log(Level.SEVERE, null, ex);
         }
-
 
     }//GEN-LAST:event_jButton7ActionPerformed
 
@@ -966,9 +960,7 @@ public class Tc_Besheet extends javax.swing.JPanel {
 
         }
 
-        Tc_Leker leker = new Tc_Leker(Tc_Betervezo.Tervezotabbed.getTitleAt(Tc_Betervezo.Tervezotabbed.getSelectedIndex()) , "leker");
-
-
+        Tc_Leker leker = new Tc_Leker(Tc_Betervezo.Tervezotabbed.getTitleAt(Tc_Betervezo.Tervezotabbed.getSelectedIndex()), "leker");
 
     }//GEN-LAST:event_jButton8ActionPerformed
 
@@ -1181,8 +1173,7 @@ public class Tc_Besheet extends javax.swing.JPanel {
 
         }
 
-        Tc_Leker leker = new Tc_Leker(Tc_Betervezo.Tervezotabbed.getTitleAt(Tc_Betervezo.Tervezotabbed.getSelectedIndex()),"mentes");
-
+        Tc_Leker leker = new Tc_Leker(Tc_Betervezo.Tervezotabbed.getTitleAt(Tc_Betervezo.Tervezotabbed.getSelectedIndex()), "mentes");
 
     }//GEN-LAST:event_jButton10ActionPerformed
 
@@ -1292,8 +1283,7 @@ public class Tc_Besheet extends javax.swing.JPanel {
 
         }
 
-        Tc_Leker leker = new Tc_Leker(Tc_Betervezo.Tervezotabbed.getTitleAt(Tc_Betervezo.Tervezotabbed.getSelectedIndex()),"termelesment");
-
+        Tc_Leker leker = new Tc_Leker(Tc_Betervezo.Tervezotabbed.getTitleAt(Tc_Betervezo.Tervezotabbed.getSelectedIndex()), "termelesment");
 
     }//GEN-LAST:event_jButton11ActionPerformed
 
@@ -1303,7 +1293,6 @@ public class Tc_Besheet extends javax.swing.JPanel {
         Tc_AnimationSFDC a = new Tc_AnimationSFDC();
         o.start();
         a.start();
-
 
     }//GEN-LAST:event_SFDCallActionPerformed
 
@@ -1342,7 +1331,6 @@ public class Tc_Besheet extends javax.swing.JPanel {
     private void jButton9MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton9MouseEntered
         // TODO add your handling code here:
         jButton9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/calc.png")));
-
 
     }//GEN-LAST:event_jButton9MouseEntered
 
@@ -1388,9 +1376,7 @@ public class Tc_Besheet extends javax.swing.JPanel {
         } catch (Exception e) {
         }
 
-
     }//GEN-LAST:event_jTable2MouseClicked
-
 
     private void keresesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_keresesActionPerformed
         // TODO add your handling code here:
@@ -1411,7 +1397,6 @@ public class Tc_Besheet extends javax.swing.JPanel {
 
         Tc_Betervezo.csuk = false;
         Tc_Calculator c = new Tc_Calculator(this, false, 0);
-
 
     }//GEN-LAST:event_jTable2KeyPressed
 
@@ -1437,7 +1422,6 @@ public class Tc_Besheet extends javax.swing.JPanel {
         if (Tc_Betervezo.csuk == false) {
             Tc_Calculator c = new Tc_Calculator(this, false, 0);
         }
-
 
     }//GEN-LAST:event_jTable2PropertyChange
 
@@ -1476,10 +1460,6 @@ public class Tc_Besheet extends javax.swing.JPanel {
 
             PrintRequestAttributeSet attr = new HashPrintRequestAttributeSet();
 
-           
-            
-            
-
             jTable2.print(JTable.PrintMode.FIT_WIDTH, header, footer);
 
             // jTable2.print(JTable.PrintMode.FIT_WIDTH, header, footer);
@@ -1488,7 +1468,6 @@ public class Tc_Besheet extends javax.swing.JPanel {
             System.err.format("Cannot print", e.getMessage());
 
         }// TODO add your handling code here:
-
 
     }//GEN-LAST:event_jButton12ActionPerformed
 
@@ -1506,7 +1485,6 @@ public class Tc_Besheet extends javax.swing.JPanel {
         tr.setRowFilter(RowFilter.regexFilter(query));
 
     }
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem CellaAdatok;

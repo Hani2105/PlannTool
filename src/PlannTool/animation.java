@@ -17,9 +17,9 @@ public class animation extends Thread {
 
     public void run() {
 
-        if (System.getProperty("user.name").equals("paloma_pal")) {
+        if (System.getProperty("user.name").equals("viktor_feher")) {
 
-            animationsziv a = new animationsziv();
+            animationzsiraf a = new animationzsiraf();
             a.setVisible(true);
 
             while (rajzol == true) {

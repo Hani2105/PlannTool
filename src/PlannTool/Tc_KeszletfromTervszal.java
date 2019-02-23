@@ -31,9 +31,8 @@ public class Tc_KeszletfromTervszal extends Thread {
     }
 
     public void run() {
-        
-//kinullazzuk a keresoket
 
+//kinullazzuk a keresoket
         k.jTextField1.setText("");
         k.jTextField13.setText("");
         k.jTextField6.setText("");
@@ -91,7 +90,7 @@ public class Tc_KeszletfromTervszal extends Thread {
 
             }
         } catch (SQLException ex) {
-           
+
         }
 
         k.jTable2.setModel(model1);
@@ -104,7 +103,7 @@ public class Tc_KeszletfromTervszal extends Thread {
             try {
                 Thread.sleep(2000);
             } catch (InterruptedException ex) {
-               
+
             }
 
             s.dispose();

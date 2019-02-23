@@ -64,8 +64,23 @@ public class keszletszal extends Thread {
             Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        ablak.model = (DefaultTableModel) xxx.totable(ablak.model, rowdata);
-        ablak.jTable1.setModel(ablak.model);
+        //betesszuk a wiplistbe a rowdata adatait
+        for (int i = 0; i < rowdata.length; i++) {
+            String[] wiplista = new String[3];
+            
+            wiplista[0] = rowdata[i][0].toString();
+            wiplista[1] = rowdata[i][1].toString();
+            wiplista[2] = rowdata[i][2].toString();
+            
+            ablak.wiplist.add(wiplista);
+        }
+
+//        ablak.model = (DefaultTableModel) xxx.totable(ablak.model, rowdata);
+//        ablak.jTable1.setModel(ablak.model);
+
+        //lefuttatjuk a szűrőt
+        wipszuro w = new wipszuro(ablak.jTable1);
+        ablak.jTable1.setModel(w.smtkiszed());
 
         // OH tábla
         String mitkeres = ablak.jTextField2.getText().trim();
@@ -87,7 +102,7 @@ public class keszletszal extends Thread {
 
             }
         } catch (SQLException ex) {
-           
+
         }
 
         ablak.jTable2.setModel(ablak.model1);
@@ -100,7 +115,7 @@ public class keszletszal extends Thread {
             try {
                 Thread.sleep(2000);
             } catch (InterruptedException ex) {
-               
+
             }
 
             s.dispose();

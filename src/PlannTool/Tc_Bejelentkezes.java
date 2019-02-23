@@ -359,7 +359,6 @@ public class Tc_Bejelentkezes extends javax.swing.JFrame {
 
         }
 
-
     }//GEN-LAST:event_jPasswordField1KeyPressed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed

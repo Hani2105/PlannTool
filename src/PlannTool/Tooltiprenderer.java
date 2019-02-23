@@ -23,26 +23,27 @@ class Tooltiprenderer extends DefaultTableCellRenderer {
         JLabel c = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 
         String tooltiptext = "";
-try{
-        for (int i = 0; i < ablak.lista.get(0).length; i++) {
+        try {
+            for (int i = 0; i < ablak.lista.get(0).length; i++) {
 
-            if (ablak.lista.get(0)[i][0] != null) {
+                if (ablak.lista.get(0)[i][0] != null) {
 
-                try {
+                    try {
 
-                    if (ablak.lista.get(0)[i][0].equals(c.getText())) {
+                        if (ablak.lista.get(0)[i][0].equals(c.getText())) {
 
-                        tooltiptext += "<html>" + ablak.lista.get(0)[i][0] + "  " + ablak.lista.get(0)[i][1] + "  " + ablak.lista.get(0)[i][2] + "<br>";
+                            tooltiptext += "<html>" + ablak.lista.get(0)[i][0] + "  " + ablak.lista.get(0)[i][1] + "  " + ablak.lista.get(0)[i][2] + "<br>";
+
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
 
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
-
                 }
-            }
 
-        }}
-catch(Exception e){}
+            }
+        } catch (Exception e) {
+        }
 
         c.setToolTipText(tooltiptext);
         return c;

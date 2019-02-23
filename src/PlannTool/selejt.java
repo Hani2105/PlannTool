@@ -66,7 +66,7 @@ public class selejt extends javax.swing.JFrame {
             }
 
         }
-        
+
         animation.rajzol = false;
 
     }
@@ -181,7 +181,6 @@ public class selejt extends javax.swing.JFrame {
             exp.fillData(jTable1, new File(fileToSave.getAbsolutePath() + ".xls"));
         }
 
-
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void formPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_formPropertyChange
@@ -192,7 +191,7 @@ public class selejt extends javax.swing.JFrame {
     private void jButton1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseEntered
         // TODO add your handling code here:
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/excel.png")));
-        
+
     }//GEN-LAST:event_jButton1MouseEntered
 
     private void jButton1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseExited

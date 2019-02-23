@@ -539,7 +539,6 @@ public class Tc_Betervezo extends javax.swing.JFrame {
     }
 
     //globalis valtozoban letaroljuk a setupban levo partnumbereket hogy le tudjuk ellenorizni a rendererben a letezesuket
-
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
         try {
@@ -550,7 +549,6 @@ public class Tc_Betervezo extends javax.swing.JFrame {
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Tc_Betervezo.class.getName()).log(Level.SEVERE, null, ex);
         }
-
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -588,7 +586,6 @@ public class Tc_Betervezo extends javax.swing.JFrame {
 
     }
 
-
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
 
@@ -611,7 +608,6 @@ public class Tc_Betervezo extends javax.swing.JFrame {
 
         });
     }
-
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
 
@@ -685,7 +681,6 @@ public class Tc_Betervezo extends javax.swing.JFrame {
             Tc_Leker leker = new Tc_Leker(Tc_Betervezo.Tervezotabbed.getTitleAt(b), "groupleker");
 
         }
-
 
     }//GEN-LAST:event_jButton3ActionPerformed
 
@@ -911,7 +906,6 @@ public class Tc_Betervezo extends javax.swing.JFrame {
 
         csuk = true;
 
-
     }//GEN-LAST:event_formWindowClosing
 
     private void jButton1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseEntered
@@ -1009,7 +1003,6 @@ public class Tc_Betervezo extends javax.swing.JFrame {
 
         v.setVisible(true);
 
-
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton6MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton6MouseEntered
@@ -1076,7 +1069,6 @@ public class Tc_Betervezo extends javax.swing.JFrame {
 
         Tc_Keszletfromterv k = new Tc_Keszletfromterv();
         k.setVisible(true);
-
 
     }//GEN-LAST:event_jButton9ActionPerformed
 

@@ -28,9 +28,7 @@ public class Anyageladosrenderer extends DefaultTableCellRenderer {
 
                 c.setBackground(Color.BLUE);
 
-            }
-
-            else if (table.getValueAt(row, 16).equals("Balance") && column > 16 && Double.parseDouble(table.getValueAt(row, column).toString()) < 0) {
+            } else if (table.getValueAt(row, 16).equals("Balance") && column > 16 && Double.parseDouble(table.getValueAt(row, column).toString()) < 0) {
 
                 c.setBackground(Color.red);
 

@@ -372,7 +372,6 @@ public class Tc_Keszletfromterv extends javax.swing.JFrame {
 
     }
 
-
     private void jTextField6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField6ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField6ActionPerformed

@@ -19,7 +19,7 @@ public class Tc_Calculator {
 
     Tc_Besheet b;
 
-    public Tc_Calculator(Tc_Besheet b , boolean selection , int cella) {
+    public Tc_Calculator(Tc_Besheet b, boolean selection, int cella) {
 
         this.b = b;
 
@@ -43,7 +43,6 @@ public class Tc_Calculator {
 
                 model.removeRow(i);
                 //this.b.jTable2.changeSelection(i+1,this.b.jTable2.getSelectedColumn(),false,false);
-               
 
                 i = i - 1;
 
@@ -75,9 +74,8 @@ public class Tc_Calculator {
 
                         wsek.add(ws);
                         model.insertRow(0, new Object[]{null, null, ws, "Infó"});
-                        
-                        //this.b.jTable2.changeSelection(i,this.b.jTable2.getSelectedColumn(),false,false);
 
+                        //this.b.jTable2.changeSelection(i,this.b.jTable2.getSelectedColumn(),false,false);
                     }
 
                     irtunke = false;
@@ -392,14 +390,12 @@ public class Tc_Calculator {
             }
 
         }
-        
-        if(selection == true){
-        
-        this.b.jTable2.changeSelection(cella, this.b.jTable2.getSelectedColumn(), false, false);
-        
+
+        if (selection == true) {
+
+            this.b.jTable2.changeSelection(cella, this.b.jTable2.getSelectedColumn(), false, false);
+
         }
     }
-    
-    
 
 }

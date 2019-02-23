@@ -17,7 +17,7 @@ public class Stitch extends javax.swing.JFrame {
     public Stitch() {
         setUndecorated(true);
         initComponents();
-        
+
     }
 
     /**

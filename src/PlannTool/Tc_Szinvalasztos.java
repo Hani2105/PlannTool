@@ -10,9 +10,9 @@ package PlannTool;
  * @author gabor_hanacsek
  */
 public class Tc_Szinvalasztos extends javax.swing.JFrame {
-    
+
     Tc_Besheet b;
-    
+
     public Tc_Szinvalasztos(Tc_Besheet b) {
         initComponents();
         this.b = b;
@@ -117,8 +117,7 @@ public class Tc_Szinvalasztos extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         try {
-            
-            
+
             Tc_Betervezo.slide1 = jColorChooser1.getColor().getRed();
             Tc_Betervezo.slide2 = jColorChooser1.getColor().getGreen();
             Tc_Betervezo.slide3 = jColorChooser1.getColor().getBlue();
@@ -128,24 +127,21 @@ public class Tc_Szinvalasztos extends javax.swing.JFrame {
             Tc_Betervezo.slide7 = jColorChooser3.getColor().getRed();
             Tc_Betervezo.slide8 = jColorChooser3.getColor().getGreen();
             Tc_Betervezo.slide9 = jColorChooser3.getColor().getBlue();
-            
+
             b.repaint();
-            
+
             jButton2.setEnabled(true);
         } catch (Exception e) {
         }
-        
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
 
-        
         planconnect pc = new planconnect();
         String Query = "update tc_users set tc_users.slides = '" + Tc_Betervezo.slide1 + "," + Tc_Betervezo.slide2 + "," + Tc_Betervezo.slide3 + "," + Tc_Betervezo.slide4 + "," + Tc_Betervezo.slide5 + "," + Tc_Betervezo.slide6 + "," + Tc_Betervezo.slide7 + "," + Tc_Betervezo.slide8 + "," + Tc_Betervezo.slide9 + "'" + " where tc_users.username = '" + System.getProperty("user.name") + "'";
         pc.feltolt(Query, true);
         this.dispose();
-        
 
     }//GEN-LAST:event_jButton2ActionPerformed
 

@@ -19,10 +19,10 @@ public class nincskeszoh extends javax.swing.JFrame {
      */
     public nincskeszoh() throws SQLException, ClassNotFoundException {
         initComponents();
-        
+
         DefaultTableModel model = new DefaultTableModel();
         DefaultTableModel model1 = new DefaultTableModel();
-        
+
         model = (DefaultTableModel) jTable1.getModel();
         model1 = (DefaultTableModel) jTable2.getModel();
         model.setRowCount(0);
@@ -30,28 +30,26 @@ public class nincskeszoh extends javax.swing.JFrame {
         String query = "SELECT oh_querymain.partnumber  , oh_querymain.serial , oh_querymain.tol , oh_querymain.ig , oh_querymain.felhasznalo , oh_querymain.lekerdezesidopont/*, count(serial)*/ FROM planningdb.oh_querymain where megcsinalva = 'N' /*group by partnumber*/";
         planconnect pc = new planconnect();
         pc.planconnect(query);
-        
-        while(pc.rs.next()){
-        
-        model.addRow(new Object[]{pc.rs.getString(1),pc.rs.getString(2),pc.rs.getString(3),pc.rs.getString(4),pc.rs.getString(5),pc.rs.getString(6)});
-        
+
+        while (pc.rs.next()) {
+
+            model.addRow(new Object[]{pc.rs.getString(1), pc.rs.getString(2), pc.rs.getString(3), pc.rs.getString(4), pc.rs.getString(5), pc.rs.getString(6)});
+
         }
-        
-        
+
         pc.planconnect("SELECT oh_querymain.partnumber , count(serial) FROM planningdb.oh_querymain where megcsinalva = 'N' group by partnumber");
-        
-        while(pc.rs.next()){
-        
-        model1.addRow(new Object[]{pc.rs.getString(1),pc.rs.getString(2)});
-        
+
+        while (pc.rs.next()) {
+
+            model1.addRow(new Object[]{pc.rs.getString(1), pc.rs.getString(2)});
+
         }
-        
+
         pc.kinyir();
-        
+
         jTable1.setModel(model);
         jTable2.setModel(model1);
-        
-        
+
     }
 
     /**

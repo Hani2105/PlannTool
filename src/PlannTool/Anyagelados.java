@@ -407,7 +407,6 @@ public class Anyagelados extends javax.swing.JFrame {
 
         }
 
-
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void seticon() {
@@ -461,7 +460,6 @@ public class Anyagelados extends javax.swing.JFrame {
         planconnect pc = new planconnect();
 
         pc.feltolt(Query, true);
-
 
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -578,7 +576,6 @@ public class Anyagelados extends javax.swing.JFrame {
 
         jComboBox1.setSelectedIndex(-1);
 
-
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
@@ -618,10 +615,6 @@ public class Anyagelados extends javax.swing.JFrame {
                 adatok.append("(");
                 Cell cella = row.getCell(16);
 
-                //ha van kovetkezo sor hozzaadunk egyet a modellhez is
-                // Now let's iterate over the columns of the current row
-//                Iterator<org.apache.poi.ss.usermodel.Cell> cellIterator = row.cellIterator();
-//                while (cellIterator.hasNext()) {
                 for (int i = 0; i < 53; i++) {
                     // org.apache.poi.ss.usermodel.Cell cell = cellIterator.next();
 
@@ -640,11 +633,9 @@ public class Anyagelados extends javax.swing.JFrame {
                                 case NUMERIC:
                                     DateFormat datef = new SimpleDateFormat("MM/dd/yyyy");
 
-                                    
                                     value = datef.format(cell.getDateCellValue());
-                                    
+
                                     System.out.println(value + " " + row.getRowNum() + " " + i);
-                                    
 
                                     break;
 
@@ -735,7 +726,6 @@ public class Anyagelados extends javax.swing.JFrame {
             }
 
         }
-
 
     }//GEN-LAST:event_jButton4ActionPerformed
 

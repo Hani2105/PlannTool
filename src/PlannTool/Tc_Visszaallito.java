@@ -334,7 +334,6 @@ public class Tc_Visszaallito extends javax.swing.JFrame {
         Tc_Calculator calc = new Tc_Calculator(Besheets.get(neve), false, 0);
         this.setVisible(false);
 
-
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**

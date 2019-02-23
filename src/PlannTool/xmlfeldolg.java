@@ -131,6 +131,8 @@ public class xmlfeldolg {
 
         String[] adat = new String[model.getColumnCount()];
 
+        
+        
         for (int i = 0; i < obi.length; i++) {
             model.addRow(new Object[model.getColumnCount()]);
             for (int j = 0; j < model.getColumnCount(); j++) {

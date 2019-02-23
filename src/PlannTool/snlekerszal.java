@@ -21,11 +21,11 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author gabor_hanacsek
  */
-public class snlekerszal extends Thread{
-    
-    public void run(){
-    
-    modelstatus = (DefaultTableModel) ablak.jTable4.getModel();
+public class snlekerszal extends Thread {
+
+    public void run() {
+
+        modelstatus = (DefaultTableModel) ablak.jTable4.getModel();
         String SN = "";
         URL url = null;
 
@@ -164,14 +164,12 @@ public class snlekerszal extends Thread{
         } catch (SQLException ex) {
             Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         animation.rajzol = false;
         ablak.jTable4.repaint();
 
         stat.beir(System.getProperty("user.name"), jTabbedPane1.getTitleAt(jTabbedPane1.getSelectedIndex()), "", "gabor.hanacsek@sanmina.com");
-    
-        
-    
+
     }
-    
+
 }

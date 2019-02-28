@@ -210,6 +210,7 @@ public class Tc_Betervezo extends javax.swing.JFrame {
         jButton6 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
         jButton9 = new javax.swing.JButton();
+        jButton10 = new javax.swing.JButton();
 
         jButton8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/login2.png"))); // NOI18N
         jButton8.setToolTipText("Login!");
@@ -394,6 +395,24 @@ public class Tc_Betervezo extends javax.swing.JFrame {
             }
         });
 
+        jButton10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/wrench2.png"))); // NOI18N
+        jButton10.setToolTipText("PN karbantartó!");
+        jButton10.setBorderPainted(false);
+        jButton10.setContentAreaFilled(false);
+        jButton10.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jButton10MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jButton10MouseExited(evt);
+            }
+        });
+        jButton10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton10ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -436,7 +455,8 @@ public class Tc_Betervezo extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(Tervezotabbed, javax.swing.GroupLayout.DEFAULT_SIZE, 966, Short.MAX_VALUE))
         );
@@ -473,9 +493,11 @@ public class Tc_Betervezo extends javax.swing.JFrame {
                 .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(45, Short.MAX_VALUE))
             .addComponent(Tervezotabbed)
         );
 
@@ -566,6 +588,10 @@ public class Tc_Betervezo extends javax.swing.JFrame {
                 Besheets.get(Tervezotabbed.getTitleAt(i)).jButton11.setEnabled(true);
                 Besheets.get(Tervezotabbed.getTitleAt(i)).jButton10.setEnabled(false);
                 Besheets.get(Tervezotabbed.getTitleAt(i)).DeleteRow.setEnabled(false);
+                //Besheets.get(Tervezotabbed.getTitleAt(i)).pnkarbantarto.setEnabled(false);
+                //repainteljük a táblát a kommentek miatt
+                Besheets.get(Tervezotabbed.getTitleAt(i)).jTable2.repaint();
+                
 
             }
 
@@ -579,6 +605,9 @@ public class Tc_Betervezo extends javax.swing.JFrame {
                 Besheets.get(Tervezotabbed.getTitleAt(i)).jButton11.setEnabled(false);
                 Besheets.get(Tervezotabbed.getTitleAt(i)).jButton10.setEnabled(true);
                 Besheets.get(Tervezotabbed.getTitleAt(i)).DeleteRow.setEnabled(true);
+                //Besheets.get(Tervezotabbed.getTitleAt(i)).pnkarbantarto.setEnabled(true);
+                //repainteljük a táblát a kommentek miatt
+                Besheets.get(Tervezotabbed.getTitleAt(i)).jTable2.repaint();
 
             }
 
@@ -1072,6 +1101,24 @@ public class Tc_Betervezo extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jButton9ActionPerformed
 
+    private void jButton10MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton10MouseEntered
+        
+        jButton10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/wrench1.png")));
+        
+    }//GEN-LAST:event_jButton10MouseEntered
+
+    private void jButton10MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton10MouseExited
+         jButton10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/wrench2.png")));
+    }//GEN-LAST:event_jButton10MouseExited
+
+    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
+      
+        
+       Tc_Pnkarbantarto p = new Tc_Pnkarbantarto("");
+       p.setVisible(true);
+        
+    }//GEN-LAST:event_jButton10ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1118,6 +1165,7 @@ public class Tc_Betervezo extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public static javax.swing.JTabbedPane Tervezotabbed;
     public javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton10;
     public static javax.swing.JButton jButton2;
     public static javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;

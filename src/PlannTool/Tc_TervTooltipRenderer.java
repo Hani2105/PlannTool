@@ -45,25 +45,53 @@ public class Tc_TervTooltipRenderer extends DefaultTableCellRenderer {
 
         //tooltip beállítása
         try {
+
             Tc_Stringbolint si = new Tc_Stringbolint(table.getValueAt(row, column).toString());
-            if (column > 3 && (table.getValueAt(row, 0) != null && table.getValueAt(row, 2) != null) && table.getValueAt(row, column) != null && !table.getValueAt(row, column).toString().equals("")) {
+//komment a pn hez ha van és tervező van bent
+            if (column == 0 && table.getValueAt(row, 0) != null && !table.getValueAt(row, 0).toString().equals("")) {
+
+                for (int i = 0; i < b.partnumbers.size(); i++) {
+
+                    if (b.partnumbers.get(i)[0].equals(table.getValueAt(row, 0).toString()) && b.partnumbers.get(i)[2] != null && !b.partnumbers.get(i)[2].equals("") && ablak.planner ) {
+
+                        tooltiptext = "Komment: " + b.partnumbers.get(i)[2];
+                        c.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/comment.jpg")));
+                        c.setToolTipText(tooltiptext);
+
+                    }
+
+                }
+
+            } else if (column > 3 && (table.getValueAt(row, 0) != null && table.getValueAt(row, 2) != null) && table.getValueAt(row, column) != null && !table.getValueAt(row, column).toString().equals("")) {
 
                 String komment = "";
                 try {
                     tooltiptext = ("<html>" + "Terv/Tény: " + table.getValueAt(row, 3).toString() + "<br>" + "PN: " + table.getValueAt(row, 0).toString() + "<br>" + "JOB: " + table.getValueAt(row, 1).toString() + "<br>" + "WS: " + table.getValueAt(row, 2).toString());
-
                     komment = si.komment;
-
                     tooltiptext += "<br> Komment: " + komment + "</html>";
+                    c.setToolTipText(tooltiptext);
+                    c.setIcon(null);
 
                 } catch (Exception e) {
-                };
+
+                    tooltiptext = ("<html>" + "Terv/Tény: " + table.getValueAt(row, 3).toString() + "<br>" + "PN: " + table.getValueAt(row, 0).toString() + "<br>" + "JOB: <br>" + "WS: " + table.getValueAt(row, 2).toString());
+                    komment = si.komment;
+                    tooltiptext += "<br> Komment: " + komment + "</html>";
+                    c.setToolTipText(tooltiptext);
+                    c.setIcon(null);
+
+                }
             } else {
 
-                tooltiptext = null;
+                c.setToolTipText(null);
+                c.setIcon(null);
+                      
 
             }
         } catch (Exception e) {
+
+            c.setText(null);
+            c.setIcon(null);
         }
 
 //pn szinezes , narancs ha nincs az adott cellahoz
@@ -74,7 +102,7 @@ public class Tc_TervTooltipRenderer extends DefaultTableCellRenderer {
 
                 for (int i = 0; i < b.partnumbers.size(); i++) {
 
-                    if (table.getValueAt(row, 0).toString().equals(b.partnumbers.get(i))) {
+                    if (table.getValueAt(row, 0).toString().equals(b.partnumbers.get(i)[0])) {
 
                         narancs = false;
 
@@ -225,7 +253,6 @@ public class Tc_TervTooltipRenderer extends DefaultTableCellRenderer {
         }
 
         c.setBorder(BorderFactory.createEtchedBorder(1));
-        c.setToolTipText(tooltiptext);
         c.setHorizontalAlignment(CENTER);
 
         return c;

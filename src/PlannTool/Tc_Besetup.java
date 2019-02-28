@@ -27,6 +27,13 @@ public class Tc_Besetup extends javax.swing.JFrame {
     /**
      * Creates new form tc_besetup
      */
+    
+    
+    
+    
+    
+    
+    
     public List<String> defaultadat1 = new ArrayList<String>();
     public List<String> defaultadat2 = new ArrayList<String>();
     public List<String> defaultadat3 = new ArrayList<String>();
@@ -34,6 +41,10 @@ public class Tc_Besetup extends javax.swing.JFrame {
     public Tc_Besetup() throws SQLException, ClassNotFoundException {
 
         initComponents();
+        
+        
+        
+        
 
         //tabla tesszuk a meglevo setup beallitasokat
         DefaultTableModel model = new DefaultTableModel();
@@ -589,7 +600,7 @@ public class Tc_Besetup extends javax.swing.JFrame {
                     .addComponent(jButton6)
                     .addComponent(jButton9))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 552, Short.MAX_VALUE)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 567, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton7)
@@ -651,7 +662,7 @@ public class Tc_Besetup extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton11)
                     .addComponent(jButton12))
-                .addGap(0, 663, Short.MAX_VALUE))
+                .addGap(0, 678, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -684,101 +695,500 @@ public class Tc_Besetup extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        planconnect pc = new planconnect();
-        String query = "Insert ignore tc_bepns (partnumber) values ('" + jTextField1.getText().trim() + "');";
-        try {
-            pc.feltolt(query, true);
+    private void jTabbedPane1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabbedPane1StateChanged
+        // TODO add your handling code here:
 
-        } catch (Exception e) {
-            infobox info = new infobox();
-            info.infoBox("A feltöltés sikertelen!!", "Mentés infó!");
-        }
-
-        //frissitjuk a pnjlistet
-        ResultSet rs = null;
-
-        query = "SELECT * FROM planningdb.tc_bepns";
-        try {
-            rs = (ResultSet) pc.planconnect(query);
-        } catch (SQLException ex) {
-            Logger.getLogger(Tc_Besetup.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Tc_Besetup.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        DefaultListModel lm2 = new DefaultListModel();
-        lm2.removeAllElements();
-        try {
-            while (rs.next()) {
-
-                lm2.addElement(rs.getString(2));
-                defaultadat1.add(rs.getString(2));
-
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(Tc_Besetup.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        jList2.setModel(lm2);
-
-        //frissitjuk a partnumber  adatokat a sheeteken
-        for (int n = 0; n < Tc_Betervezo.Tervezotabbed.getTabCount(); n++) {
-
-            query = "select tc_bepns.partnumber from tc_bepns \n"
-                    + "left join tc_prodmatrix on tc_prodmatrix.id_tc_bepns = tc_bepns.idtc_bepns\n"
-                    + "left join tc_becells on tc_prodmatrix.id_tc_becells = tc_becells.idtc_cells\n"
-                    + "where tc_becells.cellname = '" + Tc_Betervezo.Tervezotabbed.getTitleAt(n) + "'";
-
-            //kiszedjuk a regieket
-            Tc_Betervezo.Besheets.get(Tc_Betervezo.Tervezotabbed.getTitleAt(n)).partnumbers.clear();
+        if (jTabbedPane1.getTitleAt(jTabbedPane1.getSelectedIndex()).equals("Műszakjelentés és hozzáférés beállítások")) {
+            //lekerdezzuk a cimlistat
+            DefaultTableModel model = new DefaultTableModel();
+            DefaultTableModel model3 = new DefaultTableModel();
+            model3 = (DefaultTableModel) jTable3.getModel();
+            model = (DefaultTableModel) jTable2.getModel();
+            model.setRowCount(0);
+            model3.setRowCount(0);
+            String query = "SELECT Muszakjelentes.Cím FROM planningdb.Muszakjelentes order by Cím";
+            planconnect pc = new planconnect();
 
             try {
                 pc.planconnect(query);
+                //betesszuk tablaba
+                while (pc.rs.next()) {
+
+                    model.addRow(new Object[]{pc.rs.getString(1)});
+
+                }
+
             } catch (SQLException ex) {
                 Logger.getLogger(Tc_Besetup.class.getName()).log(Level.SEVERE, null, ex);
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(Tc_Besetup.class.getName()).log(Level.SEVERE, null, ex);
             }
 
+            model.addRow(new Object[]{null});
+            //feltoltjuk a cellavalaszto tablat
+            query = "SELECT tc_users.username , tc_users.cellaids , tc_users.slides  FROM planningdb.tc_users";
+
             try {
+                pc.planconnect(query);
+                //betesszuk tablaba
                 while (pc.rs.next()) {
 
-                    Tc_Betervezo.Besheets.get(Tc_Betervezo.Tervezotabbed.getTitleAt(n)).partnumbers.add(pc.rs.getString(1));
+                    model3.addRow(new Object[]{pc.rs.getString(1), pc.rs.getString(2), pc.rs.getString(3)});
 
                 }
+
             } catch (SQLException ex) {
+                Logger.getLogger(Tc_Besetup.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(Tc_Besetup.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            model3.addRow(new Object[]{null, null, null});
+
+        } else if (jTabbedPane1.getTitleAt(jTabbedPane1.getSelectedIndex()).equals("Tervváltozás címlista")) {
+
+            //lekerdezzuk a már meglévőeket
+            String query = "select * from tc_tervvaltozas_cimlista order by email";
+            DefaultTableModel model = new DefaultTableModel();
+            model = (DefaultTableModel) jTable4.getModel();
+            model.setRowCount(0);
+
+            planconnect pc = new planconnect();
+            try {
+                pc.planconnect(query);
+
+                while (pc.rs.next()) {
+
+                    model.addRow(new Object[]{pc.rs.getString(2)});
+
+                }
+                model.addRow(new Object[]{});
+                jTable4.setModel(model);
+
+            } catch (SQLException ex) {
+                Logger.getLogger(Tc_Besetup.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
                 Logger.getLogger(Tc_Besetup.class.getName()).log(Level.SEVERE, null, ex);
             }
 
             pc.kinyir();
 
         }
-//letezik e a pn ellenorzeshez
-        try {
-            Tc_Betervezo.pncheck();
-        } catch (SQLException ex) {
-            Logger.getLogger(Tc_Besetup.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Tc_Besetup.class.getName()).log(Level.SEVERE, null, ex);
+
+    }//GEN-LAST:event_jTabbedPane1StateChanged
+
+    private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
+        // sor hozzáadása a tervváltozás táblához
+
+        DefaultTableModel model = new DefaultTableModel();
+        model = (DefaultTableModel) jTable4.getModel();
+        model.addRow(new Object[]{});
+        jTable4.setModel(model);
+    }//GEN-LAST:event_jButton12ActionPerformed
+
+    private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
+        //tervváltozás cimlista mentése
+        //mentjük a címlistát
+
+        //String query = "insert into muszakjelentes (cim) values ";
+        String queryvalues = "";
+        emailellenorzo ch = new emailellenorzo();
+        boolean mentunke = true;
+        for (int i = 0; i < jTable4.getRowCount(); i++) {
+
+            try {
+                if (!jTable4.getValueAt(i, 0).toString().equals("") && jTable4.getValueAt(i, 0) != null) {
+
+                    if (ch.check(jTable4.getValueAt(i, 0).toString()) == true) {
+                        queryvalues += "('" + jTable4.getValueAt(i, 0).toString() + "'),";
+
+                    } else {
+
+                        mentunke = false;
+
+                    }
+
+                }
+            } catch (Exception e) {
+            }
+
         }
 
+        if (mentunke) {
+            queryvalues = queryvalues.substring(0, queryvalues.length() - 2);
+            String query = "insert into tc_tervvaltozas_cimlista (email) values" + queryvalues + ")";
+            String truncate = "truncate tc_tervvaltozas_cimlista";
+            planconnect pc = new planconnect();
+            pc.feltolt(truncate, false);
+            pc.feltolt(query, true);
+        }
 
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_jButton11ActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
         // TODO add your handling code here:
+
+        DefaultTableModel model = new DefaultTableModel();
+        model = (DefaultTableModel) jTable3.getModel();
+        model.addRow(new Object[]{});
+        jTable3.setModel(model);
+    }//GEN-LAST:event_jButton10ActionPerformed
+
+    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+
+        DefaultTableModel model = new DefaultTableModel();
+        model = (DefaultTableModel) jTable2.getModel();
+
+        model.addRow(new Object[]{});
+        jTable2.setModel(model);
+
+    }//GEN-LAST:event_jButton9ActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        // TODO add your handling code here:
+        //mentjük a cellavalszto adatokat
+
+        //String query = "insert into muszakjelentes (cim) values ";
+        String queryvalues = "";
+
+        for (int i = 0; i < jTable3.getRowCount(); i++) {
+            String cellak = "";
+            String szin = "";
+            try {
+                cellak = jTable3.getValueAt(i, 1).toString();
+            } catch (Exception e) {
+
+                cellak = "null";
+
+            }
+
+            try {
+                szin = jTable3.getValueAt(i, 2).toString();
+            } catch (Exception e) {
+                szin = "007,027,050,009,147,192";
+
+            }
+
+            try {
+                if (!jTable3.getValueAt(i, 0).toString().equals("") && jTable3.getValueAt(i, 0) != null) {
+                    queryvalues += "('" + jTable3.getValueAt(i, 0).toString() + "','" + cellak + "','" + szin + "'),";
+                }
+            } catch (Exception e) {
+            }
+
+        }
+
+        queryvalues = queryvalues.substring(0, queryvalues.length() - 2);
+        String query = "insert into tc_users (username , cellaids , slides) values" + queryvalues + ")";
+
+        String truncate = "truncate tc_users";
+
         planconnect pc = new planconnect();
-        String query = "Insert ignore tc_becells (cellname) values ('" + jTextField5.getText().trim() + "');";
+        pc.feltolt(truncate, false);
+        pc.feltolt(query, true);
+
+    }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        // TODO add your handling code here:
+        //mentjük a címlistát
+
+        //String query = "insert into muszakjelentes (cim) values ";
+        String queryvalues = "";
+
+        for (int i = 0; i < jTable2.getRowCount(); i++) {
+
+            try {
+                if (!jTable2.getValueAt(i, 0).toString().equals("") && jTable2.getValueAt(i, 0) != null) {
+                    queryvalues += "('" + jTable2.getValueAt(i, 0).toString() + "'),";
+                }
+            } catch (Exception e) {
+            }
+
+        }
+
+        queryvalues = queryvalues.substring(0, queryvalues.length() - 2);
+        String query = "insert into Muszakjelentes (cím) values" + queryvalues + ")";
+        String truncate = "truncate Muszakjelentes";
+        planconnect pc = new planconnect();
+        pc.feltolt(truncate, false);
+        pc.feltolt(query, true);
+    }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        // létrehozunk egy inputdialogot
+
+        String input = JOptionPane.showInputDialog("A törlés megerősítése , írd be , DELETE!");
+        //ha stimmel a szoveg
         try {
+            if (input.equals("DELETE!")) {
+
+                //összeszedjük , hogy miket kell törölni
+                String pn = "";
+                String ws = "";
+                String cell = "";
+                String cellid = "";
+                String wsid = "";
+                String pnid = "";
+                try {
+                    pn = jList2.getSelectedValue().toString();
+                } catch (Exception e) {
+                }
+
+                try {
+                    ws = jList4.getSelectedValue().toString();
+                } catch (Exception e) {
+                }
+                try {
+                    cell = jList1.getSelectedValue().toString();
+                } catch (Exception e) {
+                }
+
+                planconnect pc = new planconnect();
+
+                //töröljük azokat a tételeket a prodmatrixbol amik ezzel kapcsolatba hozhatóak , ehhez kell az id-jük
+                //cella
+                if (cell.length() > 0) {
+
+                    String query = "select * from tc_becells where tc_becells.cellname = '" + cell + "'";
+                    try {
+                        pc.planconnect(query);
+                        while (pc.rs.next()) {
+
+                            cellid = pc.rs.getString(1);
+                            //kitoroljuk a prodmatrixbol az ehez kapcsolodo teteleket
+                            query = "delete from tc_prodmatrix where tc_prodmatrix.id_tc_becells = '" + cellid + "'";
+                            pc.feltolt(query, false);
+                            //kitoroljuk a tablabol is
+                            query = "delete from tc_becells where tc_becells.cellname = '" + cell + "';";
+                            pc.feltolt(query, false);
+
+                        }
+
+                    } catch (SQLException ex) {
+                        Logger.getLogger(Tc_Besetup.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (ClassNotFoundException ex) {
+                        Logger.getLogger(Tc_Besetup.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+
+                }
+
+                //ws
+                if (ws.length() > 0) {
+
+                    String query = "SELECT * FROM planningdb.tc_bestations where tc_bestations.workstation = '" + ws + "';";
+                    try {
+                        pc.planconnect(query);
+                        while (pc.rs.next()) {
+
+                            wsid = pc.rs.getString(1);
+                            //kitoroljuk a prodmatrixbol az ehez kapcsolodo teteleket
+                            query = "delete from tc_prodmatrix where tc_prodmatrix.id_tc_bestations= '" + wsid + "'";
+                            pc.feltolt(query, false);
+                            //kitoroljuk a tablabol is
+                            query = "delete from tc_bestations where tc_bestations.workstation = '" + ws + "';";
+                            pc.feltolt(query, false);
+
+                        }
+
+                    } catch (SQLException ex) {
+                        Logger.getLogger(Tc_Besetup.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (ClassNotFoundException ex) {
+                        Logger.getLogger(Tc_Besetup.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+
+                }
+
+                //pn
+                if (pn.length() > 0) {
+
+                    String query = "SELECT * FROM planningdb.tc_bepns where tc_bepns.partnumber = '" + pn + "';";
+                    try {
+                        pc.planconnect(query);
+                        while (pc.rs.next()) {
+
+                            pnid = pc.rs.getString(1);
+                            //kitoroljuk a prodmatrixbol az ehez kapcsolodo teteleket
+                            query = "delete from tc_prodmatrix where tc_prodmatrix.id_tc_bepns = '" + pnid + "'";
+                            pc.feltolt(query, false);
+                            //kitoroljuk a tablabol is
+                            query = "delete from tc_bepns where tc_bepns.partnumber = '" + pn + "'";
+                            pc.feltolt(query, false);
+
+                        }
+
+                    } catch (SQLException ex) {
+                        Logger.getLogger(Tc_Besetup.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (ClassNotFoundException ex) {
+                        Logger.getLogger(Tc_Besetup.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+
+                }
+
+                //frissitjuk a listakat-----------------------------
+                //pn feltoltese a jlistbe
+                defaultadat1.clear();
+                String query = "SELECT * FROM planningdb.tc_bepns";
+                ResultSet rs = null;
+                try {
+                    rs = (ResultSet) pc.planconnect(query);
+                } catch (SQLException ex) {
+                    Logger.getLogger(Tc_Besetup.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(Tc_Besetup.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                DefaultListModel lm2 = new DefaultListModel();
+                lm2.clear();
+
+                try {
+                    while (rs.next()) {
+
+                        lm2.addElement(rs.getString(2));
+                        defaultadat1.add(rs.getString(2));
+
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(Tc_Besetup.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+                jList2.setModel(lm2);
+
+                //cella feltoltese
+                defaultadat2.clear();
+                query = "SELECT * FROM planningdb.tc_becells;";
+                try {
+                    rs = (ResultSet) pc.planconnect(query);
+                } catch (SQLException ex) {
+                    Logger.getLogger(Tc_Besetup.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(Tc_Besetup.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                DefaultListModel lm1 = new DefaultListModel();
+                lm1.clear();
+
+                try {
+                    while (rs.next()) {
+
+                        lm1.addElement(rs.getString(2));
+                        defaultadat2.add(rs.getString(2));
+
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(Tc_Besetup.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+                jList1.setModel(lm1);
+
+                //workstation feltoltese
+                defaultadat3.clear();
+                query = "SELECT * FROM planningdb.tc_bestations;";
+                try {
+                    rs = (ResultSet) pc.planconnect(query);
+                } catch (SQLException ex) {
+                    Logger.getLogger(Tc_Besetup.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(Tc_Besetup.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                DefaultListModel lm3 = new DefaultListModel();
+                lm3.clear();
+
+                try {
+                    while (rs.next()) {
+
+                        lm3.addElement(rs.getString(2));
+                        defaultadat3.add(rs.getString(2));
+
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(Tc_Besetup.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+                jList4.setModel(lm3);
+
+                //prodmatrix tábla frissitese
+                //tabla tesszuk a meglevo setup beallitasokat
+                DefaultTableModel model = new DefaultTableModel();
+                model = (DefaultTableModel) jTable1.getModel();
+                model.setRowCount(0);
+                query = "select  tc_prodmatrix.idtc_prodmatrix , tc_bepns.partnumber , tc_becells.cellname , tc_bestations.workstation , tc_prodmatrix.ciklusido ,tc_bepns.smt_pn from tc_prodmatrix left join tc_bepns on tc_prodmatrix.id_tc_bepns = tc_bepns.idtc_bepns  left join tc_becells on tc_becells.idtc_cells = tc_prodmatrix.id_tc_becells left join tc_bestations on tc_bestations.idtc_bestations = tc_prodmatrix.id_tc_bestations";
+
+                pc = new planconnect();
+
+                rs = (ResultSet) pc.planconnect(query);
+
+                while (rs.next()) {
+
+                    model.addRow(new Object[]{rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getDouble(5), rs.getString(6)});
+
+                }
+
+                TableCellRenderer rendererFromHeader = jTable1.getTableHeader().getDefaultRenderer();
+                JLabel headerLabel = (JLabel) rendererFromHeader;
+                headerLabel.setHorizontalAlignment(JLabel.CENTER);
+                DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+                centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+                jTable1.setDefaultRenderer(Object.class, centerRenderer);
+                jTable1.setModel(model);
+
+                //ez itt az if vége ha törlünk egyáltalán
+                pc.kinyir();
+                infobox info = new infobox();
+                info.infoBox("Sikeres törlés!", "Törlés!");
+
+            }
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_jButton8ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+
+        if (jTextField9.getText().length() > 0 && jList2.getSelectedValue() != null) {
+
+            planconnect pc = new planconnect();
+            String query = "update tc_bepns set tc_bepns.smt_pn  = '" + jTextField9.getText() + "' where tc_bepns.partnumber = '" + jList2.getSelectedValue().toString() + "'";
             pc.feltolt(query, true);
 
-        } catch (Exception e) {
+        } else {
+
             infobox info = new infobox();
-            info.infoBox("A feltöltés sikertelen!!", "Mentés infó!");
+            info.infoBox("Nem adtad meg a szükséges adatokat! (SMT és TOP L PN)!", "Hiba!");
+        }
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
+        // TODO add your handling code here:
+        int[] selectedrows = jTable1.getSelectedRows();
+
+        String querybe = "";
+
+        for (int i = 0; i < selectedrows.length; i++) {
+
+            querybe += "'" + jTable1.getValueAt(selectedrows[i], 0).toString() + "',";
         }
 
-        //frissitjuk a cellalistat
-        query = "SELECT * FROM planningdb.tc_becells;";
+        querybe = querybe.substring(0, querybe.length() - 1);
+        String query = "DELETE from tc_prodmatrix where tc_prodmatrix.idtc_prodmatrix in (" + querybe + ")";
+        planconnect pc = new planconnect();
+        try {
+            pc.feltolt(query, true);
+            infobox info = new infobox();
+            info.infoBox("Az adatokat sikeresen töröltük!", "Törlés történt!");
+
+        } catch (Exception e) {
+
+            infobox inf = new infobox();
+            inf.infoBox("A törlés nem valósult meg!", "Hiba a törlés során!");
+
+        }
+
+        //frissítjük a táblát!
+        DefaultTableModel model = new DefaultTableModel();
+        model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0);
+        query = "select tc_prodmatrix.idtc_prodmatrix , tc_bepns.partnumber , tc_becells.cellname , tc_bestations.workstation , tc_prodmatrix.ciklusido from tc_prodmatrix left join tc_bepns on tc_prodmatrix.id_tc_bepns = tc_bepns.idtc_bepns  left join tc_becells on tc_becells.idtc_cells = tc_prodmatrix.id_tc_becells left join tc_bestations on tc_bestations.idtc_bestations = tc_prodmatrix.id_tc_bestations";
+
+        pc = new planconnect();
+
         ResultSet rs = null;
         try {
             rs = (ResultSet) pc.planconnect(query);
@@ -787,110 +1197,26 @@ public class Tc_Besetup extends javax.swing.JFrame {
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Tc_Besetup.class.getName()).log(Level.SEVERE, null, ex);
         }
-        DefaultListModel lm1 = new DefaultListModel();
 
         try {
             while (rs.next()) {
 
-                lm1.addElement(rs.getString(2));
-                defaultadat2.add(rs.getString(2));
+                model.addRow(new Object[]{rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getDouble(5)});
 
             }
         } catch (SQLException ex) {
             Logger.getLogger(Tc_Besetup.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        jList1.setModel(lm1);
-        pc.kinyir();
+        TableCellRenderer rendererFromHeader = jTable1.getTableHeader().getDefaultRenderer();
+        JLabel headerLabel = (JLabel) rendererFromHeader;
+        headerLabel.setHorizontalAlignment(JLabel.CENTER);
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+        jTable1.setDefaultRenderer(Object.class, centerRenderer);
+        jTable1.setModel(model);
 
-    }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-        planconnect pc = new planconnect();
-        String query = "Insert ignore tc_bestations (workstation) values ('" + jTextField6.getText().trim() + "');";
-        try {
-            pc.feltolt(query, true);
-
-        } catch (Exception e) {
-            infobox info = new infobox();
-            info.infoBox("A feltöltés sikertelen!!", "Mentés infó!");
-        }
-
-        //frissitjuk a station listet
-        query = "SELECT * FROM planningdb.tc_bestations;";
-        ResultSet rs = null;
-        try {
-            rs = (ResultSet) pc.planconnect(query);
-        } catch (SQLException ex) {
-            Logger.getLogger(Tc_Besetup.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Tc_Besetup.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        DefaultListModel lm3 = new DefaultListModel();
-
-        try {
-            while (rs.next()) {
-
-                lm3.addElement(rs.getString(2));
-                defaultadat3.add(rs.getString(2));
-
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(Tc_Besetup.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        jList4.setModel(lm3);
-
-        try {
-            Tc_Betervezo.wscheck();
-        } catch (SQLException ex) {
-            Logger.getLogger(Tc_Besetup.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Tc_Besetup.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        pc.kinyir();
-
-    }//GEN-LAST:event_jButton3ActionPerformed
-
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
-
-    private void jTextField3KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField3KeyReleased
-        // TODO add your handling code here:
-
-        String query = jTextField3.getText().trim();
-        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-        tablesorter tr = new tablesorter();
-        tr.filter(query, model, jTable1);
-
-    }//GEN-LAST:event_jTextField3KeyReleased
-
-    private void jTextField4KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField4KeyPressed
-
-        String filter = jTextField4.getText();
-        jlistfilterfromtestbox fili = new jlistfilterfromtestbox();
-        jList2.setModel(fili.filterModel((DefaultListModel<String>) jList2.getModel(), filter, (ArrayList<String>) defaultadat1));
-
-
-    }//GEN-LAST:event_jTextField4KeyPressed
-
-    private void jTextField7KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField7KeyPressed
-        // TODO add your handling code here:
-        String filter = jTextField7.getText();
-        jlistfilterfromtestbox fili = new jlistfilterfromtestbox();
-        jList1.setModel(fili.filterModel((DefaultListModel<String>) jList1.getModel(), filter, (ArrayList<String>) defaultadat2));
-    }//GEN-LAST:event_jTextField7KeyPressed
-
-    private void jTextField8KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField8KeyPressed
-        // TODO add your handling code here:
-        String filter = jTextField8.getText();
-        jlistfilterfromtestbox fili = new jlistfilterfromtestbox();
-        jList4.setModel(fili.filterModel((DefaultListModel<String>) jList4.getModel(), filter, (ArrayList<String>) defaultadat3));
-
-    }//GEN-LAST:event_jTextField8KeyPressed
+    }//GEN-LAST:event_jToggleButton1ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         //lekérdezzük a pn id-t
@@ -1012,9 +1338,9 @@ public class Tc_Besetup extends javax.swing.JFrame {
 
         //lekerdezzuk a ciklusidoket
         query = "select tc_becells.cellname , tc_bepns.partnumber , tc_bestations.workstation , tc_prodmatrix.ciklusido from tc_prodmatrix \n"
-                + "left join tc_becells on tc_becells.idtc_cells = tc_prodmatrix.id_tc_becells \n"
-                + "left join tc_bepns on tc_bepns.idtc_bepns = tc_prodmatrix.id_tc_bepns\n"
-                + "left join tc_bestations on tc_bestations.idtc_bestations = tc_prodmatrix.id_tc_bestations";
+        + "left join tc_becells on tc_becells.idtc_cells = tc_prodmatrix.id_tc_becells \n"
+        + "left join tc_bepns on tc_bepns.idtc_bepns = tc_prodmatrix.id_tc_bepns\n"
+        + "left join tc_bestations on tc_bestations.idtc_bestations = tc_prodmatrix.id_tc_bestations";
         pc = new planconnect();
         try {
             pc.planconnect(query);
@@ -1066,8 +1392,8 @@ public class Tc_Besetup extends javax.swing.JFrame {
             Tc_Betervezo.Besheets.get(Tc_Betervezo.Tervezotabbed.getTitleAt(n)).workstations.clear();
 
             query = "SELECT tc_bestations.workstation  from tc_bestations where tc_bestations.idtc_bestations in \n"
-                    + "(select distinct tc_prodmatrix.id_tc_bestations from tc_prodmatrix where tc_prodmatrix.id_tc_becells  = \n"
-                    + "(SELECT tc_becells.idtc_cells FROM planningdb.tc_becells where tc_becells.cellname = '" + Tc_Betervezo.Tervezotabbed.getTitleAt(n) + "'))";
+            + "(select distinct tc_prodmatrix.id_tc_bestations from tc_prodmatrix where tc_prodmatrix.id_tc_becells  = \n"
+            + "(SELECT tc_becells.idtc_cells FROM planningdb.tc_becells where tc_becells.cellname = '" + Tc_Betervezo.Tervezotabbed.getTitleAt(n) + "'))";
 
             try {
                 pc.planconnect(query);
@@ -1092,10 +1418,11 @@ public class Tc_Besetup extends javax.swing.JFrame {
         //frissitjuk a partnumber  adatokat a sheeteken
         for (int n = 0; n < Tc_Betervezo.Tervezotabbed.getTabCount(); n++) {
 
-            query = "select tc_bepns.partnumber from tc_bepns \n"
-                    + "left join tc_prodmatrix on tc_prodmatrix.id_tc_bepns = tc_bepns.idtc_bepns\n"
-                    + "left join tc_becells on tc_prodmatrix.id_tc_becells = tc_becells.idtc_cells\n"
-                    + "where tc_becells.cellname = '" + Tc_Betervezo.Tervezotabbed.getTitleAt(n) + "'";
+            query = "select tc_bepns.partnumber ,pn_data.Project ,pn_data.Comment from tc_bepns \n"
+            + "left join tc_prodmatrix on tc_prodmatrix.id_tc_bepns = tc_bepns.idtc_bepns\n"
+            + "left join tc_becells on tc_prodmatrix.id_tc_becells = tc_becells.idtc_cells\n"
+            + "left join pn_data on pn_data.PartNumber = tc_bepns.partnumber\n"
+            + "where tc_becells.cellname = '" + Tc_Betervezo.Tervezotabbed.getTitleAt(n) + "'";
 
             //kiszedjuk a regieket
             Tc_Betervezo.Besheets.get(Tc_Betervezo.Tervezotabbed.getTitleAt(n)).partnumbers.clear();
@@ -1111,7 +1438,13 @@ public class Tc_Besetup extends javax.swing.JFrame {
             try {
                 while (pc.rs.next()) {
 
-                    Tc_Betervezo.Besheets.get(Tc_Betervezo.Tervezotabbed.getTitleAt(n)).partnumbers.add(pc.rs.getString(1));
+                    String[] pnadatok = new String[3];
+
+                    pnadatok[0] = pc.rs.getString(1);
+                    pnadatok[1] = pc.rs.getString(2);
+                    pnadatok[2] = pc.rs.getString(3);
+
+                    Tc_Betervezo.Besheets.get(Tc_Betervezo.Tervezotabbed.getTitleAt(n)).partnumbers.add(pnadatok);
 
                 }
             } catch (SQLException ex) {
@@ -1121,43 +1454,65 @@ public class Tc_Besetup extends javax.swing.JFrame {
         }
 
         pc.kinyir();
-
     }//GEN-LAST:event_jButton4ActionPerformed
 
-    private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
+    private void jTextField8KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField8KeyPressed
         // TODO add your handling code here:
-        int[] selectedrows = jTable1.getSelectedRows();
+        String filter = jTextField8.getText();
+        jlistfilterfromtestbox fili = new jlistfilterfromtestbox();
+        jList4.setModel(fili.filterModel((DefaultListModel<String>) jList4.getModel(), filter, (ArrayList<String>) defaultadat3));
+    }//GEN-LAST:event_jTextField8KeyPressed
 
-        String querybe = "";
+    private void jTextField8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField8ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField8ActionPerformed
 
-        for (int i = 0; i < selectedrows.length; i++) {
+    private void jTextField7KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField7KeyPressed
+        // TODO add your handling code here:
+        String filter = jTextField7.getText();
+        jlistfilterfromtestbox fili = new jlistfilterfromtestbox();
+        jList1.setModel(fili.filterModel((DefaultListModel<String>) jList1.getModel(), filter, (ArrayList<String>) defaultadat2));
+    }//GEN-LAST:event_jTextField7KeyPressed
 
-            querybe += "'" + jTable1.getValueAt(selectedrows[i], 0).toString() + "',";
-        }
+    private void jTextField7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField7ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField7ActionPerformed
 
-        querybe = querybe.substring(0, querybe.length() - 1);
-        String query = "DELETE from tc_prodmatrix where tc_prodmatrix.idtc_prodmatrix in (" + querybe + ")";
+    private void jTextField4KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField4KeyPressed
+
+        String filter = jTextField4.getText();
+        jlistfilterfromtestbox fili = new jlistfilterfromtestbox();
+        jList2.setModel(fili.filterModel((DefaultListModel<String>) jList2.getModel(), filter, (ArrayList<String>) defaultadat1));
+
+    }//GEN-LAST:event_jTextField4KeyPressed
+
+    private void jTextField3KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField3KeyReleased
+        // TODO add your handling code here:
+
+        String query = jTextField3.getText().trim();
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        tablesorter tr = new tablesorter();
+        tr.filter(query, model, jTable1);
+    }//GEN-LAST:event_jTextField3KeyReleased
+
+    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
         planconnect pc = new planconnect();
+        String query = "Insert ignore tc_bestations (workstation) values ('" + jTextField6.getText().trim() + "');";
         try {
             pc.feltolt(query, true);
-            infobox info = new infobox();
-            info.infoBox("Az adatokat sikeresen töröltük!", "Törlés történt!");
 
         } catch (Exception e) {
-
-            infobox inf = new infobox();
-            inf.infoBox("A törlés nem valósult meg!", "Hiba a törlés során!");
-
+            infobox info = new infobox();
+            info.infoBox("A feltöltés sikertelen!!", "Mentés infó!");
         }
 
-        //frissítjük a táblát!
-        DefaultTableModel model = new DefaultTableModel();
-        model = (DefaultTableModel) jTable1.getModel();
-        model.setRowCount(0);
-        query = "select tc_prodmatrix.idtc_prodmatrix , tc_bepns.partnumber , tc_becells.cellname , tc_bestations.workstation , tc_prodmatrix.ciklusido from tc_prodmatrix left join tc_bepns on tc_prodmatrix.id_tc_bepns = tc_bepns.idtc_bepns  left join tc_becells on tc_becells.idtc_cells = tc_prodmatrix.id_tc_becells left join tc_bestations on tc_bestations.idtc_bestations = tc_prodmatrix.id_tc_bestations";
-
-        pc = new planconnect();
-
+        //frissitjuk a station listet
+        query = "SELECT * FROM planningdb.tc_bestations;";
         ResultSet rs = null;
         try {
             rs = (ResultSet) pc.planconnect(query);
@@ -1166,503 +1521,161 @@ public class Tc_Besetup extends javax.swing.JFrame {
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Tc_Besetup.class.getName()).log(Level.SEVERE, null, ex);
         }
+        DefaultListModel lm3 = new DefaultListModel();
 
         try {
             while (rs.next()) {
 
-                model.addRow(new Object[]{rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getDouble(5)});
+                lm3.addElement(rs.getString(2));
+                defaultadat3.add(rs.getString(2));
 
             }
         } catch (SQLException ex) {
             Logger.getLogger(Tc_Besetup.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        TableCellRenderer rendererFromHeader = jTable1.getTableHeader().getDefaultRenderer();
-        JLabel headerLabel = (JLabel) rendererFromHeader;
-        headerLabel.setHorizontalAlignment(JLabel.CENTER);
-        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
-        jTable1.setDefaultRenderer(Object.class, centerRenderer);
-        jTable1.setModel(model);
+        jList4.setModel(lm3);
 
-
-    }//GEN-LAST:event_jToggleButton1ActionPerformed
-
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-
-        if (jTextField9.getText().length() > 0 && jList2.getSelectedValue() != null) {
-
-            planconnect pc = new planconnect();
-            String query = "update tc_bepns set tc_bepns.smt_pn  = '" + jTextField9.getText() + "' where tc_bepns.partnumber = '" + jList2.getSelectedValue().toString() + "'";
-            pc.feltolt(query, true);
-
-        } else {
-
-            infobox info = new infobox();
-            info.infoBox("Nem adtad meg a szükséges adatokat! (SMT és TOP L PN)!", "Hiba!");
+        try {
+            Tc_Betervezo.wscheck();
+        } catch (SQLException ex) {
+            Logger.getLogger(Tc_Besetup.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Tc_Besetup.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-    }//GEN-LAST:event_jButton5ActionPerformed
+        pc.kinyir();
+    }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void jTextField7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField7ActionPerformed
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField7ActionPerformed
+        planconnect pc = new planconnect();
+        String query = "Insert ignore tc_becells (cellname) values ('" + jTextField5.getText().trim() + "');";
+        try {
+            pc.feltolt(query, true);
 
-    private void jTextField8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField8ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField8ActionPerformed
+        } catch (Exception e) {
+            infobox info = new infobox();
+            info.infoBox("A feltöltés sikertelen!!", "Mentés infó!");
+        }
 
-    private void jTabbedPane1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabbedPane1StateChanged
-        // TODO add your handling code here:
+        //frissitjuk a cellalistat
+        query = "SELECT * FROM planningdb.tc_becells;";
+        ResultSet rs = null;
+        try {
+            rs = (ResultSet) pc.planconnect(query);
+        } catch (SQLException ex) {
+            Logger.getLogger(Tc_Besetup.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Tc_Besetup.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        DefaultListModel lm1 = new DefaultListModel();
 
-        if (jTabbedPane1.getTitleAt(jTabbedPane1.getSelectedIndex()).equals("Műszakjelentés és hozzáférés beállítások")) {
-            //lekerdezzuk a cimlistat
-            DefaultTableModel model = new DefaultTableModel();
-            DefaultTableModel model3 = new DefaultTableModel();
-            model3 = (DefaultTableModel) jTable3.getModel();
-            model = (DefaultTableModel) jTable2.getModel();
-            model.setRowCount(0);
-            model3.setRowCount(0);
-            String query = "SELECT Muszakjelentes.Cím FROM planningdb.Muszakjelentes order by Cím";
-            planconnect pc = new planconnect();
+        try {
+            while (rs.next()) {
+
+                lm1.addElement(rs.getString(2));
+                defaultadat2.add(rs.getString(2));
+
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Tc_Besetup.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        jList1.setModel(lm1);
+        pc.kinyir();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        planconnect pc = new planconnect();
+        String query = "Insert ignore tc_bepns (partnumber) values ('" + jTextField1.getText().trim() + "');";
+        try {
+            pc.feltolt(query, true);
+
+        } catch (Exception e) {
+            infobox info = new infobox();
+            info.infoBox("A feltöltés sikertelen!!", "Mentés infó!");
+        }
+
+        //frissitjuk a pnjlistet
+        ResultSet rs = null;
+
+        query = "SELECT * FROM planningdb.tc_bepns";
+        try {
+            rs = (ResultSet) pc.planconnect(query);
+        } catch (SQLException ex) {
+            Logger.getLogger(Tc_Besetup.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Tc_Besetup.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        DefaultListModel lm2 = new DefaultListModel();
+        lm2.removeAllElements();
+        try {
+            while (rs.next()) {
+
+                lm2.addElement(rs.getString(2));
+                defaultadat1.add(rs.getString(2));
+
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Tc_Besetup.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        jList2.setModel(lm2);
+
+        //frissitjuk a partnumber  adatokat a sheeteken
+        for (int n = 0; n < Tc_Betervezo.Tervezotabbed.getTabCount(); n++) {
+
+            query = "select tc_bepns.partnumber ,pn_data.Project ,pn_data.Comment from tc_bepns \n"
+            + "left join tc_prodmatrix on tc_prodmatrix.id_tc_bepns = tc_bepns.idtc_bepns\n"
+            + "left join tc_becells on tc_prodmatrix.id_tc_becells = tc_becells.idtc_cells\n"
+            + "left join pn_data on pn_data.PartNumber = tc_bepns.partnumber\n"
+            + "where tc_becells.cellname = '" + Tc_Betervezo.Tervezotabbed.getTitleAt(n) + "'";
+
+            //            query = "select tc_bepns.partnumber from tc_bepns \n"
+            //                    + "left join tc_prodmatrix on tc_prodmatrix.id_tc_bepns = tc_bepns.idtc_bepns\n"
+            //                    + "left join tc_becells on tc_prodmatrix.id_tc_becells = tc_becells.idtc_cells\n"
+            //                    + "where tc_becells.cellname = '" + Tc_Betervezo.Tervezotabbed.getTitleAt(n) + "'";
+            //kiszedjuk a regieket
+            Tc_Betervezo.Besheets.get(Tc_Betervezo.Tervezotabbed.getTitleAt(n)).partnumbers.clear();
 
             try {
                 pc.planconnect(query);
-                //betesszuk tablaba
-                while (pc.rs.next()) {
-
-                    model.addRow(new Object[]{pc.rs.getString(1)});
-
-                }
-
             } catch (SQLException ex) {
                 Logger.getLogger(Tc_Besetup.class.getName()).log(Level.SEVERE, null, ex);
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(Tc_Besetup.class.getName()).log(Level.SEVERE, null, ex);
             }
 
-            model.addRow(new Object[]{null});
-            //feltoltjuk a cellavalaszto tablat
-            query = "SELECT tc_users.username , tc_users.cellaids , tc_users.slides  FROM planningdb.tc_users";
-
             try {
-                pc.planconnect(query);
-                //betesszuk tablaba
                 while (pc.rs.next()) {
 
-                    model3.addRow(new Object[]{pc.rs.getString(1), pc.rs.getString(2), pc.rs.getString(3)});
+                    String[] pnadatok = new String[3];
+
+                    pnadatok[0] = pc.rs.getString(1);
+                    pnadatok[1] = pc.rs.getString(2);
+                    pnadatok[2] = pc.rs.getString(3);
+
+                    Tc_Betervezo.Besheets.get(Tc_Betervezo.Tervezotabbed.getTitleAt(n)).partnumbers.add(pnadatok);
 
                 }
-
             } catch (SQLException ex) {
-                Logger.getLogger(Tc_Besetup.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(Tc_Besetup.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
-            model3.addRow(new Object[]{null, null, null});
-
-        } else if (jTabbedPane1.getTitleAt(jTabbedPane1.getSelectedIndex()).equals("Tervváltozás címlista")) {
-
-//lekerdezzuk a már meglévőeket
-            String query = "select * from tc_tervvaltozas_cimlista order by email";
-            DefaultTableModel model = new DefaultTableModel();
-            model = (DefaultTableModel) jTable4.getModel();
-            model.setRowCount(0);
-
-            planconnect pc = new planconnect();
-            try {
-                pc.planconnect(query);
-
-                while (pc.rs.next()) {
-
-                    model.addRow(new Object[]{pc.rs.getString(2)});
-
-                }
-                model.addRow(new Object[]{});
-                jTable4.setModel(model);
-
-            } catch (SQLException ex) {
-                Logger.getLogger(Tc_Besetup.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (ClassNotFoundException ex) {
                 Logger.getLogger(Tc_Besetup.class.getName()).log(Level.SEVERE, null, ex);
             }
 
             pc.kinyir();
 
         }
-
-
-    }//GEN-LAST:event_jTabbedPane1StateChanged
-
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        // TODO add your handling code here:
-        //mentjük a címlistát
-
-        //String query = "insert into muszakjelentes (cim) values ";
-        String queryvalues = "";
-
-        for (int i = 0; i < jTable2.getRowCount(); i++) {
-
-            try {
-                if (!jTable2.getValueAt(i, 0).toString().equals("") && jTable2.getValueAt(i, 0) != null) {
-                    queryvalues += "('" + jTable2.getValueAt(i, 0).toString() + "'),";
-                }
-            } catch (Exception e) {
-            }
-
-        }
-
-        queryvalues = queryvalues.substring(0, queryvalues.length() - 2);
-        String query = "insert into Muszakjelentes (cím) values" + queryvalues + ")";
-        String truncate = "truncate Muszakjelentes";
-        planconnect pc = new planconnect();
-        pc.feltolt(truncate, false);
-        pc.feltolt(query, true);
-
-    }//GEN-LAST:event_jButton6ActionPerformed
-
-    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        // TODO add your handling code here:
-        //mentjük a cellavalszto adatokat
-
-        //String query = "insert into muszakjelentes (cim) values ";
-        String queryvalues = "";
-
-        for (int i = 0; i < jTable3.getRowCount(); i++) {
-            String cellak = "";
-            String szin = "";
-            try {
-                cellak = jTable3.getValueAt(i, 1).toString();
-            } catch (Exception e) {
-
-                cellak = "null";
-
-            }
-
-            try {
-                szin = jTable3.getValueAt(i, 2).toString();
-            } catch (Exception e) {
-                szin = "007,027,050,009,147,192";
-
-            }
-
-            try {
-                if (!jTable3.getValueAt(i, 0).toString().equals("") && jTable3.getValueAt(i, 0) != null) {
-                    queryvalues += "('" + jTable3.getValueAt(i, 0).toString() + "','" + cellak + "','" + szin + "'),";
-                }
-            } catch (Exception e) {
-            }
-
-        }
-
-        queryvalues = queryvalues.substring(0, queryvalues.length() - 2);
-        String query = "insert into tc_users (username , cellaids , slides) values" + queryvalues + ")";
-
-        String truncate = "truncate tc_users";
-
-        planconnect pc = new planconnect();
-        pc.feltolt(truncate, false);
-        pc.feltolt(query, true);
-
-
-    }//GEN-LAST:event_jButton7ActionPerformed
-
-    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-        // létrehozunk egy inputdialogot
-
-        String input = JOptionPane.showInputDialog("A törlés megerősítése , írd be , DELETE!");
-//ha stimmel a szoveg
+        //letezik e a pn ellenorzeshez
         try {
-            if (input.equals("DELETE!")) {
-
-//összeszedjük , hogy miket kell törölni
-                String pn = "";
-                String ws = "";
-                String cell = "";
-                String cellid = "";
-                String wsid = "";
-                String pnid = "";
-                try {
-                    pn = jList2.getSelectedValue().toString();
-                } catch (Exception e) {
-                }
-
-                try {
-                    ws = jList4.getSelectedValue().toString();
-                } catch (Exception e) {
-                }
-                try {
-                    cell = jList1.getSelectedValue().toString();
-                } catch (Exception e) {
-                }
-
-                planconnect pc = new planconnect();
-
-//töröljük azokat a tételeket a prodmatrixbol amik ezzel kapcsolatba hozhatóak , ehhez kell az id-jük
-//cella
-                if (cell.length() > 0) {
-
-                    String query = "select * from tc_becells where tc_becells.cellname = '" + cell + "'";
-                    try {
-                        pc.planconnect(query);
-                        while (pc.rs.next()) {
-
-                            cellid = pc.rs.getString(1);
-//kitoroljuk a prodmatrixbol az ehez kapcsolodo teteleket
-                            query = "delete from tc_prodmatrix where tc_prodmatrix.id_tc_becells = '" + cellid + "'";
-                            pc.feltolt(query, false);
-//kitoroljuk a tablabol is
-                            query = "delete from tc_becells where tc_becells.cellname = '" + cell + "';";
-                            pc.feltolt(query, false);
-
-                        }
-
-                    } catch (SQLException ex) {
-                        Logger.getLogger(Tc_Besetup.class.getName()).log(Level.SEVERE, null, ex);
-                    } catch (ClassNotFoundException ex) {
-                        Logger.getLogger(Tc_Besetup.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-
-                }
-
-//ws
-                if (ws.length() > 0) {
-
-                    String query = "SELECT * FROM planningdb.tc_bestations where tc_bestations.workstation = '" + ws + "';";
-                    try {
-                        pc.planconnect(query);
-                        while (pc.rs.next()) {
-
-                            wsid = pc.rs.getString(1);
-//kitoroljuk a prodmatrixbol az ehez kapcsolodo teteleket
-                            query = "delete from tc_prodmatrix where tc_prodmatrix.id_tc_bestations= '" + wsid + "'";
-                            pc.feltolt(query, false);
-//kitoroljuk a tablabol is
-                            query = "delete from tc_bestations where tc_bestations.workstation = '" + ws + "';";
-                            pc.feltolt(query, false);
-
-                        }
-
-                    } catch (SQLException ex) {
-                        Logger.getLogger(Tc_Besetup.class.getName()).log(Level.SEVERE, null, ex);
-                    } catch (ClassNotFoundException ex) {
-                        Logger.getLogger(Tc_Besetup.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-
-                }
-
-//pn       
-                if (pn.length() > 0) {
-
-                    String query = "SELECT * FROM planningdb.tc_bepns where tc_bepns.partnumber = '" + pn + "';";
-                    try {
-                        pc.planconnect(query);
-                        while (pc.rs.next()) {
-
-                            pnid = pc.rs.getString(1);
-//kitoroljuk a prodmatrixbol az ehez kapcsolodo teteleket
-                            query = "delete from tc_prodmatrix where tc_prodmatrix.id_tc_bepns = '" + pnid + "'";
-                            pc.feltolt(query, false);
-//kitoroljuk a tablabol is
-                            query = "delete from tc_bepns where tc_bepns.partnumber = '" + pn + "'";
-                            pc.feltolt(query, false);
-
-                        }
-
-                    } catch (SQLException ex) {
-                        Logger.getLogger(Tc_Besetup.class.getName()).log(Level.SEVERE, null, ex);
-                    } catch (ClassNotFoundException ex) {
-                        Logger.getLogger(Tc_Besetup.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-
-                }
-
-//frissitjuk a listakat-----------------------------
-//pn feltoltese a jlistbe
-                defaultadat1.clear();
-                String query = "SELECT * FROM planningdb.tc_bepns";
-                ResultSet rs = null;
-                try {
-                    rs = (ResultSet) pc.planconnect(query);
-                } catch (SQLException ex) {
-                    Logger.getLogger(Tc_Besetup.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (ClassNotFoundException ex) {
-                    Logger.getLogger(Tc_Besetup.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                DefaultListModel lm2 = new DefaultListModel();
-                lm2.clear();
-
-                try {
-                    while (rs.next()) {
-
-                        lm2.addElement(rs.getString(2));
-                        defaultadat1.add(rs.getString(2));
-
-                    }
-                } catch (SQLException ex) {
-                    Logger.getLogger(Tc_Besetup.class.getName()).log(Level.SEVERE, null, ex);
-                }
-
-                jList2.setModel(lm2);
-
-                //cella feltoltese
-                defaultadat2.clear();
-                query = "SELECT * FROM planningdb.tc_becells;";
-                try {
-                    rs = (ResultSet) pc.planconnect(query);
-                } catch (SQLException ex) {
-                    Logger.getLogger(Tc_Besetup.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (ClassNotFoundException ex) {
-                    Logger.getLogger(Tc_Besetup.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                DefaultListModel lm1 = new DefaultListModel();
-                lm1.clear();
-
-                try {
-                    while (rs.next()) {
-
-                        lm1.addElement(rs.getString(2));
-                        defaultadat2.add(rs.getString(2));
-
-                    }
-                } catch (SQLException ex) {
-                    Logger.getLogger(Tc_Besetup.class.getName()).log(Level.SEVERE, null, ex);
-                }
-
-                jList1.setModel(lm1);
-
-                //workstation feltoltese
-                defaultadat3.clear();
-                query = "SELECT * FROM planningdb.tc_bestations;";
-                try {
-                    rs = (ResultSet) pc.planconnect(query);
-                } catch (SQLException ex) {
-                    Logger.getLogger(Tc_Besetup.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (ClassNotFoundException ex) {
-                    Logger.getLogger(Tc_Besetup.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                DefaultListModel lm3 = new DefaultListModel();
-                lm3.clear();
-
-                try {
-                    while (rs.next()) {
-
-                        lm3.addElement(rs.getString(2));
-                        defaultadat3.add(rs.getString(2));
-
-                    }
-                } catch (SQLException ex) {
-                    Logger.getLogger(Tc_Besetup.class.getName()).log(Level.SEVERE, null, ex);
-                }
-
-                jList4.setModel(lm3);
-
-//prodmatrix tábla frissitese
-                //tabla tesszuk a meglevo setup beallitasokat
-                DefaultTableModel model = new DefaultTableModel();
-                model = (DefaultTableModel) jTable1.getModel();
-                model.setRowCount(0);
-                query = "select  tc_prodmatrix.idtc_prodmatrix , tc_bepns.partnumber , tc_becells.cellname , tc_bestations.workstation , tc_prodmatrix.ciklusido ,tc_bepns.smt_pn from tc_prodmatrix left join tc_bepns on tc_prodmatrix.id_tc_bepns = tc_bepns.idtc_bepns  left join tc_becells on tc_becells.idtc_cells = tc_prodmatrix.id_tc_becells left join tc_bestations on tc_bestations.idtc_bestations = tc_prodmatrix.id_tc_bestations";
-
-                pc = new planconnect();
-
-                rs = (ResultSet) pc.planconnect(query);
-
-                while (rs.next()) {
-
-                    model.addRow(new Object[]{rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getDouble(5), rs.getString(6)});
-
-                }
-
-                TableCellRenderer rendererFromHeader = jTable1.getTableHeader().getDefaultRenderer();
-                JLabel headerLabel = (JLabel) rendererFromHeader;
-                headerLabel.setHorizontalAlignment(JLabel.CENTER);
-                DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-                centerRenderer.setHorizontalAlignment(JLabel.CENTER);
-                jTable1.setDefaultRenderer(Object.class, centerRenderer);
-                jTable1.setModel(model);
-
-//ez itt az if vége ha törlünk egyáltalán
-                pc.kinyir();
-                infobox info = new infobox();
-                info.infoBox("Sikeres törlés!", "Törlés!");
-
-            }
-        } catch (Exception e) {
+            Tc_Betervezo.pncheck();
+        } catch (SQLException ex) {
+            Logger.getLogger(Tc_Besetup.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Tc_Besetup.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-    }//GEN-LAST:event_jButton8ActionPerformed
-
-    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
-
-        DefaultTableModel model = new DefaultTableModel();
-        model = (DefaultTableModel) jTable2.getModel();
-
-        model.addRow(new Object[]{});
-        jTable2.setModel(model);
-
-
-    }//GEN-LAST:event_jButton9ActionPerformed
-
-    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
-        // TODO add your handling code here:
-
-        DefaultTableModel model = new DefaultTableModel();
-        model = (DefaultTableModel) jTable3.getModel();
-        model.addRow(new Object[]{});
-        jTable3.setModel(model);
-
-    }//GEN-LAST:event_jButton10ActionPerformed
-
-    private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
-        //tervváltozás cimlista mentése
-        //mentjük a címlistát
-
-        //String query = "insert into muszakjelentes (cim) values ";
-        String queryvalues = "";
-        emailellenorzo ch = new emailellenorzo();
-        boolean mentunke = true;
-        for (int i = 0; i < jTable4.getRowCount(); i++) {
-
-            try {
-                if (!jTable4.getValueAt(i, 0).toString().equals("") && jTable4.getValueAt(i, 0) != null) {
-
-                    if (ch.check(jTable4.getValueAt(i, 0).toString()) == true) {
-                        queryvalues += "('" + jTable4.getValueAt(i, 0).toString() + "'),";
-
-                    } else {
-
-                        mentunke = false;
-
-                    }
-
-                }
-            } catch (Exception e) {
-            }
-
-        }
-
-        if (mentunke) {
-            queryvalues = queryvalues.substring(0, queryvalues.length() - 2);
-            String query = "insert into tc_tervvaltozas_cimlista (email) values" + queryvalues + ")";
-            String truncate = "truncate tc_tervvaltozas_cimlista";
-            planconnect pc = new planconnect();
-            pc.feltolt(truncate, false);
-            pc.feltolt(query, true);
-        }
-
-
-    }//GEN-LAST:event_jButton11ActionPerformed
-
-    private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
-        // sor hozzáadása a tervváltozás táblához
-
-        DefaultTableModel model = new DefaultTableModel();
-        model = (DefaultTableModel) jTable4.getModel();
-        model.addRow(new Object[]{});
-        jTable4.setModel(model);
-    }//GEN-LAST:event_jButton12ActionPerformed
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments

@@ -25,9 +25,11 @@ public class wipszuro {
     public DefaultTableModel smtkiszed() {
 
         DefaultTableModel model = new DefaultTableModel();
-        model = (DefaultTableModel) j.getModel();
-        model.setRowCount(0);
+
         if (ablak.jCheckBox4.isSelected()) {
+
+            model = (DefaultTableModel) j.getModel();
+            model.setRowCount(0);
 
             for (int i = 0; i < ablak.wiplist.size(); i++) {
 
@@ -41,6 +43,7 @@ public class wipszuro {
 
         } else {
 
+            model = (DefaultTableModel) j.getModel();
             model.setRowCount(0);
 
             for (int i = 0; i < ablak.wiplist.size(); i++) {

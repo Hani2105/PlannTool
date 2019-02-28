@@ -8,6 +8,7 @@ package PlannTool;
 import java.awt.MouseInfo;
 import java.awt.Point;
 import javax.swing.DefaultListModel;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -22,29 +23,26 @@ public class Tc_PartsOfCells extends javax.swing.JFrame {
         initComponents();
         this.b = b;
 
-        DefaultListModel model = new DefaultListModel();
-        model.removeAllElements();
+        DefaultListModel model1 = new DefaultListModel();
+        model1.removeAllElements();
 
-        //ha pn oszlop van kijelölve
-        if (b.jTable2.getSelectedColumn() == 0) {
-            for (int i = 0; i < b.partnumbers.size(); i++) {
+        DefaultTableModel model = new DefaultTableModel();
+        model = (DefaultTableModel) this.jTable1.getModel();
+        model.setRowCount(0);
 
-                model.addElement(b.partnumbers.get(i));
+        for (int i = 0; i < b.partnumbers.size(); i++) {
 
-            }
+            model.addRow(new Object[]{b.partnumbers.get(i)[0], b.partnumbers.get(i)[1], b.partnumbers.get(i)[2]});
 
-            jList1.setModel(model);
         }
 
-        // ha ws oszlop van kijelölve
-        if (b.jTable2.getSelectedColumn() == 2) {
-            for (int i = 0; i < b.workstations.size(); i++) {
+        this.jTable1.setModel(model);
 
-                model.addElement(b.workstations.get(i));
+        for (int i = 0; i < b.workstations.size(); i++) {
 
-            }
+            model1.addElement(b.workstations.get(i));
 
-            jList1.setModel(model);
+            jList1.setModel(model1);
         }
 
         //egérnél nyíljon
@@ -67,8 +65,14 @@ public class Tc_PartsOfCells extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jList1 = new javax.swing.JList<>();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Loader");
+        setAlwaysOnTop(true);
+        setAutoRequestFocus(false);
 
         jList1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jList1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -78,15 +82,53 @@ public class Tc_PartsOfCells extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jList1);
 
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "PartN", "Desc..", "Comment"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, true
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jTable1.setCellSelectionEnabled(true);
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(jTable1);
+
+        jLabel1.setText("Workstations");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 538, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(50, 50, 50)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 532, Short.MAX_VALUE)
+            .addComponent(jScrollPane2)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 470, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -97,28 +139,39 @@ public class Tc_PartsOfCells extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jList1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jList1MouseClicked
-        //beírjuk a kiválasztott pn.t az aktív cellába ha az a 0. col
+        //beírjuk a kiválasztott ws-t a cellába
 
-        if (b.jTable2.getSelectedColumn() == 0) {
+        
 
-            b.jTable2.setValueAt(jList1.getSelectedValue(), b.jTable2.getSelectedRow(), b.jTable2.getSelectedColumn());
-        }
+            b.jTable2.setValueAt(jList1.getSelectedValue(), b.jTable2.getSelectedRow(), 2);
+        
 
-        if (b.jTable2.getSelectedColumn() == 2) {
 
-            b.jTable2.setValueAt(jList1.getSelectedValue(), b.jTable2.getSelectedRow(), b.jTable2.getSelectedColumn());
-        }
 
-        this.dispose();
-
+        //this.dispose();
     }//GEN-LAST:event_jList1MouseClicked
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+
+
+
+        //beírjuk a kiválasztott pn-t a cellába
+        
+
+            b.jTable2.setValueAt(jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString(), b.jTable2.getSelectedRow(), 0);
+       
+
+        //this.dispose();
+
+
+    }//GEN-LAST:event_jTable1MouseClicked
 
     /**
      * @param args the command line arguments
@@ -164,8 +217,11 @@ public class Tc_PartsOfCells extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JList<String> jList1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 }

@@ -64,7 +64,10 @@ public class keszletszal extends Thread {
             Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        //betesszuk a wiplistbe a rowdata adatait
+        //betesszuk a wiplistbe a rowdata adatait , de előtte kiürítjük
+        
+        ablak.wiplist.clear();
+        
         for (int i = 0; i < rowdata.length; i++) {
             String[] wiplista = new String[3];
             
@@ -75,8 +78,6 @@ public class keszletszal extends Thread {
             ablak.wiplist.add(wiplista);
         }
 
-//        ablak.model = (DefaultTableModel) xxx.totable(ablak.model, rowdata);
-//        ablak.jTable1.setModel(ablak.model);
 
         //lefuttatjuk a szűrőt
         wipszuro w = new wipszuro(ablak.jTable1);

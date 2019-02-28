@@ -31,6 +31,7 @@ public class Tc_Bejelentkezes extends javax.swing.JFrame {
      *
      */
     private ablak az;
+    Tc_Besheet b;
 
     //nyissunk e uj ablakot
     public static boolean nyit = true;
@@ -38,6 +39,8 @@ public class Tc_Bejelentkezes extends javax.swing.JFrame {
     public Tc_Bejelentkezes(ablak a) {
         initComponents();
         this.az = a;
+        this.b = b;
+
     }
 
     /**
@@ -225,6 +228,7 @@ public class Tc_Bejelentkezes extends javax.swing.JFrame {
                     }
                     this.dispose();
                     Tc_Betervezo.gombenged();
+                   
 
                 } else {
 //sikertelen bejelentkezes
@@ -233,6 +237,7 @@ public class Tc_Bejelentkezes extends javax.swing.JFrame {
                     info.infoBox("Nem jó jelszó vagy felh. név!", "Hiba!");
 
                     this.setVisible(true);
+                   
 
                 }
 
@@ -242,6 +247,7 @@ public class Tc_Bejelentkezes extends javax.swing.JFrame {
                 infobox info = new infobox();
                 info.infoBox("Nem jó jelszó vagy felh. név!", "Hiba!");
                 this.setVisible(true);
+               
 
             }
         } catch (SQLException ex) {
@@ -329,6 +335,7 @@ public class Tc_Bejelentkezes extends javax.swing.JFrame {
                         }
                         this.dispose();
                         Tc_Betervezo.gombenged();
+                       
 
                     } else {
 //sikertelen bejelentkezes
@@ -337,6 +344,7 @@ public class Tc_Bejelentkezes extends javax.swing.JFrame {
                         info.infoBox("Nem jó jelszó vagy felh. név!", "Hiba!");
 
                         this.setVisible(true);
+                       
 
                     }
 
@@ -347,6 +355,7 @@ public class Tc_Bejelentkezes extends javax.swing.JFrame {
                     info.infoBox("Nem jó jelszó vagy felh. név!", "Hiba!");
 
                     this.setVisible(true);
+                   
 
                 }
             } catch (SQLException ex) {
@@ -365,28 +374,31 @@ public class Tc_Bejelentkezes extends javax.swing.JFrame {
 
         //a nem vagyok planner gomb
         ablak.planner = false;
-        Tc_Betervezo b = null;
+        Tc_Betervezo bt = null;
 
         if (nyit == true) {
             try {
 
-                b = new Tc_Betervezo(az);
+                bt = new Tc_Betervezo(az);
             } catch (SQLException ex) {
                 Logger.getLogger(Tc_Bejelentkezes.class.getName()).log(Level.SEVERE, null, ex);
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(Tc_Bejelentkezes.class.getName()).log(Level.SEVERE, null, ex);
             }
-            b.setVisible(true);
+            bt.setVisible(true);
 
         }
         this.dispose();
         Tc_Betervezo.gombenged();
+       
+
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         // TODO add your handling code here:
 
         this.setVisible(false);
+       
     }//GEN-LAST:event_formWindowClosing
 
     /**

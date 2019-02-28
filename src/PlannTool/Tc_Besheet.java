@@ -75,7 +75,7 @@ import javax.print.attribute.standard.MediaSize;
  */
 public class Tc_Besheet extends javax.swing.JPanel {
 
-    public List<String> partnumbers = new ArrayList<String>();
+    public List<String[]> partnumbers = new ArrayList<String[]>();
     public List<String> workstations = new ArrayList<String>();
     public String adat;
 
@@ -122,6 +122,7 @@ public class Tc_Besheet extends javax.swing.JPanel {
         SFDCall = new javax.swing.JMenuItem();
         Termekleker = new javax.swing.JMenuItem();
         kereses = new javax.swing.JMenuItem();
+        pnkarbantarto = new javax.swing.JMenuItem();
         jScrollPane1 = new javax.swing.JScrollPane();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -218,6 +219,14 @@ public class Tc_Besheet extends javax.swing.JPanel {
             }
         });
         JPopupMenu1.add(kereses);
+
+        pnkarbantarto.setText("PN karbantartó");
+        pnkarbantarto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pnkarbantartoActionPerformed(evt);
+            }
+        });
+        JPopupMenu1.add(pnkarbantarto);
 
         setComponentPopupMenu(JPopupMenu1);
         setPreferredSize(new java.awt.Dimension(1800, 700));
@@ -607,15 +616,23 @@ public class Tc_Besheet extends javax.swing.JPanel {
     public void parts() throws SQLException, ClassNotFoundException {
 
         planconnect pc = new planconnect();
-        String query = "SELECT tc_bepns.partnumber  from tc_bepns where tc_bepns.idtc_bepns in \n"
-                + "(select distinct tc_prodmatrix.id_tc_bepns from tc_prodmatrix where tc_prodmatrix.id_tc_becells  = \n"
-                + "(SELECT tc_becells.idtc_cells FROM planningdb.tc_becells where tc_becells.cellname = '" + Tc_Cellavalaszto.neve + "'))";
+        String query = "select tc_bepns.partnumber ,pn_data.Project ,pn_data.Comment from tc_bepns \n"
+                + "left join tc_prodmatrix on tc_prodmatrix.id_tc_bepns = tc_bepns.idtc_bepns\n"
+                + "left join tc_becells on tc_prodmatrix.id_tc_becells = tc_becells.idtc_cells\n"
+                + "left join pn_data on pn_data.PartNumber = tc_bepns.partnumber\n"
+                + "where tc_becells.cellname = '" + Tc_Cellavalaszto.neve + "'";
 
         pc.planconnect(query);
 
         while (pc.rs.next()) {
 
-            partnumbers.add(pc.rs.getString(1));
+            String[] pnadatok = new String[3];
+
+            pnadatok[0] = pc.rs.getString(1);
+            pnadatok[1] = pc.rs.getString(2);
+            pnadatok[2] = pc.rs.getString(3);
+
+            partnumbers.add(pnadatok);
 
         }
 
@@ -1475,6 +1492,22 @@ public class Tc_Besheet extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jCheckBox1ActionPerformed
 
+    private void pnkarbantartoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pnkarbantartoActionPerformed
+
+        //példányosítunk egy pnkarbit és átadjuk neki a cella értékét amiből indítjuk
+        try {
+            Tc_Pnkarbantarto p = new Tc_Pnkarbantarto(jTable2.getValueAt(jTable2.getSelectedRow(), jTable2.getSelectedColumn()).toString());
+            p.setVisible(true);
+        } catch (Exception e) {
+
+            Tc_Pnkarbantarto p = new Tc_Pnkarbantarto("");
+            p.setVisible(true);
+
+        }
+
+
+    }//GEN-LAST:event_pnkarbantartoActionPerformed
+
     private void filter(String query) {
 
         DefaultTableModel model = new DefaultTableModel();
@@ -1519,5 +1552,6 @@ public class Tc_Besheet extends javax.swing.JPanel {
     public javax.swing.JTable jTable2;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JMenuItem kereses;
+    public static javax.swing.JMenuItem pnkarbantarto;
     // End of variables declaration//GEN-END:variables
 }

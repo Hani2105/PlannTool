@@ -77,6 +77,8 @@ public class Tc_Besheet extends javax.swing.JPanel {
 
     public List<String[]> partnumbers = new ArrayList<String[]>();
     public List<String> workstations = new ArrayList<String>();
+    public List<String[][]> jobadat = new ArrayList<String[][]>();
+    
     public String adat;
 
     public Tc_Besheet(Tc_Betervezo b) throws SQLException, ClassNotFoundException {
@@ -123,6 +125,7 @@ public class Tc_Besheet extends javax.swing.JPanel {
         Termekleker = new javax.swing.JMenuItem();
         kereses = new javax.swing.JMenuItem();
         pnkarbantarto = new javax.swing.JMenuItem();
+        DataLoader = new javax.swing.JMenuItem();
         jScrollPane1 = new javax.swing.JScrollPane();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -227,6 +230,15 @@ public class Tc_Besheet extends javax.swing.JPanel {
             }
         });
         JPopupMenu1.add(pnkarbantarto);
+
+        DataLoader.setText("DataLoader");
+        DataLoader.setToolTipText("A kijelölt sorok adatait grouppolja DataLoader formátumra!");
+        DataLoader.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DataLoaderActionPerformed(evt);
+            }
+        });
+        JPopupMenu1.add(DataLoader);
 
         setComponentPopupMenu(JPopupMenu1);
         setPreferredSize(new java.awt.Dimension(1800, 700));
@@ -1508,6 +1520,13 @@ public class Tc_Besheet extends javax.swing.JPanel {
 
     }//GEN-LAST:event_pnkarbantartoActionPerformed
 
+    private void DataLoaderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DataLoaderActionPerformed
+        
+        Tc_DataLoader d = new Tc_DataLoader(this);
+        d.setVisible(true);
+        
+    }//GEN-LAST:event_DataLoaderActionPerformed
+
     private void filter(String query) {
 
         DefaultTableModel model = new DefaultTableModel();
@@ -1521,6 +1540,7 @@ public class Tc_Besheet extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem CellaAdatok;
+    private javax.swing.JMenuItem DataLoader;
     private javax.swing.JMenuItem DeleteArea;
     public javax.swing.JMenuItem DeleteRow;
     private javax.swing.JMenuItem InsertRow;

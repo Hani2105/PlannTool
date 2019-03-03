@@ -43,7 +43,7 @@ public class Tc_TervTooltipRenderer extends DefaultTableCellRenderer {
 
         String tooltiptext = "";
 
-        //tooltip beállítása
+        //tooltip beállítása + ikon hozzáadása ha van megjegyzés a pn hez
         try {
 
             Tc_Stringbolint si = new Tc_Stringbolint(table.getValueAt(row, column).toString());
@@ -52,7 +52,7 @@ public class Tc_TervTooltipRenderer extends DefaultTableCellRenderer {
 
                 for (int i = 0; i < b.partnumbers.size(); i++) {
 
-                    if (b.partnumbers.get(i)[0].equals(table.getValueAt(row, 0).toString()) && b.partnumbers.get(i)[2] != null && !b.partnumbers.get(i)[2].equals("") && ablak.planner ) {
+                    if (b.partnumbers.get(i)[0].equals(table.getValueAt(row, 0).toString()) && b.partnumbers.get(i)[2] != null && !b.partnumbers.get(i)[2].equals("") && ablak.planner) {
 
                         tooltiptext = "Komment: " + b.partnumbers.get(i)[2];
                         c.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/comment.jpg")));
@@ -85,7 +85,6 @@ public class Tc_TervTooltipRenderer extends DefaultTableCellRenderer {
 
                 c.setToolTipText(null);
                 c.setIcon(null);
-                      
 
             }
         } catch (Exception e) {
@@ -250,6 +249,36 @@ public class Tc_TervTooltipRenderer extends DefaultTableCellRenderer {
         if (isSelected) {
 
             c.setBackground(Color.LIGHT_GRAY);
+        }
+
+//released ikon beállítása a jobszámok mellé
+        try {
+            if (column == 1 && !table.getValueAt(row, 1).toString().equals("") && !table.getValueAt(row, 3).toString().equals("Infó") && ablak.planner) {
+
+//végigtekerjük a sheet jobadatait és ha megtaláljuk a JOB ot akkor pipa , ha nem akko warn
+                boolean ok = false;
+
+                for (int i = 0; i < b.jobadat.get(0).length; i++) {
+
+                    if (table.getValueAt(row, 1).toString().equals(b.jobadat.get(0)[i][0])) {
+
+                        ok = true;
+                        break;
+
+                    }
+
+                }
+
+                if (ok) {
+                    c.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/ok1.png")));
+                } else {
+
+                    c.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/warn1.png")));
+
+                }
+
+            }
+        } catch (Exception e) {
         }
 
         c.setBorder(BorderFactory.createEtchedBorder(1));

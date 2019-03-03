@@ -106,6 +106,15 @@
             <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
           </AuxValues>
         </MenuItem>
+        <MenuItem class="javax.swing.JMenuItem" name="DataLoader">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="DataLoader"/>
+            <Property name="toolTipText" type="java.lang.String" value="A kijel&#xf6;lt sorok adatait grouppolja DataLoader form&#xe1;tumra!"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="DataLoaderActionPerformed"/>
+          </Events>
+        </MenuItem>
       </SubComponents>
     </Container>
   </NonVisualComponents>

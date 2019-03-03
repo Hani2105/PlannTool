@@ -194,8 +194,13 @@ public class Tc_Leker {
         }
 
         pc.kinyir();
+
         Besheets.get(neve).jTable2.setModel(model);
         Tc_Calculator calc = new Tc_Calculator(Besheets.get(neve), false, 0);
+        //lekérdezzük a job adatokat
+
+        Tc_Jobinfotoplan j = new Tc_Jobinfotoplan(Besheets.get(neve));
+        j.start();
 
         if (ablak.planner == true && miindit.equals("mentes")) {
 

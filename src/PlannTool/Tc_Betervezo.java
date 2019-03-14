@@ -588,10 +588,10 @@ public class Tc_Betervezo extends javax.swing.JFrame {
                 Besheets.get(Tervezotabbed.getTitleAt(i)).jButton11.setEnabled(true);
                 Besheets.get(Tervezotabbed.getTitleAt(i)).jButton10.setEnabled(false);
                 Besheets.get(Tervezotabbed.getTitleAt(i)).DeleteRow.setEnabled(false);
+                Besheets.get(Tervezotabbed.getTitleAt(i)).Mernoki.setEnabled(false);
                 //Besheets.get(Tervezotabbed.getTitleAt(i)).pnkarbantarto.setEnabled(false);
                 //repainteljük a táblát a kommentek miatt
                 Besheets.get(Tervezotabbed.getTitleAt(i)).jTable2.repaint();
-                
 
             }
 
@@ -605,6 +605,7 @@ public class Tc_Betervezo extends javax.swing.JFrame {
                 Besheets.get(Tervezotabbed.getTitleAt(i)).jButton11.setEnabled(false);
                 Besheets.get(Tervezotabbed.getTitleAt(i)).jButton10.setEnabled(true);
                 Besheets.get(Tervezotabbed.getTitleAt(i)).DeleteRow.setEnabled(true);
+                Besheets.get(Tervezotabbed.getTitleAt(i)).Mernoki.setEnabled(true);
                 //Besheets.get(Tervezotabbed.getTitleAt(i)).pnkarbantarto.setEnabled(true);
                 //repainteljük a táblát a kommentek miatt
                 Besheets.get(Tervezotabbed.getTitleAt(i)).jTable2.repaint();
@@ -707,7 +708,7 @@ public class Tc_Betervezo extends javax.swing.JFrame {
 //most indítjuk a nagy ciklust amiben végigpörgetjük a sheeteket
         for (int b = 0; b < Tc_Betervezo.Tervezotabbed.getTabCount(); b++) {
 
-            Tc_Leker leker = new Tc_Leker(Tc_Betervezo.Tervezotabbed.getTitleAt(b), "groupleker");
+            Tc_Leker_1 leker= new Tc_Leker_1(Tc_Betervezo.Tervezotabbed.getTitleAt(b), "groupleker");
 
         }
 
@@ -728,6 +729,17 @@ public class Tc_Betervezo extends javax.swing.JFrame {
             t2.addRow(new Object[]{null, null, null, "Tény"});
 
         }
+
+        Besheets.get(neve).jTable2.setModel(t2);
+
+        //betesszuk a tablabol az adatokat a tablatombbe
+       
+        Tc_AdatInterface a = new Tc_AdatInterface(Besheets.get(neve));
+        a.adatbatoltpluszsor();
+
+        //es az adatokat a tablaba
+        a.tablabatolt();
+
 
     }//GEN-LAST:event_jButton4ActionPerformed
 
@@ -1102,21 +1114,20 @@ public class Tc_Betervezo extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton9ActionPerformed
 
     private void jButton10MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton10MouseEntered
-        
+
         jButton10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/wrench1.png")));
-        
+
     }//GEN-LAST:event_jButton10MouseEntered
 
     private void jButton10MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton10MouseExited
-         jButton10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/wrench2.png")));
+        jButton10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/wrench2.png")));
     }//GEN-LAST:event_jButton10MouseExited
 
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
-      
-        
-       Tc_Pnkarbantarto p = new Tc_Pnkarbantarto("");
-       p.setVisible(true);
-        
+
+        Tc_Pnkarbantarto p = new Tc_Pnkarbantarto("");
+        p.setVisible(true);
+
     }//GEN-LAST:event_jButton10ActionPerformed
 
     /**

@@ -82,6 +82,8 @@ public class Tc_Leker {
         String szak = "";
         String napneve = "";
         TableColumn column = null;
+        
+        
 
         //napok szamaszor futtatjuk
         for (int i = 0; i < napok; i++) {
@@ -138,6 +140,9 @@ public class Tc_Leker {
         planconnect pc = new planconnect();
         try {
             pc.planconnect(Query);
+            
+       
+            
             model.setRowCount(0);
             int r = 0;
 

@@ -20,7 +20,7 @@ public class Tc_Calculator {
     Tc_Besheet b;
 
     public Tc_Calculator(Tc_Besheet b, boolean selection, int cella) {
-
+        
         this.b = b;
 
         String sheetname = "";
@@ -39,13 +39,16 @@ public class Tc_Calculator {
         //kiszedjuk az info sorokat
         for (int i = 0; i < model.getRowCount(); i++) {
 
-            if (model.getValueAt(i, 3).toString().equals("Infó")) {
+            try {
+                if (model.getValueAt(i, 3).toString().equals("Infó")) {
 
-                model.removeRow(i);
-                //this.b.jTable2.changeSelection(i+1,this.b.jTable2.getSelectedColumn(),false,false);
+                    model.removeRow(i);
+                    //this.b.jTable2.changeSelection(i+1,this.b.jTable2.getSelectedColumn(),false,false);
 
-                i = i - 1;
+                    i = i - 1;
 
+                }
+            } catch (Exception e) {
             }
 
         }
@@ -143,13 +146,6 @@ public class Tc_Calculator {
                             } catch (Exception e) {
 
                             }
-                            //ha nem volt a pn hez ws hibát írunk
-//                            if (hiba == true && model.getValueAt(i, 3).toString().equals("Terv")) {
-//
-//                                infobox info = new infobox();
-//                                info.infoBox("Nincs mgeadva ciklusidő a \n " + pn + " -hez a " + ws + " - állomáson! \n Kérlek vidd fel az adatbázisba!", "Hiba!");
-//
-//                            }
 
                             //terv vagy teny es a dbo nagyobb nulla
                             if (model.getValueAt(i, 3).toString().equals("Terv") && dbo > 0) {
@@ -245,6 +241,15 @@ public class Tc_Calculator {
                         //elinditjuk a ket kisebb ciklust , hogy osszeszamoljuk a darabokat
                         for (int r = 0; r < model.getRowCount(); r++) {
 
+                            try {
+                                if (this.b.jCheckBox2.isSelected()) {
+
+                                    job = model.getValueAt(r, 1).toString();
+
+                                }
+                            } catch (Exception e) {
+                            }
+
                             for (int o = 4; o < model.getColumnCount(); o++) {
 
                                 //kinullazzuk a darabot
@@ -286,7 +291,7 @@ public class Tc_Calculator {
             String tt = "";
             int qty = 0;
 
-            for (int i = 0; i <= b.jTable2.getSelectedRow(); i++) {
+            for (int i = 0; i <= this.b.jTable2.getSelectedRow(); i++) {
 
                 //felvesszuk az ertekeket (ha nem info a sor) 
                 try {
@@ -298,9 +303,19 @@ public class Tc_Calculator {
                         qty = 0;
 
                         //elinditjuk a ket kisebb ciklust , hogy osszeszamoljuk a darabokat
-                        for (int r = 0; r <= b.jTable2.getSelectedRow() + 1; r++) {
+                        for (int r = 0; r <= this.b.jTable2.getSelectedRow() + 1; r++) {
                             //csak a kijelölt oszlopig megyunk
-                            for (int o = 4; o <= b.jTable2.getSelectedColumn(); o++) {
+
+                            try {
+                                if (this.b.jCheckBox2.isSelected()) {
+
+                                    job = model.getValueAt(r, 1).toString();
+
+                                }
+                            } catch (Exception e) {
+                            }
+
+                            for (int o = 4; o <= this.b.jTable2.getSelectedColumn(); o++) {
 
                                 //kinullazzuk a darabot
                                 //ha egyezik az aktuális sorban a job ws pn és tt és nem üres és a szamolo nagyobb nulla és nem a summa oszlop 
@@ -331,17 +346,18 @@ public class Tc_Calculator {
             }
             // a megadott oszlopon túli értékek legyenek nullásak
             try {
-                for (int n = (b.jTable2.getSelectedRow() + 1); n < b.jTable2.getRowCount(); n++) {
+                for (int n = (this.b.jTable2.getSelectedRow() + 1); n < this.b.jTable2.getRowCount(); n++) {
 
                     model.setValueAt(0, n, model.getColumnCount() - 1);
 
                 }
             } catch (Exception e) {
             }
-
+           
         }
 
         this.b.jTable2.setModel(model);
+      
 
         //szelesseg allitas ha engedelyezett
         TableColumn column = null;
@@ -351,7 +367,7 @@ public class Tc_Calculator {
             for (int i = 0; i < model.getColumnCount(); i++) {
 
                 if (i != 3) {
-                    column = b.jTable2.getColumnModel().getColumn(i);
+                    column = this.b.jTable2.getColumnModel().getColumn(i);
 
                     column.setPreferredWidth(130);
                 }
@@ -365,11 +381,11 @@ public class Tc_Calculator {
             for (int i = 0; i < model.getColumnCount(); i++) {
 
                 if (i < 3) {
-                    column = b.jTable2.getColumnModel().getColumn(i);
+                    column = this.b.jTable2.getColumnModel().getColumn(i);
                     column.setPreferredWidth(Tc_Betervezo.slider2);
                 } else if (i > 3) {
 
-                    column = b.jTable2.getColumnModel().getColumn(i);
+                    column = this.b.jTable2.getColumnModel().getColumn(i);
                     column.setPreferredWidth(Tc_Betervezo.slider1);
 
                 }
@@ -382,7 +398,7 @@ public class Tc_Calculator {
             try {
                 for (int i = 0; i < model.getColumnCount(); i++) {
 
-                    column = b.jTable2.getColumnModel().getColumn(i);
+                    column = this.b.jTable2.getColumnModel().getColumn(i);
                     column.setPreferredWidth(Tc_Betervezo.szelessegek.get(i));
 
                 }

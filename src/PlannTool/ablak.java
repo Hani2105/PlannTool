@@ -335,6 +335,7 @@ public class ablak extends javax.swing.JFrame {
             jButton22 = new javax.swing.JButton();
             jButton25 = new javax.swing.JButton();
             jProgressBar1 = new javax.swing.JProgressBar();
+            jButton26 = new javax.swing.JButton();
 
             jMenuItem1.setText("Bontás SN-re!");
             jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
@@ -556,7 +557,7 @@ public class ablak extends javax.swing.JFrame {
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(jButton3))
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -3242,6 +3243,13 @@ public class ablak extends javax.swing.JFrame {
                 }
             });
 
+            jButton26.setText("CTB");
+            jButton26.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    jButton26ActionPerformed(evt);
+                }
+            });
+
             javax.swing.GroupLayout jPanel13Layout = new javax.swing.GroupLayout(jPanel13);
             jPanel13.setLayout(jPanel13Layout);
             jPanel13Layout.setHorizontalGroup(
@@ -3252,9 +3260,11 @@ public class ablak extends javax.swing.JFrame {
                         .addGroup(jPanel13Layout.createSequentialGroup()
                             .addComponent(jButton25, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(18, 18, 18)
-                            .addComponent(jButton22))
+                            .addComponent(jButton22)
+                            .addGap(18, 18, 18)
+                            .addComponent(jButton26))
                         .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGap(0, 831, Short.MAX_VALUE))
+                    .addGap(0, 759, Short.MAX_VALUE))
             );
             jPanel13Layout.setVerticalGroup(
                 jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -3262,7 +3272,8 @@ public class ablak extends javax.swing.JFrame {
                     .addContainerGap()
                     .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jButton22)
-                        .addComponent(jButton25))
+                        .addComponent(jButton25)
+                        .addComponent(jButton26))
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                     .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addContainerGap(456, Short.MAX_VALUE))
@@ -4598,10 +4609,18 @@ public class ablak extends javax.swing.JFrame {
 
     private void jCheckBox4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox4ActionPerformed
         // wipszuro
-       wipszuro w = new wipszuro(ablak.jTable1);
-       w.smtkiszed();
+        wipszuro w = new wipszuro(ablak.jTable1);
+        w.smtkiszed();
 
     }//GEN-LAST:event_jCheckBox4ActionPerformed
+
+    private void jButton26ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton26ActionPerformed
+        // TODO add your handling code here:
+
+        CTB c = new CTB();
+        c.setVisible(true);
+
+    }//GEN-LAST:event_jButton26ActionPerformed
 
     public void gombenged() {
 
@@ -4750,6 +4769,7 @@ public class ablak extends javax.swing.JFrame {
     private javax.swing.JButton jButton23;
     private javax.swing.JButton jButton24;
     private javax.swing.JButton jButton25;
+    private javax.swing.JButton jButton26;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;

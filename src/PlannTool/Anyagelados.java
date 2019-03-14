@@ -199,7 +199,17 @@ public class Anyagelados extends javax.swing.JFrame {
 
         jTable3.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null}
             },
             new String [] {
                 "ID", "Other Organization", "QTY", "item prefix nélkül", "PartNumber", "Item material status 2", "LT", "Buyer name", "Comment"
@@ -213,6 +223,8 @@ public class Anyagelados extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        jTable3.setRowHeight(10);
+        jTable3.setRowMargin(0);
         jTable3.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 jTable3KeyPressed(evt);

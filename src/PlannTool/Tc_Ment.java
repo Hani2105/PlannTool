@@ -133,6 +133,19 @@ public class Tc_Ment {
 
         String feltoltadat = "";
         String cellid = "";
+
+        //megszamoljuk az info sorokat , hogy ki tudjuk vonni a selected row ból
+        int infsor = 0;
+
+        for (int v = 0; v < Besheets.get(neve).jTable2.getRowCount(); v++) {
+
+            if (Besheets.get(neve).jTable2.getValueAt(v, 3).toString().equals("Infó")) {
+
+                infsor++;
+
+            }
+
+        }
         // elinditjuk a nagy ciklust , az oszlopok szama ()
         for (int i = 0; i < oszlopszam; i++) {
 
@@ -289,7 +302,49 @@ public class Tc_Ment {
 
 //meghatarozzuk a datumot
                             datum = t2.getColumnName(i).substring(0, 10) + ora;
-                            feltoltadat += "('" + cellid + "','" + wsid + "','" + pnid + "','" + job + "','" + datum + "','" + terv + "','" + r + "'," + 3 + ",'" + System.getProperty("user.name") + "','" + datum + cellid + wsid + pnid + "3" + job + "','" + teny + "'),";
+
+//kiszedjuk a mernoki infot az adattablabol ha terv sorban vagyunk
+                            int mernoki = 0;
+                            Double mernokiido = 0.0;
+
+                            if (t2.getValueAt(r, 3).toString().equals("Terv")) {
+
+                                try {
+                                    mernoki = Besheets.get(neve).tablaadat[r - infsor][i].eng;
+                                } catch (Exception e) {
+                                }
+
+                            }
+
+// ha teny sor                 
+                            if (t2.getValueAt(r, 3).toString().equals("Tény")) {
+
+                                try {
+                                    mernoki = Besheets.get(neve).tablaadat[r - 1 - infsor][i].eng;
+                                } catch (Exception e) {
+                                }
+
+                            }
+
+                            if (t2.getValueAt(r, 3).toString().equals("Terv")) {
+
+                                try {
+                                    mernokiido = Besheets.get(neve).tablaadat[r - infsor][i].engtime;
+                                } catch (Exception e) {
+                                }
+
+                            }
+
+                            if (t2.getValueAt(r, 3).toString().equals("Tény")) {
+
+                                try {
+                                    mernokiido = Besheets.get(neve).tablaadat[r - 1 - infsor][i].engtime;
+                                } catch (Exception e) {
+                                }
+
+                            }
+
+                            feltoltadat += "('" + cellid + "','" + wsid + "','" + pnid + "','" + job + "','" + datum + "','" + terv + "','" + r + "'," + 3 + ",'" + System.getProperty("user.name") + "','" + datum + cellid + wsid + pnid + "3" + job + "','" + teny + "','" + mernoki + "','" + mernokiido + "'),";
 
                         }
 
@@ -300,7 +355,8 @@ public class Tc_Ment {
             }
         }
 
-        if (feltoltadat.length() > 0) {
+        if (feltoltadat.length()
+                > 0) {
             feltoltadat = feltoltadat.substring(0, feltoltadat.length() - 1);
 
             // ha planner akkor updatelunk , ezzel torlunk ki a tervbol teteleket , a tervezett darabszamot nullara allitjuk , hogy ha visszaupdatelodik mert a termeles megis csinalja ne legyen bebne a terv darabszam
@@ -311,17 +367,15 @@ public class Tc_Ment {
                 pc.feltolt(updatequery, false);
 
                 //feltoltjuk az adatokat 
-                String feltoltquery = "insert ignore tc_terv (tc_terv.idtc_becells , tc_terv.idtc_bestations , tc_terv.idtc_bepns , tc_terv.job , tc_terv.date , tc_terv.qty , tc_terv.wtf , tc_terv.tt , tc_terv.user , tc_terv.pktomig , qty_teny) values" + feltoltadat + "on duplicate key update qty = values  (qty) , wtf = values (wtf) , active = (2) , qty_teny = values (qty_teny) , timestamp = now() , user = '" + System.getProperty("user.name") + "'";
+                String feltoltquery = "insert ignore tc_terv (tc_terv.idtc_becells , tc_terv.idtc_bestations , tc_terv.idtc_bepns , tc_terv.job , tc_terv.date , tc_terv.qty , tc_terv.wtf , tc_terv.tt , tc_terv.user , tc_terv.pktomig , qty_teny , mernoki , mernokiido) values" + feltoltadat + "on duplicate key update qty = values  (qty) , wtf = values (wtf) , active = (2) , qty_teny = values (qty_teny) , timestamp = now() , user = '" + System.getProperty("user.name") + "' , mernoki = values (mernoki), mernokiido = values (mernokiido)";
                 pc.feltolt(feltoltquery, true);
-
-               
 
             }
 
             //ámde ha nem planner akkor nem updatelunk , hogy ne torlodjenek a tervek
             if (ablak.planner == false) {
                 //feltoltjuk az adatokat , es egyezoseg eseten csak a teny qty update no meg a wtf
-                String feltoltquery = "insert ignore tc_terv (tc_terv.idtc_becells , tc_terv.idtc_bestations , tc_terv.idtc_bepns , tc_terv.job , tc_terv.date , tc_terv.qty , tc_terv.wtf , tc_terv.tt , tc_terv.user , tc_terv.pktomig , qty_teny) values" + feltoltadat + "on duplicate key update  qty_teny = values (qty_teny) , wtf = values (wtf) , active = (2) ";
+                String feltoltquery = "insert ignore tc_terv (tc_terv.idtc_becells , tc_terv.idtc_bestations , tc_terv.idtc_bepns , tc_terv.job , tc_terv.date , tc_terv.qty , tc_terv.wtf , tc_terv.tt , tc_terv.user , tc_terv.pktomig , qty_teny , mernoki , mernokiido) values" + feltoltadat + "on duplicate key update  qty_teny = values (qty_teny) , wtf = values (wtf) , active = (2) ";
                 pc.feltolt(feltoltquery, true);
             }
 

@@ -78,7 +78,10 @@ public class Tc_Besheet extends javax.swing.JPanel {
     public List<String[]> partnumbers = new ArrayList<String[]>();
     public List<String> workstations = new ArrayList<String>();
     public List<String[][]> jobadat = new ArrayList<String[][]>();
-    
+
+//a tervtabla adatai tarolasara szolgalo tomb
+    Tc_CellClass[][] tablaadat;
+
     public String adat;
 
     public Tc_Besheet(Tc_Betervezo b) throws SQLException, ClassNotFoundException {
@@ -94,13 +97,14 @@ public class Tc_Besheet extends javax.swing.JPanel {
 
             jButton10.setEnabled(false);
             DeleteRow.setEnabled(false);
+            Mernoki.setEnabled(false);
 
         } //letiltjuk a teny menteset ha planner van bent
         else {
 
             jButton11.setEnabled(false);
             DeleteRow.setEnabled(true);
-
+            Mernoki.setEnabled(true);
         }
     }
 
@@ -126,6 +130,7 @@ public class Tc_Besheet extends javax.swing.JPanel {
         kereses = new javax.swing.JMenuItem();
         pnkarbantarto = new javax.swing.JMenuItem();
         DataLoader = new javax.swing.JMenuItem();
+        Mernoki = new javax.swing.JMenuItem();
         jScrollPane1 = new javax.swing.JScrollPane();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -147,6 +152,18 @@ public class Tc_Besheet extends javax.swing.JPanel {
         jLabel4 = new javax.swing.JLabel();
         jButton12 = new javax.swing.JButton();
         jCheckBox1 = new javax.swing.JCheckBox();
+        jCheckBox2 = new javax.swing.JCheckBox();
+
+        JPopupMenu1.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                JPopupMenu1FocusGained(evt);
+            }
+        });
+        JPopupMenu1.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                JPopupMenu1ComponentShown(evt);
+            }
+        });
 
         CellaAdatok.setText("Elérhető PN / WS");
         CellaAdatok.addActionListener(new java.awt.event.ActionListener() {
@@ -239,6 +256,26 @@ public class Tc_Besheet extends javax.swing.JPanel {
             }
         });
         JPopupMenu1.add(DataLoader);
+
+        Mernoki.setText("Mérnöki gyártás!");
+        Mernoki.setToolTipText("Mérnöki gyártás!");
+        Mernoki.setEnabled(false);
+        Mernoki.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                MernokiComponentShown(evt);
+            }
+        });
+        Mernoki.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MernokiActionPerformed(evt);
+            }
+        });
+        Mernoki.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                MernokiPropertyChange(evt);
+            }
+        });
+        JPopupMenu1.add(Mernoki);
 
         setComponentPopupMenu(JPopupMenu1);
         setPreferredSize(new java.awt.Dimension(1800, 700));
@@ -518,16 +555,23 @@ public class Tc_Besheet extends javax.swing.JPanel {
             }
         });
 
+        jCheckBox2.setText("Group PN");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(1137, Short.MAX_VALUE)
+                .addContainerGap(1138, Short.MAX_VALUE)
                 .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(4, 4, 4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(4, 4, 4))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jCheckBox2)
+                        .addGap(18, 18, 18)))
                 .addComponent(jButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jCheckBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -561,25 +605,25 @@ public class Tc_Besheet extends javax.swing.JPanel {
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                     .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(1294, Short.MAX_VALUE)))
+                    .addContainerGap(1301, Short.MAX_VALUE)))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(9, 9, 9)
-                                .addComponent(jCheckBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(9, 9, 9)
+                        .addComponent(jCheckBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(16, 16, 16)
                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(25, 25, 25)))
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 688, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jCheckBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 689, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
@@ -608,7 +652,7 @@ public class Tc_Besheet extends javax.swing.JPanel {
                             .addGap(17, 17, 17)
                             .addComponent(jLabel3))
                         .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addContainerGap(705, Short.MAX_VALUE)))
+                    .addContainerGap(706, Short.MAX_VALUE)))
         );
 
         jScrollPane1.setViewportView(jPanel1);
@@ -678,21 +722,40 @@ public class Tc_Besheet extends javax.swing.JPanel {
         DefaultTableModel model = new DefaultTableModel();
         model = (DefaultTableModel) this.jTable2.getModel();
 
+        //meg kell szamolni az info sorokat
+        int infsor = 0;
+
+        for (int i = 0; i < model.getRowCount(); i++) {
+
+            if (model.getValueAt(i, 3).toString().equals("Infó")) {
+
+                infsor++;
+
+            }
+
+        }
+
         int r = this.jTable2.convertRowIndexToModel(this.jTable2.getSelectedRow());
         try {
             if (this.jTable2.getValueAt(r, 3).toString().equals("Terv")) {
-                model.removeRow(r);
-                model.removeRow(r);
+
+                Tc_AdatInterface a = new Tc_AdatInterface(this);
+                a.adatbatoltsortorol(r - infsor, r + 1 - infsor);
+
+//                model.removeRow(r);
+//                model.removeRow(r);
             } else {
 
-                model.removeRow(r - 1);
-                model.removeRow(r - 1);
-
+                Tc_AdatInterface a = new Tc_AdatInterface(this);
+                a.adatbatoltsortorol(r - 1 - infsor, r - 2 - infsor);
+//                model.removeRow(r - 1);
+//                model.removeRow(r - 1);
             }
         } catch (Exception e) {
         }
 
-        this.jTable2.setModel(model);
+        Tc_AdatInterface a = new Tc_AdatInterface(this);
+        a.tablabatolt();
         Tc_Calculator calc = new Tc_Calculator(this, false, 0);
 
     }//GEN-LAST:event_DeleteRowActionPerformed
@@ -727,29 +790,47 @@ public class Tc_Besheet extends javax.swing.JPanel {
 
         int r = this.jTable2.convertRowIndexToModel(this.jTable2.getSelectedRow());
 
+        //meg kell szamolni az info sorokat
+        int infsor = 0;
+
+        for (int i = 0; i < model.getRowCount(); i++) {
+
+            if (model.getValueAt(i, 3).toString().equals("Infó")) {
+
+                infsor++;
+
+            }
+
+        }
+
         try {
             if (this.jTable2.getValueAt(r, 3).toString().equals("Terv")) {
 
                 try {
-                    model.insertRow(r + 2, new Object[]{null, null, null, "Tény"});
-                    model.insertRow(r + 2, new Object[]{null, null, null, "Terv"});
+
+                    Tc_AdatInterface a = new Tc_AdatInterface(this);
+                    a.adatbatoltbeszursor(r + 2 - infsor, r + 3 - infsor);
+
                 } catch (Exception e) {
                 }
-                return;
+
             }
             if (this.jTable2.getValueAt(r, 3).toString().equals("Tény")) {
 
                 try {
-                    model.insertRow(r + 1, new Object[]{null, null, null, "Tény"});
-                    model.insertRow(r + 1, new Object[]{null, null, null, "Terv"});
+                    Tc_AdatInterface a = new Tc_AdatInterface(this);
+                    a.adatbatoltbeszursor(r + 1 - infsor, r + 2 - infsor);
+
                 } catch (Exception e) {
                 }
-                return;
+
             }
         } catch (Exception e) {
         }
 
-        this.jTable2.setModel(model);
+        Tc_AdatInterface a = new Tc_AdatInterface(this);
+        a.tablabatolt();
+
         Tc_Calculator calc = new Tc_Calculator(this, false, 0);
     }//GEN-LAST:event_InsertRowActionPerformed
 
@@ -839,86 +920,12 @@ public class Tc_Besheet extends javax.swing.JPanel {
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         //nezet atalakítas
 
-        //betesszuk egy uj modelbe a tabla jelenlegi adatait
-        DefaultTableModel model = new DefaultTableModel();
-        model = (DefaultTableModel) jTable2.getModel();
-
-        //betesszuk tommbe az adatokat
-        String[][] adatok = new String[model.getRowCount()][model.getColumnCount()];
-
-        for (int i = 0; i < model.getRowCount(); i++) {
-
-            for (int n = 0; n < model.getColumnCount(); n++) {
-
-                try {
-                    adatok[i][n] = model.getValueAt(i, n).toString();
-                } catch (Exception e) {
-                }
-            }
-
-        }
-
-        //kinullazzuk a modelt
-        model.setRowCount(0);
-        //elkezdjuk belepakolni az adatokat  , sor , oszlop
-        //az elmentett adat sorait porgetjuk , ha van mar akkor nem irjuk be megegyszer
-        for (int r = 0; r < adatok.length; r++) {
-
-            //ezzel figyeljuk hogy van e mar ilyen pn és job
-            boolean vanmar = false;
-            //vegigporgetjuk az uj tablat 
-            for (int sor = 0; sor < model.getRowCount(); sor++) {
-
-                // ha egyezik a pn és a JOB , és a ws es a terv/teny azaz van mar ilyen
-                try {
-                    if (adatok[r][0].toString().equals(model.getValueAt(sor, 0)) && adatok[r][1].toString().equals(model.getValueAt(sor, 1)) && adatok[r][2].toString().equals(model.getValueAt(sor, 2)) && adatok[r][3].toString().equals(model.getValueAt(sor, 3))) {
-
-                        vanmar = true;
-                        //akkor beirjuk a darabot a megfelelo oszlopbol az aktualis cellaba
-                        for (int o = 4; o < adatok.length; o++) {
-
-                            try {
-                                if (!adatok[r][o].toString().equals("") && adatok[r][o] != null) {
-
-                                    model.setValueAt(adatok[r][o].toString(), sor, o);
-
-                                }
-                            } catch (Exception e) {
-                            }
-
-                        }
-
-                    }
-                } catch (Exception e) {
-                }
-
-            }
-
-            //de ha nincs , azaz false a vanemar , kell egy uj sor
-            if (vanmar == false) {
-
-                //beallitjuk a pn , job , ws -t és a terv/ tenyt
-                model.addRow(new Object[]{adatok[r][0], adatok[r][1], adatok[r][2], adatok[r][3]});
-
-                //megkeressuk az oszlopban a db ot
-                for (int o = 4; o < adatok[1].length; o++) {
-
-                    try {
-                        if (!adatok[r][o].toString().equals("") && adatok[r][o] != null) {
-
-                            model.setValueAt(adatok[r][o].toString(), model.getRowCount() - 1, o);
-
-                        }
-                    } catch (Exception e) {
-                    }
-
-                }
-
-            }
-
-        }
-
-        jTable2.setModel(model);
+   
+         Tc_AdatInterface a = new Tc_AdatInterface(this);
+         a.adatbatoltnezetvaltas();
+         a.tablabatolt();
+         Tc_Calculator c = new Tc_Calculator(this, false, 0);
+         
 
     }//GEN-LAST:event_jButton6ActionPerformed
 
@@ -989,7 +996,7 @@ public class Tc_Besheet extends javax.swing.JPanel {
 
         }
 
-        Tc_Leker leker = new Tc_Leker(Tc_Betervezo.Tervezotabbed.getTitleAt(Tc_Betervezo.Tervezotabbed.getSelectedIndex()), "leker");
+        Tc_Leker_1 leker = new Tc_Leker_1(Tc_Betervezo.Tervezotabbed.getTitleAt(Tc_Betervezo.Tervezotabbed.getSelectedIndex()), "leker");
 
     }//GEN-LAST:event_jButton8ActionPerformed
 
@@ -1071,7 +1078,7 @@ public class Tc_Besheet extends javax.swing.JPanel {
 
                             }
 
-                            Tc_Leker leker = new Tc_Leker(Tc_Betervezo.Tervezotabbed.getTitleAt(Tc_Betervezo.Tervezotabbed.getSelectedIndex()), "mentes");
+                            Tc_Leker_1 leker = new Tc_Leker_1(Tc_Betervezo.Tervezotabbed.getTitleAt(Tc_Betervezo.Tervezotabbed.getSelectedIndex()), "mentes");
 
 //updateljuk a nevet a tervben , hogy ne legyen legkozelebb ilyen gond
                             query = "update tc_terv set tc_terv.user = '" + System.getProperty("user.name") + "' where tc_terv.idtc_becells = (select tc_becells.idtc_cells from tc_becells \n"
@@ -1202,7 +1209,7 @@ public class Tc_Besheet extends javax.swing.JPanel {
 
         }
 
-        Tc_Leker leker = new Tc_Leker(Tc_Betervezo.Tervezotabbed.getTitleAt(Tc_Betervezo.Tervezotabbed.getSelectedIndex()), "mentes");
+        Tc_Leker_1 leker = new Tc_Leker_1(Tc_Betervezo.Tervezotabbed.getTitleAt(Tc_Betervezo.Tervezotabbed.getSelectedIndex()), "mentes");
 
     }//GEN-LAST:event_jButton10ActionPerformed
 
@@ -1312,7 +1319,7 @@ public class Tc_Besheet extends javax.swing.JPanel {
 
         }
 
-        Tc_Leker leker = new Tc_Leker(Tc_Betervezo.Tervezotabbed.getTitleAt(Tc_Betervezo.Tervezotabbed.getSelectedIndex()), "termelesment");
+        Tc_Leker_1 leker = new Tc_Leker_1(Tc_Betervezo.Tervezotabbed.getTitleAt(Tc_Betervezo.Tervezotabbed.getSelectedIndex()), "termelesment");
 
     }//GEN-LAST:event_jButton11ActionPerformed
 
@@ -1521,11 +1528,72 @@ public class Tc_Besheet extends javax.swing.JPanel {
     }//GEN-LAST:event_pnkarbantartoActionPerformed
 
     private void DataLoaderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DataLoaderActionPerformed
-        
+
         Tc_DataLoader d = new Tc_DataLoader(this);
         d.setVisible(true);
-        
+
     }//GEN-LAST:event_DataLoaderActionPerformed
+
+    private void MernokiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MernokiActionPerformed
+        // TODO add your handling code here:
+
+        Tc_AdatInterface a = new Tc_AdatInterface(this);
+        a.mernoki();
+
+        //ha nincs bekapcsolva a mernoki akkor jelenitjuk csak meg az ido beallitast
+        int infsor = 0;
+
+        for (int i = 0; i < jTable2.getRowCount(); i++) {
+
+            if (jTable2.getValueAt(i, 3).toString().equals("Infó")) {
+
+                infsor++;
+
+            }
+
+        }
+
+        try {
+            if (tablaadat[jTable2.getSelectedRow() - infsor][jTable2.getSelectedColumn()].eng == 1) {
+                Tc_Mernokiido i = new Tc_Mernokiido(this);
+                i.setVisible(true);
+            }
+        } catch (Exception e) {
+        }
+
+
+    }//GEN-LAST:event_MernokiActionPerformed
+
+    private void JPopupMenu1ComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_JPopupMenu1ComponentShown
+
+
+    }//GEN-LAST:event_JPopupMenu1ComponentShown
+
+    private void JPopupMenu1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_JPopupMenu1FocusGained
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_JPopupMenu1FocusGained
+
+    private void MernokiComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_MernokiComponentShown
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_MernokiComponentShown
+
+    private void MernokiPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_MernokiPropertyChange
+        // TODO add your handling code here:
+        try {
+            if (!jTable2.getValueAt(jTable2.getSelectedRow(), 3).toString().equals("Terv")) {
+
+                Mernoki.setEnabled(false);
+
+            } else if (jTable2.getValueAt(jTable2.getSelectedRow(), 3).toString().equals("Terv") && ablak.planner) {
+
+                Mernoki.setEnabled(true);
+
+            }
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_MernokiPropertyChange
 
     private void filter(String query) {
 
@@ -1545,6 +1613,7 @@ public class Tc_Besheet extends javax.swing.JPanel {
     public javax.swing.JMenuItem DeleteRow;
     private javax.swing.JMenuItem InsertRow;
     public javax.swing.JPopupMenu JPopupMenu1;
+    public javax.swing.JMenuItem Mernoki;
     private javax.swing.JMenu MuveletekSorokkal;
     private javax.swing.JMenuItem SFDCall;
     private javax.swing.JMenuItem SFDClekeres;
@@ -1562,6 +1631,7 @@ public class Tc_Besheet extends javax.swing.JPanel {
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
     public javax.swing.JCheckBox jCheckBox1;
+    public static javax.swing.JCheckBox jCheckBox2;
     public javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

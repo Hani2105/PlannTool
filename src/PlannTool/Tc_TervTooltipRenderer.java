@@ -43,6 +43,19 @@ public class Tc_TervTooltipRenderer extends DefaultTableCellRenderer {
 
         String tooltiptext = "";
 
+        //megszamoljuk az info sorokat , hogy ki tudjuk vonni a selected row ból
+        int infsor = 0;
+
+        for (int i = 0; i < b.jTable2.getRowCount(); i++) {
+
+            if (b.jTable2.getValueAt(i, 3).toString().equals("Infó")) {
+
+                infsor++;
+
+            }
+
+        }
+
         //tooltip beállítása + ikon hozzáadása ha van megjegyzés a pn hez
         try {
 
@@ -68,7 +81,9 @@ public class Tc_TervTooltipRenderer extends DefaultTableCellRenderer {
                 try {
                     tooltiptext = ("<html>" + "Terv/Tény: " + table.getValueAt(row, 3).toString() + "<br>" + "PN: " + table.getValueAt(row, 0).toString() + "<br>" + "JOB: " + table.getValueAt(row, 1).toString() + "<br>" + "WS: " + table.getValueAt(row, 2).toString());
                     komment = si.komment;
-                    tooltiptext += "<br> Komment: " + komment + "</html>";
+                    tooltiptext += "<br> Komment: " + komment + "</br>";
+                    //megkeressük a mérnöki időt
+                    tooltiptext += "<br> Mérnöki idő: " + String.valueOf(b.tablaadat[row - infsor][column].engtime) + "</html>";
                     c.setToolTipText(tooltiptext);
                     c.setIcon(null);
 
@@ -77,6 +92,8 @@ public class Tc_TervTooltipRenderer extends DefaultTableCellRenderer {
                     tooltiptext = ("<html>" + "Terv/Tény: " + table.getValueAt(row, 3).toString() + "<br>" + "PN: " + table.getValueAt(row, 0).toString() + "<br>" + "JOB: <br>" + "WS: " + table.getValueAt(row, 2).toString());
                     komment = si.komment;
                     tooltiptext += "<br> Komment: " + komment + "</html>";
+                    //megkeressük a mérnöki időt
+                    //tooltiptext += "<br> Mérnöki idő: " + String.valueOf(b.tablaadat[row - infsor][column].engtime) + "</html>";
                     c.setToolTipText(tooltiptext);
                     c.setIcon(null);
 
@@ -260,7 +277,7 @@ public class Tc_TervTooltipRenderer extends DefaultTableCellRenderer {
 
                 for (int i = 0; i < b.jobadat.get(0).length; i++) {
 
-                    if (table.getValueAt(row, 1).toString().equals(b.jobadat.get(0)[i][0])) {
+                    if (table.getValueAt(row, 1).toString().trim().equals(b.jobadat.get(0)[i][0])) {
 
                         ok = true;
                         break;
@@ -278,6 +295,27 @@ public class Tc_TervTooltipRenderer extends DefaultTableCellRenderer {
                 }
 
             }
+        } catch (Exception e) {
+        }
+
+// beallitjuk a mernoki sapkat ha mernoki ha mernoki
+        try {
+
+            //ha a terv részen vagyunk
+            if (column > 3 && !table.getValueAt(row, 3).toString().equals("Infó") && table.getValueAt(row, 3).toString().equals("Terv")) {
+
+                if (b.tablaadat[row - infsor][column].eng == 1) {
+
+                    c.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/eng1.png")));
+
+                } else {
+
+                    c.setIcon(null);
+
+                }
+
+            }
+
         } catch (Exception e) {
         }
 

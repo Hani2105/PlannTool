@@ -3,6 +3,10 @@
 <Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
   <NonVisualComponents>
     <Container class="javax.swing.JPopupMenu" name="JPopupMenu1">
+      <Events>
+        <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="JPopupMenu1FocusGained"/>
+        <EventHandler event="componentShown" listener="java.awt.event.ComponentListener" parameters="java.awt.event.ComponentEvent" handler="JPopupMenu1ComponentShown"/>
+      </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
       </AuxValues>
@@ -115,6 +119,21 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="DataLoaderActionPerformed"/>
           </Events>
         </MenuItem>
+        <MenuItem class="javax.swing.JMenuItem" name="Mernoki">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="M&#xe9;rn&#xf6;ki gy&#xe1;rt&#xe1;s!"/>
+            <Property name="toolTipText" type="java.lang.String" value="M&#xe9;rn&#xf6;ki gy&#xe1;rt&#xe1;s!"/>
+            <Property name="enabled" type="boolean" value="false"/>
+          </Properties>
+          <Events>
+            <EventHandler event="componentShown" listener="java.awt.event.ComponentListener" parameters="java.awt.event.ComponentEvent" handler="MernokiComponentShown"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="MernokiActionPerformed"/>
+            <EventHandler event="propertyChange" listener="java.beans.PropertyChangeListener" parameters="java.beans.PropertyChangeEvent" handler="MernokiPropertyChange"/>
+          </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+          </AuxValues>
+        </MenuItem>
       </SubComponents>
     </Container>
   </NonVisualComponents>
@@ -161,11 +180,19 @@
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace pref="1137" max="32767" attributes="0"/>
+                      <EmptySpace pref="1138" max="32767" attributes="0"/>
                       <Component id="jButton9" min="-2" pref="59" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jLabel4" min="-2" pref="85" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <Component id="jLabel4" min="-2" pref="85" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="1" attributes="0">
+                              <Component id="jCheckBox2" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
                       <Component id="jButton12" min="-2" pref="59" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jCheckBox1" min="-2" pref="106" max="-2" attributes="0"/>
@@ -200,7 +227,7 @@
                           <Component id="jLabel3" min="-2" pref="84" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jButton5" min="-2" pref="59" max="-2" attributes="0"/>
-                          <EmptySpace pref="1294" max="32767" attributes="0"/>
+                          <EmptySpace pref="1301" max="32767" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -210,23 +237,21 @@
                   <Group type="102" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jButton9" alignment="0" min="-2" pref="53" max="-2" attributes="0"/>
-                                  <Component id="jButton12" alignment="0" min="-2" pref="53" max="-2" attributes="0"/>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
-                                      <Component id="jCheckBox1" min="-2" pref="33" max="-2" attributes="0"/>
-                                  </Group>
-                              </Group>
-                              <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jButton9" alignment="0" min="-2" pref="53" max="-2" attributes="0"/>
+                          <Component id="jButton12" alignment="0" min="-2" pref="53" max="-2" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
+                              <Component id="jCheckBox1" min="-2" pref="33" max="-2" attributes="0"/>
                           </Group>
-                          <Group type="102" alignment="1" attributes="0">
+                          <Group type="102" attributes="0">
+                              <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
                               <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="jCheckBox2" min="-2" pref="14" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <Component id="jScrollPane2" pref="688" max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jScrollPane2" pref="689" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
                   <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
@@ -263,7 +288,7 @@
                               </Group>
                               <Component id="jButton5" min="-2" pref="53" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace pref="705" max="32767" attributes="0"/>
+                          <EmptySpace pref="706" max="32767" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -556,6 +581,14 @@
               </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+              </AuxValues>
+            </Component>
+            <Component class="javax.swing.JCheckBox" name="jCheckBox2">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Group PN"/>
+              </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
               </AuxValues>
             </Component>
           </SubComponents>

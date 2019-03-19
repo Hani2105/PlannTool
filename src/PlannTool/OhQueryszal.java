@@ -259,7 +259,10 @@ public class OhQueryszal extends Thread {
         }
 
         try {
-            pc.feltolt(query, false);
+
+            if (adatok.length() > 0) {
+                pc.feltolt(query, false);
+            }
 
 //            infobox inf = new infobox();
 //            inf.infoBox("A feltöltés sikeres!", "Feltöltés!");

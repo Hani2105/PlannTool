@@ -15,6 +15,22 @@
         <Property name="useNullLayout" type="boolean" value="true"/>
       </Layout>
       <SubComponents>
+        <MenuItem class="javax.swing.JMenuItem" name="Szinezo">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Sz&#xed;nez&#x151;!"/>
+            <Property name="toolTipText" type="java.lang.String" value="Cell&#xe1;k sz&#xed;nez&#xe9;se!"/>
+            <Property name="enabled" type="boolean" value="false"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="SzinezoActionPerformed"/>
+            <EventHandler event="propertyChange" listener="java.beans.PropertyChangeListener" parameters="java.beans.PropertyChangeEvent" handler="SzinezoPropertyChange"/>
+          </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+          </AuxValues>
+        </MenuItem>
+        <Component class="javax.swing.JPopupMenu$Separator" name="jSeparator1">
+        </Component>
         <MenuItem class="javax.swing.JMenuItem" name="CellaAdatok">
           <Properties>
             <Property name="text" type="java.lang.String" value="El&#xe9;rhet&#x151; PN / WS"/>

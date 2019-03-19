@@ -126,7 +126,7 @@ public class Tc_Leker_1 {
         //col szelesseg allitas
 
         //lekerdezzuk az adatbazis adatokat
-        String Query = "select tc_terv.date , tc_bepns.partnumber , tc_terv.job , tc_bestations.workstation , tc_terv.qty , tc_terv.tt ,tc_terv.qty_teny , tc_terv.mernoki , tc_terv.mernokiido \n"
+        String Query = "select tc_terv.date , tc_bepns.partnumber , tc_terv.job , tc_bestations.workstation , tc_terv.qty , tc_terv.tt ,tc_terv.qty_teny , tc_terv.mernoki , tc_terv.mernokiido , tc_terv.cellaszin  \n"
                 + "from tc_terv \n"
                 + "left join tc_bepns on tc_bepns.idtc_bepns = tc_terv.idtc_bepns \n"
                 + "left join tc_bestations on tc_bestations.idtc_bestations = tc_terv.idtc_bestations\n"
@@ -153,7 +153,7 @@ public class Tc_Leker_1 {
 
                 for (int n = 0; n < model.getColumnCount(); n++) {
 
-                    Besheets.get(neve).tablaadat[i][n] = new Tc_CellClass("", 0, 0.0);
+                    Besheets.get(neve).tablaadat[i][n] = new Tc_CellClass("", 0, 0.0 , 0);
 
                 }
 
@@ -227,6 +227,10 @@ public class Tc_Leker_1 {
                                 Besheets.get(neve).tablaadat[cellsor][i].engtime = pc.rs.getDouble(9);
                             } catch (Exception e) {
                             }
+                             try {
+                                Besheets.get(neve).tablaadat[cellsor][i].szin = pc.rs.getInt(10);
+                            } catch (Exception e) {
+                            }
 // betesszuk az adattablaba a teny sort
                             cellsor++;
 
@@ -252,6 +256,10 @@ public class Tc_Leker_1 {
                             }
                             try {
                                 Besheets.get(neve).tablaadat[cellsor][i].eng = pc.rs.getInt(8);
+                            } catch (Exception e) {
+                            }
+                            try {
+                                Besheets.get(neve).tablaadat[cellsor][i].szin = pc.rs.getInt(10);
                             } catch (Exception e) {
                             }
 

@@ -268,19 +268,27 @@ public class Tc_TervTooltipRenderer extends DefaultTableCellRenderer {
             c.setBackground(Color.LIGHT_GRAY);
         }
 
-//released ikon beállítása a jobszámok mellé
+//released ikon beállítása a jobszámok mellé és tooltip
         try {
             if (column == 1 && !table.getValueAt(row, 1).toString().equals("") && !table.getValueAt(row, 3).toString().equals("Infó") && ablak.planner) {
 
 //végigtekerjük a sheet jobadatait és ha megtaláljuk a JOB ot akkor pipa , ha nem akko warn
                 boolean ok = false;
+                String jobtooltip = "<html>";
 
                 for (int i = 0; i < b.jobadat.get(0).length; i++) {
 
                     if (table.getValueAt(row, 1).toString().trim().equals(b.jobadat.get(0)[i][0])) {
 
                         ok = true;
-                        break;
+                        String location = "Skeleton/TP15";
+
+                        if (!b.jobadat.get(0)[i][1].toString().equals("") && b.jobadat.get(0)[i][1] != null) {
+
+                            location = b.jobadat.get(0)[i][1].toString();
+                        }
+
+                        jobtooltip += "Location: " + location + " QTY: " + b.jobadat.get(0)[i][2].toString() + "<br>";
 
                     }
 
@@ -288,6 +296,7 @@ public class Tc_TervTooltipRenderer extends DefaultTableCellRenderer {
 
                 if (ok) {
                     c.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/ok1.png")));
+                    c.setToolTipText(jobtooltip);
                 } else {
 
                     c.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/warn1.png")));
@@ -311,6 +320,25 @@ public class Tc_TervTooltipRenderer extends DefaultTableCellRenderer {
                 } else {
 
                     c.setIcon(null);
+
+                }
+
+            }
+
+        } catch (Exception e) {
+        }
+
+//beállítjuk a cella színét ha nincs kiválasztva és a terv részen vagyunk
+        try {
+
+            //ha a terv részen vagyunk
+            if (column > 3 && !table.getValueAt(row, 3).toString().equals("Infó") && !isSelected) {
+
+                if (b.tablaadat[row - infsor][column].szin != 0) {
+//itt össze kell rakni a szint
+                    c.setBackground(new Color(b.tablaadat[row - infsor][column].szin));
+
+                } else {
 
                 }
 

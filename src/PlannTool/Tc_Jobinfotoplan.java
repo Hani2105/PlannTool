@@ -67,11 +67,13 @@ public class Tc_Jobinfotoplan extends Thread {
 
         b.jobadat.clear();
 
-        String jobadat[][] = new String[rowdata.length][2];
+        String jobadat[][] = new String[rowdata.length][3];
         for (int i = 0; i < rowdata.length; i++) {
 
             jobadat[i][0] = rowdata[i][0].toString();
-            jobadat[i][1] = rowdata[i][4].toString();
+            jobadat[i][1] = rowdata[i][2].toString();
+            jobadat[i][2] = rowdata[i][3].toString();
+           // jobadat[i][4] = rowdata[i][4].toString();
 
         }
 

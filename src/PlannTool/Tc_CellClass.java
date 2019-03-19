@@ -14,12 +14,14 @@ public class Tc_CellClass {
     int eng = 0;
     String value = "";
     Double engtime = 0.0;
+    int szin = 0;
 
-    public Tc_CellClass(String value, int eng, double engtime) {
+    public Tc_CellClass(String value, int eng, double engtime , int szin) {
 
         this.value = value;
         this.eng = eng;
         this.engtime = engtime;
+        this.szin = szin;
 
     }
 

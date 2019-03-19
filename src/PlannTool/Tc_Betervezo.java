@@ -589,7 +589,9 @@ public class Tc_Betervezo extends javax.swing.JFrame {
                 Besheets.get(Tervezotabbed.getTitleAt(i)).jButton10.setEnabled(false);
                 Besheets.get(Tervezotabbed.getTitleAt(i)).DeleteRow.setEnabled(false);
                 Besheets.get(Tervezotabbed.getTitleAt(i)).Mernoki.setEnabled(false);
+                Besheets.get(Tervezotabbed.getTitleAt(i)).Szinezo.setEnabled(false);
                 //Besheets.get(Tervezotabbed.getTitleAt(i)).pnkarbantarto.setEnabled(false);
+                
                 //repainteljük a táblát a kommentek miatt
                 Besheets.get(Tervezotabbed.getTitleAt(i)).jTable2.repaint();
 
@@ -606,6 +608,7 @@ public class Tc_Betervezo extends javax.swing.JFrame {
                 Besheets.get(Tervezotabbed.getTitleAt(i)).jButton10.setEnabled(true);
                 Besheets.get(Tervezotabbed.getTitleAt(i)).DeleteRow.setEnabled(true);
                 Besheets.get(Tervezotabbed.getTitleAt(i)).Mernoki.setEnabled(true);
+                Besheets.get(Tervezotabbed.getTitleAt(i)).Szinezo.setEnabled(true);
                 //Besheets.get(Tervezotabbed.getTitleAt(i)).pnkarbantarto.setEnabled(true);
                 //repainteljük a táblát a kommentek miatt
                 Besheets.get(Tervezotabbed.getTitleAt(i)).jTable2.repaint();

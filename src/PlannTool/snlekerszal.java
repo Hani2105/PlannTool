@@ -43,6 +43,7 @@ public class snlekerszal extends Thread {
         }
 
         SN = normalizer.removeAccents(SN);
+        SN = SN.replace("#", "%23");
 
         xmlfeldolg xxx = new xmlfeldolg();
         Object rowdata[][] = null;

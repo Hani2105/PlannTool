@@ -3439,7 +3439,7 @@ public class ablak extends javax.swing.JFrame {
             String username = System.getProperty("user.name");
             ablak.stat.beir(System.getProperty("user.name"), ablak.jTabbedPane1.getTitleAt(ablak.jTabbedPane1.getSelectedIndex()), "", "gabor.hanacsek@sanmina.com");
 
-            if (!username.equals("gabor_hanacsek") || !username.equals("roland_bognar")) {
+            if (!username.equals("gabor_hanacsek") && !username.equals("roland_bognar")) {
 
                 jTabbedPane1.setSelectedIndex(0);
                 infobox info = new infobox();

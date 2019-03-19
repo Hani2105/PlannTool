@@ -98,6 +98,7 @@ public class Tc_Besheet extends javax.swing.JPanel {
             jButton10.setEnabled(false);
             DeleteRow.setEnabled(false);
             Mernoki.setEnabled(false);
+            Szinezo.setEnabled(false);
 
         } //letiltjuk a teny menteset ha planner van bent
         else {
@@ -105,6 +106,7 @@ public class Tc_Besheet extends javax.swing.JPanel {
             jButton11.setEnabled(false);
             DeleteRow.setEnabled(true);
             Mernoki.setEnabled(true);
+            Szinezo.setEnabled(true);
         }
     }
 
@@ -118,6 +120,8 @@ public class Tc_Besheet extends javax.swing.JPanel {
     private void initComponents() {
 
         JPopupMenu1 = new javax.swing.JPopupMenu();
+        Szinezo = new javax.swing.JMenuItem();
+        jSeparator1 = new javax.swing.JPopupMenu.Separator();
         CellaAdatok = new javax.swing.JMenuItem();
         DeleteArea = new javax.swing.JMenuItem();
         MuveletekSorokkal = new javax.swing.JMenu();
@@ -164,6 +168,22 @@ public class Tc_Besheet extends javax.swing.JPanel {
                 JPopupMenu1ComponentShown(evt);
             }
         });
+
+        Szinezo.setText("Színező!");
+        Szinezo.setToolTipText("Cellák színezése!");
+        Szinezo.setEnabled(false);
+        Szinezo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SzinezoActionPerformed(evt);
+            }
+        });
+        Szinezo.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                SzinezoPropertyChange(evt);
+            }
+        });
+        JPopupMenu1.add(Szinezo);
+        JPopupMenu1.add(jSeparator1);
 
         CellaAdatok.setText("Elérhető PN / WS");
         CellaAdatok.addActionListener(new java.awt.event.ActionListener() {
@@ -742,14 +762,12 @@ public class Tc_Besheet extends javax.swing.JPanel {
                 Tc_AdatInterface a = new Tc_AdatInterface(this);
                 a.adatbatoltsortorol(r - infsor, r + 1 - infsor);
 
-//                model.removeRow(r);
-//                model.removeRow(r);
+
             } else {
 
                 Tc_AdatInterface a = new Tc_AdatInterface(this);
-                a.adatbatoltsortorol(r - 1 - infsor, r - 2 - infsor);
-//                model.removeRow(r - 1);
-//                model.removeRow(r - 1);
+                a.adatbatoltsortorol(r - infsor, r - 1 - infsor);
+
             }
         } catch (Exception e) {
         }
@@ -1595,6 +1613,28 @@ public class Tc_Besheet extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_MernokiPropertyChange
 
+    private void SzinezoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SzinezoActionPerformed
+        
+        Tc_Szinezo sz = new Tc_Szinezo( this);
+        sz.setVisible(true);
+        
+    }//GEN-LAST:event_SzinezoActionPerformed
+
+    private void SzinezoPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_SzinezoPropertyChange
+        try {
+            if (!jTable2.getValueAt(jTable2.getSelectedRow(), 3).toString().equals("Terv")) {
+
+                Szinezo.setEnabled(false);
+
+            } else if (jTable2.getValueAt(jTable2.getSelectedRow(), 3).toString().equals("Terv") && ablak.planner) {
+
+                Szinezo.setEnabled(true);
+
+            }
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_SzinezoPropertyChange
+
     private void filter(String query) {
 
         DefaultTableModel model = new DefaultTableModel();
@@ -1618,6 +1658,7 @@ public class Tc_Besheet extends javax.swing.JPanel {
     private javax.swing.JMenuItem SFDCall;
     private javax.swing.JMenuItem SFDClekeres;
     private javax.swing.JMenu SFDCmuveletek;
+    public javax.swing.JMenuItem Szinezo;
     private javax.swing.JMenuItem Termekleker;
     private javax.swing.JButton jButton1;
     public javax.swing.JButton jButton10;
@@ -1639,6 +1680,7 @@ public class Tc_Besheet extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JPopupMenu.Separator jSeparator1;
     public javax.swing.JTable jTable2;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JMenuItem kereses;

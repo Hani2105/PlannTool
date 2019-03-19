@@ -270,7 +270,7 @@ public class Tc_TervTooltipRenderer extends DefaultTableCellRenderer {
 
 //released ikon beállítása a jobszámok mellé és tooltip
         try {
-            if (column == 1 && !table.getValueAt(row, 1).toString().equals("") && !table.getValueAt(row, 3).toString().equals("Infó") && ablak.planner) {
+            if (column == 1 && !table.getValueAt(row, 1).toString().equals("") && !table.getValueAt(row, 3).toString().equals("Infó")) {
 
 //végigtekerjük a sheet jobadatait és ha megtaláljuk a JOB ot akkor pipa , ha nem akko warn
                 boolean ok = false;

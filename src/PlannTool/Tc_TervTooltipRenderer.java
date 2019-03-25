@@ -10,6 +10,7 @@ import java.awt.Component;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JTable;
+import javax.swing.ToolTipManager;
 import javax.swing.table.DefaultTableCellRenderer;
 
 /**
@@ -38,6 +39,14 @@ public class Tc_TervTooltipRenderer extends DefaultTableCellRenderer {
     
     public Component getTableCellRendererComponent(JTable table, Object value,
             boolean isSelected, boolean hasFocus, int row, int column) {
+
+        //a tooltip eltünés és előjövetel ideje
+        // Get current delay
+        int initialDelay = ToolTipManager.sharedInstance().getInitialDelay();
+
+        // Show tool tips immediately
+        ToolTipManager.sharedInstance().setInitialDelay(0);
+        ToolTipManager.sharedInstance().setDismissDelay(9999999);
 
         JLabel c = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 

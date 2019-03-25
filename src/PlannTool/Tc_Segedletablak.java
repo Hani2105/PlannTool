@@ -70,17 +70,17 @@ public class Tc_Segedletablak extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Cella", "PartNumber", "WorkStation", "Terv", "Tény", "Variancia szak", "Komment"
+                "Cella", "PartNumber", "Job", "WorkStation", "Terv", "Tény", "Variancia szak", "Komment"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
         if (jTable1.getColumnModel().getColumnCount() > 0) {
             jTable1.getColumnModel().getColumn(0).setPreferredWidth(10);
-            jTable1.getColumnModel().getColumn(2).setPreferredWidth(10);
             jTable1.getColumnModel().getColumn(3).setPreferredWidth(10);
             jTable1.getColumnModel().getColumn(4).setPreferredWidth(10);
             jTable1.getColumnModel().getColumn(5).setPreferredWidth(10);
-            jTable1.getColumnModel().getColumn(6).setPreferredWidth(500);
+            jTable1.getColumnModel().getColumn(6).setPreferredWidth(10);
+            jTable1.getColumnModel().getColumn(7).setPreferredWidth(500);
         }
 
         jLabel1.setText("Lekért szak!");
@@ -290,7 +290,7 @@ public class Tc_Segedletablak extends javax.swing.JFrame {
         cellak += ")";
 
         //System.out.println(cellak);
-        String query1 = "select tc_becells.cellname , tc_bepns.partnumber , tc_bestations.workstation ,cast(tc_terv.qty as unsigned) , tc_terv.tt , cast(tc_terv.qty_teny as unsigned) \n"
+        String query1 = "select tc_becells.cellname , tc_bepns.partnumber , tc_bestations.workstation ,cast(tc_terv.qty as unsigned) , tc_terv.tt , cast(tc_terv.qty_teny as unsigned) , tc_terv.job \n"
                 + "from tc_terv \n"
                 + "left join tc_becells on tc_becells.idtc_cells = tc_terv.idtc_becells\n"
                 + "left join tc_bepns on tc_bepns.idtc_bepns = tc_terv.idtc_bepns\n"
@@ -319,12 +319,13 @@ public class Tc_Segedletablak extends javax.swing.JFrame {
                 String cella = pc.rs.getString(1);
                 String pn = pc.rs.getString(2);
                 String ws = pc.rs.getString(3);
+                String job = pc.rs.getString(7);
                 int qty = new Tc_Stringbolint(pc.rs.getString(4)).db;
                 int tenyqty = new Tc_Stringbolint(pc.rs.getString(6)).db;
 
                 //bejarjuk a tabla sorait es megnezzuk hogy irtunk e mar ilyen pn-t , ws-t es cellat es megenzzuk h terv vagy teny
                 //ha nem írtunk még , és terv  , hozzáadunk egy sort a modellhez
-                model.addRow(new Object[]{cella, pn, ws, qty, tenyqty});
+                model.addRow(new Object[]{cella, pn, job ,  ws, qty, tenyqty});
 
             }
         } catch (SQLException ex) {

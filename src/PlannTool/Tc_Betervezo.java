@@ -29,6 +29,7 @@ import javax.swing.JPopupMenu;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
+import javax.swing.ToolTipManager;
 import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
@@ -45,6 +46,9 @@ import org.joda.time.format.DateTimeFormatter;
  */
 public class Tc_Betervezo extends javax.swing.JFrame {
 
+    
+  
+    
     /**
      */
     //nem engedjuk csukni amig megy a levelkuldes

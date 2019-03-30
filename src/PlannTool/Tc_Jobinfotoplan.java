@@ -60,6 +60,7 @@ public class Tc_Jobinfotoplan extends Thread {
             lista.add("Workstation");
             lista.add("Qty");
             lista.add("Unit_Status");
+            lista.add("Order_Status");
             rowdata = (Object[][]) xxx.xmlfeldolg(url, nodelist, lista);
 
         } catch (Exception e) {
@@ -67,12 +68,13 @@ public class Tc_Jobinfotoplan extends Thread {
 
         b.jobadat.clear();
 
-        String jobadat[][] = new String[rowdata.length][3];
+        String jobadat[][] = new String[rowdata.length][4];
         for (int i = 0; i < rowdata.length; i++) {
 
             jobadat[i][0] = rowdata[i][0].toString();
             jobadat[i][1] = rowdata[i][2].toString();
             jobadat[i][2] = rowdata[i][3].toString();
+            jobadat[i][3] = rowdata[i][5].toString();
            // jobadat[i][4] = rowdata[i][4].toString();
 
         }

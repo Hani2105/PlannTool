@@ -144,6 +144,7 @@ public class Tc_SFDCszal extends Thread {
 
                     }
 
+                    
 //beforgatjuk a rowdatat es összeszedjuk az össz darabszamot a pn-hez es job-hoz ha nem nulla egyik ertek sem es meg nem irtunk
 //osszdarab
                     if (!pn.equals("") && !ws.equals("") && irtunke == false) {

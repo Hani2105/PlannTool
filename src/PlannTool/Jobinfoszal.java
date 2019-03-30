@@ -45,6 +45,7 @@ public class Jobinfoszal extends Thread {
             lista.add("Workstation");
             lista.add("Qty");
             lista.add("Unit_Status");
+            lista.add("Order_Status");
 
             rowdata = (Object[][]) xxx.xmlfeldolg(url, nodelist, lista);
 

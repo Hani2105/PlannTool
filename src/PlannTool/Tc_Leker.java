@@ -82,8 +82,6 @@ public class Tc_Leker {
         String szak = "";
         String napneve = "";
         TableColumn column = null;
-        
-        
 
         //napok szamaszor futtatjuk
         for (int i = 0; i < napok; i++) {
@@ -128,7 +126,7 @@ public class Tc_Leker {
         //col szelesseg allitas
 
         //lekerdezzuk az adatbazis adatokat
-        String Query = "select tc_terv.date , tc_bepns.partnumber , tc_terv.job , tc_bestations.workstation , tc_terv.qty , tc_terv.tt ,tc_terv.qty_teny \n"
+        String Query = "select tc_terv.date , tc_bepns.partnumber , tc_terv.job , tc_bestations.workstation , tc_terv.qty , tc_terv.tt ,tc_terv.qty_teny , tc_terv.mernoki , tc_terv.mernokiido , tc_terv.cellaszin  \n"
                 + "from tc_terv \n"
                 + "left join tc_bepns on tc_bepns.idtc_bepns = tc_terv.idtc_bepns \n"
                 + "left join tc_bestations on tc_bestations.idtc_bestations = tc_terv.idtc_bestations\n"
@@ -140,55 +138,143 @@ public class Tc_Leker {
         planconnect pc = new planconnect();
         try {
             pc.planconnect(Query);
-            
-       
-            
+
+//<<<<<<<<<<<<<<<<<-----------------------------Ez az új rész --------------------------------------->>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+            // lekerdezzük , hogy hány sor van a queryben , hogy be tudjuk állítani az arraynak
+            pc.rs.last();
+            int utolsosor = pc.rs.getRow();
+            pc.rs.beforeFirst();
+
+            // megcsináljuk az arrayt amiben a tábla adatait fogjuk tárolni
+            Besheets.get(neve).tablaadat = new Tc_CellClass[utolsosor * 2][model.getColumnCount()];
+
+            //telerakjuk peldanyokkal az üres tablatonbunket
+            for (int i = 0; i < utolsosor * 2; i++) {
+
+                for (int n = 0; n < model.getColumnCount(); n++) {
+
+                    Besheets.get(neve).tablaadat[i][n] = new Tc_CellClass("", 0, 0.0 , 0);
+
+                }
+
+            }
+
+            //<<<<<<<<<<<<<<<<<-----------------------------Eddig --------------------------------------->>>>>>>>>>>>>>>>>>>>>>>>>>>>>          
             model.setRowCount(0);
-            int r = 0;
+
+            int cellsor = 0;
 
             //vegigporgetjuk a resultsetet
             while (pc.rs.next()) {
 
                 //porgetjuk az oszlopokat
-                for (int i = 4; i < model.getColumnCount(); i++) {
+                for (int i = 0; i < model.getColumnCount(); i++) {
 
                     //h egyezik a query datuma az oszlop datumaval akkor 
-                    if (pc.rs.getString(1).equals(model.getColumnName(i).substring(0, model.getColumnName(i).length() - 4) + ":00.0")) {
+                    try {
+                        if (pc.rs.getString(1).equals(model.getColumnName(i).substring(0, model.getColumnName(i).length() - 4) + ":00.0")) {
 
 //a terv es teny darabszamok
-                        String terv = "";
-                        String teny = "";
-                        try {
-                            terv = pc.rs.getString(5);
-                        } catch (Exception e) {
-                            terv = "0";
-                        }
+                            String terv = "";
+                            String teny = "";
+                            try {
+                                terv = pc.rs.getString(5);
+                            } catch (Exception e) {
+                                terv = "0";
+                            }
 
-                        if (terv.equals("")) {
-                            terv = "0";
-                        }
-                        try {
-                            teny = pc.rs.getString(7);
-                        } catch (Exception e) {
-                            teny = "0";
-                        }
+                            if (terv.equals("")) {
+                                terv = "0";
+                            }
+                            try {
+                                teny = pc.rs.getString(7);
+                            } catch (Exception e) {
+                                teny = "0";
+                            }
 
-                        if (teny.equals("")) {
-                            teny = "0";
-                        }
+                            if (teny.equals("")) {
+                                teny = "0";
+                            }
 
-                        // hozzaadunk ket sort (tervet es tenyt)
-                        //a terv hozzáadása
-                        model.addRow(new Object[]{pc.rs.getString(2), pc.rs.getString(3), pc.rs.getString(4), "Terv"});
-                        model.setValueAt(terv, model.getRowCount() - 1, i);
+                            // hozzaadunk ket sort (tervet es tenyt)
+                            //a terv hozzáadása
+// betesszuk az adattablaba a terv sort
+                            try {
+                                Besheets.get(neve).tablaadat[cellsor][0].value = pc.rs.getString(2);
+                            } catch (Exception e) {
+                            }
+                            try {
+                                Besheets.get(neve).tablaadat[cellsor][1].value = pc.rs.getString(3);
+                            } catch (Exception e) {
+                            }
+                            try {
+                                Besheets.get(neve).tablaadat[cellsor][2].value = pc.rs.getString(4);
+                            } catch (Exception e) {
+                            }
+                            try {
+                                Besheets.get(neve).tablaadat[cellsor][3].value = "Terv";
+                            } catch (Exception e) {
+                            }
+                            try {
+                                Besheets.get(neve).tablaadat[cellsor][i].value = terv;
+                            } catch (Exception e) {
+                            }
+                            try {
+                                Besheets.get(neve).tablaadat[cellsor][i].eng = pc.rs.getInt(8);
+                            } catch (Exception e) {
+                            }
+                            try {
+                                Besheets.get(neve).tablaadat[cellsor][i].engtime = pc.rs.getDouble(9);
+                            } catch (Exception e) {
+                            }
+                             try {
+                                Besheets.get(neve).tablaadat[cellsor][i].szin = pc.rs.getInt(10);
+                            } catch (Exception e) {
+                            }
+// betesszuk az adattablaba a teny sort
+                            cellsor++;
+
+                            try {
+                                Besheets.get(neve).tablaadat[cellsor][0].value = pc.rs.getString(2);
+                            } catch (Exception e) {
+                            }
+                            try {
+                                Besheets.get(neve).tablaadat[cellsor][1].value = pc.rs.getString(3);
+                            } catch (Exception e) {
+                            }
+                            try {
+                                Besheets.get(neve).tablaadat[cellsor][2].value = pc.rs.getString(4);
+                            } catch (Exception e) {
+                            }
+                            try {
+                                Besheets.get(neve).tablaadat[cellsor][3].value = "Tény";
+                            } catch (Exception e) {
+                            }
+                            try {
+                                Besheets.get(neve).tablaadat[cellsor][i].value = teny;
+                            } catch (Exception e) {
+                            }
+                            try {
+                                Besheets.get(neve).tablaadat[cellsor][i].eng = pc.rs.getInt(8);
+                            } catch (Exception e) {
+                            }
+                            try {
+                                Besheets.get(neve).tablaadat[cellsor][i].szin = pc.rs.getInt(10);
+                            } catch (Exception e) {
+                            }
+
+                            model.addRow(new Object[model.getColumnCount()]);
+
 //a tény hozzáadása
-                        model.addRow(new Object[]{pc.rs.getString(2), pc.rs.getString(3), pc.rs.getString(4), "Tény"});
-                        model.setValueAt(teny, model.getRowCount() - 1, i);
-                        r++;
+                            model.addRow(new Object[model.getColumnCount()]);
 
+                        }
+                    } catch (Exception e) {
                     }
 
                 }
+
+                cellsor++;
 
             }
 
@@ -200,8 +286,16 @@ public class Tc_Leker {
 
         pc.kinyir();
 
-        Besheets.get(neve).jTable2.setModel(model);
+//bealitjuk az adatokat a tablaba
+
+        
+        Tc_AdatInterface a = new Tc_AdatInterface(Besheets.get(neve));
+        a.tablabatolt();
         Tc_Calculator calc = new Tc_Calculator(Besheets.get(neve), false, 0);
+
+       
+        
+        
         //lekérdezzük a job adatokat
 
         Tc_Jobinfotoplan j = new Tc_Jobinfotoplan(Besheets.get(neve));

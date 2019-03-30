@@ -124,10 +124,10 @@ public class Tc_osszsfdccellabol extends Thread {
 
 //b legyen az aktuális sheet
             b = Besheets.get(Tc_Betervezo.Tervezotabbed.getTitleAt(q));
-//ebben fogjuk tarolni a mar beirt pn-t és ws-t
-            List<String> pnws = new ArrayList<>();
+
+            //ebben fogjuk tarolni a mar beirt pn-t és ws-t
+            List<String> pnwsjob = new ArrayList<>();
 //ez lesz a kapcsoloja
-            boolean irtunke = false;
 
 //elindulunk , bejarjuk a tablat es megkeressuk a megfelelo oszlopot
             for (int i = 4; i < b.jTable2.getColumnCount(); i++) {
@@ -136,168 +136,145 @@ public class Tc_osszsfdccellabol extends Thread {
                 if (b.jTable2.getColumnName(i).substring(0, b.jTable2.getColumnName(i).length() - 4).equals(tol.replace("%20", " "))) {
 
 //bejarjuk a sorokat
+                    outerloop:
                     for (int r = 0; r < b.jTable2.getRowCount(); r++) {
 
-                        irtunke = false;
+//csak akkor csinálunk bármit is ha tény sorban vagyunk
+                        if (b.jTable2.getValueAt(r, 3).toString().equals("Tény")) {
 
 //felvesszuk az elso pn-t és ws-t
 //try az info sorok miatt
-                        String pn = "";
-                        String ws = "";
+                            String pn = "";
+                            String ws = "";
+                            String job = "";
+                            long osszeg = 0;
 
-                        try {
-                            pn = b.jTable2.getValueAt(r, 0).toString();
-                            ws = b.jTable2.getValueAt(r, 2).toString();
-                        } catch (Exception e) {
+                            try {
+                                pn = b.jTable2.getValueAt(r, 0).toString();
+                                ws = b.jTable2.getValueAt(r, 2).toString();
+                            } catch (Exception e) {
 
-                        }
+                            }
+
+                            try {
+                                job = b.jTable2.getValueAt(r, 1).toString();
+                            } catch (Exception e) {
+                            }
+
 // ha megvannak az adatok , megnezzuk , hogy foglalkoztunk e mar ezzel a kombinacioval
-                        for (int k = 0; k < pnws.size(); k++) {
+                            for (int k = 0; k < pnwsjob.size(); k++) {
 
-                            if (pnws.get(k).equals(pn + ws)) {
+                                if (pnwsjob.get(k).equals(pn + ws)) {
 
 //ha egyezik atallitjuk az irtunke booleant igenre
-                                irtunke = true;
+                                    continue outerloop;
+
+                                }
 
                             }
 
-                        }
+//bejárjuk a row datát végig ha idáig eljutottunk
+                            for (int n = 0; n < rowdata.length; n++) {
 
-//beforgatjuk a rowdatat es összeszedjuk az össz darabszamot a pn-hez es job-hoz ha nem nulla egyik ertek sem es meg nem irtunk
-//osszdarab
-                        if (!pn.equals("") && !ws.equals("") && irtunke == false) {
-                            Long osszdarab = (long) 0;
-                            for (int data = 0; data < rowdata.length; data++) {
+//4 eset lehetséges innentől
+//ha nem kell first pass és nem kell grouppolni job ra
+                                if (rowdata[n][1].equals(pn) && rowdata[n][0].toString().contains(ws) && !b.jCheckBox1.isSelected() && !b.jCheckBox3.isSelected()) {
 
-//ha egyezik a pn és a ws osszeadjuk az osszegeket (ha nincs kipipalva a checkbox)
-                                if (rowdata[data][1].equals(pn) && rowdata[data][0].toString().contains(ws) && b.jCheckBox1.isSelected() == false) {
-
-                                    osszdarab += Long.parseLong(rowdata[data][4].toString());
+                                    osszeg += Long.parseLong(rowdata[n][4].toString());
 
                                 }
-//ha egyezik a pn és a ws osszeadjuk az osszegeket (ha ki van pipálva)
-                                if (rowdata[data][1].equals(pn) && rowdata[data][0].toString().contains(ws) && b.jCheckBox1.isSelected() == true && rowdata[data][2].toString().equals("1")) {
 
-                                    osszdarab += Long.parseLong(rowdata[data][4].toString());
+//ha csak a first passra vagyunk kiváncsiak de nem kell grouppolni JOB ra
+                                if (rowdata[n][1].equals(pn) && rowdata[n][0].toString().contains(ws) && b.jCheckBox1.isSelected() && rowdata[n][2].toString().equals("1") && !b.jCheckBox3.isSelected()) {
+
+                                    osszeg += Long.parseLong(rowdata[n][4].toString());
 
                                 }
+
+//ha nem csak a firstpass érdekel de grouppolni kell JOB ra
+                                if (rowdata[n][1].equals(pn) && rowdata[n][0].toString().contains(ws) && !b.jCheckBox1.isSelected() && b.jCheckBox3.isSelected() && rowdata[n][3].toString().equals(job)) {
+
+                                    osszeg += Long.parseLong(rowdata[n][4].toString());
+
+                                }
+
+//ha csak first pass érdekel és grouppolunk is job ra
+                                if (rowdata[n][1].equals(pn) && rowdata[n][0].toString().contains(ws) && b.jCheckBox1.isSelected() && b.jCheckBox1.isSelected() && rowdata[n][2].toString().equals("1") && b.jCheckBox3.isSelected() && rowdata[n][3].toString().equals(job)) {
+
+                                    osszeg += Long.parseLong(rowdata[n][4].toString());
+
+                                }
+
                             }
 
-//megprobalunk keresni egy olyan sort ami megfelel a pn-nek ws-nek es van felette terv
-                            int ebbeirni = 0;
+//most jön az , hogy hova tegyük az összeszedett adatot (mindig a leg felső sorba ahol egyezés van és van terv felette)
+                            for (int n = 0; n < b.jTable2.getRowCount(); n++) {
 
-                            for (int m = 0; m < b.jTable2.getRowCount(); m++) {
+//ha tény sorban vagyunk
+                                if (b.jTable2.getValueAt(n, 3).equals("Tény")) {
 
-                                try {
-                                    if (b.jTable2.getValueAt(m, 0).equals(pn) && b.jTable2.getValueAt(m, 2).equals(ws) && b.jTable2.getValueAt(m - 1, i) != null && b.jTable2.getValueAt(m, 3).toString().equals("Tény") && !b.jTable2.getValueAt(m - 1, i).equals("") && b.jTable2.getValueAt(m - 1, 3).equals("Terv")) {
-
-                                        ebbeirni = m;
-                                        break;
-
-                                    }
-                                } catch (Exception e) {
-                                }
-                            }
-
-//beirjuk a darabot a tablaba ha az nagyobb mint nulla van olyan sorunk amibe tudunk irni mert van felette terv
-                            if (osszdarab > 0 && ebbeirni > 0) {
-
-//hogy ottmaradjon a komment hasznaljuk a stringbolintet
-                                try {
-                                    Tc_Stringbolint c = new Tc_Stringbolint(b.jTable2.getValueAt(ebbeirni, i).toString());
-                                    b.jTable2.setValueAt(osszdarab + " " + c.komment, ebbeirni, i);
-                                } catch (Exception e) {
-//ha nem tudjuk stringe konvertalni akkor csak a darab marad
-
-                                    b.jTable2.setValueAt(osszdarab, ebbeirni, i);
-
-                                }
-
-//ha ugyan ehhez a pn hez van még beírva ebbe az oszlopba másik darab , azt nullra állítom 
-                                for (int t = ebbeirni + 1; t < b.jTable2.getRowCount(); t++) {
-
-                                    if (b.jTable2.getValueAt(t, i) != null && b.jTable2.getValueAt(t, 0).equals(pn) && b.jTable2.getValueAt(t, 2).equals(ws) && b.jTable2.getValueAt(t, 3).equals("Tény")) {
-
-                                        b.jTable2.setValueAt(null, t, i);
-
-                                    }
-
-                                }
-
-//ha irtunk elrakjuk a pn-t ws-t egy listaba , hogy lassuk , foglalkoztunk mar vele
-                                pnws.add(pn + ws);
-
-                            } //ha nincs olyan sor amibe írhatnánk de van összegünk                            
-                            else if (osszdarab > 0 && ebbeirni == 0 && b.jTable2.getValueAt(r, 0).equals(pn) && b.jTable2.getValueAt(r, 2).equals(ws) && b.jTable2.getValueAt(r, 3).equals("Tény")) {
-
-//probalunk keresni egy olyan sort amibe már van írva
-                                int utsosor = 0;
-
-                                for (int t = 0; t < b.jTable2.getRowCount(); t++) {
-
+//ha kell foglalkozni a job-al
                                     try {
-                                        if (b.jTable2.getValueAt(t, 0).equals(pn) && b.jTable2.getValueAt(t, 2).equals(ws) && b.jTable2.getValueAt(t, 3).equals("Tény") && b.jTable2.getValueAt(t, i) != null) {
+                                        if (b.jTable2.getValueAt(n - 1, i) != null && !b.jTable2.getValueAt(n - 1, i).equals("") && b.jTable2.getValueAt(n, 0).equals(pn) && b.jTable2.getValueAt(n, 2).equals(ws) && b.jCheckBox3.isSelected() && b.jTable2.getValueAt(n, 1).equals(job)) {
 
-                                            utsosor = t;
+                                            Tc_Stringbolint c = new Tc_Stringbolint(b.jTable2.getValueAt(n, i).toString());
+                                            b.jTable2.setValueAt(osszeg + " " + c.komment, n, i);
+                                            pnwsjob.add(pn + ws);
+                                            continue outerloop;
 
                                         }
                                     } catch (Exception e) {
                                     }
 
-                                }
+// ha nem kell foglalkozni a job al
+                                    try {
+                                        if (b.jTable2.getValueAt(n - 1, i) != null && !b.jTable2.getValueAt(n - 1, i).equals("") && b.jTable2.getValueAt(n, 0).equals(pn) && b.jTable2.getValueAt(n, 2).equals(ws) && !b.jCheckBox3.isSelected()) {
 
-//megkeressuk az utolso sort amibe irhatunk mert ugyan az a pn ws es teny es meg nincs sehova írva
-                                if (utsosor == 0) {
-                                    for (int t = 0; t < b.jTable2.getRowCount(); t++) {
-
-                                        try {
-                                            if (b.jTable2.getValueAt(t, 0).equals(pn) && b.jTable2.getValueAt(t, 2).equals(ws) && b.jTable2.getValueAt(t, 3).equals("Tény")) {
-
-                                                utsosor = t;
-
-                                            }
-                                        } catch (Exception e) {
+                                            Tc_Stringbolint c = new Tc_Stringbolint(b.jTable2.getValueAt(n, i).toString());
+                                            b.jTable2.setValueAt(osszeg + " " + c.komment, n, i);
+                                            pnwsjob.add(pn + ws);
+                                            continue outerloop;
                                         }
-
+                                    } catch (Exception e) {
                                     }
                                 }
+                            }
 
-                                //hogy ottmaradjon a komment hasznaljuk a stringbolintet
-                                try {
-                                    Tc_Stringbolint c = new Tc_Stringbolint(b.jTable2.getValueAt(utsosor, i).toString());
-                                    b.jTable2.setValueAt(osszdarab + " " + c.komment, utsosor, i);
-                                } catch (Exception e) {
-//ha nem tudjuk stringe konvertalni akkor csak a darab marad
-
-                                    b.jTable2.setValueAt(osszdarab, utsosor, i);
-
-                                }
-
-//ha ugyan ehhez a pn hez van még beírva ebbe az oszlopba másik darab , azt nullra állítom 
-                                for (int t = 0; t < b.jTable2.getRowCount(); t++) {
-
+//ha eljutunk idáig az azt jelenti , hogy nem volt olyan sor ami felett van terv
+                            for (int n = 0; n < b.jTable2.getRowCount(); n++) {
+//ha tény sorban vagyunk
+                                if (b.jTable2.getValueAt(n, 3).equals("Tény")) {
+//ha kell foglalkozni a job-al
                                     try {
-                                        if (b.jTable2.getValueAt(t, i) != null && b.jTable2.getValueAt(t, 0).equals(pn) && b.jTable2.getValueAt(t, 2).equals(ws) && b.jTable2.getValueAt(t, 3).equals("Tény") && t != utsosor) {
+                                        if (b.jTable2.getValueAt(n, 0).equals(pn) && b.jTable2.getValueAt(n, 2).equals(ws) && b.jCheckBox3.isSelected() && b.jTable2.getValueAt(n, 1).equals(job)) {
 
-                                            b.jTable2.setValueAt(null, t, i);
+                                            Tc_Stringbolint c = new Tc_Stringbolint(b.jTable2.getValueAt(n, i).toString());
+                                            b.jTable2.setValueAt(osszeg + " " + c.komment, n, i);
+                                            pnwsjob.add(pn + ws);
+                                            continue outerloop;
 
                                         }
                                     } catch (Exception e) {
                                     }
 
+// ha nem kell foglalkozni a job al
+                                    try {
+                                        if (b.jTable2.getValueAt(n, 0).equals(pn) && b.jTable2.getValueAt(n, 2).equals(ws) && !b.jCheckBox3.isSelected()) {
+
+                                            Tc_Stringbolint c = new Tc_Stringbolint(b.jTable2.getValueAt(n, i).toString());
+                                            b.jTable2.setValueAt(osszeg + " " + c.komment, n, i);
+                                            pnwsjob.add(pn + ws);
+                                            continue outerloop;
+                                        }
+                                    } catch (Exception e) {
+                                    }
                                 }
-
-//ha irtunk elrakjuk a pn-t ws-t egy listaba , hogy lassuk , foglalkoztunk mar vele
-                                pnws.add(pn + ws);
-
                             }
 
                         }
 
                     }
-
                 }
-
             }
 
         }

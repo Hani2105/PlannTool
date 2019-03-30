@@ -282,6 +282,12 @@ public class ablak extends javax.swing.JFrame {
                         comp.setBackground(Color.green);
                         comp.setForeground(Color.BLACK);
                     }
+
+                    else if(value.equals("42Q not released!")){
+                        comp.setBackground(Color.orange);
+                        comp.setForeground(Color.BLACK);
+
+                    }
                     else {
                         comp.setBackground(Color.white);
                         comp.setForeground(Color.BLACK);
@@ -2508,7 +2514,7 @@ public class ablak extends javax.swing.JFrame {
                                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel25)
                                     .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addComponent(jDateChooser2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
+                                        .addComponent(jDateChooser2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 25, Short.MAX_VALUE)
                                         .addComponent(jLabel23, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel7Layout.createSequentialGroup()

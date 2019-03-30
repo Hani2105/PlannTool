@@ -126,6 +126,7 @@ public class Jobfigyeloszal extends Thread {
             lista.add("Workstation");
             lista.add("Qty");
             lista.add("Unit_Status");
+            lista.add("Order_Status");
             rowdata = (Object[][]) xxx.xmlfeldolg(url, nodelist, lista);
 
         } catch (Exception e) {
@@ -140,7 +141,13 @@ public class Jobfigyeloszal extends Thread {
 
             for (int n = 0; n < rowdata.length; n++) {
 
-                if (ablak.jTable14.getValueAt(i, 2).toString().equals(rowdata[n][0]) && (rowdata[n][4].equals("Traveler Printed") || rowdata[n][4].equals("Unit Skeleton"))) {
+                if (ablak.jTable14.getValueAt(i, 2).toString().equals(rowdata[n][0]) && rowdata[n][5].equals("N")) {
+
+                    model.setValueAt("42Q not released!", i, 5); 
+                    irtunke = true;
+                }
+
+                if (ablak.jTable14.getValueAt(i, 2).toString().equals(rowdata[n][0]) && (rowdata[n][4].equals("Traveler Printed") || rowdata[n][4].equals("Unit Skeleton"))&& irtunke == false) {
 
                     model.setValueAt(rowdata[n][3], i, 5);
                     irtunke = true;

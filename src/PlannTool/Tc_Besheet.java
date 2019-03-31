@@ -254,7 +254,6 @@ public class Tc_Besheet extends javax.swing.JPanel {
         JPopupMenu1.add(SFDCmuveletek);
 
         kereses.setText("Keresés a kijelölt cellára!");
-        kereses.setToolTipText("");
         kereses.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 keresesActionPerformed(evt);

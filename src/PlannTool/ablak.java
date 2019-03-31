@@ -2707,24 +2707,23 @@ public class ablak extends javax.swing.JFrame {
 
             jPanel9.setBackground(new java.awt.Color(204, 204, 204));
 
-            jLabel34.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/Selective11.jpg"))); // NOI18N
-            jLabel34.setText("jLabel34");
+            jLabel34.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/sanmina-logo (2).png"))); // NOI18N
 
             javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
             jPanel9.setLayout(jPanel9Layout);
             jPanel9Layout.setHorizontalGroup(
                 jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel9Layout.createSequentialGroup()
-                    .addGap(129, 129, 129)
+                    .addGap(132, 132, 132)
                     .addComponent(jLabel34, javax.swing.GroupLayout.PREFERRED_SIZE, 829, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(137, Short.MAX_VALUE))
+                    .addContainerGap(139, Short.MAX_VALUE))
             );
             jPanel9Layout.setVerticalGroup(
                 jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel9Layout.createSequentialGroup()
-                    .addContainerGap()
+                    .addGap(24, 24, 24)
                     .addComponent(jLabel34)
-                    .addContainerGap(26, Short.MAX_VALUE))
+                    .addContainerGap(46, Short.MAX_VALUE))
             );
 
             jTabbedPane1.addTab("BeTervező", jPanel9);

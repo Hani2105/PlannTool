@@ -109,7 +109,6 @@
         <MenuItem class="javax.swing.JMenuItem" name="kereses">
           <Properties>
             <Property name="text" type="java.lang.String" value="Keres&#xe9;s a kijel&#xf6;lt cell&#xe1;ra!"/>
-            <Property name="toolTipText" type="java.lang.String" value=""/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="keresesActionPerformed"/>

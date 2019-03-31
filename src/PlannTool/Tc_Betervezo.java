@@ -524,7 +524,7 @@ public class Tc_Betervezo extends javax.swing.JFrame {
 
     private void seticon() {
 
-        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("kepek/2.jpg")));
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("kepek/sanlogo.png")));
 
     }
 

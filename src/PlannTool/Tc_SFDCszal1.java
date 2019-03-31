@@ -108,7 +108,6 @@ public class Tc_SFDCszal1 extends Thread {
 //ebben fogjuk tarolni a mar beirt pn-t és ws-t
         List<String> pnwsjob = new ArrayList<>();
 //ez lesz a kapcsoloja
-        
 
 //elindulunk , bejarjuk a tablat es megkeressuk a megfelelo oszlopot
         for (int i = 4; i < b.jTable2.getColumnCount(); i++) {
@@ -145,7 +144,7 @@ public class Tc_SFDCszal1 extends Thread {
 // ha megvannak az adatok , megnezzuk , hogy foglalkoztunk e mar ezzel a kombinacioval
                         for (int k = 0; k < pnwsjob.size(); k++) {
 
-                            if (pnwsjob.get(k).equals(pn + ws)) {
+                            if (pnwsjob.get(k).equals(pn + ws + job)) {
 
 //ha egyezik atallitjuk az irtunke booleant igenre
                                 continue outerloop;
@@ -189,65 +188,68 @@ public class Tc_SFDCszal1 extends Thread {
                         }
 
 //most jön az , hogy hova tegyük az összeszedett adatot (mindig a leg felső sorba ahol egyezés van és van terv felette)
-                        for (int n = 0; n < b.jTable2.getRowCount(); n++) {
+//de ez az egész csak akkor játszik ha nagyobb az összeg mint nulla
+                        if (osszeg > 0) {
+                            for (int n = 0; n < b.jTable2.getRowCount(); n++) {
 
 //ha tény sorban vagyunk
-                            if (b.jTable2.getValueAt(n, 3).equals("Tény")) {
+                                if (b.jTable2.getValueAt(n, 3).equals("Tény")) {
 
 //ha kell foglalkozni a job-al
-                                try {
-                                    if (b.jTable2.getValueAt(n - 1, i) != null && !b.jTable2.getValueAt(n - 1, i).equals("") && b.jTable2.getValueAt(n, 0).equals(pn) && b.jTable2.getValueAt(n, 2).equals(ws) && b.jCheckBox3.isSelected() && b.jTable2.getValueAt(n, 1).equals(job)) {
+                                    try {
+                                        if (b.jTable2.getValueAt(n - 1, i) != null && !b.jTable2.getValueAt(n - 1, i).equals("") && b.jTable2.getValueAt(n, 0).equals(pn) && b.jTable2.getValueAt(n, 2).equals(ws) && b.jCheckBox3.isSelected() && b.jTable2.getValueAt(n, 1).equals(job)) {
 
-                                        Tc_Stringbolint c = new Tc_Stringbolint(b.jTable2.getValueAt(n, i).toString());
-                                        b.jTable2.setValueAt(osszeg + " " + c.komment, n, i);
-                                        pnwsjob.add(pn + ws);
-                                        continue outerloop;
+                                            Tc_Stringbolint c = new Tc_Stringbolint(b.jTable2.getValueAt(n, i).toString());
+                                            b.jTable2.setValueAt(osszeg + " " + c.komment, n, i);
+                                            pnwsjob.add(pn + ws + job);
+                                            continue outerloop;
 
+                                        }
+                                    } catch (Exception e) {
                                     }
-                                } catch (Exception e) {
-                                }
 
 // ha nem kell foglalkozni a job al
-                                try {
-                                    if (b.jTable2.getValueAt(n - 1, i) != null && !b.jTable2.getValueAt(n - 1, i).equals("") && b.jTable2.getValueAt(n, 0).equals(pn) && b.jTable2.getValueAt(n, 2).equals(ws) && !b.jCheckBox3.isSelected()) {
+                                    try {
+                                        if (b.jTable2.getValueAt(n - 1, i) != null && !b.jTable2.getValueAt(n - 1, i).equals("") && b.jTable2.getValueAt(n, 0).equals(pn) && b.jTable2.getValueAt(n, 2).equals(ws) && !b.jCheckBox3.isSelected()) {
 
-                                        Tc_Stringbolint c = new Tc_Stringbolint(b.jTable2.getValueAt(n, i).toString());
-                                        b.jTable2.setValueAt(osszeg + " " + c.komment, n, i);
-                                        pnwsjob.add(pn + ws);
-                                        continue outerloop;
+                                            Tc_Stringbolint c = new Tc_Stringbolint(b.jTable2.getValueAt(n, i).toString());
+                                            b.jTable2.setValueAt(osszeg + " " + c.komment, n, i);
+                                            pnwsjob.add(pn + ws + job);
+                                            continue outerloop;
+                                        }
+                                    } catch (Exception e) {
                                     }
-                                } catch (Exception e) {
                                 }
                             }
-                        }
 
 //ha eljutunk idáig az azt jelenti , hogy nem volt olyan sor ami felett van terv
-                        for (int n = 0; n < b.jTable2.getRowCount(); n++) {
+                            for (int n = 0; n < b.jTable2.getRowCount(); n++) {
 //ha tény sorban vagyunk
-                            if (b.jTable2.getValueAt(n, 3).equals("Tény")) {
+                                if (b.jTable2.getValueAt(n, 3).equals("Tény")) {
 //ha kell foglalkozni a job-al
-                                try {
-                                    if (b.jTable2.getValueAt(n, 0).equals(pn) && b.jTable2.getValueAt(n, 2).equals(ws) && b.jCheckBox3.isSelected() && b.jTable2.getValueAt(n, 1).equals(job)) {
+                                    try {
+                                        if (b.jTable2.getValueAt(n, 0).equals(pn) && b.jTable2.getValueAt(n, 2).equals(ws) && b.jCheckBox3.isSelected() && b.jTable2.getValueAt(n, 1).equals(job)) {
 
-                                        Tc_Stringbolint c = new Tc_Stringbolint(b.jTable2.getValueAt(n, i).toString());
-                                        b.jTable2.setValueAt(osszeg + " " + c.komment, n, i);
-                                        pnwsjob.add(pn + ws);
-                                        continue outerloop;
+                                            Tc_Stringbolint c = new Tc_Stringbolint(b.jTable2.getValueAt(n, i).toString());
+                                            b.jTable2.setValueAt(osszeg + " " + c.komment, n, i);
+                                            pnwsjob.add(pn + ws + job);
+                                            continue outerloop;
 
+                                        }
+                                    } catch (Exception e) {
                                     }
-                                } catch (Exception e) {
-                                }
 
 // ha nem kell foglalkozni a job al
-                                try {
-                                    if (b.jTable2.getValueAt(n, 0).equals(pn) && b.jTable2.getValueAt(n, 2).equals(ws) && !b.jCheckBox3.isSelected()) {
+                                    try {
+                                        if (b.jTable2.getValueAt(n, 0).equals(pn) && b.jTable2.getValueAt(n, 2).equals(ws) && !b.jCheckBox3.isSelected()) {
 
-                                        Tc_Stringbolint c = new Tc_Stringbolint(b.jTable2.getValueAt(n, i).toString());
-                                        b.jTable2.setValueAt(osszeg + " " + c.komment, n, i);
-                                        pnwsjob.add(pn + ws);
-                                        continue outerloop;
+                                            Tc_Stringbolint c = new Tc_Stringbolint(b.jTable2.getValueAt(n, i).toString());
+                                            b.jTable2.setValueAt(osszeg + " " + c.komment, n, i);
+                                            pnwsjob.add(pn + ws + job);
+                                            continue outerloop;
+                                        }
+                                    } catch (Exception e) {
                                     }
-                                } catch (Exception e) {
                                 }
                             }
                         }

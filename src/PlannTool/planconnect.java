@@ -30,7 +30,7 @@ public class planconnect {
     public Object planconnect(String startQuery) throws SQLException, ClassNotFoundException {
 
         String driver = "com.mysql.jdbc.driver";
-        String url = "jdbc:mysql://143.116.140.114/planningdb?zeroDateTimeBehavior=convertToNull";
+        String url = "jdbc:mysql://143.116.140.114/planningdb?zeroDateTimeBehavior=convertToNull&characterEncoding=utf8";
         String username = "plan";
         String password = "plan500";
         Class.forName("com.mysql.jdbc.Driver");

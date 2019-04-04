@@ -351,11 +351,11 @@ public class Tc_TervTooltipRenderer extends DefaultTableCellRenderer {
         } catch (Exception e) {
         }
 //
-//beállítjuk a cella színét ha nincs kiválasztva és a terv részen vagyunk
+//beállítjuk a cella színét ha a terv részen vagyunk
         try {
 
             //ha a terv részen vagyunk
-            if (column > 3 && !table.getValueAt(row, 3).toString().equals("Infó") && !isSelected) {
+            if (column > 3 && !table.getValueAt(row, 3).toString().equals("Infó")) {
 
                 if (b.tablaadat[row - infsor][column].szin != 0) {
 //itt össze kell rakni a szint
@@ -370,8 +370,9 @@ public class Tc_TervTooltipRenderer extends DefaultTableCellRenderer {
 //ha ki van jelölve a cella
         if (isSelected) {
 
-            c.setBackground(new Color(220, 224, 232));
+            //c.setBackground(new Color(220, 224, 232));
             c.setForeground(new Color(0, 0, 0));
+            c.setBorder(BorderFactory.createLineBorder(new Color(232, 11, 44), 2));
 
         }
         return c;

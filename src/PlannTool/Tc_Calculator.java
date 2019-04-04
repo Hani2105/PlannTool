@@ -20,7 +20,7 @@ public class Tc_Calculator {
     Tc_Besheet b;
 
     public Tc_Calculator(Tc_Besheet b, boolean selection, int cella) {
-        
+
         this.b = b;
 
         String sheetname = "";
@@ -353,11 +353,10 @@ public class Tc_Calculator {
                 }
             } catch (Exception e) {
             }
-           
+
         }
 
         this.b.jTable2.setModel(model);
-      
 
         //szelesseg allitas ha engedelyezett
         TableColumn column = null;
@@ -412,6 +411,30 @@ public class Tc_Calculator {
             this.b.jTable2.changeSelection(cella, this.b.jTable2.getSelectedColumn(), false, false);
 
         }
+//megvizsgaljuk hogy le kell e futtatni az ablakos kalkulátort
+
+//ha kipipáljuk és még nem visible
+        if (this.b.jCheckBoxMenuItem1.isSelected() && !Tc_Betervezo.calculatorablaktarolo.get(0).letezek) {
+
+            Tc_Betervezo.calculatorablaktarolo.get(0).setVisible(true);
+            Tc_Betervezo.calculatorablaktarolo.get(0).letezek();
+            Tc_Calcablakszal csz = new Tc_Calcablakszal(this.b, Tc_Betervezo.calculatorablaktarolo.get(0));
+            csz.start();
+//ha kipipáljuk és már visible
+        } else if (this.b.jCheckBoxMenuItem1.isSelected() && Tc_Betervezo.calculatorablaktarolo.get(0).letezek) {
+
+            Tc_Calcablakszal csz = new Tc_Calcablakszal(this.b, Tc_Betervezo.calculatorablaktarolo.get(0));
+            csz.start();
+
+        } //ha nem pipáljuk ki és visible       
+        else if (!this.b.jCheckBoxMenuItem1.isSelected() && Tc_Betervezo.calculatorablaktarolo.get(0).letezek) {
+
+            //eltüntetjük
+            Tc_Betervezo.calculatorablaktarolo.get(0).setVisible(false);
+            Tc_Betervezo.calculatorablaktarolo.get(0).letezek = false;
+
+        }
+
     }
 
 }

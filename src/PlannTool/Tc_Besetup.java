@@ -879,12 +879,11 @@ public class Tc_Besetup extends javax.swing.JFrame {
         }
 
         queryvalues = queryvalues.substring(0, queryvalues.length() - 2);
-        String query = "insert into tc_users (username , cellaids , slides) values" + queryvalues + ")";
+        String query = "insert ignore into tc_users (username , cellaids , slides) values" + queryvalues + ") on duplicate key update cellaids = values (cellaids) , slides= values (slides) ";
 
-        String truncate = "truncate tc_users";
+       
 
         planconnect pc = new planconnect();
-        pc.feltolt(truncate, false);
         pc.feltolt(query, true);
 
     }//GEN-LAST:event_jButton7ActionPerformed

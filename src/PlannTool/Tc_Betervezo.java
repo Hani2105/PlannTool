@@ -46,9 +46,6 @@ import org.joda.time.format.DateTimeFormatter;
  */
 public class Tc_Betervezo extends javax.swing.JFrame {
 
-    
-  
-    
     /**
      */
     //nem engedjuk csukni amig megy a levelkuldes
@@ -58,6 +55,7 @@ public class Tc_Betervezo extends javax.swing.JFrame {
     public static List<String> works = new ArrayList<String>();
     public static Map<String, Tc_Besheet> Besheets = new TreeMap();
     public static List<String[][]> ciklusidok = new ArrayList<String[][]>();
+    public static ArrayList<Tc_Calcablak> calculatorablaktarolo = new ArrayList<Tc_Calcablak>();
 
     //szinezes adatai
     public static int slide1;
@@ -182,6 +180,10 @@ public class Tc_Betervezo extends javax.swing.JFrame {
 //lekerjuk a pn-eket es ws eket hogy le tudjuk ellenorizni , hogy leteznek e
         pncheck();
         wscheck();
+        
+//csinálunk egy calcablakot es beletesszuk a listaba , hogy előkapjuk amikor akarjuk
+
+        calculatorablaktarolo.add(new Tc_Calcablak());
 
     }
 
@@ -595,7 +597,7 @@ public class Tc_Betervezo extends javax.swing.JFrame {
                 Besheets.get(Tervezotabbed.getTitleAt(i)).Mernoki.setEnabled(false);
                 Besheets.get(Tervezotabbed.getTitleAt(i)).Szinezo.setEnabled(false);
                 //Besheets.get(Tervezotabbed.getTitleAt(i)).pnkarbantarto.setEnabled(false);
-                
+
                 //repainteljük a táblát a kommentek miatt
                 Besheets.get(Tervezotabbed.getTitleAt(i)).jTable2.repaint();
 
@@ -715,7 +717,7 @@ public class Tc_Betervezo extends javax.swing.JFrame {
 //most indítjuk a nagy ciklust amiben végigpörgetjük a sheeteket
         for (int b = 0; b < Tc_Betervezo.Tervezotabbed.getTabCount(); b++) {
 
-            Tc_Leker leker= new Tc_Leker(Tc_Betervezo.Tervezotabbed.getTitleAt(b), "groupleker");
+            Tc_Leker leker = new Tc_Leker(Tc_Betervezo.Tervezotabbed.getTitleAt(b), "groupleker");
 
         }
 
@@ -740,7 +742,6 @@ public class Tc_Betervezo extends javax.swing.JFrame {
         Besheets.get(neve).jTable2.setModel(t2);
 
         //betesszuk a tablabol az adatokat a tablatombbe
-       
         Tc_AdatInterface a = new Tc_AdatInterface(Besheets.get(neve));
         a.adatbatoltpluszsor();
 

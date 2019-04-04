@@ -135,6 +135,7 @@ public class Tc_Besheet extends javax.swing.JPanel {
         pnkarbantarto = new javax.swing.JMenuItem();
         DataLoader = new javax.swing.JMenuItem();
         Mernoki = new javax.swing.JMenuItem();
+        jCheckBoxMenuItem1 = new javax.swing.JCheckBoxMenuItem();
         jScrollPane1 = new javax.swing.JScrollPane();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -297,6 +298,9 @@ public class Tc_Besheet extends javax.swing.JPanel {
             }
         });
         JPopupMenu1.add(Mernoki);
+
+        jCheckBoxMenuItem1.setText("Kalkulátor ablak");
+        JPopupMenu1.add(jCheckBoxMenuItem1);
 
         setComponentPopupMenu(JPopupMenu1);
         setPreferredSize(new java.awt.Dimension(1800, 700));
@@ -1697,8 +1701,9 @@ public class Tc_Besheet extends javax.swing.JPanel {
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
     public javax.swing.JCheckBox jCheckBox1;
-    public static javax.swing.JCheckBox jCheckBox2;
+    public javax.swing.JCheckBox jCheckBox2;
     public javax.swing.JCheckBox jCheckBox3;
+    public javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
     public javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

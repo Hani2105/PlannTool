@@ -1518,6 +1518,9 @@ public class Tc_Besheet extends javax.swing.JPanel {
             Tc_Betervezo.szelessegek.add(jTable2.getColumnModel().getColumn(i).getWidth());
 
         }
+        
+        Tc_Calcablakszal c = new Tc_Calcablakszal(this, Tc_Betervezo.calculatorablaktarolo.get(0));
+        c.start();
 
     }//GEN-LAST:event_jTable2MouseReleased
 

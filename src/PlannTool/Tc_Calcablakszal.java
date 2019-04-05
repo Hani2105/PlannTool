@@ -34,59 +34,63 @@ public class Tc_Calcablakszal extends Thread {
 //ha a teljes időintervallumra vagyunk kiváncsiak
         if (this.c.jRadioButton2.isSelected()) {
 
+            try {
+
 //elkezdjük bejárni a táblát
-            for (int r = 0; r < this.b.jTable2.getRowCount(); r++) {
+                for (int r = 0; r < this.b.jTable2.getRowCount(); r++) {
 
 //megnezzük , hogy foglalkoztunk e már vele (pn,ws,terv vagy tény)
-                boolean irtunke = false;
-                Integer melyiksor = 0;
+                    boolean irtunke = false;
+                    Integer melyiksor = 0;
 
-                for (int i = 0; i < model.getRowCount(); i++) {
-                    try {
-                        if (model.getValueAt(i, 0).equals(this.b.jTable2.getValueAt(r, 0)) && model.getValueAt(i, 1).equals(this.b.jTable2.getValueAt(r, 2)) && model.getValueAt(i, 2).equals(this.b.jTable2.getValueAt(r, 3))) {
+                    for (int i = 0; i < model.getRowCount(); i++) {
+                        try {
+                            if (model.getValueAt(i, 0).equals(this.b.jTable2.getValueAt(r, 0)) && model.getValueAt(i, 1).equals(this.b.jTable2.getValueAt(r, 2)) && model.getValueAt(i, 2).equals(this.b.jTable2.getValueAt(r, 3))) {
 
-                            irtunke = true;
-                            melyiksor = i;
+                                irtunke = true;
+                                melyiksor = i;
+                            }
+                        } catch (Exception e) {
                         }
-                    } catch (Exception e) {
-                    }
 
-                }
+                    }
 
 //ha nem írtunk létre kell hozni a modellben egy új sort és nem info sorban vagyunk
-                if (!irtunke && !this.b.jTable2.getValueAt(r, 3).equals("Infó")) {
+                    if (!irtunke && !this.b.jTable2.getValueAt(r, 3).equals("Infó")) {
 
-                    model.addRow(new Object[]{this.b.jTable2.getValueAt(r, 0), this.b.jTable2.getValueAt(r, 2), this.b.jTable2.getValueAt(r, 3), null});
+                        model.addRow(new Object[]{this.b.jTable2.getValueAt(r, 0), this.b.jTable2.getValueAt(r, 2), this.b.jTable2.getValueAt(r, 3), null});
 
 //vegigrohanunk az oszlopokon es összeadjuk az összeget majd beírjuk az utolsó helyre
-                    int osszeg = 0;
-                    for (int o = 4; o < this.b.jTable2.getColumnCount() - 2; o++) {
+                        int osszeg = 0;
+                        for (int o = 4; o < this.b.jTable2.getColumnCount() - 2; o++) {
 
-                        osszeg += new Tc_Stringbolint(this.b.jTable2.getValueAt(r, o).toString()).db;
+                            osszeg += new Tc_Stringbolint(this.b.jTable2.getValueAt(r, o).toString()).db;
+
+                        }
+
+                        model.setValueAt(osszeg, model.getRowCount() - 1, 3);
 
                     }
-
-                    model.setValueAt(osszeg, model.getRowCount() - 1, 3);
-
-                }
 
 //ha írtunk akkor össze kell adni a táblában szereplő összeget 
-                if (irtunke) {
+                    if (irtunke) {
 
-                    int osszeg = 0;
-                    for (int o = 4; o < this.b.jTable2.getColumnCount() - 1; o++) {
+                        int osszeg = 0;
+                        for (int o = 4; o < this.b.jTable2.getColumnCount() - 1; o++) {
 
-                        osszeg += new Tc_Stringbolint(this.b.jTable2.getValueAt(r, o).toString()).db;
+                            osszeg += new Tc_Stringbolint(this.b.jTable2.getValueAt(r, o).toString()).db;
+
+                        }
+
+                        model.setValueAt(Integer.parseInt(model.getValueAt(melyiksor, 3).toString()) + osszeg, melyiksor, 3);
 
                     }
 
-                    model.setValueAt(Integer.parseInt(model.getValueAt(melyiksor, 3).toString()) + osszeg, melyiksor, 3);
-
                 }
 
+                this.c.jTable1.setModel(model);
+            } catch (Exception e) {
             }
-
-            this.c.jTable1.setModel(model);
 
         }
 
@@ -94,58 +98,128 @@ public class Tc_Calcablakszal extends Thread {
         if (this.c.jRadioButton1.isSelected()) {
 
 //elkezdjük bejárni a táblát
-            for (int r = 0; r < this.b.jTable2.getSelectedRow()+1; r++) {
+            try {
+                for (int r = 0; r < this.b.jTable2.getSelectedRow() + 1; r++) {
 
 //megnezzük , hogy foglalkoztunk e már vele (pn,ws,terv vagy tény)
-                boolean irtunke = false;
-                Integer melyiksor = 0;
+                    boolean irtunke = false;
+                    Integer melyiksor = 0;
 
-                for (int i = 0; i < model.getRowCount(); i++) {
-                    try {
-                        if (model.getValueAt(i, 0).equals(this.b.jTable2.getValueAt(r, 0)) && model.getValueAt(i, 1).equals(this.b.jTable2.getValueAt(r, 2)) && model.getValueAt(i, 2).equals(this.b.jTable2.getValueAt(r, 3))) {
+                    for (int i = 0; i < model.getRowCount(); i++) {
+                        try {
+                            if (model.getValueAt(i, 0).equals(this.b.jTable2.getValueAt(r, 0)) && model.getValueAt(i, 1).equals(this.b.jTable2.getValueAt(r, 2)) && model.getValueAt(i, 2).equals(this.b.jTable2.getValueAt(r, 3))) {
 
-                            irtunke = true;
-                            melyiksor = i;
+                                irtunke = true;
+                                melyiksor = i;
+                            }
+                        } catch (Exception e) {
                         }
-                    } catch (Exception e) {
-                    }
 
-                }
+                    }
 
 //ha nem írtunk létre kell hozni a modellben egy új sort és nem info sorban vagyunk
-                if (!irtunke && !b.jTable2.getValueAt(r, 3).equals("Infó")) {
+                    if (!irtunke && !b.jTable2.getValueAt(r, 3).equals("Infó")) {
 
-                    model.addRow(new Object[]{this.b.jTable2.getValueAt(r, 0), this.b.jTable2.getValueAt(r, 2), this.b.jTable2.getValueAt(r, 3), null});
+                        model.addRow(new Object[]{this.b.jTable2.getValueAt(r, 0), this.b.jTable2.getValueAt(r, 2), this.b.jTable2.getValueAt(r, 3), null});
 
 //vegigrohanunk az oszlopokon es összeadjuk az összeget majd beírjuk az utolsó helyre
-                    int osszeg = 0;
-                    for (int o = 4; o < b.jTable2.getSelectedColumn()+1; o++) {
+                        int osszeg = 0;
+                        for (int o = 4; o < b.jTable2.getSelectedColumn() + 1; o++) {
 
-                        osszeg += new Tc_Stringbolint(this.b.jTable2.getValueAt(r, o).toString()).db;
+                            osszeg += new Tc_Stringbolint(this.b.jTable2.getValueAt(r, o).toString()).db;
+
+                        }
+
+                        model.setValueAt(osszeg, model.getRowCount() - 1, 3);
 
                     }
-
-                    model.setValueAt(osszeg, model.getRowCount() - 1, 3);
-
-                }
 
 //ha írtunk akkor össze kell adni a táblában szereplő összeget 
-                if (irtunke) {
+                    if (irtunke) {
 
-                    int osszeg = 0;
-                    for (int o = 4; o < this.b.jTable2.getSelectedColumn()+1; o++) {
+                        int osszeg = 0;
+                        for (int o = 4; o < this.b.jTable2.getSelectedColumn() + 1; o++) {
 
-                        osszeg += new Tc_Stringbolint(this.b.jTable2.getValueAt(r, o).toString()).db;
+                            osszeg += new Tc_Stringbolint(this.b.jTable2.getValueAt(r, o).toString()).db;
+
+                        }
+
+                        model.setValueAt(Integer.parseInt(model.getValueAt(melyiksor, 3).toString()) + osszeg, melyiksor, 3);
 
                     }
 
-                    model.setValueAt(Integer.parseInt(model.getValueAt(melyiksor, 3).toString()) + osszeg, melyiksor, 3);
+                }
+
+                this.c.jTable1.setModel(model);
+            } catch (Exception e) {
+            }
+
+        }
+
+//ha a kijelölésre vagyunk kiváncsiak
+        if (this.c.jRadioButton3.isSelected()) {
+
+//elkezdjük bejárni a táblát
+//kiszedjük a kiválasztott sorokat
+            try {
+                int[] sorok = b.jTable2.getSelectedRows();
+                for (int r = sorok[0]; r <= sorok[sorok.length - 1]; r++) {
+
+//megnezzük , hogy foglalkoztunk e már vele (pn,ws,terv vagy tény)
+                    boolean irtunke = false;
+                    Integer melyiksor = 0;
+
+                    for (int i = 0; i < model.getRowCount(); i++) {
+                        try {
+                            if (model.getValueAt(i, 0).equals(this.b.jTable2.getValueAt(r, 0)) && model.getValueAt(i, 1).equals(this.b.jTable2.getValueAt(r, 2)) && model.getValueAt(i, 2).equals(this.b.jTable2.getValueAt(r, 3))) {
+
+                                irtunke = true;
+                                melyiksor = i;
+                            }
+                        } catch (Exception e) {
+                        }
+
+                    }
+
+//ha nem írtunk létre kell hozni a modellben egy új sort és nem info sorban vagyunk
+                    if (!irtunke && !b.jTable2.getValueAt(r, 3).equals("Infó")) {
+
+                        model.addRow(new Object[]{this.b.jTable2.getValueAt(r, 0), this.b.jTable2.getValueAt(r, 2), this.b.jTable2.getValueAt(r, 3), null});
+
+//vegigrohanunk az oszlopokon es összeadjuk az összeget majd beírjuk az utolsó helyre
+                        int osszeg = 0;
+                        int[] oszlopok = b.jTable2.getSelectedColumns();
+
+                        for (int o = oszlopok[0]; o <= oszlopok[oszlopok.length - 1]; o++) {
+
+                            osszeg += new Tc_Stringbolint(this.b.jTable2.getValueAt(r, o).toString()).db;
+
+                        }
+
+                        model.setValueAt(osszeg, model.getRowCount() - 1, 3);
+
+                    }
+
+//ha írtunk akkor össze kell adni a táblában szereplő összeget 
+                    if (irtunke) {
+
+                        int osszeg = 0;
+                        int[] oszlopok = b.jTable2.getSelectedColumns();
+                        for (int o = oszlopok[0]; o <= oszlopok[oszlopok.length - 1]; o++) {
+
+                            osszeg += new Tc_Stringbolint(this.b.jTable2.getValueAt(r, o).toString()).db;
+
+                        }
+
+                        model.setValueAt(Integer.parseInt(model.getValueAt(melyiksor, 3).toString()) + osszeg, melyiksor, 3);
+
+                    }
 
                 }
 
+                this.c.jTable1.setModel(model);
+            } catch (Exception e) {
             }
-
-            this.c.jTable1.setModel(model);
 
         }
 

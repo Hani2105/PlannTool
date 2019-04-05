@@ -41,6 +41,7 @@ public class Tc_Calcablak extends javax.swing.JFrame {
         jTable1 = new javax.swing.JTable();
         jRadioButton1 = new javax.swing.JRadioButton();
         jRadioButton2 = new javax.swing.JRadioButton();
+        jRadioButton3 = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Összegző");
@@ -75,6 +76,9 @@ public class Tc_Calcablak extends javax.swing.JFrame {
         jRadioButton2.setText("Összesen");
         jRadioButton2.setToolTipText("A lekérdezett időintervallumot figyelembe véve!");
 
+        buttonGroup1.add(jRadioButton3);
+        jRadioButton3.setText("Kijelölés");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -82,7 +86,10 @@ public class Tc_Calcablak extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jRadioButton1)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jRadioButton1)
+                        .addGap(56, 56, 56)
+                        .addComponent(jRadioButton3))
                     .addComponent(jRadioButton2))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
@@ -93,7 +100,9 @@ public class Tc_Calcablak extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jRadioButton1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jRadioButton1)
+                    .addComponent(jRadioButton3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jRadioButton2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -150,6 +159,7 @@ public class Tc_Calcablak extends javax.swing.JFrame {
     private javax.swing.ButtonGroup buttonGroup1;
     public static javax.swing.JRadioButton jRadioButton1;
     public static javax.swing.JRadioButton jRadioButton2;
+    public static javax.swing.JRadioButton jRadioButton3;
     private javax.swing.JScrollPane jScrollPane1;
     public static javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables

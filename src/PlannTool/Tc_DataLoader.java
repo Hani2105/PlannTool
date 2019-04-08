@@ -67,7 +67,7 @@ public class Tc_DataLoader extends javax.swing.JFrame {
                 for (int n = 0; n < jTable2.getRowCount(); n++) {
 
 //ha megtaláljuk ugyan azt a job pn és ws kombot akkor false-ra állítjuk
-                    if (jTable2.getValueAt(n, 0).equals(pn) && jTable2.getValueAt(n, 1).equals(job) && jTable2.getValueAt(n, 2).equals(ws)) {
+                    if (jTable2.getValueAt(n, 0).equals(job) && jTable2.getValueAt(n, 1).equals(pn) && jTable2.getValueAt(n, 2).equals(ws)) {   
 
                         foglalkozni = false;
 
@@ -80,7 +80,7 @@ public class Tc_DataLoader extends javax.swing.JFrame {
 //ha olyan sorban vagyunk ahol egyezik a job , pn és ws
 
                         try {
-                            if (b.jTable2.getValueAt(r, 1).toString().equals(job) && b.jTable2.getValueAt(r, 0).toString().equals(pn) && b.jTable2.getValueAt(r, 2).toString().equals(ws)) {
+                            if (b.jTable2.getValueAt(r, 1).toString().equals(job) && b.jTable2.getValueAt(r, 0).toString().equals(pn) && b.jTable2.getValueAt(r, 2).toString().equals(ws) && b.jTable2.getValueAt(r, 3).toString().equals("Terv") ) {
 //vegigmegyunk az oszes oszlopon is
                                 for (int o = 4; o < b.jTable2.getColumnCount(); o++) {
 //ha van valami az adott cellában ráuszítjuk az érték kiszedőt és hozzáadjuk a databhoz
@@ -143,6 +143,7 @@ public class Tc_DataLoader extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jTable1);
         jTable1.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 
+        jTable2.setAutoCreateRowSorter(true);
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 

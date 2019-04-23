@@ -75,6 +75,11 @@ public class Tc_Oszlopallito extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Oszlop szélesség");
         setAlwaysOnTop(true);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jSlider1.setMaximum(200);
         jSlider1.setValue(70);
@@ -141,7 +146,7 @@ public class Tc_Oszlopallito extends javax.swing.JFrame {
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 296, Short.MAX_VALUE)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(51, 51, 51)
                                 .addComponent(jRadioButton1)
@@ -216,6 +221,21 @@ public class Tc_Oszlopallito extends javax.swing.JFrame {
         Tc_Betervezo.allitsuke = 2;
 
     }//GEN-LAST:event_jRadioButton3ActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // feltoltjuk az adatokat az adatbazisba
+
+        //összeallitjuk az adatokbol az ertekeket stringe
+        String ertekek = String.valueOf(Tc_Betervezo.slider1) + "," + String.valueOf(Tc_Betervezo.slider2) + "," + String.valueOf(Tc_Betervezo.allitsuke);
+
+        String query = "Update tc_users set osz = ('" + ertekek + "') where tc_users.username = '" + ablak.user + "'";
+
+        planconnect pc = new planconnect();
+        pc.feltolt(query, false);
+        pc.kinyir();
+
+
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments

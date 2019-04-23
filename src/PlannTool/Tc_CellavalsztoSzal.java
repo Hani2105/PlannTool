@@ -68,7 +68,13 @@ public class Tc_CellavalsztoSzal extends Thread {
             }
 
         }
+        
+        
         animation.rajzol = false;
+//megnyitunk egy időpont bekérést
+
+      Tc_Idointervallum i = new Tc_Idointervallum();
+      i.setVisible(true);
         
 
     }

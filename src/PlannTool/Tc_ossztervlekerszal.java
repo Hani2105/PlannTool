@@ -32,9 +32,9 @@ public class Tc_ossztervlekerszal extends Thread {
 
     public void run() {
 
-        Tc_Betervezo.jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/dall1.png")));
+        
 
-        int comboertek = Tc_Betervezo.jComboBox1.getSelectedIndex();
+        Tc_Betervezo.nezetvaltas = true;
         //eltesszuk az adatokat az ellenorzeshez , hogy valtozott e a terv
         Tc_Tervvaltozasellenor.tervellenor.clear();
         Tc_Tervvaltozasellenor t = new Tc_Tervvaltozasellenor();
@@ -47,7 +47,7 @@ public class Tc_ossztervlekerszal extends Thread {
         }
 
         try {
-            Tc_Betervezo.jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/lekergig.gif")));
+           
         } catch (Exception e) {
         }
         //ciklust indítunk és végrehajtjuk a lekért cellákon a dátum beállítást
@@ -66,12 +66,6 @@ public class Tc_ossztervlekerszal extends Thread {
         String first = "";
         String second = "";
 
-        try {
-            first = df.format(Tc_Betervezo.jDateChooser1.getDate());
-            second = df.format(Tc_Betervezo.jDateChooser2.getDate());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
         Date one = null;
         Date two = null;
@@ -95,7 +89,7 @@ public class Tc_ossztervlekerszal extends Thread {
 
         //oszlopok neve a datumbol
         Calendar c = Calendar.getInstance();
-        c.setTime(Tc_Betervezo.jDateChooser1.getDate());
+       
         Date dt = new Date();
         dt = c.getTime();
         org.joda.time.format.DateTimeFormatter fmt = DateTimeFormat.forPattern("yyyy-MM-dd");
@@ -139,7 +133,7 @@ public class Tc_ossztervlekerszal extends Thread {
             for (int i = 0; i < napok; i++) {
 //itt a bibi!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 //ha 12 órás a műszakrend 2 szer
-                if (comboertek == 0) {
+                if (Tc_Betervezo.comboertek == 0) {
                     for (int k = 0; k < 2; k++) {
 
                         if (k == 0) {
@@ -159,7 +153,7 @@ public class Tc_ossztervlekerszal extends Thread {
                 }
 
                 //ha 8 órás 3 szor
-                if (comboertek == 1) {
+                if (Tc_Betervezo.comboertek == 1) {
                     for (int k = 0; k < 3; k++) {
 
                         if (k == 0) {

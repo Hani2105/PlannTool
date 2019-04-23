@@ -23,6 +23,17 @@ public class Tc_Calculator {
 
         this.b = b;
 
+//ha sorbarendezett nezet van
+        if (Tc_Betervezo.nezet == 1 && Tc_Betervezo.nezetvaltas) {
+
+            Tc_Betervezo.calc = 1;
+            Tc_AdatInterface a = new Tc_AdatInterface(b);
+            a.adatbatoltnezetvaltas();
+            a.tablabatolt();
+            Tc_Betervezo.nezetvaltas = false;
+
+        }
+
         String sheetname = "";
         try {
             sheetname = Tc_Betervezo.Tervezotabbed.getTitleAt(Tc_Betervezo.Tervezotabbed.getSelectedIndex());
@@ -218,8 +229,7 @@ public class Tc_Calculator {
             }
 
         } //ha össz összeadás van!
-        else if (Tc_Betervezo.calc
-                == 2) {
+        else if (Tc_Betervezo.calc  == 2) {
             //bejarjuk a sorokat , felvesszuk a ws-t , a job -ot es a pn-t , terv/tenyt , darabszamot
             String pn = "";
             String job = "";
@@ -276,15 +286,15 @@ public class Tc_Calculator {
                 } catch (Exception e) {
                 }
 
-                //ha lefutott a ciklus beírjuk az utolsó oszlopba
+//ha lefutott a ciklus beírjuk az utolsó oszlopba
                 model.setValueAt(qty, i, model.getColumnCount() - 1);
 
             }
 
-        } //Ha az adott időpontig vagyunk kiváncsiak az eredményre!
-        else if (Tc_Betervezo.calc
-                == 3) {
-            //bejarjuk a sorokat , felvesszuk a ws-t , a job -ot es a pn-t , terv/tenyt , darabszamot
+        } 
+//Ha az adott időpontig vagyunk kiváncsiak az eredményre!
+        else if (Tc_Betervezo.calc  == 3) {
+//bejarjuk a sorokat , felvesszuk a ws-t , a job -ot es a pn-t , terv/tenyt , darabszamot
             String pn = "";
             String job = "";
             String ws = "";
@@ -293,7 +303,7 @@ public class Tc_Calculator {
 
             for (int i = 0; i <= this.b.jTable2.getSelectedRow(); i++) {
 
-                //felvesszuk az ertekeket (ha nem info a sor) 
+//felvesszuk az ertekeket (ha nem info a sor) 
                 try {
                     if (!model.getValueAt(i, 3).toString().equals("Infó")) {
                         pn = model.getValueAt(i, 0).toString();
@@ -358,7 +368,7 @@ public class Tc_Calculator {
 
         this.b.jTable2.setModel(model);
 
-        //szelesseg allitas ha engedelyezett
+//szelesseg allitas ha engedelyezett
         TableColumn column = null;
         if (Tc_Betervezo.allitsuke
                 == 1) {
@@ -411,23 +421,23 @@ public class Tc_Calculator {
             this.b.jTable2.changeSelection(cella, this.b.jTable2.getSelectedColumn(), false, false);
 
         }
-//megvizsgaljuk hogy le kell e futtatni az ablakos kalkulátort
 
+//megvizsgaljuk hogy le kell e futtatni az ablakos kalkulátort
 //ha kipipáljuk és még nem visible
-        if (this.b.jCheckBoxMenuItem1.isSelected() && !Tc_Betervezo.calculatorablaktarolo.get(0).letezek) {
+        if (this.b.jCheckBox4.isSelected() && !Tc_Betervezo.calculatorablaktarolo.get(0).letezek) {
 
             Tc_Betervezo.calculatorablaktarolo.get(0).setVisible(true);
             Tc_Betervezo.calculatorablaktarolo.get(0).letezek();
             Tc_Calcablakszal csz = new Tc_Calcablakszal(this.b, Tc_Betervezo.calculatorablaktarolo.get(0));
             csz.start();
 //ha kipipáljuk és már visible
-        } else if (this.b.jCheckBoxMenuItem1.isSelected() && Tc_Betervezo.calculatorablaktarolo.get(0).letezek) {
+        } else if (this.b.jCheckBox4.isSelected() && Tc_Betervezo.calculatorablaktarolo.get(0).letezek) {
 
             Tc_Calcablakszal csz = new Tc_Calcablakszal(this.b, Tc_Betervezo.calculatorablaktarolo.get(0));
             csz.start();
 
         } //ha nem pipáljuk ki és visible       
-        else if (!this.b.jCheckBoxMenuItem1.isSelected() && Tc_Betervezo.calculatorablaktarolo.get(0).letezek) {
+        else if (!this.b.jCheckBox4.isSelected() && Tc_Betervezo.calculatorablaktarolo.get(0).letezek) {
 
             //eltüntetjük
             Tc_Betervezo.calculatorablaktarolo.get(0).setVisible(false);

@@ -5,6 +5,15 @@
  */
 package PlannTool;
 
+import static PlannTool.Tc_Betervezo.slide1;
+import static PlannTool.Tc_Betervezo.slide2;
+import static PlannTool.Tc_Betervezo.slide3;
+import static PlannTool.Tc_Betervezo.slide4;
+import static PlannTool.Tc_Betervezo.slide5;
+import static PlannTool.Tc_Betervezo.slide6;
+import static PlannTool.Tc_Betervezo.slide7;
+import static PlannTool.Tc_Betervezo.slide8;
+import static PlannTool.Tc_Betervezo.slide9;
 import java.awt.event.KeyEvent;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -59,7 +68,6 @@ public class Tc_Bejelentkezes extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jPasswordField1 = new javax.swing.JPasswordField();
-        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -72,7 +80,7 @@ public class Tc_Bejelentkezes extends javax.swing.JFrame {
 
         jLabel2.setText("Jelszó:");
 
-        jButton1.setText("Bejelentkezés plannerként");
+        jButton1.setText("Bejelentkezés");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -86,13 +94,6 @@ public class Tc_Bejelentkezes extends javax.swing.JFrame {
         jPasswordField1.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 jPasswordField1KeyPressed(evt);
-            }
-        });
-
-        jButton2.setText("Nem vagyok Planner!");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
             }
         });
 
@@ -113,8 +114,7 @@ public class Tc_Bejelentkezes extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jPasswordField1)
-                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 191, Short.MAX_VALUE)
-                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 189, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -131,16 +131,14 @@ public class Tc_Bejelentkezes extends javax.swing.JFrame {
                     .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton2)
-                .addContainerGap(47, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -153,113 +151,32 @@ public class Tc_Bejelentkezes extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
-        // TODO add your handling code here:
-        planconnect pc = new planconnect();
-        char[] password = jPasswordField1.getPassword();
-        String pass = "";
-
-        try {
-            pass = String.valueOf(password);
-            //pass = pass.replace("+", "%2B");
-        } catch (Exception e) {
-
-        }
-
-        //proba universal login
-        URL oracle = null;
-        try {
-            oracle = new URL("http://143.116.140.120/api/auth/authlib.php?username=" + jTextField1.getText() + "&password=" + URLEncoder.encode(pass, "UTF-8") + "");
-        } catch (UnsupportedEncodingException ex) {
-            Logger.getLogger(Tc_Bejelentkezes.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (MalformedURLException ex) {
-            Logger.getLogger(Tc_Bejelentkezes.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        BufferedReader in = null;
-        try {
-            in = new BufferedReader(
-                    new InputStreamReader(oracle.openStream()));
-        } catch (IOException ex) {
-            Logger.getLogger(Tc_Bejelentkezes.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        String inputLine = "";
-        String truee = "";
-        try {
-            while ((inputLine = in.readLine()) != null) {
-
-                truee = inputLine;
-            }
-        } catch (IOException ex) {
-            Logger.getLogger(Tc_Bejelentkezes.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        try {
-            in.close();
-        } catch (IOException ex) {
-            Logger.getLogger(Tc_Bejelentkezes.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        //eredeti kód
-        String query = "SELECT job_positions_id as poz , pass FROM planningdb.perm where perm.email like '%" + jTextField1.getText().replace(".", "_") + "%'";
-
-        ResultSet rs = null;
-        try {
-            rs = (ResultSet) pc.planconnect(query);
-        } catch (SQLException ex) {
-            Logger.getLogger(Tc_Bejelentkezes.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Tc_Bejelentkezes.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        try {
-            if (rs.next()) {
-
-                String poz = "";
-                poz = rs.getString(1);
-
-                if (truee.equals("true") && (Integer.parseInt(poz) == 1 || Integer.parseInt(poz) == 2 || Integer.parseInt(poz) == 4)) {
-//sikeres bejelentkezes
-                    ablak.planner = true;
-
-                    if (nyit == true) {
-                        Tc_Betervezo b = new Tc_Betervezo(az);
-                        b.setVisible(true);
-
-                    }
-                    this.dispose();
-                    Tc_Betervezo.gombenged();
-                   
-
-                } else {
-//sikertelen bejelentkezes
-                    ablak.planner = false;
-                    infobox info = new infobox();
-                    info.infoBox("Nem jó jelszó vagy felh. név!", "Hiba!");
-
-                    this.setVisible(true);
-                   
-
-                }
-
-            } else {
-//sikertelen bejelentkezes
-                ablak.planner = false;
-                infobox info = new infobox();
-                info.infoBox("Nem jó jelszó vagy felh. név!", "Hiba!");
-                this.setVisible(true);
-               
-
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(Tc_Bejelentkezes.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Tc_Bejelentkezes.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        bejel();
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jPasswordField1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPasswordField1KeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+
+            bejel();
+
+        }
+
+    }//GEN-LAST:event_jPasswordField1KeyPressed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // TODO add your handling code here:
+
+        this.setVisible(false);
+
+    }//GEN-LAST:event_formWindowClosing
+
+    public void bejel() {
+
+//csak ha valami van írva a felh nevhez es jelszohoz
+        if (jTextField1.getText().length() > 0 && jPasswordField1.getText().length() > 0) {
+
+            // TODO add your handling code here:
             planconnect pc = new planconnect();
             char[] password = jPasswordField1.getPassword();
             String pass = "";
@@ -275,14 +192,13 @@ public class Tc_Bejelentkezes extends javax.swing.JFrame {
             URL oracle = null;
             try {
                 oracle = new URL("http://143.116.140.120/api/auth/authlib.php?username=" + jTextField1.getText() + "&password=" + URLEncoder.encode(pass, "UTF-8") + "");
-            } catch (MalformedURLException ex) {
-                Logger.getLogger(Tc_Bejelentkezes.class.getName()).log(Level.SEVERE, null, ex);
             } catch (UnsupportedEncodingException ex) {
+                Logger.getLogger(Tc_Bejelentkezes.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (MalformedURLException ex) {
                 Logger.getLogger(Tc_Bejelentkezes.class.getName()).log(Level.SEVERE, null, ex);
             }
 
             BufferedReader in = null;
-
             try {
                 in = new BufferedReader(
                         new InputStreamReader(oracle.openStream()));
@@ -294,6 +210,7 @@ public class Tc_Bejelentkezes extends javax.swing.JFrame {
             String truee = "";
             try {
                 while ((inputLine = in.readLine()) != null) {
+
                     truee = inputLine;
                 }
             } catch (IOException ex) {
@@ -311,7 +228,6 @@ public class Tc_Bejelentkezes extends javax.swing.JFrame {
             ResultSet rs = null;
             try {
                 rs = (ResultSet) pc.planconnect(query);
-
             } catch (SQLException ex) {
                 Logger.getLogger(Tc_Bejelentkezes.class.getName()).log(Level.SEVERE, null, ex);
             } catch (ClassNotFoundException ex) {
@@ -323,41 +239,90 @@ public class Tc_Bejelentkezes extends javax.swing.JFrame {
 
                     String poz = "";
                     poz = rs.getString(1);
-
+//sikeres bejelentkezes és planner a jogosultság
                     if (truee.equals("true") && (Integer.parseInt(poz) == 1 || Integer.parseInt(poz) == 2 || Integer.parseInt(poz) == 4)) {
-//sikeres bejelentkezes
+
                         ablak.planner = true;
+                        ablak.muvez = false;
+                        ablak.user = jTextField1.getText();
 
                         if (nyit == true) {
                             Tc_Betervezo b = new Tc_Betervezo(az);
                             b.setVisible(true);
 
                         }
+
+                        userdata();
                         this.dispose();
-                        Tc_Betervezo.gombenged();
-                       
+//ha jó a login de nem planner jogosultsági szint hanem művez
+                    } else if (truee.equals("true") && (Integer.parseInt(poz) == 6 || Integer.parseInt(poz) == 7 || Integer.parseInt(poz) == 8)) {
 
-                    } else {
-//sikertelen bejelentkezes
                         ablak.planner = false;
-                        infobox info = new infobox();
-                        info.infoBox("Nem jó jelszó vagy felh. név!", "Hiba!");
+                        ablak.muvez = true;
+                        ablak.user = jTextField1.getText();
+                        if (nyit == true) {
+                            Tc_Betervezo b = new Tc_Betervezo(az);
+                            b.setVisible(true);
 
-                        this.setVisible(true);
-                       
+                        }
+
+                        userdata();
+                        this.dispose();
+
+                    } //ha jo az universal login de nem planner es nem muvez              
+                    else if (truee.equals("true")) {
+
+                        ablak.planner = false;
+                        ablak.muvez = false;
+                        ablak.user = jTextField1.getText();
+                        infobox info = new infobox();
+                        info.infoBox("Csak olvasási joggal engedlek be!","Figyelem!");
+                        if (nyit == true) {
+                            Tc_Betervezo b = new Tc_Betervezo(az);
+                            b.setVisible(true);
+
+                        }
+
+                        userdata();
+                        this.dispose();
+
+                    } //ha nem jo az universal login
+                    else if (!truee.equals("true")) {
+
+                        ablak.planner = false;
+                        ablak.muvez = false;
+                        ablak.user = "Ismeretlen";
+
+                        infobox info = new infobox();
+                        info.infoBox("Hibás adatok a bejelentkezésnél!", "Hiba!");
 
                     }
 
-                } else {
-//sikertelen bejelentkezes
-                    ablak.planner = false;
-                    infobox info = new infobox();
-                    info.infoBox("Nem jó jelszó vagy felh. név!", "Hiba!");
+                } else if (truee.equals("true")) {
 
-                    this.setVisible(true);
-                   
+                    infobox info = new infobox();
+                    info.infoBox("Nem szerepelsz a Planning adatbázisában , csak megtekintésre engedlek be!", "Figyelem!");
+                    ablak.planner = false;
+                    ablak.muvez = false;
+                    ablak.user = jTextField1.getText();
+                    if (nyit == true) {
+                        Tc_Betervezo b = new Tc_Betervezo(az);
+                        b.setVisible(true);
+
+                    }
+                    userdata();
+                    this.dispose();
+
+                } else if (!truee.equals("true")) {
+
+                    ablak.planner = false;
+                    ablak.muvez = false;
+                    ablak.user = "Ismeretlen";
+                    infobox info = new infobox();
+                    info.infoBox("Hibás adatok a bejelentkezésnél!", "Hiba!");
 
                 }
+
             } catch (SQLException ex) {
                 Logger.getLogger(Tc_Bejelentkezes.class.getName()).log(Level.SEVERE, null, ex);
             } catch (ClassNotFoundException ex) {
@@ -366,40 +331,65 @@ public class Tc_Bejelentkezes extends javax.swing.JFrame {
 
             pc.kinyir();
 
+        } else {
+
+            infobox info = new infobox();
+            info.infoBox("Nem adtál meg Felhasználót / Jelszót!", "Hiba!");
+
         }
 
-    }//GEN-LAST:event_jPasswordField1KeyPressed
+    }
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    public void userdata() {
 
-        //a nem vagyok planner gomb
-        ablak.planner = false;
-        Tc_Betervezo bt = null;
+        planconnect pc = new planconnect();
+        String query = "select tc_users.fs , tc_users.fstyle , tc_users.nezet , tc_users.slides , tc_users.osz  from tc_users where tc_users.username = '" + ablak.user + "'";
+        //System.out.println(query);
 
-        if (nyit == true) {
-            try {
+        try {
+            pc.planconnect(query);
 
-                bt = new Tc_Betervezo(az);
-            } catch (SQLException ex) {
-                Logger.getLogger(Tc_Bejelentkezes.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(Tc_Bejelentkezes.class.getName()).log(Level.SEVERE, null, ex);
+            while (pc.rs.next()) {
+
+                Tc_Betervezo.fs = pc.rs.getString(1);
+                Tc_Betervezo.fstyle = pc.rs.getString(2);
+                Tc_Betervezo.nezet = Integer.parseInt(pc.rs.getString(3));
+                String szamok = pc.rs.getString(4);
+                String[] szamtomb = szamok.split(",");
+                String oszlopszelesseg = pc.rs.getString(5);
+                String[] oszlopszelessegtomb = oszlopszelesseg.split(",");
+                try {
+                    Tc_Betervezo.slide1 = Integer.parseInt(szamtomb[0]);
+                    Tc_Betervezo.slide2 = Integer.parseInt(szamtomb[1]);
+                    Tc_Betervezo.slide3 = Integer.parseInt(szamtomb[2]);
+                    Tc_Betervezo.slide4 = Integer.parseInt(szamtomb[3]);
+                    Tc_Betervezo.slide5 = Integer.parseInt(szamtomb[4]);
+                    Tc_Betervezo.slide6 = Integer.parseInt(szamtomb[5]);
+                    Tc_Betervezo.slide7 = Integer.parseInt(szamtomb[6]);
+                    Tc_Betervezo.slide8 = Integer.parseInt(szamtomb[7]);
+                    Tc_Betervezo.slide9 = Integer.parseInt(szamtomb[8]);
+                    Tc_Betervezo.slider1 = Integer.parseInt(oszlopszelessegtomb[0]);
+                    Tc_Betervezo.slider2 = Integer.parseInt(oszlopszelessegtomb[1]);
+                    Tc_Betervezo.allitsuke = Integer.parseInt(oszlopszelessegtomb[2]);
+
+                } catch (Exception e) {
+
+                }
+
+                //System.out.println(cellak);
             }
-            bt.setVisible(true);
 
+        } catch (SQLException ex) {
+            Logger.getLogger(Tc_Cellavalaszto.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Tc_Cellavalaszto.class.getName()).log(Level.SEVERE, null, ex);
         }
-        this.dispose();
+
         Tc_Betervezo.gombenged();
-       
 
-    }//GEN-LAST:event_jButton2ActionPerformed
+        pc.kinyir();
 
-    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        // TODO add your handling code here:
-
-        this.setVisible(false);
-       
-    }//GEN-LAST:event_formWindowClosing
+    }
 
     /**
      * @param args the command line arguments
@@ -438,7 +428,6 @@ public class Tc_Bejelentkezes extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

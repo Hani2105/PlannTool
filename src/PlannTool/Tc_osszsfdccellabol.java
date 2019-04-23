@@ -59,14 +59,14 @@ public class Tc_osszsfdccellabol extends Thread {
         }
 
         //ha 12 ora van beallitva 12 -t adunk hozza
-        if (Tc_Betervezo.jComboBox1.getSelectedIndex() == 0) {
+        if (Tc_Betervezo.comboertek == 0) {
 
             dt = dt.plusMinutes(719);
 
         }
 
         // ha 8 van beallitva 8 at adunk hozza
-        if (Tc_Betervezo.jComboBox1.getSelectedIndex() == 1) {
+        if (Tc_Betervezo.comboertek== 1) {
 
             dt = dt.plusMinutes(479);
 

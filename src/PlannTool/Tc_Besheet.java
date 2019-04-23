@@ -6,68 +6,30 @@
 package PlannTool;
 
 import static PlannTool.Tc_Betervezo.Besheets;
-import static PlannTool.Tc_Betervezo.jComboBox1;
-
-import static PlannTool.ablak.jTable1;
-import static PlannTool.ablak.jTable2;
-import static PlannTool.ablak.jTextField1;
-import static PlannTool.ablak.model;
-import static PlannTool.ablak.model1;
-
-import java.awt.Color;
-import static java.awt.Frame.MAXIMIZED_BOTH;
-import java.awt.event.ActionEvent;
-import java.net.MalformedURLException;
-import java.net.URL;
+import static PlannTool.Tc_Betervezo.c;
+import static PlannTool.Tc_Betervezo.first;
+import static PlannTool.Tc_Betervezo.one;
+import static PlannTool.Tc_Betervezo.second;
+import static PlannTool.Tc_Betervezo.two;
 import java.sql.SQLException;
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.AbstractAction;
-import javax.swing.Action;
-import javax.swing.DefaultCellEditor;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.RowFilter;
-import javax.swing.event.TableModelEvent;
-import javax.swing.event.TableModelListener;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.JTableHeader;
-import javax.swing.table.TableColumn;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
-import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormat;
-import static PlannTool.Tc_Betervezo.Tervezotabbed;
 import java.text.MessageFormat;
-import java.util.concurrent.ExecutionException;
-import javafx.scene.media.Media;
-import javax.print.PrintService;
-import javax.print.attribute.Attribute;
 import javax.print.attribute.HashPrintRequestAttributeSet;
-
-import javax.print.attribute.PrintRequestAttribute;
 import javax.print.attribute.PrintRequestAttributeSet;
-import javax.print.attribute.standard.Copies;
-import javax.print.attribute.standard.MediaPrintableArea;
-import javax.print.attribute.standard.MediaSizeName;
-import javax.print.attribute.standard.OrientationRequested;
-import java.*;
-import java.awt.print.PageFormat;
-import java.awt.print.Paper;
-import javax.print.PrintServiceLookup;
-import javax.print.attribute.standard.MediaSize;
+import java.awt.Font;
+import static java.awt.Frame.MAXIMIZED_BOTH;
+import org.joda.time.format.DateTimeFormat;
 
 /**
  *
@@ -85,6 +47,7 @@ public class Tc_Besheet extends javax.swing.JPanel {
     public String adat;
 
     public Tc_Besheet(Tc_Betervezo b) throws SQLException, ClassNotFoundException {
+
         initComponents();
 
         jTable2.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
@@ -93,21 +56,39 @@ public class Tc_Besheet extends javax.swing.JPanel {
         this.jTable2.setDefaultRenderer(Object.class, new Tc_TervTooltipRenderer(this));
 
         //letiltjuk a terv mentése gombot ha a planner false
-        if (ablak.planner == false) {
+        if (!ablak.planner && ablak.muvez) {
 
             jButton10.setEnabled(false);
             DeleteRow.setEnabled(false);
             Mernoki.setEnabled(false);
             Szinezo.setEnabled(false);
+            jButton11.setEnabled(true);
 
         } //letiltjuk a teny menteset ha planner van bent
-        else {
+        else if (ablak.planner) {
 
             jButton11.setEnabled(false);
             DeleteRow.setEnabled(true);
             Mernoki.setEnabled(true);
             Szinezo.setEnabled(true);
+            jButton10.setEnabled(true);
+            //ha se nem planner se nem muvez
+        } else if (!ablak.planner && !ablak.muvez) {
+
+            jButton10.setEnabled(false);
+            DeleteRow.setEnabled(false);
+            Mernoki.setEnabled(false);
+            Szinezo.setEnabled(false);
+            jButton11.setEnabled(false);
+
         }
+
+//beállítjuk a betűméretet és stílust
+        jTable2.setFont(new Font(Tc_Betervezo.fstyle, Font.PLAIN, Integer.parseInt(Tc_Betervezo.fs)));
+
+//beállítjuk a jlabelt a felhasznalonak
+        jLabel7.setText(ablak.user);
+
     }
 
     /**
@@ -133,33 +114,31 @@ public class Tc_Besheet extends javax.swing.JPanel {
         Termekleker = new javax.swing.JMenuItem();
         kereses = new javax.swing.JMenuItem();
         pnkarbantarto = new javax.swing.JMenuItem();
-        DataLoader = new javax.swing.JMenuItem();
         Mernoki = new javax.swing.JMenuItem();
-        jCheckBoxMenuItem1 = new javax.swing.JCheckBoxMenuItem();
-        jScrollPane1 = new javax.swing.JScrollPane();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
-        jButton6 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
+        jSeparator2 = new javax.swing.JSeparator();
         jLabel1 = new javax.swing.JLabel();
-        jButton8 = new javax.swing.JButton();
-        jButton10 = new javax.swing.JButton();
         jButton11 = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jButton5 = new javax.swing.JButton();
-        jButton9 = new javax.swing.JButton();
-        jLabel4 = new javax.swing.JLabel();
-        jButton12 = new javax.swing.JButton();
-        jCheckBox1 = new javax.swing.JCheckBox();
+        jButton8 = new javax.swing.JButton();
+        jSeparator3 = new javax.swing.JSeparator();
         jCheckBox2 = new javax.swing.JCheckBox();
+        jCheckBox4 = new javax.swing.JCheckBox();
+        jCheckBox1 = new javax.swing.JCheckBox();
         jCheckBox3 = new javax.swing.JCheckBox();
+        jSeparator4 = new javax.swing.JSeparator();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jTextField2 = new javax.swing.JTextField();
+        jButton4 = new javax.swing.JButton();
+        jButton10 = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
 
         JPopupMenu1.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -270,15 +249,6 @@ public class Tc_Besheet extends javax.swing.JPanel {
         });
         JPopupMenu1.add(pnkarbantarto);
 
-        DataLoader.setText("DataLoader");
-        DataLoader.setToolTipText("A kijelölt sorok adatait grouppolja DataLoader formátumra!");
-        DataLoader.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                DataLoaderActionPerformed(evt);
-            }
-        });
-        JPopupMenu1.add(DataLoader);
-
         Mernoki.setText("Mérnöki gyártás!");
         Mernoki.setToolTipText("Mérnöki gyártás!");
         Mernoki.setEnabled(false);
@@ -298,9 +268,6 @@ public class Tc_Besheet extends javax.swing.JPanel {
             }
         });
         JPopupMenu1.add(Mernoki);
-
-        jCheckBoxMenuItem1.setText("Kalkulátor ablak");
-        JPopupMenu1.add(jCheckBoxMenuItem1);
 
         setComponentPopupMenu(JPopupMenu1);
         setPreferredSize(new java.awt.Dimension(1800, 700));
@@ -347,60 +314,23 @@ public class Tc_Besheet extends javax.swing.JPanel {
             jTable2.getColumnModel().getColumn(3).setPreferredWidth(70);
         }
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/colorc1.png"))); // NOI18N
-        jButton1.setToolTipText("Ter/Tény színezése");
-        jButton1.setBorderPainted(false);
-        jButton1.setContentAreaFilled(false);
-        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jButton1MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                jButton1MouseExited(evt);
-            }
-        });
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1794, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, 0)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 664, Short.MAX_VALUE))
+        );
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/behuzos1.png"))); // NOI18N
-        jButton2.setToolTipText("Behúzós");
-        jButton2.setBorderPainted(false);
-        jButton2.setContentAreaFilled(false);
-        jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jButton2MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                jButton2MouseExited(evt);
-            }
-        });
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
+        jLabel6.setFont(new java.awt.Font("sansserif", 0, 10)); // NOI18N
+        jLabel6.setText("Kereső:");
 
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/search1.png"))); // NOI18N
-        jButton4.setToolTipText("Kereső");
-        jButton4.setBorderPainted(false);
-        jButton4.setContentAreaFilled(false);
-        jButton4.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jButton4MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                jButton4MouseExited(evt);
-            }
-        });
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
-            }
-        });
-
+        jTextField1.setFont(new java.awt.Font("sansserif", 0, 10)); // NOI18N
         jTextField1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 jTextField1MouseEntered(evt);
@@ -409,309 +339,242 @@ public class Tc_Besheet extends javax.swing.JPanel {
                 jTextField1MouseExited(evt);
             }
         });
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField1ActionPerformed(evt);
+            }
+        });
         jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 jTextField1KeyReleased(evt);
             }
         });
 
-        jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/look1.png"))); // NOI18N
-        jButton6.setToolTipText("Nézetváltás (PN / JOB szerint)");
-        jButton6.setBorderPainted(false);
-        jButton6.setContentAreaFilled(false);
-        jButton6.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jButton6MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                jButton6MouseExited(evt);
-            }
-        });
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
-            }
-        });
-
-        jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/email1.png"))); // NOI18N
+        jButton7.setFont(new java.awt.Font("sansserif", 0, 10)); // NOI18N
+        jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/email_kicsi.png"))); // NOI18N
         jButton7.setToolTipText("Műszakjelentés küldése");
         jButton7.setBorderPainted(false);
         jButton7.setContentAreaFilled(false);
-        jButton7.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jButton7MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                jButton7MouseExited(evt);
-            }
-        });
+        jButton7.setMinimumSize(new java.awt.Dimension(10, 10));
+        jButton7.setPreferredSize(new java.awt.Dimension(20, 20));
         jButton7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton7ActionPerformed(evt);
             }
         });
 
+        jSeparator2.setOrientation(javax.swing.SwingConstants.VERTICAL);
+        jSeparator2.setAlignmentX(0.0F);
+        jSeparator2.setAlignmentY(0.0F);
+        jSeparator2.setFont(new java.awt.Font("sansserif", 0, 10)); // NOI18N
+        jSeparator2.setPreferredSize(new java.awt.Dimension(5, 20));
+
+        jLabel1.setFont(new java.awt.Font("sansserif", 0, 10)); // NOI18N
         jLabel1.setText("Nincs elküldve!");
+        jLabel1.setMaximumSize(new java.awt.Dimension(71, 20));
 
-        jButton8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/plan1.png"))); // NOI18N
-        jButton8.setToolTipText("Terv lekérése!");
-        jButton8.setBorderPainted(false);
-        jButton8.setContentAreaFilled(false);
-        jButton8.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jButton8MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                jButton8MouseExited(evt);
-            }
-        });
-        jButton8.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton8ActionPerformed(evt);
-            }
-        });
-
-        jButton10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/save1.png"))); // NOI18N
-        jButton10.setToolTipText("Terv mentése!");
-        jButton10.setBorderPainted(false);
-        jButton10.setContentAreaFilled(false);
-        jButton10.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton10.setVerifyInputWhenFocusTarget(false);
-        jButton10.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButton10.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jButton10MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                jButton10MouseExited(evt);
-            }
-        });
-        jButton10.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton10ActionPerformed(evt);
-            }
-        });
-
-        jButton11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/upload1.png"))); // NOI18N
+        jButton11.setFont(new java.awt.Font("sansserif", 0, 10)); // NOI18N
+        jButton11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/upload_kicsi.png"))); // NOI18N
         jButton11.setToolTipText("Tény mentése!");
         jButton11.setBorderPainted(false);
         jButton11.setContentAreaFilled(false);
-        jButton11.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jButton11MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                jButton11MouseExited(evt);
-            }
-        });
+        jButton11.setMinimumSize(new java.awt.Dimension(48, 10));
+        jButton11.setPreferredSize(new java.awt.Dimension(20, 20));
         jButton11.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton11ActionPerformed(evt);
             }
         });
 
-        jLabel2.setText("Nincs mentve!");
-
+        jLabel3.setFont(new java.awt.Font("sansserif", 0, 10)); // NOI18N
         jLabel3.setText("Nincs mentve!");
+        jLabel3.setPreferredSize(new java.awt.Dimension(67, 20));
 
-        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/osz1.png"))); // NOI18N
-        jButton5.setToolTipText("Oszlop szélesség állítás!");
-        jButton5.setBorderPainted(false);
-        jButton5.setContentAreaFilled(false);
-        jButton5.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jButton5MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                jButton5MouseExited(evt);
-            }
-        });
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        jButton8.setFont(new java.awt.Font("sansserif", 0, 10)); // NOI18N
+        jButton8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/plan_kicsi.png"))); // NOI18N
+        jButton8.setToolTipText("Terv lekérése!");
+        jButton8.setBorderPainted(false);
+        jButton8.setContentAreaFilled(false);
+        jButton8.setMinimumSize(new java.awt.Dimension(10, 10));
+        jButton8.setPreferredSize(new java.awt.Dimension(20, 20));
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                jButton8ActionPerformed(evt);
             }
         });
 
-        jButton9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/calc2.png"))); // NOI18N
-        jButton9.setToolTipText("Kalkulátor sor/össz!");
-        jButton9.setBorderPainted(false);
-        jButton9.setContentAreaFilled(false);
-        jButton9.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jButton9MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                jButton9MouseExited(evt);
-            }
-        });
-        jButton9.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton9ActionPerformed(evt);
-            }
-        });
+        jSeparator3.setOrientation(javax.swing.SwingConstants.VERTICAL);
+        jSeparator3.setAlignmentX(0.0F);
+        jSeparator3.setAlignmentY(0.0F);
+        jSeparator3.setFont(new java.awt.Font("sansserif", 0, 10)); // NOI18N
+        jSeparator3.setPreferredSize(new java.awt.Dimension(5, 20));
 
-        jLabel4.setText("Calc: Időpontig");
-        jLabel4.setMaximumSize(new java.awt.Dimension(67, 15));
-        jLabel4.setMinimumSize(new java.awt.Dimension(67, 15));
-        jLabel4.setPreferredSize(new java.awt.Dimension(67, 15));
+        jCheckBox2.setFont(new java.awt.Font("sansserif", 0, 10)); // NOI18N
+        jCheckBox2.setText("Group PN");
+        jCheckBox2.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
 
-        jButton12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/print2.png"))); // NOI18N
-        jButton12.setToolTipText("Nyomtatás!");
-        jButton12.setBorderPainted(false);
-        jButton12.setContentAreaFilled(false);
-        jButton12.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jButton12MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                jButton12MouseExited(evt);
-            }
-        });
-        jButton12.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton12ActionPerformed(evt);
-            }
-        });
+        jCheckBox4.setFont(new java.awt.Font("sansserif", 0, 10)); // NOI18N
+        jCheckBox4.setText("Kalkulátor ablak:");
+        jCheckBox4.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
 
-        jCheckBox1.setText("First pass only");
+        jCheckBox1.setFont(new java.awt.Font("sansserif", 0, 10)); // NOI18N
+        jCheckBox1.setForeground(new java.awt.Color(255, 0, 4));
+        jCheckBox1.setText("42Q First pass only");
+        jCheckBox1.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jCheckBox1ActionPerformed(evt);
             }
         });
 
-        jCheckBox2.setText("Group PN");
-
-        jCheckBox3.setText("Group by JOB");
+        jCheckBox3.setFont(new java.awt.Font("sansserif", 0, 10)); // NOI18N
+        jCheckBox3.setForeground(new java.awt.Color(255, 0, 4));
+        jCheckBox3.setText("42Q Group by JOB");
+        jCheckBox3.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         jCheckBox3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jCheckBox3ActionPerformed(evt);
             }
         });
 
-        jLabel5.setText("42Q beállítások:");
+        jSeparator4.setOrientation(javax.swing.SwingConstants.VERTICAL);
+        jSeparator4.setAlignmentX(0.0F);
+        jSeparator4.setAlignmentY(0.0F);
+        jSeparator4.setFont(new java.awt.Font("sansserif", 0, 10)); // NOI18N
+        jSeparator4.setPreferredSize(new java.awt.Dimension(5, 20));
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(1138, Short.MAX_VALUE)
-                .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(4, 4, 4))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jCheckBox2)
-                        .addGap(18, 18, 18)))
-                .addComponent(jButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jCheckBox1)
-                    .addComponent(jCheckBox3))
-                .addGap(900, 900, 900))
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(20, 20, 20)
-                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(18, 18, 18)
-                    .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(12, 12, 12)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(1345, Short.MAX_VALUE)))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jCheckBox1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jCheckBox3))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(23, 23, 23)
-                        .addComponent(jLabel5))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(16, 16, 16)
-                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jCheckBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 705, Short.MAX_VALUE)
-                .addContainerGap())
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addGap(11, 11, 11)
-                                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGap(13, 13, 13)
-                            .addComponent(jLabel1))
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGap(16, 16, 16)
-                            .addComponent(jLabel2))
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGap(17, 17, 17)
-                            .addComponent(jLabel3))
-                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addContainerGap(717, Short.MAX_VALUE)))
-        );
+        jLabel2.setFont(new java.awt.Font("sansserif", 0, 10)); // NOI18N
+        jLabel2.setText("Nincs mentve!");
+        jLabel2.setPreferredSize(new java.awt.Dimension(67, 20));
 
-        jScrollPane1.setViewportView(jPanel1);
+        jLabel4.setFont(new java.awt.Font("sansserif", 0, 10)); // NOI18N
+        jLabel4.setText("Terv/Tény sor +");
+        jLabel4.setPreferredSize(new java.awt.Dimension(73, 20));
+
+        jTextField2.setFont(new java.awt.Font("sansserif", 0, 10)); // NOI18N
+        jTextField2.setMinimumSize(new java.awt.Dimension(12, 10));
+        jTextField2.setPreferredSize(new java.awt.Dimension(12, 20));
+
+        jButton4.setFont(new java.awt.Font("sansserif", 0, 8)); // NOI18N
+        jButton4.setText("+");
+        jButton4.setMinimumSize(new java.awt.Dimension(33, 10));
+        jButton4.setPreferredSize(new java.awt.Dimension(33, 20));
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
+        jButton10.setFont(new java.awt.Font("sansserif", 0, 10)); // NOI18N
+        jButton10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/save_kicsi.png"))); // NOI18N
+        jButton10.setToolTipText("Terv mentése!");
+        jButton10.setBorderPainted(false);
+        jButton10.setContentAreaFilled(false);
+        jButton10.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton10.setMinimumSize(new java.awt.Dimension(10, 10));
+        jButton10.setPreferredSize(new java.awt.Dimension(20, 20));
+        jButton10.setVerifyInputWhenFocusTarget(false);
+        jButton10.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton10ActionPerformed(evt);
+            }
+        });
+
+        jLabel5.setFont(new java.awt.Font("sansserif", 0, 10)); // NOI18N
+        jLabel5.setText("Üdv");
+        jLabel5.setPreferredSize(new java.awt.Dimension(18, 20));
+
+        jLabel7.setFont(new java.awt.Font("sansserif", 0, 10)); // NOI18N
+        jLabel7.setText("Ismeretlen");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1800, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jCheckBox2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jCheckBox4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jCheckBox1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jCheckBox3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(11, 11, 11)
+                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 700, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel6)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jCheckBox1)
+                        .addComponent(jCheckBox4)
+                        .addComponent(jCheckBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jCheckBox3))
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(1, 1, 1)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
+
+        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jLabel5, jLabel6, jLabel7, jTextField1});
+
     }// </editor-fold>//GEN-END:initComponents
 
     public void parts() throws SQLException, ClassNotFoundException {
@@ -786,7 +649,6 @@ public class Tc_Besheet extends javax.swing.JPanel {
 
                 Tc_AdatInterface a = new Tc_AdatInterface(this);
                 a.adatbatoltsortorol(r - infsor, r + 1 - infsor);
-
 
             } else {
 
@@ -877,40 +739,6 @@ public class Tc_Besheet extends javax.swing.JPanel {
         Tc_Calculator calc = new Tc_Calculator(this, false, 0);
     }//GEN-LAST:event_InsertRowActionPerformed
 
-    private void jButton1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseEntered
-        // TODO add your handling code here:
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/colorc.png")));
-    }//GEN-LAST:event_jButton1MouseEntered
-
-    private void jButton1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseExited
-        // TODO add your handling code here:
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/colorc1.png")));
-    }//GEN-LAST:event_jButton1MouseExited
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-
-        Tc_Szinvalasztos sz = new Tc_Szinvalasztos(this);
-        sz.setVisible(true);
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jButton2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseEntered
-        // TODO add your handling code here:
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/behuzos.png")));
-    }//GEN-LAST:event_jButton2MouseEntered
-
-    private void jButton2MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseExited
-        // TODO add your handling code here:
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/behuzos1.png")));
-    }//GEN-LAST:event_jButton2MouseExited
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-
-        Tc_Behuzos bh = new Tc_Behuzos();
-        bh.setVisible(true);
-    }//GEN-LAST:event_jButton2ActionPerformed
-
     private void SFDClekeresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SFDClekeresActionPerformed
 
         //sfdc lekeres
@@ -921,67 +749,23 @@ public class Tc_Besheet extends javax.swing.JPanel {
 
     }//GEN-LAST:event_SFDClekeresActionPerformed
 
-    private void jButton4MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton4MouseEntered
-        // TODO add your handling code here:
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/search.png")));
-
-    }//GEN-LAST:event_jButton4MouseEntered
-
-    private void jButton4MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton4MouseExited
-        // TODO add your handling code here:
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/search1.png")));
-    }//GEN-LAST:event_jButton4MouseExited
-
     private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyReleased
         // TODO add your handling code here:
         String query = jTextField1.getText().trim();
-        filter(query);
+        filter(query, this);
 
     }//GEN-LAST:event_jTextField1KeyReleased
 
     private void jTextField1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextField1MouseEntered
         // TODO add your handling code here:
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/search.png")));
+
 
     }//GEN-LAST:event_jTextField1MouseEntered
 
     private void jTextField1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextField1MouseExited
         // TODO add your handling code here:
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/search1.png")));
+
     }//GEN-LAST:event_jTextField1MouseExited
-
-    private void jButton6MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton6MouseEntered
-        // TODO add your handling code here:
-        jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/look.png")));
-    }//GEN-LAST:event_jButton6MouseEntered
-
-    private void jButton6MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton6MouseExited
-        // TODO add your handling code here:
-        jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/look1.png")));
-    }//GEN-LAST:event_jButton6MouseExited
-
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        //nezet atalakítas
-
-   
-         Tc_AdatInterface a = new Tc_AdatInterface(this);
-         a.adatbatoltnezetvaltas();
-         a.tablabatolt();
-         Tc_Calculator c = new Tc_Calculator(this, false, 0);
-         
-
-    }//GEN-LAST:event_jButton6ActionPerformed
-
-    private void jButton7MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton7MouseEntered
-        // TODO add your handling code here:
-        jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/email.png")));
-
-    }//GEN-LAST:event_jButton7MouseEntered
-
-    private void jButton7MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton7MouseExited
-        // TODO add your handling code here:
-        jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/email1.png")));
-    }//GEN-LAST:event_jButton7MouseExited
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         //email kuldes
@@ -998,19 +782,13 @@ public class Tc_Besheet extends javax.swing.JPanel {
 
     }//GEN-LAST:event_jButton7ActionPerformed
 
-    private void jButton8MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton8MouseEntered
-        // TODO add your handling code here:
-
-        jButton8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/plan.png")));
-    }//GEN-LAST:event_jButton8MouseEntered
-
-    private void jButton8MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton8MouseExited
-        jButton8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/plan1.png")));
-    }//GEN-LAST:event_jButton8MouseExited
-
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-//eltesszuk az adatokat az ellenorzeshez , hogy valtozott e a terv
+//visszaallitjuk a nezetvaltas figyelojet
 
+        Tc_Betervezo.nezetvaltas = true;
+
+        //lefuttatjuk az össztervlekért
+        //eltesszuk az adatokat az ellenorzeshez , hogy valtozott e a terv
         Tc_Tervvaltozasellenor.tervellenor.clear();
         Tc_Tervvaltozasellenor t = new Tc_Tervvaltozasellenor();
         try {
@@ -1021,37 +799,41 @@ public class Tc_Besheet extends javax.swing.JPanel {
             Logger.getLogger(Tc_Besheet.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-//eltesszuk az oszlop szelessegeket
-        Tc_Betervezo.szelessegek.clear();
-        for (int i = 0; i < this.jTable2.getColumnCount(); i++) {
-
-            Tc_Betervezo.szelessegek.add(this.jTable2.getColumnModel().getColumn(i).getWidth());
-
-        }
-
-// terv lekérése
-        Besheets.clear();
+        //ciklust indítunk és végrehajtjuk a lekért cellákon a dátum beállítást
+        //bepakoljuk a maptree be a sheeteket ujból
+        Tc_Betervezo.Besheets.clear();
         for (int i = 0; i < Tc_Betervezo.Tervezotabbed.getTabCount(); i++) {
 
             String name = Tc_Betervezo.Tervezotabbed.getTitleAt(i);
 
-            Besheets.put(name, (Tc_Besheet) Tc_Betervezo.Tervezotabbed.getComponentAt(i));
+            Tc_Betervezo.Besheets.put(name, (Tc_Besheet) Tc_Betervezo.Tervezotabbed.getComponentAt(i));
 
         }
 
-        Tc_Leker leker = new Tc_Leker(Tc_Betervezo.Tervezotabbed.getTitleAt(Tc_Betervezo.Tervezotabbed.getSelectedIndex()), "leker");
+        int napok = 0;
+
+        Tc_Napszamolo nap = new Tc_Napszamolo();
+        if (!first.equals("") && !second.equals("")) {
+            napok = nap.daysBetweenUsingJoda(one, two);
+        }
+
+        //oszlopok neve a datumbol
+        Date dt = new Date();
+        dt = c.getTime();
+        org.joda.time.format.DateTimeFormatter fmt = DateTimeFormat.forPattern("yyyy-MM-dd");
+        org.joda.time.format.DateTimeFormatter fmtnap = DateTimeFormat.forPattern("E");
+
+//letrehozunk egy megfelelo jtablet
+//most indítjuk a nagy ciklust amiben végigpörgetjük a sheeteket
+        for (int b = 0; b < Tc_Betervezo.Tervezotabbed.getTabCount(); b++) {
+
+            Tc_Leker leker = new Tc_Leker(Tc_Betervezo.Tervezotabbed.getTitleAt(b), "groupleker");
+
+        }
+
+        Tc_Calculator calc = new Tc_Calculator(Tc_Betervezo.Besheets.get(Tc_Betervezo.Tervezotabbed.getTitleAt(Tc_Betervezo.Tervezotabbed.getSelectedIndex())), false, 0);
 
     }//GEN-LAST:event_jButton8ActionPerformed
-
-    private void jButton10MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton10MouseEntered
-        // TODO add your handling code here:
-        jButton10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/save.png")));
-    }//GEN-LAST:event_jButton10MouseEntered
-
-    private void jButton10MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton10MouseExited
-        // TODO add your handling code here:
-        jButton10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/save1.png")));
-    }//GEN-LAST:event_jButton10MouseExited
 
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
 //terv mentése
@@ -1082,7 +864,7 @@ public class Tc_Besheet extends javax.swing.JPanel {
 
 //ha nem egyezik a rendszernev a tervben szereplo nevvel es planneri joga van
                 try {
-                    if (!pc.rs.getString(1).equals(System.getProperty("user.name")) && (pc.rs.getString(2).equals("1") || pc.rs.getString(2).equals("2") || pc.rs.getString(2).equals("4"))) {
+                    if (!pc.rs.getString(1).equals(ablak.user) && (pc.rs.getString(2).equals("1") || pc.rs.getString(2).equals("2") || pc.rs.getString(2).equals("4"))) {
 
 //kiirjuk az infot hogy ki változtatta a tervét utoljára és felajánljuk hogy letöltsük a változást vagy figyelmen kívül hagyjuk és akkor az a változtatás elvész
                         String[] buttons = {"Lekérem a változást!  :) ", "Felülírom azt a tervet!  :( "};
@@ -1124,7 +906,7 @@ public class Tc_Besheet extends javax.swing.JPanel {
                             Tc_Leker leker = new Tc_Leker(Tc_Betervezo.Tervezotabbed.getTitleAt(Tc_Betervezo.Tervezotabbed.getSelectedIndex()), "mentes");
 
 //updateljuk a nevet a tervben , hogy ne legyen legkozelebb ilyen gond
-                            query = "update tc_terv set tc_terv.user = '" + System.getProperty("user.name") + "' where tc_terv.idtc_becells = (select tc_becells.idtc_cells from tc_becells \n"
+                            query = "update tc_terv set tc_terv.user = '" + ablak.user + "' where tc_terv.idtc_becells = (select tc_becells.idtc_cells from tc_becells \n"
                                     + "where tc_becells.cellname = '" + Tc_Betervezo.Tervezotabbed.getTitleAt(Tc_Betervezo.Tervezotabbed.getSelectedIndex()) + "') and tc_terv.active = 2 and tc_terv.tt = '3' \n"
                                     + "order by tc_terv.timestamp desc , tc_terv.idtc_terv desc limit 1";
                             pc.feltolt(query, false);
@@ -1256,16 +1038,6 @@ public class Tc_Besheet extends javax.swing.JPanel {
 
     }//GEN-LAST:event_jButton10ActionPerformed
 
-    private void jButton11MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton11MouseEntered
-        // TODO add your handling code here:
-        jButton11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/upload.png")));
-    }//GEN-LAST:event_jButton11MouseEntered
-
-    private void jButton11MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton11MouseExited
-        // TODO add your handling code here:
-        jButton11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/upload1.png")));
-    }//GEN-LAST:event_jButton11MouseExited
-
     private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
 
         //kitoroljuk a szurot
@@ -1375,24 +1147,6 @@ public class Tc_Besheet extends javax.swing.JPanel {
 
     }//GEN-LAST:event_SFDCallActionPerformed
 
-    private void jButton5MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton5MouseEntered
-        // TODO add your handling code here:
-        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/osz.png")));
-    }//GEN-LAST:event_jButton5MouseEntered
-
-    private void jButton5MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton5MouseExited
-        // TODO add your handling code here:
-        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/osz1.png")));
-    }//GEN-LAST:event_jButton5MouseExited
-
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        // TODO add your handling code here:
-
-        Tc_Oszlopallito o = new Tc_Oszlopallito(this);
-        o.setVisible(true);
-
-    }//GEN-LAST:event_jButton5ActionPerformed
-
     private void TermeklekerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TermeklekerActionPerformed
         // TODO add your handling code here:
         Tc_AnimationSFDC a = new Tc_AnimationSFDC();
@@ -1406,39 +1160,6 @@ public class Tc_Besheet extends javax.swing.JPanel {
         // TODO add your handling code here:
         jTable2.repaint();
     }//GEN-LAST:event_jScrollPane2MouseMoved
-
-    private void jButton9MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton9MouseEntered
-        // TODO add your handling code here:
-        jButton9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/calc.png")));
-
-    }//GEN-LAST:event_jButton9MouseEntered
-
-    private void jButton9MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton9MouseExited
-        // TODO add your handling code here:
-        jButton9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/calc2.png")));
-    }//GEN-LAST:event_jButton9MouseExited
-
-    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
-
-        if (Tc_Betervezo.calc == 1) {
-            Tc_Betervezo.calc = 2;
-            jLabel4.setText("Calc: Összesen");
-
-        } else if (Tc_Betervezo.calc == 2) {
-
-            Tc_Betervezo.calc = 3;
-            jLabel4.setText("Calc: Időpontig");
-
-        } else if (Tc_Betervezo.calc == 3) {
-
-            Tc_Betervezo.calc = 1;
-            jLabel4.setText("Calc: Soronként");
-
-        }
-
-        Tc_Calculator c = new Tc_Calculator(this, false, 0);
-
-    }//GEN-LAST:event_jButton9ActionPerformed
 
     private void jTable2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable2MouseClicked
         // kalkulátort lefuttatjuk
@@ -1467,7 +1188,7 @@ public class Tc_Besheet extends javax.swing.JPanel {
 
         }
         String query = jTextField1.getText().trim();
-        filter(query);
+        filter(query, this);
 
     }//GEN-LAST:event_keresesActionPerformed
 
@@ -1504,10 +1225,6 @@ public class Tc_Besheet extends javax.swing.JPanel {
 
     }//GEN-LAST:event_jTable2PropertyChange
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton4ActionPerformed
-
     private void jTable2MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable2MouseReleased
         // TODO add your handling code here:
 
@@ -1518,40 +1235,11 @@ public class Tc_Besheet extends javax.swing.JPanel {
             Tc_Betervezo.szelessegek.add(jTable2.getColumnModel().getColumn(i).getWidth());
 
         }
-        
+
         Tc_Calcablakszal c = new Tc_Calcablakszal(this, Tc_Betervezo.calculatorablaktarolo.get(0));
         c.start();
 
     }//GEN-LAST:event_jTable2MouseReleased
-
-    private void jButton12MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton12MouseEntered
-        // TODO add your handling code here:
-        jButton12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/print1.png")));
-    }//GEN-LAST:event_jButton12MouseEntered
-
-    private void jButton12MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton12MouseExited
-        // TODO add your handling code here:
-        jButton12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/print2.png")));
-    }//GEN-LAST:event_jButton12MouseExited
-
-    private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
-        MessageFormat header = new MessageFormat("Report print");
-        MessageFormat footer = new MessageFormat("Page{0,number,integer}");
-
-        try {
-
-            PrintRequestAttributeSet attr = new HashPrintRequestAttributeSet();
-
-            jTable2.print(JTable.PrintMode.FIT_WIDTH, header, footer);
-
-            // jTable2.print(JTable.PrintMode.FIT_WIDTH, header, footer);
-        } catch (java.awt.print.PrinterException e) {
-
-            System.err.format("Cannot print", e.getMessage());
-
-        }// TODO add your handling code here:
-
-    }//GEN-LAST:event_jButton12ActionPerformed
 
     private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
         // TODO add your handling code here:
@@ -1572,13 +1260,6 @@ public class Tc_Besheet extends javax.swing.JPanel {
 
 
     }//GEN-LAST:event_pnkarbantartoActionPerformed
-
-    private void DataLoaderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DataLoaderActionPerformed
-
-        Tc_DataLoader d = new Tc_DataLoader(this);
-        d.setVisible(true);
-
-    }//GEN-LAST:event_DataLoaderActionPerformed
 
     private void MernokiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MernokiActionPerformed
         // TODO add your handling code here:
@@ -1642,10 +1323,10 @@ public class Tc_Besheet extends javax.swing.JPanel {
     }//GEN-LAST:event_MernokiPropertyChange
 
     private void SzinezoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SzinezoActionPerformed
-        
-        Tc_Szinezo sz = new Tc_Szinezo( this);
+
+        Tc_Szinezo sz = new Tc_Szinezo(this);
         sz.setVisible(true);
-        
+
     }//GEN-LAST:event_SzinezoActionPerformed
 
     private void SzinezoPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_SzinezoPropertyChange
@@ -1667,12 +1348,43 @@ public class Tc_Besheet extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jCheckBox3ActionPerformed
 
-    private void filter(String query) {
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField1ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        //aktuális sheet
+        int n = Tc_Betervezo.Tervezotabbed.getSelectedIndex();
+        String neve = Tc_Betervezo.Tervezotabbed.getTitleAt(n);
+        //hozzaadjuk a sorokat
+        DefaultTableModel t2 = new DefaultTableModel();
+        t2 = (DefaultTableModel) Besheets.get(neve).jTable2.getModel();
+
+        for (int i = 0; i < Integer.parseInt(jTextField2.getText()); i++) {
+
+            t2.addRow(new Object[]{null, null, null, "Terv"});
+            t2.addRow(new Object[]{null, null, null, "Tény"});
+
+        }
+
+        Besheets.get(neve).jTable2.setModel(t2);
+
+        //betesszuk a tablabol az adatokat a tablatombbe
+        Tc_AdatInterface a = new Tc_AdatInterface(Besheets.get(neve));
+        a.adatbatoltpluszsor();
+
+        //es az adatokat a tablaba
+        a.tablabatolt();
+
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void filter(String query, Tc_Besheet b) {
 
         DefaultTableModel model = new DefaultTableModel();
-        model = (DefaultTableModel) jTable2.getModel();
+        model = (DefaultTableModel) b.jTable2.getModel();
         TableRowSorter<DefaultTableModel> tr = new TableRowSorter<DefaultTableModel>(model);
-        jTable2.setRowSorter(tr);
+        b.jTable2.setRowSorter(tr);
 
         tr.setRowFilter(RowFilter.regexFilter(query));
 
@@ -1680,7 +1392,6 @@ public class Tc_Besheet extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem CellaAdatok;
-    private javax.swing.JMenuItem DataLoader;
     private javax.swing.JMenuItem DeleteArea;
     public javax.swing.JMenuItem DeleteRow;
     private javax.swing.JMenuItem InsertRow;
@@ -1692,32 +1403,31 @@ public class Tc_Besheet extends javax.swing.JPanel {
     private javax.swing.JMenu SFDCmuveletek;
     public javax.swing.JMenuItem Szinezo;
     private javax.swing.JMenuItem Termekleker;
-    private javax.swing.JButton jButton1;
     public javax.swing.JButton jButton10;
     public javax.swing.JButton jButton11;
-    private javax.swing.JButton jButton12;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
-    private javax.swing.JButton jButton9;
     public javax.swing.JCheckBox jCheckBox1;
     public javax.swing.JCheckBox jCheckBox2;
     public javax.swing.JCheckBox jCheckBox3;
-    public javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
+    public javax.swing.JCheckBox jCheckBox4;
     public javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    public javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JPopupMenu.Separator jSeparator1;
+    private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JSeparator jSeparator3;
+    private javax.swing.JSeparator jSeparator4;
     public javax.swing.JTable jTable2;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField2;
     private javax.swing.JMenuItem kereses;
     public static javax.swing.JMenuItem pnkarbantarto;
     // End of variables declaration//GEN-END:variables

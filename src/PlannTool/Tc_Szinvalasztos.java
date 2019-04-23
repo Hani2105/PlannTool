@@ -143,7 +143,7 @@ public class Tc_Szinvalasztos extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
 
         planconnect pc = new planconnect();
-        String Query = "update tc_users set tc_users.slides = '" + Tc_Betervezo.slide1 + "," + Tc_Betervezo.slide2 + "," + Tc_Betervezo.slide3 + "," + Tc_Betervezo.slide4 + "," + Tc_Betervezo.slide5 + "," + Tc_Betervezo.slide6 + "," + Tc_Betervezo.slide7 + "," + Tc_Betervezo.slide8 + "," + Tc_Betervezo.slide9 + "'" + " where tc_users.username = '" + System.getProperty("user.name") + "'";
+        String Query = "update tc_users set tc_users.slides = '" + Tc_Betervezo.slide1 + "," + Tc_Betervezo.slide2 + "," + Tc_Betervezo.slide3 + "," + Tc_Betervezo.slide4 + "," + Tc_Betervezo.slide5 + "," + Tc_Betervezo.slide6 + "," + Tc_Betervezo.slide7 + "," + Tc_Betervezo.slide8 + "," + Tc_Betervezo.slide9 + "'" + " where tc_users.username = '" + ablak.user + "'";
         pc.feltolt(Query, true);
         this.dispose();
 

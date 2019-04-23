@@ -6,7 +6,7 @@
 package PlannTool;
 
 import static PlannTool.Tc_Betervezo.Besheets;
-import static PlannTool.Tc_Betervezo.jComboBox1;
+
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -30,35 +30,11 @@ public class Tc_Leker {
 
     public Tc_Leker(String sheetname, String miindit) {
 
-        SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd");
-        String first = "";
-        String second = "";
-
-        try {
-            first = df.format(Tc_Betervezo.jDateChooser1.getDate());
-            second = df.format(Tc_Betervezo.jDateChooser2.getDate());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        Date one = null;
-        Date two = null;
         int napok = 0;
-        if (!first.equals("") && !second.equals("")) {
-            try {
-                one = df.parse(first);
-            } catch (ParseException ex) {
-                Logger.getLogger(Tc_Betervezo.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            try {
-                two = df.parse(second);
-            } catch (ParseException ex) {
-                Logger.getLogger(Tc_Betervezo.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
+
         Tc_Napszamolo nap = new Tc_Napszamolo();
-        if (!first.equals("") && !second.equals("")) {
-            napok = nap.daysBetweenUsingJoda(one, two);
+        if (!Tc_Betervezo.first.equals("") && !Tc_Betervezo.second.equals("")) {
+            napok = nap.daysBetweenUsingJoda(Tc_Betervezo.one, Tc_Betervezo.two);
         }
 
         //System.out.println(napok);
@@ -70,10 +46,9 @@ public class Tc_Leker {
         model.setColumnCount(4);
 
         //oszlopok neve a datumbol
-        Calendar c = Calendar.getInstance();
-        c.setTime(Tc_Betervezo.jDateChooser1.getDate());
+//        Calendar c = Calendar.getInstance();
         Date dt = new Date();
-        dt = c.getTime();
+        dt = Tc_Betervezo.c.getTime();
         org.joda.time.format.DateTimeFormatter fmt = DateTimeFormat.forPattern("yyyy-MM-dd");
         org.joda.time.format.DateTimeFormatter fmtnap = DateTimeFormat.forPattern("E");
 
@@ -87,7 +62,7 @@ public class Tc_Leker {
         for (int i = 0; i < napok; i++) {
 
             //ha 12 órás a műszakrend 2 szer
-            if (jComboBox1.getSelectedIndex() == 0) {
+            if (Tc_Betervezo.comboertek == 0) {
                 for (int k = 0; k < 2; k++) {
 
                     szak = (k == 0) ? " 06:00" : " 18:00";
@@ -100,7 +75,7 @@ public class Tc_Leker {
             }
 
             //ha 8 órás 3 szor
-            if (jComboBox1.getSelectedIndex() == 1) {
+            if (Tc_Betervezo.comboertek == 1) {
                 for (int k = 0; k < 3; k++) {
 
                     if (k == 0) {
@@ -153,7 +128,7 @@ public class Tc_Leker {
 
                 for (int n = 0; n < model.getColumnCount(); n++) {
 
-                    Besheets.get(neve).tablaadat[i][n] = new Tc_CellClass("", 0, 0.0 , 0);
+                    Besheets.get(neve).tablaadat[i][n] = new Tc_CellClass("", 0, 0.0, 0);
 
                 }
 
@@ -227,7 +202,7 @@ public class Tc_Leker {
                                 Besheets.get(neve).tablaadat[cellsor][i].engtime = pc.rs.getDouble(9);
                             } catch (Exception e) {
                             }
-                             try {
+                            try {
                                 Besheets.get(neve).tablaadat[cellsor][i].szin = pc.rs.getInt(10);
                             } catch (Exception e) {
                             }
@@ -287,17 +262,11 @@ public class Tc_Leker {
         pc.kinyir();
 
 //bealitjuk az adatokat a tablaba
-
-        
         Tc_AdatInterface a = new Tc_AdatInterface(Besheets.get(neve));
         a.tablabatolt();
         Tc_Calculator calc = new Tc_Calculator(Besheets.get(neve), false, 0);
 
-       
-        
-        
         //lekérdezzük a job adatokat
-
         Tc_Jobinfotoplan j = new Tc_Jobinfotoplan(Besheets.get(neve));
         j.start();
 
@@ -319,6 +288,9 @@ public class Tc_Leker {
             }
 
         }
+
+        //visszaallitjuk a nezetvaltas figyelojet
+        Tc_Betervezo.nezetvaltas = true;
 
     }
 

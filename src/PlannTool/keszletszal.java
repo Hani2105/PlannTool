@@ -86,11 +86,13 @@ public class keszletszal extends Thread {
         // OH tábla
         String mitkeres = ablak.jTextField2.getText().trim();
 
-        String query = "SELECT oracle_backup_subinv.item as partnumber , oracle_backup_subinv.subinv , oracle_backup_subinv.locator , oracle_backup_subinv.quantity FROM trax_mon.oracle_backup_subinv where item like '%" + mitkeres + "%'";
+        String query = "SELECT oracle_backup_subinv.item as partnumber , oracle_backup_subinv.subinv , oracle_backup_subinv.locator , oracle_backup_subinv.quantity , oracle_backup_subinv.exported FROM trax_mon.oracle_backup_subinv where item like '%" + mitkeres + "%'";
         connect onhend = new connect((query));
 
         ablak.model1 = (DefaultTableModel) ablak.jTable2.getModel();
         ablak.model1.setRowCount(0);
+        
+        String exportdate = "";
 
         try {
             while (onhend.rs.next()) {
@@ -100,12 +102,14 @@ public class keszletszal extends Thread {
                 String locator = onhend.rs.getString(3);
                 String qty = onhend.rs.getString(4);
                 ablak.model1.addRow(new Object[]{pn, subinv, locator, qty});
+                exportdate = onhend.rs.getString(5);
 
             }
         } catch (SQLException ex) {
 
         }
 
+        a.jLabel21.setText("Az oracle export parserer futott: " + exportdate);
         ablak.jTable2.setModel(ablak.model1);
 
         //fun

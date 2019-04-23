@@ -28,6 +28,17 @@ public class Jobfigyeloszal extends Thread {
 
         List<String> allomasok = new ArrayList<String>();
         allomasok = ablak.jList1.getSelectedValuesList();
+//ha üres a lista szólunk miatta majd kilépünk
+
+        if (allomasok.size() == 0) {
+
+            infobox i = new infobox();
+            i.infoBox("Nem adtál meg állomásokat!", "Hiba!");
+            animation.rajzol = false;
+            return;
+
+        }
+
         boolean irtunke;
 
         //feldolgozzuk stringge
@@ -143,11 +154,11 @@ public class Jobfigyeloszal extends Thread {
 
                 if (ablak.jTable14.getValueAt(i, 2).toString().equals(rowdata[n][0]) && rowdata[n][5].equals("N")) {
 
-                    model.setValueAt("42Q not released!", i, 5); 
+                    model.setValueAt("42Q not released!", i, 5);
                     irtunke = true;
                 }
 
-                if (ablak.jTable14.getValueAt(i, 2).toString().equals(rowdata[n][0]) && (rowdata[n][4].equals("Traveler Printed") || rowdata[n][4].equals("Unit Skeleton"))&& irtunke == false) {
+                if (ablak.jTable14.getValueAt(i, 2).toString().equals(rowdata[n][0]) && (rowdata[n][4].equals("Traveler Printed") || rowdata[n][4].equals("Unit Skeleton")) && irtunke == false) {
 
                     model.setValueAt(rowdata[n][3], i, 5);
                     irtunke = true;

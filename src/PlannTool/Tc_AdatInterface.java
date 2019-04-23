@@ -15,10 +15,11 @@ import javax.swing.table.DefaultTableModel;
 public class Tc_AdatInterface {
 
     Tc_Besheet b;
-
+   
     public Tc_AdatInterface(Tc_Besheet b) {
 
         this.b = b;
+       
 
     }
 
@@ -47,6 +48,7 @@ public class Tc_AdatInterface {
         }
 
         b.jTable2.setModel(model);
+       
 
     }
 

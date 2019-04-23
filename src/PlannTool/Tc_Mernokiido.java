@@ -48,6 +48,7 @@ public class Tc_Mernokiido extends javax.swing.JFrame {
         setUndecorated(true);
         setOpacity(0.8F);
 
+        jTextField1.setEditable(false);
         jTextField1.setFont(new java.awt.Font("sansserif", 0, 100)); // NOI18N
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

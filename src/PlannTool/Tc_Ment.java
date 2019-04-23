@@ -358,7 +358,7 @@ public class Tc_Ment {
 
                             }
 
-                            feltoltadat += "('" + cellid + "','" + wsid + "','" + pnid + "','" + job + "','" + datum + "','" + terv + "','" + r + "'," + 3 + ",'" + System.getProperty("user.name") + "','" + datum + cellid + wsid + pnid + "3" + job + "','" + teny + "','" + mernoki + "','" + mernokiido + "','" + szin + "'),";
+                            feltoltadat += "('" + cellid + "','" + wsid + "','" + pnid + "','" + job + "','" + datum + "','" + terv + "','" + r + "'," + 3 + ",'" + ablak.user + "','" + datum + cellid + wsid + pnid + "3" + job + "','" + teny + "','" + mernoki + "','" + mernokiido + "','" + szin + "'),";
 
                         }
 
@@ -381,7 +381,7 @@ public class Tc_Ment {
                 pc.feltolt(updatequery, false);
 
                 //feltoltjuk az adatokat 
-                String feltoltquery = "insert ignore tc_terv (tc_terv.idtc_becells , tc_terv.idtc_bestations , tc_terv.idtc_bepns , tc_terv.job , tc_terv.date , tc_terv.qty , tc_terv.wtf , tc_terv.tt , tc_terv.user , tc_terv.pktomig , qty_teny , mernoki , mernokiido , cellaszin) values" + feltoltadat + "on duplicate key update qty = values  (qty) , wtf = values (wtf) , active = (2) , qty_teny = values (qty_teny) , timestamp = now() , user = '" + System.getProperty("user.name") + "' , mernoki = values (mernoki), mernokiido = values (mernokiido) , cellaszin = values (cellaszin)";
+                String feltoltquery = "insert ignore tc_terv (tc_terv.idtc_becells , tc_terv.idtc_bestations , tc_terv.idtc_bepns , tc_terv.job , tc_terv.date , tc_terv.qty , tc_terv.wtf , tc_terv.tt , tc_terv.user , tc_terv.pktomig , qty_teny , mernoki , mernokiido , cellaszin) values" + feltoltadat + "on duplicate key update qty = values  (qty) , wtf = values (wtf) , active = (2) , qty_teny = values (qty_teny) , timestamp = now() , user = '" + ablak.user + "' , mernoki = values (mernoki), mernokiido = values (mernokiido) , cellaszin = values (cellaszin)";
                 pc.feltolt(feltoltquery, true);
 
             }

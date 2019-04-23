@@ -65,11 +65,26 @@ public class Tc_TervTooltipRenderer extends DefaultTableCellRenderer {
 
         }
 //a border beállítása
+//ta terv sorban vagyunk akkor felül
 
-        c.setBorder(BorderFactory.createEtchedBorder(1));
-        c.setHorizontalAlignment(CENTER);
-        c.setIcon(null);
-        c.setToolTipText(null);
+        if (table.getValueAt(row, 3).toString().equals("Terv")) {
+
+            c.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createMatteBorder(1, 0, 0, 0, Color.orange), BorderFactory.createEtchedBorder(1)));
+            //c.setBorder(BorderFactory.createMatteBorder(1, 0, 0, 0, Color.black));
+            c.setHorizontalAlignment(CENTER);
+            c.setIcon(null);
+            c.setToolTipText(null);
+        }
+
+//ha tény sorban vagyunk
+        if (table.getValueAt(row, 3).toString().equals("Tény")) {
+
+            c.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.orange), BorderFactory.createEtchedBorder(1)));
+            //c.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.black));
+            c.setHorizontalAlignment(CENTER);
+            c.setIcon(null);
+            c.setToolTipText(null);
+        }
 
 //kezdjük azzal , hogy kiszinezünk minden sort annak megfelelően , hogy terv vagy tény vagy info
         //infó sorok színezése
@@ -109,7 +124,7 @@ public class Tc_TervTooltipRenderer extends DefaultTableCellRenderer {
                 c.setIcon(null);
                 c.setToolTipText(null);
 
-            } else if (column > 3 && Integer.parseInt(table.getValueAt(row, table.getColumnCount() - 1).toString()) != 0  && table.getValueAt(row, 3).equals("Terv") && ((Integer.parseInt(table.getValueAt(row, table.getColumnCount() - 1).toString())) <= (Integer.parseInt(table.getValueAt(row + 1, table.getColumnCount() - 1).toString())))) {
+            } else if (column > 3 && Integer.parseInt(table.getValueAt(row, table.getColumnCount() - 1).toString()) != 0 && table.getValueAt(row, 3).equals("Terv") && ((Integer.parseInt(table.getValueAt(row, table.getColumnCount() - 1).toString())) <= (Integer.parseInt(table.getValueAt(row + 1, table.getColumnCount() - 1).toString())))) {
 
                 c.setBackground(new Color(Tc_Betervezo.slide7, Tc_Betervezo.slide8, Tc_Betervezo.slide9));
                 c.setIcon(null);
@@ -295,21 +310,21 @@ public class Tc_TervTooltipRenderer extends DefaultTableCellRenderer {
                 String jobtooltip = "<html>";
 
                 for (int i = 0; i < b.jobadat.get(0).length; i++) {
-
+//ha egyezik a jobszam es nem N a statusz , azaz released
                     if (table.getValueAt(row, 1).toString().trim().equals(b.jobadat.get(0)[i][0]) && !b.jobadat.get(0)[i][3].equals("N")) {
 
                         ok = "R";
                         String location = "Skeleton/TP15";
-
+//ha nem üres a workstation és nem null akkor felvesszuk lokációnak az ott szereplő állomást
                         if (!b.jobadat.get(0)[i][1].toString().equals("") && b.jobadat.get(0)[i][1] != null) {
 
                             location = b.jobadat.get(0)[i][1].toString();
                         }
-
+//ha nem írtuk át akkor ugye marad a skeleton tp 15 , és hozzácsapjuk a darabot , ha átrtuk akkor is hozzácsapjuk a darabot
                         jobtooltip += "Location: " + location + " QTY: " + b.jobadat.get(0)[i][2].toString() + "<br>";
 
                     }
-
+//ha pedig a job státusza not released
                     if (table.getValueAt(row, 1).toString().trim().equals(b.jobadat.get(0)[i][0]) && b.jobadat.get(0)[i][3].equals("N")) {
 
                         c.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/n.png")));
@@ -319,11 +334,19 @@ public class Tc_TervTooltipRenderer extends DefaultTableCellRenderer {
                     }
 
                 }
-
-                if (ok.equals("R")) {
+//ha released beállítjuk az ikont es a tooltipet ha nincs a jobtooltip szövegben a skeleton szócska
+                if (ok.equals("R") && !jobtooltip.contains("Skeleton")) {
                     c.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/ok1.png")));
                     c.setToolTipText(jobtooltip);
-                } else if (ok.equals("C")) {
+
+                } //ámde ha benne van a skeleton szócska akkor más ikont állítunk neki
+                else if (ok.equals("R") && jobtooltip.contains("Skeleton")) {
+
+                    c.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/charge1.png")));
+                    c.setToolTipText(jobtooltip);
+
+                } //ha nem letezik akkor beallitjuk az ikont es a tooltipet               
+                else if (ok.equals("C")) {
 
                     c.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/warn1.png")));
                     c.setToolTipText("Does not exist in 42Q!");

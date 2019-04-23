@@ -43,7 +43,7 @@ public class Tc_Cellavalaszto extends javax.swing.JFrame {
             lm1.addElement(rs.getString(2));
 
         }
-        
+
         pc.kinyir();
 
         jList1.setModel(lm1);
@@ -57,10 +57,15 @@ public class Tc_Cellavalaszto extends javax.swing.JFrame {
             jComboBox1.addItem(pc.rs.getString(2));
 
         }
-        
+
         pc.kinyir();
 
-        jComboBox1.setSelectedIndex(-1);
+        try {
+            jComboBox1.setSelectedItem(ablak.user);
+        } catch (Exception e) {
+            jComboBox1.setSelectedIndex(-1);
+
+        }
 
 //        Besheet sheet = new Besheet();
 //        bt.jTabbedPane1.add("valami", sheet);
@@ -85,25 +90,20 @@ public class Tc_Cellavalaszto extends javax.swing.JFrame {
         jComboBox1 = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
         jButton4 = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cella választó");
         setAlwaysOnTop(true);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jScrollPane1.setOpaque(false);
-
         jScrollPane1.setViewportView(jList1);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 120, 170, 310));
-
-        jScrollPane2.setOpaque(false);
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 120, 170, 190));
 
         jList2.setToolTipText("");
         jScrollPane2.setViewportView(jList2);
 
-        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 120, 170, 310));
+        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 120, 170, 190));
 
         jButton1.setText("-->");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -111,7 +111,7 @@ public class Tc_Cellavalaszto extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 120, -1, -1));
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 120, -1, -1));
 
         jButton2.setText("<--");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -119,7 +119,7 @@ public class Tc_Cellavalaszto extends javax.swing.JFrame {
                 jButton2ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 170, -1, -1));
+        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 150, -1, -1));
 
         jButton3.setText("Cellák megnyitása");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -132,18 +132,17 @@ public class Tc_Cellavalaszto extends javax.swing.JFrame {
                 jButton3KeyPressed(evt);
             }
         });
-        getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 10, 130, -1));
+        getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 40, 130, -1));
 
-        jComboBox1.setOpaque(false);
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox1ActionPerformed(evt);
             }
         });
-        getContentPane().add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 10, 190, 30));
+        getContentPane().add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 0, 190, 30));
 
         jLabel1.setText("Felhasználó:");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 10, -1, -1));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 0, 70, 30));
 
         jButton4.setText("Mentés");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
@@ -151,10 +150,7 @@ public class Tc_Cellavalaszto extends javax.swing.JFrame {
                 jButton4ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 290, 70, 30));
-
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/cella.png"))); // NOI18N
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 120, 200, 300));
+        getContentPane().add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 180, 70, 30));
 
         pack();
         setLocationRelativeTo(null);
@@ -188,7 +184,7 @@ public class Tc_Cellavalaszto extends javax.swing.JFrame {
                 querybe += pc.rs.getString(1) + ",";
 
             }
-            
+
             pc.kinyir();
 
             querybe = querybe.substring(0, querybe.length() - 1);
@@ -218,11 +214,23 @@ public class Tc_Cellavalaszto extends javax.swing.JFrame {
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
 
         DefaultListModel lm2 = new DefaultListModel();
+
+        if (jComboBox1.isFocusOwner()) {
+            try {
+
+                ablak.user = jComboBox1.getSelectedItem().toString();
+
+            } catch (Exception e) {
+            }
+        }
+
         if (jComboBox1.getSelectedIndex() != -1) {
-            String query = "select tc_users.cellaids from tc_users where tc_users.username = '" + jComboBox1.getSelectedItem().toString() + "'";
+
+            String query = "select tc_users.cellaids from tc_users where tc_users.username = '" + ablak.user + "'";
             //System.out.println(query);
 
             String cellak = "";
+
             planconnect pc = new planconnect();
             try {
                 pc.planconnect(query);
@@ -230,8 +238,8 @@ public class Tc_Cellavalaszto extends javax.swing.JFrame {
                 while (pc.rs.next()) {
 
                     cellak = pc.rs.getString(1);
-                    //System.out.println(cellak);
 
+                    //System.out.println(cellak);
                 }
 
             } catch (SQLException ex) {
@@ -266,7 +274,7 @@ public class Tc_Cellavalaszto extends javax.swing.JFrame {
                 while (pc.rs.next()) {
                     lm2.addElement(pc.rs.getString(1));
                 }
-                
+
                 pc.kinyir();
 
                 jList2.setModel(lm2);
@@ -281,8 +289,6 @@ public class Tc_Cellavalaszto extends javax.swing.JFrame {
             lm2.removeAllElements();
             jList2.setModel(lm2);
         }
-        
-        
 
 
     }//GEN-LAST:event_jComboBox1ActionPerformed
@@ -316,9 +322,6 @@ public class Tc_Cellavalaszto extends javax.swing.JFrame {
             }
 
         }
-
-        bt.jButton1.setFocusable(false);
-        bt.jButton3.requestFocus();
 
         this.setVisible(false);
 
@@ -432,7 +435,6 @@ public class Tc_Cellavalaszto extends javax.swing.JFrame {
     private javax.swing.JButton jButton4;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JList<String> jList1;
     public static javax.swing.JList<String> jList2;
     private javax.swing.JScrollPane jScrollPane1;

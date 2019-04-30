@@ -44,6 +44,7 @@ public class Tc_Jobinfotoplan extends Thread {
         try {
 
             jobszamok = jobszamok.substring(0, jobszamok.length() - 1);
+            jobszamok = jobszamok.replaceAll("[+.^:,/ ]", "");
         } catch (Exception e) {
         }
 
@@ -61,26 +62,33 @@ public class Tc_Jobinfotoplan extends Thread {
             lista.add("Qty");
             lista.add("Unit_Status");
             lista.add("Order_Status");
-            rowdata = (Object[][]) xxx.xmlfeldolg(url, nodelist, lista);
+            try {
+                rowdata = (Object[][]) xxx.xmlfeldolg(url, nodelist, lista);
+            } catch (Exception e) {
+            }
 
         } catch (Exception e) {
         }
 
         b.jobadat.clear();
 
-        String jobadat[][] = new String[rowdata.length][4];
-        for (int i = 0; i < rowdata.length; i++) {
+        try {
+            String jobadat[][] = new String[rowdata.length][5];
 
-            jobadat[i][0] = rowdata[i][0].toString();
-            jobadat[i][1] = rowdata[i][2].toString();
-            jobadat[i][2] = rowdata[i][3].toString();
-            jobadat[i][3] = rowdata[i][5].toString();
-           // jobadat[i][4] = rowdata[i][4].toString();
+            for (int i = 0; i < rowdata.length; i++) {
 
+                jobadat[i][0] = rowdata[i][0].toString();
+                jobadat[i][1] = rowdata[i][2].toString();
+                jobadat[i][2] = rowdata[i][3].toString();
+                jobadat[i][3] = rowdata[i][5].toString();
+                jobadat[i][4] = rowdata[i][4].toString();
+
+            }
+
+            b.jobadat.add(jobadat);
+
+        } catch (Exception e) {
         }
-
-        b.jobadat.add(jobadat);
-
     }
 
 }

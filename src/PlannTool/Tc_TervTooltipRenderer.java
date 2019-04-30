@@ -315,6 +315,14 @@ public class Tc_TervTooltipRenderer extends DefaultTableCellRenderer {
 
                         ok = "R";
                         String location = "Skeleton/TP15";
+
+//ha az unit status unit component akkor átírjuk arra 
+                        if (b.jobadat.get(0)[i][4].equals("Unit Component")) {
+
+                            location = "Unit Component";
+
+                        }
+
 //ha nem üres a workstation és nem null akkor felvesszuk lokációnak az ott szereplő állomást
                         if (!b.jobadat.get(0)[i][1].toString().equals("") && b.jobadat.get(0)[i][1] != null) {
 

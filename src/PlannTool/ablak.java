@@ -67,19 +67,13 @@ public class ablak extends javax.swing.JFrame {
     public static String regirev;
     public static List<String[][]> modelactilist = new ArrayList<>();
     public static List<String[]> wiplist = new ArrayList<>();
-    
 
     public ablak() throws SQLException {
 
         initComponents();
-
-        Revconrolszal r = new Revconrolszal(this);
-        r.start();
-
+        jTabbedPane1.setUI(new MyTabbedPaneUI(jTabbedPane1));
         seticon();
 
-//        Riporterszal riporter = new Riporterszal();
-//        riporter.start();
         jTextField4.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
@@ -125,6 +119,7 @@ public class ablak extends javax.swing.JFrame {
         new ExcelAdapter(jTable4);
         new ExcelAdapter(jTable18);
         new ExcelAdapter(jTable19);
+        new ExcelAdapter(jTable16);
 
         jTable11.getColumnModel().getColumn(0).setCellRenderer(new Tooltiprenderer());
 
@@ -135,7 +130,7 @@ public class ablak extends javax.swing.JFrame {
 
     private void seticon() {
 
-        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("kepek/1.png")));
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("kepek/1.jpg")));
 
     }
 
@@ -308,44 +303,10 @@ public class ablak extends javax.swing.JFrame {
             jButton20 = new javax.swing.JButton();
             jButton19 = new javax.swing.JButton();
             jPanel12 = new javax.swing.JPanel();
-            jButton21 = new javax.swing.JButton();
-            jScrollPane18 = new javax.swing.JScrollPane();
-            jTextArea1 = new javax.swing.JTextArea();
-            jLabel38 = new javax.swing.JLabel();
-            jTextField20 = new javax.swing.JTextField();
-            jLabel41 = new javax.swing.JLabel();
-            jLabel42 = new javax.swing.JLabel();
-            jLabel39 = new javax.swing.JLabel();
-            jTextField21 = new javax.swing.JTextField();
-            jLabel40 = new javax.swing.JLabel();
-            jTextField22 = new javax.swing.JTextField();
-            jButton23 = new javax.swing.JButton();
-            jScrollPane19 = new javax.swing.JScrollPane();
-            jTextArea2 = new javax.swing.JTextArea();
-            jLabel43 = new javax.swing.JLabel();
-            jSeparator1 = new javax.swing.JSeparator();
-            jLabel45 = new javax.swing.JLabel();
-            jLabel46 = new javax.swing.JLabel();
-            jLabel47 = new javax.swing.JLabel();
-            jLabel48 = new javax.swing.JLabel();
-            jTextField23 = new javax.swing.JTextField();
-            jScrollPane20 = new javax.swing.JScrollPane();
-            jTable16 = new javax.swing.JTable();
-            jScrollPane21 = new javax.swing.JScrollPane();
-            jTable17 = new javax.swing.JTable();
-            jLabel49 = new javax.swing.JLabel();
-            jLabel50 = new javax.swing.JLabel();
-            jLabel51 = new javax.swing.JLabel();
-            jTextField24 = new javax.swing.JTextField();
-            jButton24 = new javax.swing.JButton();
-            jRadioButton1 = new javax.swing.JRadioButton();
-            jLabel52 = new javax.swing.JLabel();
-            jRadioButton2 = new javax.swing.JRadioButton();
             jPanel13 = new javax.swing.JPanel();
-            jButton22 = new javax.swing.JButton();
-            jButton25 = new javax.swing.JButton();
-            jProgressBar1 = new javax.swing.JProgressBar();
-            jButton26 = new javax.swing.JButton();
+            jScrollPane18 = new javax.swing.JScrollPane();
+            jTable16 = new javax.swing.JTable();
+            jButton21 = new javax.swing.JButton();
 
             jMenuItem1.setText("Bontás SN-re!");
             jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
@@ -356,16 +317,21 @@ public class ablak extends javax.swing.JFrame {
             jPopupMenu2.add(jMenuItem1);
 
             setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-            setTitle("PlannTool R_2.2");
+            setTitle("PlannTool R_10.0");
             setLocation(new java.awt.Point(500, 300));
 
+            jPanel6.setBackground(new java.awt.Color(255, 255, 255));
             jPanel6.setPreferredSize(new java.awt.Dimension(1100, 550));
             jPanel6.setLayout(new java.awt.BorderLayout());
 
+            jScrollPane7.setBackground(new java.awt.Color(255, 255, 255));
             jScrollPane7.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
             jScrollPane7.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
             jScrollPane7.setPreferredSize(new java.awt.Dimension(1100, 600));
 
+            jTabbedPane1.setBackground(new java.awt.Color(255, 51, 51));
+            jTabbedPane1.setFont(new java.awt.Font("Serif", 0, 12)); // NOI18N
+            jTabbedPane1.setOpaque(true);
             jTabbedPane1.setPreferredSize(new java.awt.Dimension(1100, 550));
             jTabbedPane1.addChangeListener(new javax.swing.event.ChangeListener() {
                 public void stateChanged(javax.swing.event.ChangeEvent evt) {
@@ -413,6 +379,7 @@ public class ablak extends javax.swing.JFrame {
                 }
             });
             jTable1.setComponentPopupMenu(jPopupMenu2);
+            jTable1.setOpaque(false);
             jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
                 public void mouseClicked(java.awt.event.MouseEvent evt) {
                     jTable1MouseClicked(evt);
@@ -811,7 +778,7 @@ public class ablak extends javax.swing.JFrame {
                                         .addComponent(jCheckBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(jCheckBox3, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addComponent(jScrollPane3))))
-                    .addContainerGap(2345, Short.MAX_VALUE))
+                    .addContainerGap(2368, Short.MAX_VALUE))
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(3141, 3141, 3141)
@@ -2013,7 +1980,7 @@ public class ablak extends javax.swing.JFrame {
                         .addGroup(jPanel3Layout.createSequentialGroup()
                             .addGap(38, 38, 38)
                             .addComponent(jLabel29, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addContainerGap(14, Short.MAX_VALUE))
             );
             jPanel3Layout.setVerticalGroup(
                 jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -2033,7 +2000,7 @@ public class ablak extends javax.swing.JFrame {
                             .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGap(0, 30, Short.MAX_VALUE))
+                    .addGap(0, 32, Short.MAX_VALUE))
             );
 
             jTabbedPane1.addTab("SN infó", jPanel3);
@@ -2112,7 +2079,7 @@ public class ablak extends javax.swing.JFrame {
                             .addComponent(jTextField12)))
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                     .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 873, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(60, Short.MAX_VALUE))
+                    .addContainerGap(65, Short.MAX_VALUE))
             );
             jPanel4Layout.setVerticalGroup(
                 jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -2132,7 +2099,7 @@ public class ablak extends javax.swing.JFrame {
                             .addComponent(jLabel17)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                             .addComponent(jTextField12, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addContainerGap(15, Short.MAX_VALUE))
+                    .addContainerGap(11, Short.MAX_VALUE))
             );
 
             jLabel11.getAccessibleContext().setAccessibleDescription("");
@@ -2207,7 +2174,7 @@ public class ablak extends javax.swing.JFrame {
                             .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                     .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 892, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(65, Short.MAX_VALUE))
+                    .addContainerGap(70, Short.MAX_VALUE))
             );
             jPanel5Layout.setVerticalGroup(
                 jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -2513,7 +2480,7 @@ public class ablak extends javax.swing.JFrame {
                                 .addGroup(jPanel7Layout.createSequentialGroup()
                                     .addGap(6, 6, 6)
                                     .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addContainerGap(18, Short.MAX_VALUE))
             );
             jPanel7Layout.setVerticalGroup(
                 jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -2735,7 +2702,7 @@ public class ablak extends javax.swing.JFrame {
                 .addGroup(jPanel9Layout.createSequentialGroup()
                     .addGap(24, 24, 24)
                     .addComponent(jLabel34)
-                    .addContainerGap(46, Short.MAX_VALUE))
+                    .addContainerGap(45, Short.MAX_VALUE))
             );
 
             jTabbedPane1.addTab("BeTervező", jPanel9);
@@ -2797,7 +2764,7 @@ public class ablak extends javax.swing.JFrame {
                     .addComponent(jDateChooser5, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                     .addComponent(jButton18, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(542, Short.MAX_VALUE))
+                    .addContainerGap(530, Short.MAX_VALUE))
             );
             jPanel10Layout.setVerticalGroup(
                 jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -2913,15 +2880,15 @@ public class ablak extends javax.swing.JFrame {
                 jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel11Layout.createSequentialGroup()
                     .addComponent(jScrollPane17, javax.swing.GroupLayout.PREFERRED_SIZE, 992, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
                     .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jButton20, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton19, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                    .addContainerGap(13, Short.MAX_VALUE))
+                    .addContainerGap(17, Short.MAX_VALUE))
             );
             jPanel11Layout.setVerticalGroup(
                 jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jScrollPane17, javax.swing.GroupLayout.DEFAULT_SIZE, 523, Short.MAX_VALUE)
+                .addComponent(jScrollPane17, javax.swing.GroupLayout.DEFAULT_SIZE, 519, Short.MAX_VALUE)
                 .addGroup(jPanel11Layout.createSequentialGroup()
                     .addComponent(jButton20, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(18, 18, 18)
@@ -2931,339 +2898,58 @@ public class ablak extends javax.swing.JFrame {
 
             jTabbedPane1.addTab("Gyártás infó", jPanel11);
 
-            jButton21.setText("Run");
+            jTable16.setModel(new javax.swing.table.DefaultTableModel(
+                new Object [][] {
+                    {null, null, null},
+                    {null, null, null},
+                    {null, null, null},
+                    {null, null, null},
+                    {null, null, null},
+                    {null, null, null},
+                    {null, null, null},
+                    {null, null, null},
+                    {null, null, null},
+                    {null, null, null},
+                    {null, null, null},
+                    {null, null, null},
+                    {null, null, null},
+                    {null, null, null},
+                    {null, null, null},
+                    {null, null, null},
+                    {null, null, null},
+                    {null, null, null},
+                    {null, null, null},
+                    {null, null, null},
+                    {null, null, null},
+                    {null, null, null},
+                    {null, null, null},
+                    {null, null, null},
+                    {null, null, null},
+                    {null, null, null},
+                    {null, null, null},
+                    {null, null, null},
+                    {null, null, null},
+                    {null, null, null}
+                },
+                new String [] {
+                    "Széria szám:", "Konténer szám:", "Létrehozás dátuma:"
+                }
+            ) {
+                boolean[] canEdit = new boolean [] {
+                    true, false, false
+                };
+
+                public boolean isCellEditable(int rowIndex, int columnIndex) {
+                    return canEdit [columnIndex];
+                }
+            });
+            jTable16.setColumnSelectionAllowed(false);
+            jScrollPane18.setViewportView(jTable16);
+
+            jButton21.setText("Lekérdez");
             jButton21.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
                     jButton21ActionPerformed(evt);
-                }
-            });
-
-            jTextArea1.setColumns(20);
-            jTextArea1.setRows(5);
-            jScrollPane18.setViewportView(jTextArea1);
-
-            jLabel38.setText("Logger");
-
-            jLabel41.setText("Sync from before:");
-
-            jLabel42.setText("days");
-
-            jLabel39.setText("Cell name:");
-
-            jLabel40.setText("Revízió kontrol");
-
-            jButton23.setText("Ment");
-            jButton23.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    jButton23ActionPerformed(evt);
-                }
-            });
-
-            jTextArea2.setColumns(20);
-            jTextArea2.setRows(5);
-            jScrollPane19.setViewportView(jTextArea2);
-
-            jLabel43.setText("Leírás");
-
-            jLabel45.setForeground(new java.awt.Color(255, 0, 0));
-            jLabel45.setText("Revízió beállítása!");
-
-            jLabel46.setForeground(new java.awt.Color(255, 0, 0));
-            jLabel46.setText("Adatbázisok szinkronizálása");
-
-            jLabel47.setForeground(new java.awt.Color(255, 0, 0));
-            jLabel47.setText("Aging riport beállításai!");
-
-            jLabel48.setText("Days in wip vagy nagyobb mint:");
-
-            jTable16.setModel(new javax.swing.table.DefaultTableModel(
-                new Object [][] {
-                    {null},
-                    {null},
-                    {null},
-                    {null},
-                    {null},
-                    {null},
-                    {null},
-                    {null},
-                    {null},
-                    {null},
-                    {null},
-                    {null},
-                    {null},
-                    {null},
-                    {null},
-                    {null},
-                    {null},
-                    {null},
-                    {null},
-                    {null},
-                    {null},
-                    {null},
-                    {null},
-                    {null},
-                    {null}
-                },
-                new String [] {
-                    "Email"
-                }
-            ));
-            jScrollPane20.setViewportView(jTable16);
-
-            jTable17.setModel(new javax.swing.table.DefaultTableModel(
-                new Object [][] {
-                    {null},
-                    {null},
-                    {null},
-                    {null},
-                    {null},
-                    {null},
-                    {null},
-                    {null},
-                    {null},
-                    {null},
-                    {null},
-                    {null},
-                    {null},
-                    {null},
-                    {null},
-                    {null},
-                    {null},
-                    {null},
-                    {null},
-                    {null},
-                    {null},
-                    {null},
-                    {null},
-                    {null},
-                    {null}
-                },
-                new String [] {
-                    "Prefix"
-                }
-            ));
-            jScrollPane21.setViewportView(jTable17);
-
-            jLabel49.setText("Fgyelt prefixek:");
-
-            jLabel50.setText("Email lista:");
-
-            jLabel51.setText("Riport kiküldése ezen óra után:");
-
-            jButton24.setText("Ment");
-            jButton24.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    jButton24ActionPerformed(evt);
-                }
-            });
-
-            buttonGroup1.add(jRadioButton1);
-            jRadioButton1.setSelected(true);
-            jRadioButton1.setText("Not Need");
-
-            jLabel52.setText("Restart:");
-
-            buttonGroup1.add(jRadioButton2);
-            jRadioButton2.setText("Needed");
-            jRadioButton2.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    jRadioButton2ActionPerformed(evt);
-                }
-            });
-
-            javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
-            jPanel12.setLayout(jPanel12Layout);
-            jPanel12Layout.setHorizontalGroup(
-                jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel12Layout.createSequentialGroup()
-                    .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jSeparator1)
-                        .addGroup(jPanel12Layout.createSequentialGroup()
-                            .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel12Layout.createSequentialGroup()
-                                        .addGap(37, 37, 37)
-                                        .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addGroup(jPanel12Layout.createSequentialGroup()
-                                                .addComponent(jLabel40, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(162, 162, 162)
-                                                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addGroup(jPanel12Layout.createSequentialGroup()
-                                                        .addGap(12, 12, 12)
-                                                        .addComponent(jLabel43, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                    .addComponent(jLabel45))
-                                                .addGap(204, 204, 204))
-                                            .addGroup(jPanel12Layout.createSequentialGroup()
-                                                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                                    .addGroup(jPanel12Layout.createSequentialGroup()
-                                                        .addComponent(jTextField22, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addGap(18, 18, 18))
-                                                    .addGroup(jPanel12Layout.createSequentialGroup()
-                                                        .addComponent(jButton23, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addGap(35, 35, 35)))
-                                                .addComponent(jScrollPane19, javax.swing.GroupLayout.PREFERRED_SIZE, 428, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                    .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(jPanel12Layout.createSequentialGroup()
-                                            .addGap(317, 317, 317)
-                                            .addComponent(jLabel38, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGap(220, 220, 220))
-                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel12Layout.createSequentialGroup()
-                                            .addContainerGap()
-                                            .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addGroup(jPanel12Layout.createSequentialGroup()
-                                                    .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                        .addComponent(jLabel39, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addGroup(jPanel12Layout.createSequentialGroup()
-                                                            .addComponent(jTextField20, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                            .addComponent(jLabel42, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                        .addGroup(jPanel12Layout.createSequentialGroup()
-                                                            .addGap(24, 24, 24)
-                                                            .addComponent(jTextField21, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                        .addComponent(jLabel41, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                    .addGap(12, 12, 12))
-                                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel12Layout.createSequentialGroup()
-                                                    .addComponent(jButton21, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
-                                            .addComponent(jScrollPane18, javax.swing.GroupLayout.PREFERRED_SIZE, 429, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                .addGroup(jPanel12Layout.createSequentialGroup()
-                                    .addGap(273, 273, 273)
-                                    .addComponent(jLabel46, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(jPanel12Layout.createSequentialGroup()
-                                    .addContainerGap()
-                                    .addComponent(jRadioButton1)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(jPanel12Layout.createSequentialGroup()
-                                            .addGap(12, 12, 12)
-                                            .addComponent(jRadioButton2))
-                                        .addComponent(jLabel52, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                            .addGap(20, 20, 20)))
-                    .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel12Layout.createSequentialGroup()
-                            .addGap(47, 47, 47)
-                            .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(jPanel12Layout.createSequentialGroup()
-                                        .addComponent(jScrollPane20, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
-                                    .addGroup(jPanel12Layout.createSequentialGroup()
-                                        .addComponent(jLabel50, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addGap(131, 131, 131)))
-                                .addGroup(jPanel12Layout.createSequentialGroup()
-                                    .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel48, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jTextField23, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGap(40, 40, 40)))
-                            .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jScrollPane21, javax.swing.GroupLayout.DEFAULT_SIZE, 188, Short.MAX_VALUE)
-                                    .addComponent(jLabel49, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel51, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addComponent(jTextField24, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addContainerGap(39, Short.MAX_VALUE))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel12Layout.createSequentialGroup()
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel12Layout.createSequentialGroup()
-                                    .addComponent(jLabel47, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(185, 185, 185))
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel12Layout.createSequentialGroup()
-                                    .addComponent(jButton24, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(203, 203, 203))))))
-            );
-            jPanel12Layout.setVerticalGroup(
-                jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel12Layout.createSequentialGroup()
-                    .addGap(7, 7, 7)
-                    .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel46, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel47, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGap(17, 17, 17)
-                    .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel38, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel48, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel51))
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel12Layout.createSequentialGroup()
-                            .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jTextField23, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jTextField24, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel49)
-                                .addComponent(jLabel50))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jScrollPane20, javax.swing.GroupLayout.DEFAULT_SIZE, 337, Short.MAX_VALUE)
-                                .addComponent(jScrollPane21, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jButton24)
-                            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGroup(jPanel12Layout.createSequentialGroup()
-                            .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(jPanel12Layout.createSequentialGroup()
-                                    .addGap(21, 21, 21)
-                                    .addComponent(jLabel41, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(jTextField20, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jLabel42, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                    .addGap(18, 18, 18)
-                                    .addComponent(jLabel39)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jTextField21, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jButton21)
-                                    .addGap(44, 44, 44))
-                                .addGroup(jPanel12Layout.createSequentialGroup()
-                                    .addComponent(jScrollPane18, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                            .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel45)
-                                .addComponent(jLabel40, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addGroup(jPanel12Layout.createSequentialGroup()
-                                    .addComponent(jTextField22, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel52)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(jRadioButton1)
-                                        .addComponent(jRadioButton2))
-                                    .addGap(30, 30, 30)
-                                    .addComponent(jButton23))
-                                .addGroup(jPanel12Layout.createSequentialGroup()
-                                    .addComponent(jLabel43, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(jScrollPane19, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGap(85, 85, 85))))
-            );
-
-            jTabbedPane1.addTab("Sincronizer & Setup", jPanel12);
-
-            jButton22.setText("Anyagoló");
-            jButton22.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    jButton22ActionPerformed(evt);
-                }
-            });
-
-            jButton25.setText("Part properties feltöltő");
-            jButton25.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    jButton25ActionPerformed(evt);
-                }
-            });
-
-            jButton26.setText("CTB");
-            jButton26.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    jButton26ActionPerformed(evt);
                 }
             });
 
@@ -3273,30 +2959,35 @@ public class ablak extends javax.swing.JFrame {
                 jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel13Layout.createSequentialGroup()
                     .addContainerGap()
-                    .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel13Layout.createSequentialGroup()
-                            .addComponent(jButton25, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(18, 18, 18)
-                            .addComponent(jButton22)
-                            .addGap(18, 18, 18)
-                            .addComponent(jButton26))
-                        .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGap(0, 759, Short.MAX_VALUE))
+                    .addComponent(jScrollPane18, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(18, 18, 18)
+                    .addComponent(jButton21)
+                    .addContainerGap(492, Short.MAX_VALUE))
             );
             jPanel13Layout.setVerticalGroup(
                 jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jScrollPane18, javax.swing.GroupLayout.DEFAULT_SIZE, 513, Short.MAX_VALUE)
                 .addGroup(jPanel13Layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jButton22)
-                        .addComponent(jButton25)
-                        .addComponent(jButton26))
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(456, Short.MAX_VALUE))
+                    .addComponent(jButton21)
+                    .addGap(0, 0, Short.MAX_VALUE))
             );
 
-            jTabbedPane1.addTab("Master module", jPanel13);
+            javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
+            jPanel12.setLayout(jPanel12Layout);
+            jPanel12Layout.setHorizontalGroup(
+                jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel12Layout.createSequentialGroup()
+                    .addComponent(jPanel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addContainerGap())
+            );
+            jPanel12Layout.setVerticalGroup(
+                jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel12Layout.createSequentialGroup()
+                    .addComponent(jPanel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addContainerGap())
+            );
+
+            jTabbedPane1.addTab("SN konténer infó", jPanel12);
 
             jScrollPane7.setViewportView(jTabbedPane1);
 
@@ -3448,98 +3139,6 @@ public class ablak extends javax.swing.JFrame {
             }
             pc.kinyir();
             jList1.setModel(lm);
-
-        }
-// ez a setup és a sincron fül , csak roland es en mehetunk be
-        if (i == 10) {
-
-            String username = System.getProperty("user.name");
-            ablak.stat.beir(System.getProperty("user.name"), ablak.jTabbedPane1.getTitleAt(ablak.jTabbedPane1.getSelectedIndex()), "", "gabor.hanacsek@sanmina.com");
-
-            if (!username.equals("gabor_hanacsek") && !username.equals("roland_bognar")) {
-
-                jTabbedPane1.setSelectedIndex(0);
-                infobox info = new infobox();
-
-                info.infoBox("Csak Roli és Hani!", "Hiba!");
-
-            }
-
-// ha mi vagyunk akkor beallitjuk a setupon az aktuális reviziot
-            jTextField22.setText(rev);
-
-//lekerdezgetjuk a riporthoz a cuccokat es feltöltjük a táblákat az adatokkal
-//az email
-            String query = "SELECT * FROM planningdb.tc_riport_email";
-            planconnect pc = new planconnect();
-            int ide = 0;
-            try {
-                pc.planconnect(query);
-                while (pc.rs.next()) {
-
-                    jTable16.setValueAt(pc.rs.getString(2), ide, 0);
-                    ide++;
-
-                }
-
-            } catch (SQLException ex) {
-                Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
-            }
-//a prefix
-            query = "SELECT * FROM planningdb.tc_riport_prefix";
-            ide = 0;
-            try {
-                pc.planconnect(query);
-                while (pc.rs.next()) {
-
-                    jTable17.setValueAt(pc.rs.getString(2), ide, 0);
-                    ide++;
-
-                }
-
-            } catch (SQLException ex) {
-                Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
-//az időpont
-            query = "SELECT * FROM planningdb.tc_riport_ido order by tc_riport_ido.idtc_riport_ido desc limit 1";
-
-            try {
-                pc.planconnect(query);
-                while (pc.rs.next()) {
-
-                    jTextField24.setText(pc.rs.getString(2));
-                    jTextField23.setText(pc.rs.getString(3));
-
-                }
-
-            } catch (SQLException ex) {
-                Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
-            pc.kinyir();
-
-        }
-//ez a master module
-        if (i == 11) {
-
-            String username = System.getProperty("user.name");
-            ablak.stat.beir(System.getProperty("user.name"), ablak.jTabbedPane1.getTitleAt(ablak.jTabbedPane1.getSelectedIndex()), "", "gabor.hanacsek@sanmina.com");
-
-            if (!username.equals("gabor_hanacsek") && !username.equals("roland_bognar")) {
-
-                jTabbedPane1.setSelectedIndex(0);
-                infobox info = new infobox();
-
-                info.infoBox("Hanié!", "Hiba!");
-
-            }
 
         }
 
@@ -4441,102 +4040,6 @@ public class ablak extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jButton19ActionPerformed
 
-    private void jButton21ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton21ActionPerformed
-
-        Tc_sincronizerszal szsz = new Tc_sincronizerszal(); //a szinkronizacio szala
-        Tc_sincronizerszal.fut = true;
-        szsz.start();
-
-
-    }//GEN-LAST:event_jButton21ActionPerformed
-
-    private void jButton23ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton23ActionPerformed
-        // TODO add your handling code here:
-        planconnect pc = new planconnect();
-// az insert query
-
-        int resi = 0;
-
-        if (jRadioButton2.isSelected()) {
-
-            resi = 1;
-
-        }
-        String query = "insert into tc_rev (revizio , megjegyzes , restart) values ('" + jTextField22.getText() + "','" + jTextArea2.getText() + "','" + resi + "')";
-
-        pc.feltolt(query, true);
-
-
-    }//GEN-LAST:event_jButton23ActionPerformed
-
-    private void jButton24ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton24ActionPerformed
-        // TODO add your handling code here:
-//a mentes gomb
-//truncateljuk a tablat es beillesztjuk ujbol az adatot az emailes tablaba
-
-        String query = "truncate table tc_riport_email";
-        planconnect pc = new planconnect();
-        pc.feltolt(query, false);
-
-//összeszedjuk az emaileket a tablabol
-        String adatok = "";
-
-        for (int i = 0; i < jTable16.getRowCount(); i++) {
-//ha van írva a sorba
-
-            if (jTable16.getValueAt(i, 0) != null && !jTable16.getValueAt(i, 0).toString().equals("")) {
-
-                adatok += "('" + jTable16.getValueAt(i, 0).toString() + "'),";
-
-            }
-
-        }
-
-        adatok = adatok.substring(0, adatok.length() - 1);
-
-//osszeallitjuk az insert queryt 
-        query = "insert into tc_riport_email (email) values " + adatok;
-        pc.feltolt(query, false);
-
-//eddig tartott az emailes
-//a prefixes tabla mentese
-//truncateljuk a tablat es beillesztjuk ujbol az adatot a prefixes tablaba
-        query = "truncate table tc_riport_prefix";
-        pc = new planconnect();
-        pc.feltolt(query, false);
-
-//összeszedjuk az emaileket a tablabol
-        adatok = "";
-
-        for (int i = 0; i < jTable17.getRowCount(); i++) {
-//ha van írva a sorba
-
-            if (jTable17.getValueAt(i, 0) != null && !jTable17.getValueAt(i, 0).toString().equals("")) {
-
-                adatok += "('" + jTable17.getValueAt(i, 0).toString() + "'),";
-
-            }
-
-        }
-
-        adatok = adatok.substring(0, adatok.length() - 1);
-
-//osszeallitjuk az insert queryt 
-        query = "insert into tc_riport_prefix (prefix) values " + adatok;
-        pc.feltolt(query, false);
-
-//eddig tartott a prefixes
-//days in wip updatje , beszurjuk az uj adatokat
-        query = "insert into tc_riport_ido  (idopont , age) values ('" + jTextField24.getText() + "','" + jTextField23.getText() + "')";
-        pc.feltolt(query, true);
-
-
-    }//GEN-LAST:event_jButton24ActionPerformed
-
-    private void jRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jRadioButton2ActionPerformed
-
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
 //seria számra lebontása a wip nek
 
@@ -4590,23 +4093,6 @@ public class ablak extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jCheckBox2ActionPerformed
 
-    private void jButton22ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton22ActionPerformed
-        // az anyagoló meghívása
-
-        Anyagelados m = null;
-        try {
-            m = new Anyagelados();
-        } catch (SQLException ex) {
-            Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        m.setExtendedState(m.getExtendedState() | m.MAXIMIZED_BOTH);
-        m.setVisible(true);
-
-
-    }//GEN-LAST:event_jButton22ActionPerformed
-
     private void jCheckBox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox3ActionPerformed
         // TODO add your handling code here:
         activityszuro sz = new activityszuro();
@@ -4616,14 +4102,6 @@ public class ablak extends javax.swing.JFrame {
         sz.firstpass();
     }//GEN-LAST:event_jCheckBox3ActionPerformed
 
-    private void jButton25ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton25ActionPerformed
-
-        PartPropertiesszal p = new PartPropertiesszal(this);
-        p.start();
-
-
-    }//GEN-LAST:event_jButton25ActionPerformed
-
     private void jCheckBox4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox4ActionPerformed
         // wipszuro
         wipszuro w = new wipszuro(ablak.jTable1);
@@ -4631,13 +4109,88 @@ public class ablak extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jCheckBox4ActionPerformed
 
-    private void jButton26ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton26ActionPerformed
-        // TODO add your handling code here:
+    private void jButton21ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton21ActionPerformed
+        // konténer infó lekérdezés
+        //megnezzuk , hogy van e valami az sn oszlopban
 
-        CTB c = new CTB();
-        c.setVisible(true);
+        if (jTable16.getValueAt(0, 0) != null && !jTable16.getValueAt(0, 0).toString().equals("")) {
+            String snlist = "";
+            //összeszedjük az sn eket a querynek megfelelő formátummá
+            for (int i = 0; i < jTable16.getRowCount(); i++) {
 
-    }//GEN-LAST:event_jButton26ActionPerformed
+                if (jTable16.getValueAt(i, 0) != null && !jTable16.getValueAt(0, 0).toString().equals("")) {
+
+                    snlist += "'" + jTable16.getValueAt(i, 0).toString().trim() + "',";
+
+                }
+
+            }
+
+            if (snlist.length() > 0) {
+
+                snlist = snlist.substring(0, snlist.length() - 1);
+                snlist = snlist.replace("-SMT", "");
+                String query = "select barcode.container_ID from barcode where barcode in (" + snlist + ")";
+                szaifconn con = null;
+                try {
+
+                    //kitöröljük az adatokat a táblából
+                    DefaultTableModel model = new DefaultTableModel();
+                    model = (DefaultTableModel) jTable16.getModel();
+                    for (int i = 0; i < model.getRowCount(); i++) {
+
+                        for (int r = 0; r < model.getColumnCount(); r++) {
+
+                            model.setValueAt("", i, r);
+
+                        }
+
+                    }
+
+                    con = new szaifconn("com.mysql.jdbc.driver", "jdbc:mysql://143.116.140.113/plrdb", "cpi", "cpi602");
+                    ResultSet rs = (ResultSet) con.lekerdez(query);
+                    String contlist = "";
+                    while (rs.next()) {
+
+                        contlist += "'" + rs.getString(1) + "',";
+
+                    }
+
+                    if (contlist.length() > 0) {
+
+                        contlist = contlist.substring(0, contlist.length() - 1);
+                        query = "SELECT barcode.barcode , container.container , container.insertDate \n"
+                                + "FROM plrdb.container\n"
+                                + "left join plrdb.barcode on container.ID = barcode.container_ID \n"
+                                + "where container.id in (" + contlist + ")";
+
+                        rs = (ResultSet) con.lekerdez(query);
+                        int sorszam = 0;
+                        while (rs.next()) {
+
+                            model.setValueAt(rs.getString(1), sorszam, 0);
+                            model.setValueAt(rs.getString(2), sorszam, 1);
+                            model.setValueAt(rs.getString(3), sorszam, 2);
+                            sorszam++;
+                        }
+                        
+                        jTable16.setModel(model);
+
+                    }
+
+                    con.kinyir();
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (Exception ex) {
+                    Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+            }
+
+        }
+
+
+    }//GEN-LAST:event_jButton21ActionPerformed
 
     public void gombenged() {
 
@@ -4781,12 +4334,7 @@ public class ablak extends javax.swing.JFrame {
     private javax.swing.JButton jButton19;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton20;
-    public static javax.swing.JButton jButton21;
-    private javax.swing.JButton jButton22;
-    private javax.swing.JButton jButton23;
-    private javax.swing.JButton jButton24;
-    private javax.swing.JButton jButton25;
-    private javax.swing.JButton jButton26;
+    private javax.swing.JButton jButton21;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
@@ -4833,22 +4381,8 @@ public class ablak extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel34;
     private javax.swing.JLabel jLabel35;
     private javax.swing.JLabel jLabel36;
-    private javax.swing.JLabel jLabel38;
-    private javax.swing.JLabel jLabel39;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel40;
-    private javax.swing.JLabel jLabel41;
-    private javax.swing.JLabel jLabel42;
-    private javax.swing.JLabel jLabel43;
-    private javax.swing.JLabel jLabel45;
-    private javax.swing.JLabel jLabel46;
-    private javax.swing.JLabel jLabel47;
-    private javax.swing.JLabel jLabel48;
-    private javax.swing.JLabel jLabel49;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel50;
-    private javax.swing.JLabel jLabel51;
-    private javax.swing.JLabel jLabel52;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
@@ -4869,9 +4403,6 @@ public class ablak extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JPopupMenu jPopupMenu2;
-    public static javax.swing.JProgressBar jProgressBar1;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane10;
     private javax.swing.JScrollPane jScrollPane11;
@@ -4882,10 +4413,7 @@ public class ablak extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane16;
     private javax.swing.JScrollPane jScrollPane17;
     private javax.swing.JScrollPane jScrollPane18;
-    private javax.swing.JScrollPane jScrollPane19;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane20;
-    private javax.swing.JScrollPane jScrollPane21;
     private javax.swing.JScrollPane jScrollPane22;
     private javax.swing.JScrollPane jScrollPane23;
     private javax.swing.JScrollPane jScrollPane3;
@@ -4895,7 +4423,6 @@ public class ablak extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JScrollPane jScrollPane9;
-    private javax.swing.JSeparator jSeparator1;
     public static javax.swing.JTabbedPane jTabbedPane1;
     public static javax.swing.JTable jTable1;
     public static javax.swing.JTable jTable10;
@@ -4905,7 +4432,6 @@ public class ablak extends javax.swing.JFrame {
     public static javax.swing.JTable jTable14;
     public static javax.swing.JTable jTable15;
     private javax.swing.JTable jTable16;
-    private javax.swing.JTable jTable17;
     public static javax.swing.JTable jTable18;
     public static javax.swing.JTable jTable19;
     public static javax.swing.JTable jTable2;
@@ -4916,8 +4442,6 @@ public class ablak extends javax.swing.JFrame {
     public static javax.swing.JTable jTable7;
     public static javax.swing.JTable jTable8;
     public static javax.swing.JTable jTable9;
-    public static javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextArea jTextArea2;
     public static javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField10;
     private javax.swing.JTextField jTextField11;
@@ -4929,11 +4453,6 @@ public class ablak extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField18;
     private javax.swing.JTextField jTextField19;
     public static javax.swing.JTextField jTextField2;
-    public static javax.swing.JTextField jTextField20;
-    public static javax.swing.JTextField jTextField21;
-    private javax.swing.JTextField jTextField22;
-    private javax.swing.JTextField jTextField23;
-    private javax.swing.JTextField jTextField24;
     public static javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField5;

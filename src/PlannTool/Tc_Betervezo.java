@@ -64,15 +64,15 @@ public class Tc_Betervezo extends javax.swing.JFrame {
     public static Calendar c = Calendar.getInstance();
 
     //szinezes adatai
-    public static int slide1;
-    public static int slide2;
-    public static int slide3;
-    public static int slide4;
-    public static int slide5;
-    public static int slide6;
-    public static int slide7;
-    public static int slide8;
-    public static int slide9;
+    public static int slide1 = 255;
+    public static int slide2 = 255;
+    public static int slide3 = 255;
+    public static int slide4 = 204;
+    public static int slide5 = 255;
+    public static int slide6 = 255;
+    public static int slide7 = 204;
+    public static int slide8 = 255;
+    public static int slide9 = 204;
 
     //oszlopallitas valtozoi
     public static int allitsuke = 2;
@@ -88,14 +88,14 @@ public class Tc_Betervezo extends javax.swing.JFrame {
 
     //az ablak
     public static ablak a;
-    
+
     public Tc_Betervezo(ablak a) throws SQLException, ClassNotFoundException {
         setExtendedState(MAXIMIZED_BOTH);
-        
+
         initComponents();
-        
+
         seticon();
-        
+
         planconnect pc = new planconnect();
 
         //lekerdezzuk a ciklusidoket
@@ -105,27 +105,27 @@ public class Tc_Betervezo extends javax.swing.JFrame {
                 + "left join tc_bestations on tc_bestations.idtc_bestations = tc_prodmatrix.id_tc_bestations";
         pc = new planconnect();
         pc.planconnect(query);
-        
+
         pc.rs.last();
         int utsosor = pc.rs.getRow();
         pc.rs.beforeFirst();
-        
+
         String[][] ciklusidok = new String[utsosor][4];
         int i = 0;
         while (pc.rs.next()) {
-            
+
             ciklusidok[i][0] = pc.rs.getString(1);
             ciklusidok[i][1] = pc.rs.getString(2);
             ciklusidok[i][2] = pc.rs.getString(3);
             ciklusidok[i][3] = pc.rs.getString(4);
-            
+
             i++;
         }
-        
+
         pc.kinyir();
-        
+
         this.ciklusidok.add(ciklusidok);
-        
+
         Tc_Cellavalaszto c = new Tc_Cellavalaszto(this);
         c.setVisible(true);
         this.a = a;
@@ -135,7 +135,7 @@ public class Tc_Betervezo extends javax.swing.JFrame {
 
 //csinálunk egy calcablakot es beletesszuk a listaba , hogy előkapjuk amikor akarjuk
         calculatorablaktarolo.add(new Tc_Calcablak());
-        
+
     }
 
     /**
@@ -434,11 +434,11 @@ public class Tc_Betervezo extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void seticon() {
-        
+
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("kepek/sanlogo.png")));
-        
+
     }
-    
+
     public static void pncheck() throws SQLException, ClassNotFoundException {
 
         //lekerdezzuk a letezo PN -eket , hogy meg tudjuk vizsgalni , hogy el fog e veszni feltoltes utan (piros)
@@ -446,17 +446,17 @@ public class Tc_Betervezo extends javax.swing.JFrame {
         planconnect pc = new planconnect();
         pc.planconnect(query);
         partn.clear();
-        
+
         while (pc.rs.next()) {
-            
+
             partn.add(pc.rs.getString(1));
-            
+
         }
-        
+
         pc.kinyir();
-        
+
     }
-    
+
     public static void wscheck() throws SQLException, ClassNotFoundException {
 
         //lekerdezzuk a letezo PN -eket , hogy meg tudjuk vizsgalni , hogy el fog e veszni feltoltes utan (piros)
@@ -464,15 +464,15 @@ public class Tc_Betervezo extends javax.swing.JFrame {
         planconnect pc = new planconnect();
         pc.planconnect(query);
         works.clear();
-        
+
         while (pc.rs.next()) {
-            
+
             works.add(pc.rs.getString(1));
-            
+
         }
-        
+
         pc.kinyir();
-        
+
     }
 
     //gombok engedese , letiltasa
@@ -480,11 +480,11 @@ public class Tc_Betervezo extends javax.swing.JFrame {
 
 //letiltjuk a gombokat ha nem planner de feltolthet tenyt
         if (!ablak.planner && ablak.muvez) {
-            
+
             Tc_Betervezo.jMenuItem9.setEnabled(false);
-            
+
             for (int i = 0; i < Tervezotabbed.getTabCount(); i++) {
-                
+
                 Besheets.get(Tervezotabbed.getTitleAt(i)).jButton11.setEnabled(true);
                 Besheets.get(Tervezotabbed.getTitleAt(i)).jButton10.setEnabled(false);
                 Besheets.get(Tervezotabbed.getTitleAt(i)).DeleteRow.setEnabled(false);
@@ -492,15 +492,15 @@ public class Tc_Betervezo extends javax.swing.JFrame {
                 Besheets.get(Tervezotabbed.getTitleAt(i)).Szinezo.setEnabled(false);
                 //repainteljük a táblát a kommentek miatt
                 Besheets.get(Tervezotabbed.getTitleAt(i)).jTable2.repaint();
-                
+
             }
 //ha planner 
         } else if (ablak.planner && !ablak.muvez) {
-            
+
             Tc_Betervezo.jMenuItem9.setEnabled(true);
-            
+
             for (int i = 0; i < Tervezotabbed.getTabCount(); i++) {
-                
+
                 Besheets.get(Tervezotabbed.getTitleAt(i)).jButton11.setEnabled(false);
                 Besheets.get(Tervezotabbed.getTitleAt(i)).jButton10.setEnabled(true);
                 Besheets.get(Tervezotabbed.getTitleAt(i)).DeleteRow.setEnabled(true);
@@ -508,17 +508,17 @@ public class Tc_Betervezo extends javax.swing.JFrame {
                 Besheets.get(Tervezotabbed.getTitleAt(i)).Szinezo.setEnabled(true);
                 //repainteljük a táblát a kommentek miatt
                 Besheets.get(Tervezotabbed.getTitleAt(i)).jTable2.repaint();
-                
+
             }
-            
+
         }
 //ha se nem planner se nem tolthet fel
         if (!ablak.planner && !ablak.muvez) {
-            
+
             Tc_Betervezo.jMenuItem9.setEnabled(false);
-            
+
             for (int i = 0; i < Tervezotabbed.getTabCount(); i++) {
-                
+
                 Besheets.get(Tervezotabbed.getTitleAt(i)).jButton11.setEnabled(false);
                 Besheets.get(Tervezotabbed.getTitleAt(i)).jButton10.setEnabled(false);
                 Besheets.get(Tervezotabbed.getTitleAt(i)).DeleteRow.setEnabled(false);
@@ -528,29 +528,29 @@ public class Tc_Betervezo extends javax.swing.JFrame {
                 Besheets.get(Tervezotabbed.getTitleAt(i)).jLabel7.setText(ablak.user);
                 //repainteljük a táblát a kommentek miatt
                 Besheets.get(Tervezotabbed.getTitleAt(i)).jTable2.repaint();
-                
+
             }
-            
+
         }
 
         //a nezetvaltas radiobuttonjai
         if (Tc_Betervezo.nezet == 0) {
-            
+
             Tc_Betervezo.jRadioButtonMenuItem1.setSelected(true);
-            
+
         } else if (Tc_Betervezo.nezet == 1) {
-            
+
             Tc_Betervezo.jRadioButtonMenuItem2.setSelected(true);
-            
+
         }
-        
+
     }
-    
+
     static public void tablarajzolo(DefaultTableModel model, JTable table) {
         SwingUtilities.invokeLater(() -> {
-            
+
             table.setModel(model);
-            
+
         });
     }
 
@@ -577,12 +577,12 @@ public class Tc_Betervezo extends javax.swing.JFrame {
 
         //ha van aktív besheet
         if (Tc_Betervezo.Tervezotabbed.getSelectedIndex() >= 0) {
-            
+
             Tc_Szinvalasztos sz = new Tc_Szinvalasztos(Besheets.get(Tc_Betervezo.Tervezotabbed.getTitleAt(Tervezotabbed.getSelectedIndex())));
             sz.setVisible(true);
-            
+
         }
-        
+
 
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
@@ -599,14 +599,14 @@ public class Tc_Betervezo extends javax.swing.JFrame {
         Tc_Betervezo.calc = 1;
 //a radiobuttont is atnyomjuk
         Tc_Betervezo.jRadioButtonMenuItem6.setSelected(true);
-        
+
         for (int i = 0; i < Tc_Betervezo.Besheets.size(); i++) {
-            
+
             Tc_AdatInterface a = new Tc_AdatInterface(Tc_Betervezo.Besheets.get(Tc_Betervezo.Tervezotabbed.getTitleAt(i)));
             a.adatbatoltnezetvaltas();
             a.tablabatolt();
             Tc_Calculator c = new Tc_Calculator(Tc_Betervezo.Besheets.get(Tc_Betervezo.Tervezotabbed.getTitleAt(i)), false, 0);
-            
+
         }
 
         //beirjuk az adatbazisba a valtozast
@@ -614,7 +614,7 @@ public class Tc_Betervezo extends javax.swing.JFrame {
         planconnect pc = new planconnect();
         pc.feltolt(query, false);
         pc.kinyir();
-        
+
 
     }//GEN-LAST:event_jRadioButtonMenuItem2ActionPerformed
 
@@ -640,18 +640,18 @@ public class Tc_Betervezo extends javax.swing.JFrame {
         //bepakoljuk a maptree be a sheeteket ujból
         Tc_Betervezo.Besheets.clear();
         for (int i = 0; i < Tc_Betervezo.Tervezotabbed.getTabCount(); i++) {
-            
+
             String name = Tc_Betervezo.Tervezotabbed.getTitleAt(i);
-            
+
             Tc_Betervezo.Besheets.put(name, (Tc_Besheet) Tc_Betervezo.Tervezotabbed.getComponentAt(i));
-            
+
         }
 
         //meghatarozzuk a napokat , mekkora intervallumra kell beallitani a sheeteket
         SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd");
         String first = "";
         String second = "";
-        
+
         Date one = null;
         Date two = null;
         int napok = 0;
@@ -684,11 +684,11 @@ public class Tc_Betervezo extends javax.swing.JFrame {
 //beallitjuk a kalkulaciot idopontig
         Tc_Betervezo.calc = 3;
         Tc_Betervezo.jRadioButtonMenuItem3.setSelected(true);
-        
+
         for (int b = 0; b < Tc_Betervezo.Tervezotabbed.getTabCount(); b++) {
-            
+
             Tc_Leker leker = new Tc_Leker(Tc_Betervezo.Tervezotabbed.getTitleAt(b), "groupleker");
-            
+
         }
 
 //beirjuk az adatbazisba a valtozast
@@ -696,14 +696,14 @@ public class Tc_Betervezo extends javax.swing.JFrame {
         planconnect pc = new planconnect();
         pc.feltolt(query, false);
         pc.kinyir();
-        
+
 
     }//GEN-LAST:event_jRadioButtonMenuItem1ActionPerformed
 
     private void jRadioButtonMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonMenuItem3ActionPerformed
-        
+
         Tc_Betervezo.calc = 3;
-        
+
 
     }//GEN-LAST:event_jRadioButtonMenuItem3ActionPerformed
 
@@ -810,18 +810,18 @@ public class Tc_Betervezo extends javax.swing.JFrame {
         //nyomtatás
         MessageFormat header = new MessageFormat("Report print");
         MessageFormat footer = new MessageFormat("Page{0,number,integer}");
-        
+
         try {
-            
+
             PrintRequestAttributeSet attr = new HashPrintRequestAttributeSet();
-            
+
             Besheets.get(Tervezotabbed.getTitleAt(Tervezotabbed.getSelectedIndex())).jTable2.print(JTable.PrintMode.FIT_WIDTH, header, footer);
 
             // jTable2.print(JTable.PrintMode.FIT_WIDTH, header, footer);
         } catch (java.awt.print.PrinterException e) {
-            
+
             System.err.format("Cannot print", e.getMessage());
-            
+
         }// TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem14ActionPerformed
 
@@ -839,21 +839,21 @@ public class Tc_Betervezo extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
-                    
+
                 }
             }
         } catch (ClassNotFoundException ex) {
             java.util.logging.Logger.getLogger(Tc_Betervezo.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
-            
+
         } catch (InstantiationException ex) {
             java.util.logging.Logger.getLogger(Tc_Betervezo.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
-            
+
         } catch (IllegalAccessException ex) {
             java.util.logging.Logger.getLogger(Tc_Betervezo.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
-            
+
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Tc_Betervezo.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
@@ -863,7 +863,7 @@ public class Tc_Betervezo extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                
+
             }
         });
     }

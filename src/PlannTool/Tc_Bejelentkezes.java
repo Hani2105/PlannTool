@@ -5,15 +5,6 @@
  */
 package PlannTool;
 
-import static PlannTool.Tc_Betervezo.slide1;
-import static PlannTool.Tc_Betervezo.slide2;
-import static PlannTool.Tc_Betervezo.slide3;
-import static PlannTool.Tc_Betervezo.slide4;
-import static PlannTool.Tc_Betervezo.slide5;
-import static PlannTool.Tc_Betervezo.slide6;
-import static PlannTool.Tc_Betervezo.slide7;
-import static PlannTool.Tc_Betervezo.slide8;
-import static PlannTool.Tc_Betervezo.slide9;
 import java.awt.event.KeyEvent;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -24,7 +15,6 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 

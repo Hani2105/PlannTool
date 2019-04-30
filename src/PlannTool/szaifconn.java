@@ -10,6 +10,8 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -22,6 +24,7 @@ public class szaifconn {
     String username;
     String password;
     ResultSet rs;
+    Connection conn;
 
     szaifconn(String driver, String url, String username, String password) throws ClassNotFoundException {
 
@@ -35,11 +38,25 @@ public class szaifconn {
 
     public Object lekerdez(String query) throws SQLException, ClassNotFoundException, Exception {
 
-        Connection conn = (Connection) DriverManager.getConnection(url, username, password);
+        conn = (Connection) DriverManager.getConnection(url, username, password);
         Statement st = conn.createStatement();
         rs = st.executeQuery(query);
 
         return rs;
+
+    }
+
+    public void kinyir() {
+
+        try {
+            if (conn != null) {
+                this.rs.close();
+                this.conn.close();
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(planconnect.class.getName()).log(Level.SEVERE, null, ex);
+
+        }
 
     }
 

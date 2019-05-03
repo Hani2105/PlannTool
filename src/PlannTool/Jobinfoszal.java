@@ -32,9 +32,30 @@ public class Jobinfoszal extends Thread {
         xmlfeldolg xxx = new xmlfeldolg();
         Object rowdata[][] = null;
 
+//összeszedjük a JOB számokat
+        String jobok = "";
+        for (int i = 0; i < ablak.jTable17.getRowCount(); i++) {
+
+            try {
+                if (!ablak.jTable17.getValueAt(i, 0).toString().equals("")) {
+
+                    jobok += ablak.jTable17.getValueAt(i, 0).toString().trim() + ";";
+
+                }
+            } catch (Exception e) {
+            }
+
+        }
+
+        if (jobok.length() > 0) {
+
+            jobok = jobok.substring(0, jobok.length() - 1);
+
+        }
+
         try {
 
-            String urlstring = "http://143.116.140.120/rest/request.php?page=planning_shop_order&shoporder=" + ablak.jTextField7.getText().trim() + "&format=xml";
+            String urlstring = "http://143.116.140.120/rest/request.php?page=planning_shop_order&shoporder=" + jobok + "&format=xml";
             urlstring = urlstring.trim();
             url = new URL(urlstring);
             ArrayList<String> lista = new ArrayList();
@@ -65,8 +86,6 @@ public class Jobinfoszal extends Thread {
 
         }
 
-        ablak.jLabel12.setText("JOB total QTY: " + qty);
-        
         animation.rajzol = false;
 
         stat.beir(System.getProperty("user.name"), jTabbedPane1.getTitleAt(jTabbedPane1.getSelectedIndex()), "", "gabor.hanacsek@sanmina.com");

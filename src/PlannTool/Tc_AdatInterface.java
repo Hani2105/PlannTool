@@ -15,11 +15,10 @@ import javax.swing.table.DefaultTableModel;
 public class Tc_AdatInterface {
 
     Tc_Besheet b;
-   
+
     public Tc_AdatInterface(Tc_Besheet b) {
 
         this.b = b;
-       
 
     }
 
@@ -48,7 +47,6 @@ public class Tc_AdatInterface {
         }
 
         b.jTable2.setModel(model);
-       
 
     }
 
@@ -96,11 +94,10 @@ public class Tc_AdatInterface {
 
                 for (int o = 0; o < temp[1].length; o++) {
 
-                    temp[r][o] = new Tc_CellClass("", 0, 0.0 , 0);
+                    temp[r][o] = new Tc_CellClass("", 0, 0.0, 0);
 //mivel minden cella mögött kell h legyen class , nem szabadna hibára futnia  
 
                     temp[r][o] = b.tablaadat[r][o];
-                    
 
                 }
 
@@ -116,7 +113,7 @@ public class Tc_AdatInterface {
 
             for (int o = 0; o < b.tablaadat[1].length; o++) {
 
-                b.tablaadat[r][o] = new Tc_CellClass("", 0, 0.0 , 0);
+                b.tablaadat[r][o] = new Tc_CellClass("", 0, 0.0, 0);
 
                 try {
                     b.tablaadat[r][o].value = model.getValueAt(r + infsor, o).toString();
@@ -126,7 +123,6 @@ public class Tc_AdatInterface {
                     b.tablaadat[r][o].eng = temp[r][o].eng;
                     b.tablaadat[r][o].engtime = temp[r][o].engtime;
                     b.tablaadat[r][o].szin = temp[r][o].szin;
-                    
 
                 } catch (Exception e) {
                 }
@@ -205,7 +201,7 @@ public class Tc_AdatInterface {
 
             for (int o = 0; o < temp[1].length; o++) {
 
-                temp[r][o] = new Tc_CellClass("", 0, 0.0 , 0);
+                temp[r][o] = new Tc_CellClass("", 0, 0.0, 0);
 
                 if (r != ujsorszam1 && r != ujsorszam2) {
                     try {
@@ -305,7 +301,7 @@ public class Tc_AdatInterface {
 
             for (int o = 0; o < temp[1].length; o++) {
 
-                temp[r][o] = new Tc_CellClass("", 0, 0.0 , 0);
+                temp[r][o] = new Tc_CellClass("", 0, 0.0, 0);
 
             }
 
@@ -320,7 +316,9 @@ public class Tc_AdatInterface {
         String azonosito = "";
 
         //összerakunk az eredeti tömbböl egy azonositot
-        for (int r = 0; r < b.tablaadat.length; r++) {
+        for (int r = 0;
+                r < b.tablaadat.length;
+                r++) {
             epit = true;
             //kell egy integer , hogy tudjuk melyik sorba kell tenni
             int idetedd = 0;
@@ -380,7 +378,9 @@ public class Tc_AdatInterface {
         b.tablaadat = new Tc_CellClass[ujsor][temp[1].length];
 
         //beletesszük az adatokat
-        for (int r = 0; r < ujsor; r++) {
+        for (int r = 0;
+                r < ujsor;
+                r++) {
 
             for (int o = 0; o < temp[1].length; o++) {
 

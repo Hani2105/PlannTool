@@ -120,6 +120,7 @@ public class ablak extends javax.swing.JFrame {
         new ExcelAdapter(jTable18);
         new ExcelAdapter(jTable19);
         new ExcelAdapter(jTable16);
+        new ExcelAdapter(jTable17);
 
         jTable11.getColumnModel().getColumn(0).setCellRenderer(new Tooltiprenderer());
 
@@ -208,12 +209,15 @@ public class ablak extends javax.swing.JFrame {
         jPanel4 = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
         jTable5 = new javax.swing.JTable();
-        jTextField7 = new javax.swing.JTextField();
         jButton9 = new javax.swing.JButton();
-        jLabel11 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
         jTextField12 = new javax.swing.JTextField();
+        jScrollPane19 = new javax.swing.JScrollPane();
+        jTable17 = new javax.swing.JTable();
+        jButton22 = new javax.swing.JButton();
+        jLabel37 = new javax.swing.JLabel();
+        jButton23 = new javax.swing.JButton();
+        jLabel11 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         jScrollPane6 = new javax.swing.JScrollPane();
         jTable6 = new javax.swing.JTable();
@@ -2005,6 +2009,7 @@ public class ablak extends javax.swing.JFrame {
 
             jTabbedPane1.addTab("SN infó", jPanel3);
 
+            jTable5.setAutoCreateRowSorter(true);
             jTable5.setModel(new javax.swing.table.DefaultTableModel(
                 new Object [][] {
 
@@ -2028,12 +2033,6 @@ public class ablak extends javax.swing.JFrame {
             });
             jScrollPane5.setViewportView(jTable5);
 
-            jTextField7.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    jTextField7ActionPerformed(evt);
-                }
-            });
-
             jButton9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/search1.png"))); // NOI18N
             jButton9.setToolTipText("Keres");
             jButton9.setBorderPainted(false);
@@ -2052,11 +2051,87 @@ public class ablak extends javax.swing.JFrame {
                 }
             });
 
-            jLabel11.setText("JOB szám:");
-
-            jLabel12.setText("JOB total QTY:");
-
             jLabel17.setText("Kijelölések összege:");
+
+            jTable17.setModel(new javax.swing.table.DefaultTableModel(
+                new Object [][] {
+                    {null},
+                    {null},
+                    {null},
+                    {null},
+                    {null},
+                    {null},
+                    {null},
+                    {null},
+                    {null},
+                    {null},
+                    {null},
+                    {null},
+                    {null},
+                    {null},
+                    {null},
+                    {null},
+                    {null},
+                    {null},
+                    {null},
+                    {null},
+                    {null},
+                    {null},
+                    {null},
+                    {null},
+                    {null},
+                    {null},
+                    {null},
+                    {null},
+                    {null},
+                    {null}
+                },
+                new String [] {
+                    "Jobszámok"
+                }
+            ));
+            jScrollPane19.setViewportView(jTable17);
+
+            jButton22.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/excel1.png"))); // NOI18N
+            jButton22.setToolTipText("Exportálás excelbe!");
+            jButton22.setBorderPainted(false);
+            jButton22.setContentAreaFilled(false);
+            jButton22.addMouseListener(new java.awt.event.MouseAdapter() {
+                public void mouseEntered(java.awt.event.MouseEvent evt) {
+                    jButton22MouseEntered(evt);
+                }
+                public void mouseExited(java.awt.event.MouseEvent evt) {
+                    jButton22MouseExited(evt);
+                }
+            });
+            jButton22.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    jButton22ActionPerformed(evt);
+                }
+            });
+
+            jLabel37.setText("Exportálás excelbe");
+
+            jButton23.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/torles1.png"))); // NOI18N
+            jButton23.setToolTipText("Tábla törlése");
+            jButton23.setBorderPainted(false);
+            jButton23.setContentAreaFilled(false);
+            jButton23.setPreferredSize(new java.awt.Dimension(132, 33));
+            jButton23.addMouseListener(new java.awt.event.MouseAdapter() {
+                public void mouseEntered(java.awt.event.MouseEvent evt) {
+                    jButton23MouseEntered(evt);
+                }
+                public void mouseExited(java.awt.event.MouseEvent evt) {
+                    jButton23MouseExited(evt);
+                }
+            });
+            jButton23.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    jButton23ActionPerformed(evt);
+                }
+            });
+
+            jLabel11.setText("Adatok törlése");
 
             javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
             jPanel4.setLayout(jPanel4Layout);
@@ -2065,44 +2140,54 @@ public class ablak extends javax.swing.JFrame {
                 .addGroup(jPanel4Layout.createSequentialGroup()
                     .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel4Layout.createSequentialGroup()
-                            .addGap(51, 51, 51)
-                            .addComponent(jLabel11))
+                            .addGap(26, 26, 26)
+                            .addComponent(jLabel17))
                         .addGroup(jPanel4Layout.createSequentialGroup()
-                            .addGap(16, 16, 16)
+                            .addContainerGap()
+                            .addComponent(jTextField12, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel4Layout.createSequentialGroup()
+                            .addGap(47, 47, 47)
+                            .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel4Layout.createSequentialGroup()
+                            .addGap(29, 29, 29)
                             .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(jLabel17)
+                                .addComponent(jLabel37)
                                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField7, javax.swing.GroupLayout.DEFAULT_SIZE, 156, Short.MAX_VALUE)
-                            .addComponent(jTextField12)))
+                                    .addComponent(jButton23, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(jPanel4Layout.createSequentialGroup()
+                                        .addGap(8, 8, 8)
+                                        .addComponent(jButton22, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 873, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(65, Short.MAX_VALUE))
+                    .addComponent(jScrollPane19, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 746, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             );
             jPanel4Layout.setVerticalGroup(
                 jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel4Layout.createSequentialGroup()
-                    .addGap(4, 4, 4)
+                    .addContainerGap()
                     .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 504, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jScrollPane19, javax.swing.GroupLayout.DEFAULT_SIZE, 507, Short.MAX_VALUE)
                         .addGroup(jPanel4Layout.createSequentialGroup()
-                            .addComponent(jLabel11)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                             .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(jLabel17)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(jTextField12, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addContainerGap(11, Short.MAX_VALUE))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jTextField12, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jLabel37, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(18, 18, 18)
+                            .addComponent(jButton22, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jLabel11)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jButton23, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(0, 0, Short.MAX_VALUE))
+                        .addComponent(jScrollPane5))
+                    .addContainerGap())
             );
-
-            jLabel11.getAccessibleContext().setAccessibleDescription("");
 
             jTabbedPane1.addTab("JOB infó", jPanel4);
 
@@ -2943,7 +3028,7 @@ public class ablak extends javax.swing.JFrame {
                     return canEdit [columnIndex];
                 }
             });
-            jTable16.setColumnSelectionAllowed(false);
+            jTable16.setCellSelectionEnabled(true);
             jScrollPane18.setViewportView(jTable16);
 
             jButton21.setText("Lekérdez");
@@ -3634,10 +3719,6 @@ public class ablak extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jButton9ActionPerformed
 
-    private void jTextField7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField7ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField7ActionPerformed
-
     private void jTable5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable5MouseClicked
 
         Integer osszeg = 0;
@@ -4173,7 +4254,7 @@ public class ablak extends javax.swing.JFrame {
                             model.setValueAt(rs.getString(3), sorszam, 2);
                             sorszam++;
                         }
-                        
+
                         jTable16.setModel(model);
 
                     }
@@ -4189,8 +4270,68 @@ public class ablak extends javax.swing.JFrame {
 
         }
 
+        ablak.stat.beir(System.getProperty("user.name"), ablak.jTabbedPane1.getTitleAt(ablak.jTabbedPane1.getSelectedIndex()), "", "gabor.hanacsek@sanmina.com");
+
 
     }//GEN-LAST:event_jButton21ActionPerformed
+
+    private void jButton22MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton22MouseEntered
+       
+        jButton22.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/excel.png")));
+        
+    }//GEN-LAST:event_jButton22MouseEntered
+
+    private void jButton22MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton22MouseExited
+        // TODO add your handling code here:
+        jButton22.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/excel1.png")));
+    }//GEN-LAST:event_jButton22MouseExited
+
+    private void jButton22ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton22ActionPerformed
+        // jobinfo export to excel
+
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setAcceptAllFileFilterUsed(true);
+        fileChooser.setDialogTitle("Specify a file to save");
+
+        int userSelection = fileChooser.showSaveDialog(this);
+
+        if (userSelection == JFileChooser.APPROVE_OPTION) {
+
+            File fileToSave = fileChooser.getSelectedFile();
+            ExcelExporter exp = new ExcelExporter();
+            exp.fillData(jTable5, new File(fileToSave.getAbsolutePath()+".xls"));
+           
+        }
+
+    }//GEN-LAST:event_jButton22ActionPerformed
+
+    private void jButton23MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton23MouseEntered
+        // TODO add your handling code here:
+         jButton23.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/torles.png")));
+    }//GEN-LAST:event_jButton23MouseEntered
+
+    private void jButton23MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton23MouseExited
+        // TODO add your handling code here:
+         jButton23.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/torles1.png")));
+    }//GEN-LAST:event_jButton23MouseExited
+
+    private void jButton23ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton23ActionPerformed
+        //jobinfo tábák adatainak törlése
+        
+        for(int i = 0; i < ablak.jTable17.getRowCount(); i++){
+        
+          ablak.jTable17.setValueAt("", i, 0);
+        
+        
+        }
+        
+        DefaultTableModel model = new DefaultTableModel();
+        model = (DefaultTableModel) ablak.jTable5.getModel();
+        model.setRowCount(0);
+        ablak.jTable5.setModel(model);
+        
+        
+    }//GEN-LAST:event_jButton23ActionPerformed
 
     public void gombenged() {
 
@@ -4335,6 +4476,8 @@ public class ablak extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton20;
     private javax.swing.JButton jButton21;
+    private javax.swing.JButton jButton22;
+    private javax.swing.JButton jButton23;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
@@ -4354,7 +4497,6 @@ public class ablak extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
-    public static javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
@@ -4381,6 +4523,7 @@ public class ablak extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel34;
     private javax.swing.JLabel jLabel35;
     private javax.swing.JLabel jLabel36;
+    private javax.swing.JLabel jLabel37;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -4413,6 +4556,7 @@ public class ablak extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane16;
     private javax.swing.JScrollPane jScrollPane17;
     private javax.swing.JScrollPane jScrollPane18;
+    private javax.swing.JScrollPane jScrollPane19;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane22;
     private javax.swing.JScrollPane jScrollPane23;
@@ -4432,6 +4576,7 @@ public class ablak extends javax.swing.JFrame {
     public static javax.swing.JTable jTable14;
     public static javax.swing.JTable jTable15;
     private javax.swing.JTable jTable16;
+    public static javax.swing.JTable jTable17;
     public static javax.swing.JTable jTable18;
     public static javax.swing.JTable jTable19;
     public static javax.swing.JTable jTable2;
@@ -4457,7 +4602,6 @@ public class ablak extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField5;
     public static javax.swing.JTextField jTextField6;
-    public static javax.swing.JTextField jTextField7;
     public static javax.swing.JTextField jTextField8;
     public static javax.swing.JTextField jTextField9;
     // End of variables declaration//GEN-END:variables

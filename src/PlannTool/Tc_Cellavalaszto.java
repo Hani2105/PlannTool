@@ -100,7 +100,6 @@ public class Tc_Cellavalaszto extends javax.swing.JFrame {
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 120, 170, 190));
 
-        jList2.setToolTipText("");
         jScrollPane2.setViewportView(jList2);
 
         getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 120, 170, 190));

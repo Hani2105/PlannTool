@@ -265,6 +265,7 @@ public class Tc_Leker {
         Tc_AdatInterface a = new Tc_AdatInterface(Besheets.get(neve));
         a.tablabatolt();
         Tc_Calculator calc = new Tc_Calculator(Besheets.get(neve), false, 0);
+        calc.run();
 
         //lekérdezzük a job adatokat
         Tc_Jobinfotoplan j = new Tc_Jobinfotoplan(Besheets.get(neve));

@@ -81,8 +81,10 @@ public class Jobinfoszal extends Thread {
         int qty = 0;
 
         for (int i = 0; i < ablak.jobstatus.getRowCount(); i++) {
-
-            qty += Integer.parseInt(ablak.jobstatus.getValueAt(i, 3).toString());
+            try {
+                qty += Integer.parseInt(ablak.jobstatus.getValueAt(i, 3).toString());
+            } catch (Exception e) {
+            }
 
         }
 

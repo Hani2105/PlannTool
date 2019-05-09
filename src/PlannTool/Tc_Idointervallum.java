@@ -212,6 +212,7 @@ public class Tc_Idointervallum extends javax.swing.JFrame {
         }
 
         Tc_Calculator calc = new Tc_Calculator(Tc_Betervezo.Besheets.get(Tc_Betervezo.Tervezotabbed.getTitleAt(Tc_Betervezo.Tervezotabbed.getSelectedIndex())), false, 0);
+        calc.run();
 
         this.dispose();
 

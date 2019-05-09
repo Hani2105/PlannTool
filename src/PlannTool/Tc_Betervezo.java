@@ -606,6 +606,7 @@ public class Tc_Betervezo extends javax.swing.JFrame {
             a.adatbatoltnezetvaltas();
             a.tablabatolt();
             Tc_Calculator c = new Tc_Calculator(Tc_Betervezo.Besheets.get(Tc_Betervezo.Tervezotabbed.getTitleAt(i)), false, 0);
+            c.run();
 
         }
 

@@ -152,7 +152,6 @@ public class Tc_Besheet extends javax.swing.JPanel {
         });
 
         Szinezo.setText("Színező!");
-        Szinezo.setToolTipText("Cellák színezése!");
         Szinezo.setEnabled(false);
         Szinezo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -250,7 +249,6 @@ public class Tc_Besheet extends javax.swing.JPanel {
         JPopupMenu1.add(pnkarbantarto);
 
         Mernoki.setText("Mérnöki gyártás!");
-        Mernoki.setToolTipText("Mérnöki gyártás!");
         Mernoki.setEnabled(false);
         Mernoki.addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentShown(java.awt.event.ComponentEvent evt) {
@@ -662,6 +660,7 @@ public class Tc_Besheet extends javax.swing.JPanel {
         Tc_AdatInterface a = new Tc_AdatInterface(this);
         a.tablabatolt();
         Tc_Calculator calc = new Tc_Calculator(this, false, 0);
+        calc.run();
 
     }//GEN-LAST:event_DeleteRowActionPerformed
 
@@ -737,6 +736,7 @@ public class Tc_Besheet extends javax.swing.JPanel {
         a.tablabatolt();
 
         Tc_Calculator calc = new Tc_Calculator(this, false, 0);
+        calc.run();
     }//GEN-LAST:event_InsertRowActionPerformed
 
     private void SFDClekeresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SFDClekeresActionPerformed
@@ -832,6 +832,7 @@ public class Tc_Besheet extends javax.swing.JPanel {
         }
 
         Tc_Calculator calc = new Tc_Calculator(Tc_Betervezo.Besheets.get(Tc_Betervezo.Tervezotabbed.getTitleAt(Tc_Betervezo.Tervezotabbed.getSelectedIndex())), false, 0);
+        calc.run();
 
     }//GEN-LAST:event_jButton8ActionPerformed
 
@@ -1167,10 +1168,12 @@ public class Tc_Besheet extends javax.swing.JPanel {
             if ((jTable2.getValueAt(jTable2.getSelectedRow(), 3).toString().equals("Terv") || jTable2.getValueAt(jTable2.getSelectedRow(), 3).toString().equals("Tény")) && jTable2.getValueAt(jTable2.getSelectedRow() - 1, 3).toString().equals("Infó") && jTable2.getSelectedColumn() > 3) {
 
                 Tc_Calculator c = new Tc_Calculator(this, true, jTable2.getSelectedRow());
+                c.run();
 
             } else if (jTable2.getSelectedColumn() > 3) {
 
                 Tc_Calculator c = new Tc_Calculator(this, false, jTable2.getSelectedRow());
+                c.run();
 
             }
         } catch (Exception e) {
@@ -1197,6 +1200,7 @@ public class Tc_Besheet extends javax.swing.JPanel {
 
         Tc_Betervezo.csuk = false;
         Tc_Calculator c = new Tc_Calculator(this, false, 0);
+        c.run();
 
     }//GEN-LAST:event_jTable2KeyPressed
 
@@ -1204,6 +1208,7 @@ public class Tc_Besheet extends javax.swing.JPanel {
 
         Tc_Betervezo.csuk = false;
         Tc_Calculator c = new Tc_Calculator(this, false, 0);
+        c.run();
 
     }//GEN-LAST:event_jTable2KeyReleased
 
@@ -1221,6 +1226,7 @@ public class Tc_Besheet extends javax.swing.JPanel {
 
         if (Tc_Betervezo.csuk == false) {
             Tc_Calculator c = new Tc_Calculator(this, false, 0);
+            c.run();
         }
 
     }//GEN-LAST:event_jTable2PropertyChange

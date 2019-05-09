@@ -301,6 +301,7 @@ public class ablak extends javax.swing.JFrame {
             }
             ;
             jButton18 = new javax.swing.JButton();
+            jCheckBox5 = new javax.swing.JCheckBox();
             jPanel11 = new javax.swing.JPanel();
             jScrollPane17 = new javax.swing.JScrollPane();
             jTable15 = new javax.swing.JTable();
@@ -311,6 +312,13 @@ public class ablak extends javax.swing.JFrame {
             jScrollPane18 = new javax.swing.JScrollPane();
             jTable16 = new javax.swing.JTable();
             jButton21 = new javax.swing.JButton();
+            jPanel14 = new javax.swing.JPanel();
+            jPanel15 = new javax.swing.JPanel();
+            jButton24 = new javax.swing.JButton();
+            jTextField7 = new javax.swing.JTextField();
+            jLabel12 = new javax.swing.JLabel();
+            jScrollPane20 = new javax.swing.JScrollPane();
+            jTable20 = new javax.swing.JTable();
 
             jMenuItem1.setText("Bontás SN-re!");
             jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
@@ -1870,6 +1878,7 @@ public class ablak extends javax.swing.JFrame {
                     "Serial N", "SN", "JOB", "Part Number", "Location", "Last Comp Date"
                 }
             ));
+            jTable4.setCellSelectionEnabled(true);
             jScrollPane4.setViewportView(jTable4);
 
             jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/leker1.png"))); // NOI18N
@@ -2831,25 +2840,32 @@ public class ablak extends javax.swing.JFrame {
                 }
             });
 
+            jCheckBox5.setText("Elhagyott JOB-ok");
+            jCheckBox5.setToolTipText("A megadott dátumtól kérdezzük le azokat a JOB -okat amik végleg kikerültek a tervekből! A Sor/Cella ebben az esetben nem releváns!");
+
             javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
             jPanel10.setLayout(jPanel10Layout);
             jPanel10Layout.setHorizontalGroup(
                 jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel10Layout.createSequentialGroup()
-                    .addComponent(jScrollPane15, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(18, 18, 18)
-                    .addComponent(jScrollPane16, javax.swing.GroupLayout.PREFERRED_SIZE, 926, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE))
-                .addGroup(jPanel10Layout.createSequentialGroup()
-                    .addGap(25, 25, 25)
-                    .addComponent(jLabel35, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(49, 49, 49)
-                    .addComponent(jLabel36)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                    .addComponent(jDateChooser5, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                    .addComponent(jButton18, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(530, Short.MAX_VALUE))
+                    .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel10Layout.createSequentialGroup()
+                            .addGap(25, 25, 25)
+                            .addComponent(jLabel35, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jScrollPane15, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel10Layout.createSequentialGroup()
+                            .addComponent(jLabel36)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(jDateChooser5, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(jButton18, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jCheckBox5)
+                            .addGap(0, 396, Short.MAX_VALUE))
+                        .addComponent(jScrollPane16))
+                    .addContainerGap())
             );
             jPanel10Layout.setVerticalGroup(
                 jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -2862,7 +2878,10 @@ public class ablak extends javax.swing.JFrame {
                                     .addComponent(jLabel35, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel36))
                                 .addComponent(jDateChooser5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addComponent(jButton18, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jButton18, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel10Layout.createSequentialGroup()
+                            .addGap(19, 19, 19)
+                            .addComponent(jCheckBox5)))
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                     .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(jScrollPane16, javax.swing.GroupLayout.DEFAULT_SIZE, 449, Short.MAX_VALUE)
@@ -3073,6 +3092,88 @@ public class ablak extends javax.swing.JFrame {
             );
 
             jTabbedPane1.addTab("SN konténer infó", jPanel12);
+
+            jButton24.setText("Lekérdez");
+            jButton24.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    jButton24ActionPerformed(evt);
+                }
+            });
+
+            jLabel12.setText("Szalaggyűjtés ehhez:");
+
+            jTable20.setModel(new javax.swing.table.DefaultTableModel(
+                new Object [][] {
+
+                },
+                new String [] {
+                    "Program", "Gép", "Modul", "Side", "Slot", "Qty/Board", "Shape", "Feedername"
+                }
+            ));
+            jScrollPane20.setViewportView(jTable20);
+            if (jTable20.getColumnModel().getColumnCount() > 0) {
+                jTable20.getColumnModel().getColumn(2).setMinWidth(50);
+                jTable20.getColumnModel().getColumn(2).setPreferredWidth(50);
+                jTable20.getColumnModel().getColumn(2).setMaxWidth(50);
+                jTable20.getColumnModel().getColumn(3).setMinWidth(50);
+                jTable20.getColumnModel().getColumn(3).setPreferredWidth(50);
+                jTable20.getColumnModel().getColumn(3).setMaxWidth(50);
+                jTable20.getColumnModel().getColumn(4).setMinWidth(50);
+                jTable20.getColumnModel().getColumn(4).setPreferredWidth(50);
+                jTable20.getColumnModel().getColumn(4).setMaxWidth(50);
+                jTable20.getColumnModel().getColumn(5).setMinWidth(70);
+                jTable20.getColumnModel().getColumn(5).setPreferredWidth(70);
+                jTable20.getColumnModel().getColumn(5).setMaxWidth(70);
+            }
+
+            javax.swing.GroupLayout jPanel15Layout = new javax.swing.GroupLayout(jPanel15);
+            jPanel15.setLayout(jPanel15Layout);
+            jPanel15Layout.setHorizontalGroup(
+                jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel15Layout.createSequentialGroup()
+                    .addGap(14, 14, 14)
+                    .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel15Layout.createSequentialGroup()
+                            .addGap(13, 13, 13)
+                            .addComponent(jLabel12))
+                        .addGroup(jPanel15Layout.createSequentialGroup()
+                            .addGap(24, 24, 24)
+                            .addComponent(jButton24)))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jScrollPane20, javax.swing.GroupLayout.DEFAULT_SIZE, 936, Short.MAX_VALUE))
+            );
+            jPanel15Layout.setVerticalGroup(
+                jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel15Layout.createSequentialGroup()
+                    .addGap(14, 14, 14)
+                    .addComponent(jLabel12)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jButton24)
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel15Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(jScrollPane20, javax.swing.GroupLayout.DEFAULT_SIZE, 507, Short.MAX_VALUE))
+            );
+
+            javax.swing.GroupLayout jPanel14Layout = new javax.swing.GroupLayout(jPanel14);
+            jPanel14.setLayout(jPanel14Layout);
+            jPanel14Layout.setHorizontalGroup(
+                jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel14Layout.createSequentialGroup()
+                    .addComponent(jPanel15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addContainerGap())
+            );
+            jPanel14Layout.setVerticalGroup(
+                jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel14Layout.createSequentialGroup()
+                    .addComponent(jPanel15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addContainerGap())
+            );
+
+            jTabbedPane1.addTab("Alkatrész infó (nem stabil)", jPanel14);
 
             jScrollPane7.setViewportView(jTabbedPane1);
 
@@ -3725,8 +3826,10 @@ public class ablak extends javax.swing.JFrame {
         int[] selectedrows = jTable5.getSelectedRows();
 
         for (int i = 0; i < selectedrows.length; i++) {
-
-            osszeg += Integer.parseInt(jTable5.getValueAt(selectedrows[i], 3).toString());
+            try {
+                osszeg += Integer.parseInt(jTable5.getValueAt(selectedrows[i], 3).toString());
+            } catch (Exception e) {
+            }
 
         }
 
@@ -4276,9 +4379,9 @@ public class ablak extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton21ActionPerformed
 
     private void jButton22MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton22MouseEntered
-       
+
         jButton22.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/excel.png")));
-        
+
     }//GEN-LAST:event_jButton22MouseEntered
 
     private void jButton22MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton22MouseExited
@@ -4299,39 +4402,119 @@ public class ablak extends javax.swing.JFrame {
 
             File fileToSave = fileChooser.getSelectedFile();
             ExcelExporter exp = new ExcelExporter();
-            exp.fillData(jTable5, new File(fileToSave.getAbsolutePath()+".xls"));
-           
+            exp.fillData(jTable5, new File(fileToSave.getAbsolutePath() + ".xls"));
+
         }
 
     }//GEN-LAST:event_jButton22ActionPerformed
 
     private void jButton23MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton23MouseEntered
         // TODO add your handling code here:
-         jButton23.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/torles.png")));
+        jButton23.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/torles.png")));
     }//GEN-LAST:event_jButton23MouseEntered
 
     private void jButton23MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton23MouseExited
         // TODO add your handling code here:
-         jButton23.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/torles1.png")));
+        jButton23.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/torles1.png")));
     }//GEN-LAST:event_jButton23MouseExited
 
     private void jButton23ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton23ActionPerformed
         //jobinfo tábák adatainak törlése
-        
-        for(int i = 0; i < ablak.jTable17.getRowCount(); i++){
-        
-          ablak.jTable17.setValueAt("", i, 0);
-        
-        
+
+        for (int i = 0; i < ablak.jTable17.getRowCount(); i++) {
+
+            ablak.jTable17.setValueAt("", i, 0);
+
         }
-        
+
         DefaultTableModel model = new DefaultTableModel();
         model = (DefaultTableModel) ablak.jTable5.getModel();
         model.setRowCount(0);
         ablak.jTable5.setModel(model);
-        
-        
+
+
     }//GEN-LAST:event_jButton23ActionPerformed
+
+    private void jButton24ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton24ActionPerformed
+
+// nexim konnect
+        if (jTextField7.getText().length() > 0) {
+            DefaultTableModel model = new DefaultTableModel();
+            model = (DefaultTableModel) jTable20.getModel();
+            model.setRowCount(0);
+            neximconnect nc = new neximconnect();
+            try {
+
+                String query = "SELECT DISTINCT JOBNAME, MODEL.NAME AS \"Gép\" , FLOOR(FEEDERSETUP.FEEDERID/10000) as MODULE,\n"
+                        + "  FLOOR(MOD(FEEDERSETUP.FEEDERID,10000)/1000) as SIDE, \n"
+                        + "  MOD(FEEDERSETUP.FEEDERID,1000) AS SLOT, count(FEEDERSETUPREFLIST.FEEDERID) as qty , PARTSHAPENAME ,\n"
+                        + "  FEEDERNAME \n"
+                        + "FROM JOBDATA \n"
+                        + "LEFT JOIN LINE ON LINE.JOBID = JOBDATA.JOBID\n"
+                        + "LEFT JOIN SETUP ON SETUP.JOBID = JOBDATA.JOBID \n"
+                        + "      AND SETUP.LINEID = LINE.LINEID \n"
+                        + "      AND SETUP.TOPBOTTOM = LINE.TOPBOTTOM\n"
+                        + "LEFT JOIN FEEDERSETUP ON FEEDERSETUP.SETUPID = SETUP.SETUPID \n"
+                        + "LEFT JOIN FEEDERSETUPREFLIST ON FEEDERSETUPREFLIST.SETUPID = SETUP.SETUPID\n"
+                        + "      AND FEEDERSETUPREFLIST.MODELID = FEEDERSETUP.MODELID \n"
+                        + "      AND FEEDERSETUP.FEEDERID = FEEDERSETUPREFLIST.FEEDERID\n"
+                        + "      AND FEEDERSETUP.UNITPOSID = FEEDERSETUPREFLIST.UNITPOSID\n"
+                        + "      AND FEEDERSETUP.SUBSLOT = FEEDERSETUPREFLIST.SUBSLOT  \n"
+                        + "LEFT JOIN MODEL ON MODEL.MODELID = FEEDERSETUP.MODELID -- Gépnévhez\n"
+                        + "      AND MODEL.JOBID = JOBDATA.JOBID\n"
+                        + "      AND MODEL.TOPBOTTOM = LINE.TOPBOTTOM\n"
+                        + "LEFT JOIN COORDINATE ON COORDINATE.COORDINATEID = FEEDERSETUPREFLIST.COORDINATEID\n"
+                        + "       AND COORDINATE.JOBID = JOBDATA.JOBID\n"
+                        + "       AND COORDINATE.TOPBOTTOM = LINE.TOPBOTTOM \n"
+                        + "LEFT JOIN PARTNUMBER ON PARTNUMBER.PARTNUMBERNAME = FEEDERSETUP.PARTNUMBER -- Shape-hez kell\n"
+                        + "      AND PARTNUMBER.JOBID = JOBDATA.JOBID\n"
+                        + "LEFT JOIN VENDERLOTPARTNUMBER ON VENDERLOTPARTNUMBER.PARTNUMBERID = PARTNUMBER.PARTNUMBERID -- Shape-hez kell\n"
+                        + "    WHERE partnumber.partnumbername = '" + jTextField7.getText().trim() + "' -- PARTNUMBER       \n"
+                        + "      AND FEEDERSETUPREFLIST.FEEDERID IS NOT NULL	-- HA FAMILY SETUP IS KELL, AKKOR EZ A SORT COMMENTELD KI, EZZEL CSAK AZT KAPOD AMIT HASZNAL IS\n"
+                        + "      AND FEEDERSETUP.PARTNUMBER IS NOT NULL \n"
+                        + "GROUP BY JOBNAME,  SETUP.TOPBOTTOM, PARTNUMBER, FEEDERNAME, FEEDERSETUP.FEEDERID, MODEL.NAME, PARTNUMBER, PARTSHAPENAME, VENDERLOTPARTNUMBER.PMAPP , MODEL.NAME\n"
+                        + "ORDER BY jobname";
+
+                nc.planconnect(query);
+                int merete = 0;
+                String adatok[][] = null;
+                if (nc.rs != null) {
+                    nc.rs.last();
+                    merete = nc.rs.getRow();
+                    adatok = new String[merete][8];
+                    nc.rs.beforeFirst();
+                    int i = 0;
+
+                    while (nc.rs.next()) {
+
+                        adatok[i][0] = nc.rs.getString(1);
+                        adatok[i][1] = nc.rs.getString(2);
+                        adatok[i][2] = nc.rs.getString(3);
+                        adatok[i][3] = nc.rs.getString(4);
+                        adatok[i][4] = nc.rs.getString(5);
+                        adatok[i][5] = nc.rs.getString(6);
+                        adatok[i][6] = nc.rs.getString(7);
+                        adatok[i][7] = nc.rs.getString(8);
+                        model.addRow(new Object[]{nc.rs.getString(1), nc.rs.getString(2), nc.rs.getString(3), nc.rs.getString(4), nc.rs.getString(5), nc.rs.getString(6), nc.rs.getString(7), nc.rs.getString(8)});
+                        i++;
+
+                    }
+
+                    nc.kinyir();
+                    jTable20.setModel(model);
+                }
+
+                System.err.println("");
+
+            } catch (SQLException ex) {
+                Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
+                ex.printStackTrace();
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
+    }//GEN-LAST:event_jButton24ActionPerformed
 
     public void gombenged() {
 
@@ -4478,6 +4661,7 @@ public class ablak extends javax.swing.JFrame {
     private javax.swing.JButton jButton21;
     private javax.swing.JButton jButton22;
     private javax.swing.JButton jButton23;
+    private javax.swing.JButton jButton24;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
@@ -4489,6 +4673,7 @@ public class ablak extends javax.swing.JFrame {
     public static javax.swing.JCheckBox jCheckBox2;
     public static javax.swing.JCheckBox jCheckBox3;
     public static javax.swing.JCheckBox jCheckBox4;
+    public static javax.swing.JCheckBox jCheckBox5;
     public static com.toedter.calendar.JDateChooser jDateChooser1;
     public static com.toedter.calendar.JDateChooser jDateChooser2;
     public static com.toedter.calendar.JDateChooser jDateChooser3;
@@ -4497,6 +4682,7 @@ public class ablak extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
@@ -4537,6 +4723,8 @@ public class ablak extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel13;
+    private javax.swing.JPanel jPanel14;
+    private javax.swing.JPanel jPanel15;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
@@ -4558,6 +4746,7 @@ public class ablak extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane18;
     private javax.swing.JScrollPane jScrollPane19;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane20;
     private javax.swing.JScrollPane jScrollPane22;
     private javax.swing.JScrollPane jScrollPane23;
     private javax.swing.JScrollPane jScrollPane3;
@@ -4580,6 +4769,7 @@ public class ablak extends javax.swing.JFrame {
     public static javax.swing.JTable jTable18;
     public static javax.swing.JTable jTable19;
     public static javax.swing.JTable jTable2;
+    private javax.swing.JTable jTable20;
     public static javax.swing.JTable jTable3;
     public static javax.swing.JTable jTable4;
     public static javax.swing.JTable jTable5;
@@ -4602,6 +4792,7 @@ public class ablak extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField5;
     public static javax.swing.JTextField jTextField6;
+    private javax.swing.JTextField jTextField7;
     public static javax.swing.JTextField jTextField8;
     public static javax.swing.JTextField jTextField9;
     // End of variables declaration//GEN-END:variables

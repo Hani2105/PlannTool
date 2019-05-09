@@ -295,16 +295,20 @@ public class Tc_AdatInterface {
     public void adatbatoltnezetvaltas() {
 
         //leterehozunk egy akkora tömböt mint az eredeti és feltöltjük üres classokkal
-        Tc_CellClass[][] temp = new Tc_CellClass[b.tablaadat.length][b.tablaadat[1].length];
+        Tc_CellClass[][] temp = null;
+        try {
+            temp = new Tc_CellClass[b.tablaadat.length][b.tablaadat[1].length];
 
-        for (int r = 0; r < temp.length; r++) {
+            for (int r = 0; r < temp.length; r++) {
 
-            for (int o = 0; o < temp[1].length; o++) {
+                for (int o = 0; o < temp[1].length; o++) {
 
-                temp[r][o] = new Tc_CellClass("", 0, 0.0, 0);
+                    temp[r][o] = new Tc_CellClass("", 0, 0.0, 0);
+
+                }
 
             }
-
+        } catch (Exception e) {
         }
 
         //elkezdjük forgatni az eredeti tömböt és belepakoljuk amit kell a temp-be
@@ -375,21 +379,21 @@ public class Tc_AdatInterface {
         }
 
         //letrehozzuk az uj adattablat
-        b.tablaadat = new Tc_CellClass[ujsor][temp[1].length];
+        try {
+            b.tablaadat = new Tc_CellClass[ujsor][temp[1].length];
 
-        //beletesszük az adatokat
-        for (int r = 0;
-                r < ujsor;
-                r++) {
+            //beletesszük az adatokat
+            for (int r = 0; r < ujsor; r++) {
 
-            for (int o = 0; o < temp[1].length; o++) {
+                for (int o = 0; o < temp[1].length; o++) {
 
-                b.tablaadat[r][o] = temp[r][o];
+                    b.tablaadat[r][o] = temp[r][o];
+
+                }
 
             }
-
+        } catch (Exception e) {
         }
-
     }
 
 }

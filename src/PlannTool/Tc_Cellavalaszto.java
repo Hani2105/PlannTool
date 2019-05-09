@@ -205,7 +205,7 @@ public class Tc_Cellavalaszto extends javax.swing.JFrame {
             Logger.getLogger(Tc_Cellavalaszto.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        this.dispose();
+        //this.dispose();
 
 
     }//GEN-LAST:event_jButton4ActionPerformed

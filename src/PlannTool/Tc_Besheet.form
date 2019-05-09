@@ -18,7 +18,6 @@
         <MenuItem class="javax.swing.JMenuItem" name="Szinezo">
           <Properties>
             <Property name="text" type="java.lang.String" value="Sz&#xed;nez&#x151;!"/>
-            <Property name="toolTipText" type="java.lang.String" value="Cell&#xe1;k sz&#xed;nez&#xe9;se!"/>
             <Property name="enabled" type="boolean" value="false"/>
           </Properties>
           <Events>
@@ -128,7 +127,6 @@
         <MenuItem class="javax.swing.JMenuItem" name="Mernoki">
           <Properties>
             <Property name="text" type="java.lang.String" value="M&#xe9;rn&#xf6;ki gy&#xe1;rt&#xe1;s!"/>
-            <Property name="toolTipText" type="java.lang.String" value="M&#xe9;rn&#xf6;ki gy&#xe1;rt&#xe1;s!"/>
             <Property name="enabled" type="boolean" value="false"/>
           </Properties>
           <Events>

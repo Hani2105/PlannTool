@@ -15,14 +15,20 @@ import javax.swing.table.TableColumn;
  *
  * @author gabor_hanacsek
  */
-public class Tc_Calculator {
+public class Tc_Calculator extends Thread {
 
     Tc_Besheet b;
+    boolean selection;
+    int cella;
 
     public Tc_Calculator(Tc_Besheet b, boolean selection, int cella) {
 
         this.b = b;
+        this.selection = selection;
+        this.cella = cella;
+    }
 
+    public void run() {
 //ha sorbarendezett nezet van
         if (Tc_Betervezo.nezet == 1 && Tc_Betervezo.nezetvaltas) {
 
@@ -229,7 +235,7 @@ public class Tc_Calculator {
             }
 
         } //ha össz összeadás van!
-        else if (Tc_Betervezo.calc  == 2) {
+        else if (Tc_Betervezo.calc == 2) {
             //bejarjuk a sorokat , felvesszuk a ws-t , a job -ot es a pn-t , terv/tenyt , darabszamot
             String pn = "";
             String job = "";
@@ -291,9 +297,8 @@ public class Tc_Calculator {
 
             }
 
-        } 
-//Ha az adott időpontig vagyunk kiváncsiak az eredményre!
-        else if (Tc_Betervezo.calc  == 3) {
+        } //Ha az adott időpontig vagyunk kiváncsiak az eredményre!
+        else if (Tc_Betervezo.calc == 3) {
 //bejarjuk a sorokat , felvesszuk a ws-t , a job -ot es a pn-t , terv/tenyt , darabszamot
             String pn = "";
             String job = "";

@@ -124,7 +124,7 @@ public class Tc_TervTooltipRenderer extends DefaultTableCellRenderer {
                 c.setIcon(null);
                 c.setToolTipText(null);
 
-            } else if (column > 3 && Integer.parseInt(table.getValueAt(row, table.getColumnCount() - 1).toString()) != 0 && table.getValueAt(row, 3).equals("Terv") && ((Integer.parseInt(table.getValueAt(row, table.getColumnCount() - 1).toString())) <= (Integer.parseInt(table.getValueAt(row + 1, table.getColumnCount() - 1).toString())))) {
+            } else if (column > 3 && (Integer.parseInt(table.getValueAt(row, table.getColumnCount() - 1).toString()) > 0 || Integer.parseInt(table.getValueAt(row + 1, table.getColumnCount() - 1).toString()) > 0 ) && table.getValueAt(row, 3).equals("Terv") && ((Integer.parseInt(table.getValueAt(row, table.getColumnCount() - 1).toString())) <= (Integer.parseInt(table.getValueAt(row + 1, table.getColumnCount() - 1).toString())))) {
 
                 c.setBackground(new Color(Tc_Betervezo.slide7, Tc_Betervezo.slide8, Tc_Betervezo.slide9));
                 c.setIcon(null);

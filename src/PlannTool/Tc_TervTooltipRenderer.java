@@ -114,6 +114,18 @@ public class Tc_TervTooltipRenderer extends DefaultTableCellRenderer {
             c.setToolTipText(null);
 
         }
+        
+//job szinezes , ha találunk még ilyen cella értéket szinezünk
+        try {
+            if ((column == 1 || column == 0 || column == 2) && table.getValueAt(row, 1).toString().equals(b.jobaszinezeshez) && !b.jobaszinezeshez.equals("")) {
+
+                c.setBackground(new Color(241, 252, 35));
+                c.setForeground(new Color(0, 0, 0));
+                //c.setBorder(BorderFactory.createLineBorder(new Color(232, 11, 44), 2));
+
+            }
+        } catch (Exception e) {
+        }
 
 //jöhet a kalkulátor színezés
         //calculátor zöld színe ha hagyobb vagy egyenlő a tény a tervnél és nem nulla és már a terv reszben vagyunk
@@ -124,7 +136,7 @@ public class Tc_TervTooltipRenderer extends DefaultTableCellRenderer {
                 c.setIcon(null);
                 c.setToolTipText(null);
 
-            } else if (column > 3 && (Integer.parseInt(table.getValueAt(row, table.getColumnCount() - 1).toString()) > 0 || Integer.parseInt(table.getValueAt(row + 1, table.getColumnCount() - 1).toString()) > 0 ) && table.getValueAt(row, 3).equals("Terv") && ((Integer.parseInt(table.getValueAt(row, table.getColumnCount() - 1).toString())) <= (Integer.parseInt(table.getValueAt(row + 1, table.getColumnCount() - 1).toString())))) {
+            } else if (column > 3 && (Integer.parseInt(table.getValueAt(row, table.getColumnCount() - 1).toString()) > 0 || Integer.parseInt(table.getValueAt(row + 1, table.getColumnCount() - 1).toString()) > 0) && table.getValueAt(row, 3).equals("Terv") && ((Integer.parseInt(table.getValueAt(row, table.getColumnCount() - 1).toString())) <= (Integer.parseInt(table.getValueAt(row + 1, table.getColumnCount() - 1).toString())))) {
 
                 c.setBackground(new Color(Tc_Betervezo.slide7, Tc_Betervezo.slide8, Tc_Betervezo.slide9));
                 c.setIcon(null);
@@ -398,14 +410,26 @@ public class Tc_TervTooltipRenderer extends DefaultTableCellRenderer {
         } catch (Exception e) {
         }
 
-//ha ki van jelölve a cella
+        //ha job cella van kijelölve   
         if (isSelected) {
+//felvesszük a jobszámot
+
+            b.jobaszinezeshez = table.getValueAt(row, 1).toString();
+            table.repaint();
+
+        }
+
+
+
+//ha ki van jelölve a cella
+        if (isSelected && (column != 1 || column != 2 || column != 0)) {
 
             //c.setBackground(new Color(220, 224, 232));
             c.setForeground(new Color(0, 0, 0));
             c.setBorder(BorderFactory.createLineBorder(new Color(232, 11, 44), 2));
 
         }
+
         return c;
 
     }

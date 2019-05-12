@@ -348,8 +348,10 @@ public class Tc_Muszakjelentes extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-//kuldok egy levelet magamnak hogy mirol akartak jelentest kuldeni
+        //kuldok egy levelet magamnak hogy mirol akartak jelentest kuldeni
 
+        
+        
         //peldanyositunk egy levelkuldot
         try {
             //stat.beir(System.getProperty("user.name"), Tc_Betervezo.Tervezotabbed.getTitleAt(Tc_Betervezo.Tervezotabbed.getSelectedIndex()), "Mjelenteskartlenni", "gabor.hanacsek@sanmina.com");

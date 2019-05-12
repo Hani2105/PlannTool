@@ -25,7 +25,7 @@ public class Tc_Jobinfotoplan extends Thread {
     }
 
     public void run() {
-
+        b.jobadat.clear();
 //összeszedjük a jobszámokat a sheetről
         DefaultTableModel model = new DefaultTableModel();
         model = (DefaultTableModel) b.jTable2.getModel();
@@ -65,12 +65,14 @@ public class Tc_Jobinfotoplan extends Thread {
             try {
                 rowdata = (Object[][]) xxx.xmlfeldolg(url, nodelist, lista);
             } catch (Exception e) {
+                infobox inf = new infobox();
+                inf.infoBox("Nem lehetséges a JOB infók összegyűjtése , túl sok vagy hibás JOB számok miatt!", "Hiba!");
             }
 
         } catch (Exception e) {
         }
 
-        b.jobadat.clear();
+        
 
         try {
             String jobadat[][] = new String[rowdata.length][5];

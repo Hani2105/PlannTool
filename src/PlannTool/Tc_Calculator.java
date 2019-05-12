@@ -60,8 +60,6 @@ public class Tc_Calculator extends Thread {
                 if (model.getValueAt(i, 3).toString().equals("Infó")) {
 
                     model.removeRow(i);
-                    //this.b.jTable2.changeSelection(i+1,this.b.jTable2.getSelectedColumn(),false,false);
-
                     i = i - 1;
 
                 }
@@ -95,7 +93,7 @@ public class Tc_Calculator extends Thread {
                         wsek.add(ws);
                         model.insertRow(0, new Object[]{null, null, ws, "Infó"});
 
-                        //this.b.jTable2.changeSelection(i,this.b.jTable2.getSelectedColumn(),false,false);
+                       
                     }
 
                     irtunke = false;
@@ -156,6 +154,7 @@ public class Tc_Calculator extends Thread {
 
                                         dbo = Double.parseDouble(Tc_Betervezo.ciklusidok.get(0)[n][3]);
                                         hiba = false;
+                                        break;
 
                                     }
 

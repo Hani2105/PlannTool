@@ -18,8 +18,7 @@ public class Tc_Stringbolint {
 
         boolean inte = true;
         int eddigmenni = 1;
-        boolean szovege = true;
-        int innentol = 1;
+        
         db = 0;
         komment = "";
 

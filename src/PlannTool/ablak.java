@@ -3110,6 +3110,7 @@ public class ablak extends javax.swing.JFrame {
                     "Program", "Gép", "Modul", "Side", "Slot", "Qty/Board", "Shape", "Feedername"
                 }
             ));
+            jTable20.setCellSelectionEnabled(true);
             jScrollPane20.setViewportView(jTable20);
             if (jTable20.getColumnModel().getColumnCount() > 0) {
                 jTable20.getColumnModel().getColumn(2).setMinWidth(50);
@@ -4471,7 +4472,7 @@ public class ablak extends javax.swing.JFrame {
                         + "LEFT JOIN VENDERLOTPARTNUMBER ON VENDERLOTPARTNUMBER.PARTNUMBERID = PARTNUMBER.PARTNUMBERID -- Shape-hez kell\n"
                         + "    WHERE partnumber.partnumbername = '" + jTextField7.getText().trim() + "' -- PARTNUMBER       \n"
                         + "      AND FEEDERSETUPREFLIST.FEEDERID IS NOT NULL	-- HA FAMILY SETUP IS KELL, AKKOR EZ A SORT COMMENTELD KI, EZZEL CSAK AZT KAPOD AMIT HASZNAL IS\n"
-                        + "      AND FEEDERSETUP.PARTNUMBER IS NOT NULL \n"
+                        + "      AND FEEDERSETUP.PARTNUMBER IS NOT NULL and setup.mastersetup = 1 \n"
                         + "GROUP BY JOBNAME,  SETUP.TOPBOTTOM, PARTNUMBER, FEEDERNAME, FEEDERSETUP.FEEDERID, MODEL.NAME, PARTNUMBER, PARTSHAPENAME, VENDERLOTPARTNUMBER.PMAPP , MODEL.NAME\n"
                         + "ORDER BY jobname";
 

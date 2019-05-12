@@ -40,6 +40,8 @@ public class Tc_Besheet extends javax.swing.JPanel {
     public List<String[]> partnumbers = new ArrayList<String[]>();
     public List<String> workstations = new ArrayList<String>();
     public List<String[][]> jobadat = new ArrayList<String[][]>();
+    //ez az azonos jobok megkereséséhez kell a renderernek
+    public String jobaszinezeshez = "";
 
 //a tervtabla adatai tarolasara szolgalo tomb
     Tc_CellClass[][] tablaadat;

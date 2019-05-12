@@ -59,6 +59,9 @@ public class xmlfeldolg {
         } catch (IOException ex) {
             Logger.getLogger(ablak.class
                     .getName()).log(Level.SEVERE, null, ex);
+            
+           
+            
 
 
         } catch (SAXException ex) {

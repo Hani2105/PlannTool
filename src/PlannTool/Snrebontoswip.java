@@ -51,7 +51,7 @@ public class Snrebontoswip extends javax.swing.JFrame {
             jTable1.getColumnModel().getColumn(3).setPreferredWidth(50);
         }
 
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/excel1.png"))); // NOI18N
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/PICTURES/excel1.png"))); // NOI18N
         jButton3.setToolTipText("Exportálás excelbe!");
         jButton3.setBorderPainted(false);
         jButton3.setContentAreaFilled(false);

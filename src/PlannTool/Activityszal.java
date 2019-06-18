@@ -5,6 +5,7 @@
  */
 package PlannTool;
 
+import PlannTool.ANIMATIONS.animation;
 import static PlannTool.ablak.jTabbedPane1;
 import static PlannTool.ablak.stat;
 import java.net.MalformedURLException;
@@ -26,7 +27,7 @@ public class Activityszal extends Thread {
     public void run() {
 
         String part;
-        part = ablak.jTextField3.getText().trim();
+        part = ablak.jTextField3.getText().trim().toUpperCase();
         Date tol = ablak.jDateChooser1.getDate();
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd%20HH:mm:ss");
         String stol = df.format(tol);

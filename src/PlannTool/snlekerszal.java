@@ -5,6 +5,8 @@
  */
 package PlannTool;
 
+import PlannTool.ANIMATIONS.animation;
+import PlannTool.CONNECTS.connect;
 import static PlannTool.ablak.jTabbedPane1;
 import static PlannTool.ablak.lista;
 import static PlannTool.ablak.modelstatus;

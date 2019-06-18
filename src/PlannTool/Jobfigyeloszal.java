@@ -5,6 +5,8 @@
  */
 package PlannTool;
 
+import PlannTool.ANIMATIONS.animation;
+import PlannTool.CONNECTS.planconnect;
 import static PlannTool.ablak.jTabbedPane1;
 import static PlannTool.ablak.stat;
 import java.net.URL;
@@ -63,7 +65,7 @@ public class Jobfigyeloszal extends Thread {
 
             planconnect pc = new planconnect();
             try {
-                pc.planconnect(Query);
+                pc.lekerdez(Query);
             } catch (SQLException ex) {
                 Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
             } catch (ClassNotFoundException ex) {
@@ -90,7 +92,7 @@ public class Jobfigyeloszal extends Thread {
                     + "left join tc_bepns on tc_bepns.idtc_bepns = tc_terv.idtc_bepns\n"
                     + "where tc_terv.date >= '" + stol + "' and tc_terv.active = 2 and tc_becells.cellname in (" + allomasokquerybe + ") group by tc_terv.job , tc_bepns.partnumber order by tc_becells.cellname asc , tc_terv.date asc;";
             try {
-                pc.planconnect(Query);
+                pc.lekerdez(Query);
             } catch (SQLException ex) {
                 Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
             } catch (ClassNotFoundException ex) {
@@ -202,7 +204,7 @@ public class Jobfigyeloszal extends Thread {
             model = (DefaultTableModel) ablak.jTable14.getModel();
             model.setRowCount(0);
             try {
-                pc.planconnect(query);
+                pc.lekerdez(query);
             } catch (SQLException ex) {
                 Logger.getLogger(Jobfigyeloszal.class.getName()).log(Level.SEVERE, null, ex);
             } catch (ClassNotFoundException ex) {
@@ -223,7 +225,7 @@ public class Jobfigyeloszal extends Thread {
                     + "where job1 is null  group by job2";
 
             try {
-                pc.planconnect(query);
+                pc.lekerdez(query);
 
                 while (pc.rs.next()) {
 
@@ -246,6 +248,8 @@ public class Jobfigyeloszal extends Thread {
                 jobszamok += ablak.jTable14.getValueAt(i, 2).toString().trim() + ";";
 
             }
+
+            jobszamok = jobszamok.replace(" ", "");
 
             try {
 
@@ -270,6 +274,10 @@ public class Jobfigyeloszal extends Thread {
                 rowdata = (Object[][]) xxx.xmlfeldolg(url, nodelist, lista);
 
             } catch (Exception e) {
+
+                infobox info = new infobox();
+                info.infoBox("Nem sikerült lekérdezni a JOB ok státuszát!", "Hiba!");
+
             }
 
             //betesszuk a tablaba
@@ -278,25 +286,35 @@ public class Jobfigyeloszal extends Thread {
             for (int i = 0; i < ablak.jTable14.getRowCount(); i++) {
 
                 irtunke = false;
+                try {
+                    for (int n = 0; n < rowdata.length; n++) {
 
-                for (int n = 0; n < rowdata.length; n++) {
+                        if (ablak.jTable14.getValueAt(i, 2).toString().equals(rowdata[n][0]) && rowdata[n][5].equals("N")) {
 
-                    if (ablak.jTable14.getValueAt(i, 2).toString().equals(rowdata[n][0]) && rowdata[n][5].equals("N")) {
+                            model.setValueAt("42Q not released!", i, 5);
+                            irtunke = true;
+                        }
 
-                        model.setValueAt("42Q not released!", i, 5);
-                        irtunke = true;
+                        if (ablak.jTable14.getValueAt(i, 2).toString().equals(rowdata[n][0]) && (rowdata[n][4].equals("Traveler Printed") || rowdata[n][4].equals("Unit Skeleton")) && irtunke == false) {
+
+                            model.setValueAt(rowdata[n][3], i, 5);
+                            irtunke = true;
+
+                        }
+
+                        if (ablak.jTable14.getValueAt(i, 2).toString().equals(rowdata[n][0]) && rowdata[n][5].equals("X")) {
+
+                            model.setValueAt("JOB Cancelled!", i, 5);
+                            irtunke = true;
+                            
+                        } else if (ablak.jTable14.getValueAt(i, 2).toString().equals(rowdata[n][0]) && irtunke == false) {
+
+                            model.setValueAt("Minden elindult!", i, 5);
+
+                        }
+
                     }
-
-                    if (ablak.jTable14.getValueAt(i, 2).toString().equals(rowdata[n][0]) && (rowdata[n][4].equals("Traveler Printed") || rowdata[n][4].equals("Unit Skeleton")) && irtunke == false) {
-
-                        model.setValueAt(rowdata[n][3], i, 5);
-                        irtunke = true;
-
-                    } else if (ablak.jTable14.getValueAt(i, 2).toString().equals(rowdata[n][0]) && irtunke == false) {
-
-                        model.setValueAt("Minden elindult!", i, 5);
-
-                    }
+                } catch (Exception e) {
 
                 }
 

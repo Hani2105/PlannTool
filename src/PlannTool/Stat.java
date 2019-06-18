@@ -5,6 +5,7 @@
  */
 package PlannTool;
 
+import PlannTool.CONNECTS.planconnect;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Properties;

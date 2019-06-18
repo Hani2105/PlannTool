@@ -5,6 +5,8 @@
  */
 package PlannTool;
 
+import PlannTool.ANIMATIONS.animation;
+import PlannTool.CONNECTS.planconnect;
 import static PlannTool.ablak.jTabbedPane1;
 import static PlannTool.ablak.stat;
 import java.net.MalformedURLException;
@@ -82,7 +84,7 @@ public class OhQueryszal extends Thread {
             serials = serials.substring(0, serials.length() - 1);
 
             try {
-                rss = (ResultSet) planconnection_temp.planconnect("SELECT serial FROM planningdb.oh_querymain where megcsinalva = 'Y';");
+                rss = (ResultSet) planconnection_temp.lekerdez("SELECT serial FROM planningdb.oh_querymain where megcsinalva = 'Y';");
                 while (rss.next()) {
                     sn_list.add(rss.getString(1));
 

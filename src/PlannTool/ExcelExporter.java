@@ -16,7 +16,7 @@ import jxl.write.*;
 
 public class ExcelExporter {
 
-    void fillData(JTable table, File file) {
+    public void fillData(JTable table, File file) {
 
         try {
 

@@ -5,6 +5,8 @@
  */
 package PlannTool;
 
+import PlannTool.ANIMATIONS.animation;
+import PlannTool.CONNECTS.planconnect;
 import static PlannTool.ablak.jTabbedPane1;
 import static PlannTool.ablak.stat;
 import java.sql.SQLException;
@@ -48,7 +50,7 @@ public class Gyartasinfoszal extends Thread {
         //peldanositunk egy plan connectet
         planconnect pc = new planconnect();
         try {
-            pc.planconnect(query);
+            pc.lekerdez(query);
         } catch (SQLException ex) {
             Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {

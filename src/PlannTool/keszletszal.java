@@ -5,6 +5,10 @@
  */
 package PlannTool;
 
+
+import PlannTool.ANIMATIONS.animation;
+import PlannTool.ANIMATIONS.stitch;
+import PlannTool.CONNECTS.connect;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -115,7 +119,7 @@ public class keszletszal extends Thread {
         //fun
         if (System.getProperty("user.name").toString().equals("eva_istenes")) {
 
-            Stitch s = new Stitch();
+            stitch s = new stitch();
             s.setVisible(true);
             try {
                 Thread.sleep(2000);

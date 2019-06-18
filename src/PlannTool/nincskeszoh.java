@@ -5,6 +5,7 @@
  */
 package PlannTool;
 
+import PlannTool.CONNECTS.planconnect;
 import java.sql.SQLException;
 import javax.swing.table.DefaultTableModel;
 
@@ -29,7 +30,7 @@ public class nincskeszoh extends javax.swing.JFrame {
         model1.setRowCount(0);
         String query = "SELECT oh_querymain.partnumber  , oh_querymain.serial , oh_querymain.tol , oh_querymain.ig , oh_querymain.felhasznalo , oh_querymain.lekerdezesidopont/*, count(serial)*/ FROM planningdb.oh_querymain where megcsinalva = 'N' /*group by partnumber*/";
         planconnect pc = new planconnect();
-        pc.planconnect(query);
+        pc.lekerdez(query);
 
         while (pc.rs.next()) {
 
@@ -37,7 +38,7 @@ public class nincskeszoh extends javax.swing.JFrame {
 
         }
 
-        pc.planconnect("SELECT oh_querymain.partnumber , count(serial) FROM planningdb.oh_querymain where megcsinalva = 'N' group by partnumber");
+        pc.lekerdez("SELECT oh_querymain.partnumber , count(serial) FROM planningdb.oh_querymain where megcsinalva = 'N' group by partnumber");
 
         while (pc.rs.next()) {
 

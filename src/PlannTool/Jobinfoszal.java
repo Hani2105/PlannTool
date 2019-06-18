@@ -5,6 +5,7 @@
  */
 package PlannTool;
 
+import PlannTool.ANIMATIONS.animation;
 import static PlannTool.ablak.jTabbedPane1;
 import static PlannTool.ablak.stat;
 import java.net.MalformedURLException;

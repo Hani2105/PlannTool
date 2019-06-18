@@ -5,6 +5,7 @@
  */
 package PlannTool;
 
+import PlannTool.ANIMATIONS.animation;
 import static PlannTool.ablak.jTable1;
 import java.net.MalformedURLException;
 import java.net.URL;

@@ -5,6 +5,7 @@
  */
 package PlannTool;
 
+import PlannTool.CONNECTS.planconnect;
 import java.sql.Array;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -107,7 +108,7 @@ public class bejelentkezes extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jPasswordField1)
-                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 169, Short.MAX_VALUE)
+                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 169, Short.MAX_VALUE)
                             .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
@@ -154,7 +155,7 @@ public class bejelentkezes extends javax.swing.JFrame {
         String query = "SELECT job_positions_id as poz , pass FROM planningdb.perm where perm.id = '" + jTextField1.getText() + "'";
 
         try {
-            ResultSet rs = (ResultSet) pc.planconnect(query);
+            ResultSet rs = (ResultSet) pc.lekerdez(query);
 
             if (rs.next()) {
                 String poz = rs.getString(1);

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package PlannTool;
+package PlannTool_TABS;
 
 import javax.swing.JTable;
 import javax.swing.RowFilter;

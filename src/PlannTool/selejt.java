@@ -5,6 +5,7 @@
  */
 package PlannTool;
 
+import PlannTool.ANIMATIONS.animation;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -101,7 +102,7 @@ public class selejt extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(jTable1);
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/kepek/excel1.png"))); // NOI18N
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/PICTURES/excel1.png"))); // NOI18N
         jButton1.setToolTipText("Exportálás excelbe!");
         jButton1.setBorderPainted(false);
         jButton1.setContentAreaFilled(false);

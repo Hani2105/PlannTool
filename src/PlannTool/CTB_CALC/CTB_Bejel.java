@@ -70,7 +70,11 @@ public class CTB_Bejel extends javax.swing.JFrame {
         jButton1.setText("Bejelentkezés");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                try {
+                    jButton1ActionPerformed(evt);
+                } catch (IOException ex) {
+                    Logger.getLogger(CTB_Bejel.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
 
@@ -80,7 +84,11 @@ public class CTB_Bejel extends javax.swing.JFrame {
 
         jPasswordField1.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                jPasswordField1KeyPressed(evt);
+                try {
+                    jPasswordField1KeyPressed(evt);
+                } catch (IOException ex) {
+                    Logger.getLogger(CTB_Bejel.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
 
@@ -136,7 +144,7 @@ public class CTB_Bejel extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) throws IOException {//GEN-FIRST:event_jButton1ActionPerformed
 
         try {
             bejel();
@@ -146,7 +154,7 @@ public class CTB_Bejel extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jPasswordField1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPasswordField1KeyPressed
+    private void jPasswordField1KeyPressed(java.awt.event.KeyEvent evt) throws IOException {//GEN-FIRST:event_jPasswordField1KeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
 
             try {
@@ -166,7 +174,7 @@ public class CTB_Bejel extends javax.swing.JFrame {
 
     }//GEN-LAST:event_formWindowClosing
 
-    public void bejel() throws ClassNotFoundException {
+    public void bejel() throws ClassNotFoundException, IOException {
 
 //csak ha valami van írva a felh nevhez es jelszohoz
         if (jTextField1.getText().length() > 0 && jPasswordField1.getText().length() > 0) {

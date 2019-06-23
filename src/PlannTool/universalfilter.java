@@ -31,14 +31,7 @@ public class universalfilter {
 
         tr.setRowFilter(RowFilter.regexFilter(keresendo));
 
-//        int total = 0;
-//
-//        for (int i = 0; i < jTable1.getRowCount(); i++) {
-//            String value = (String) jTable1.getValueAt(i, 2);
-//            total += Integer.parseInt(value);
-//        }
-//
-//        jTextField6.setText(Integer.toString(total));
+
     }
 
 }

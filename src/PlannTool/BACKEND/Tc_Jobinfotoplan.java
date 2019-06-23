@@ -94,6 +94,8 @@ public class Tc_Jobinfotoplan extends Thread {
 
         } catch (Exception e) {
         }
+
+        b.jTable2.repaint();
     }
 
 }

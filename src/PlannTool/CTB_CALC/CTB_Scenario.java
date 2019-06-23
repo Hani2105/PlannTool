@@ -23,6 +23,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JTable;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
+import static org.apache.poi.hssf.usermodel.HeaderFooter.file;
 
 /**
  *
@@ -42,13 +43,14 @@ public class CTB_Scenario {
 //gyakorlatilag azt szeretnenk csinalni , hogy vegigmegyünk a tabokon es elmentjuk egy textbe az adatokat.
 
 //ki kell tallozni , hogy hova szeretnenk menteni
-        JFileChooser fileChooser = new JFileChooser();
+        JFileChooser fileChooser = CTB_Filechooser.getFileChooser();
         fileChooser.setAcceptAllFileFilterUsed(true);
         fileChooser.setDialogTitle("Mentés helye!");
 
         int userSelection = fileChooser.showSaveDialog(c);
 
         if (userSelection == JFileChooser.APPROVE_OPTION) {
+            CTB_Filechooser.setLastDir(fileChooser.getSelectedFile());
             File fileToSave = fileChooser.getSelectedFile();
             File file = new File(fileToSave.getAbsolutePath() + ".scen");
             FileWriter fw = new FileWriter(file);
@@ -57,7 +59,7 @@ public class CTB_Scenario {
             bw.write("Kezdodik a file!");
             bw.newLine();
 
-            JTable[] tablakneve = new JTable[8];
+            JTable[] tablakneve = new JTable[9];
             tablakneve[0] = c.jTable1;
             tablakneve[1] = c.jTable2;
             tablakneve[2] = c.jTable3;
@@ -66,6 +68,7 @@ public class CTB_Scenario {
             tablakneve[5] = c.jTable6;
             tablakneve[6] = c.jTable7;
             tablakneve[7] = c.jTable8;
+            tablakneve[8] = c.jTable11;
 
             for (int i = 0; i < tablakneve.length; i++) {
 
@@ -79,6 +82,7 @@ public class CTB_Scenario {
 
             bw.close();
             fw.close();
+            CTB.jLabel6.setText(fileToSave.getName().replace(".scen", ""));
         }
 
         infobox info = new infobox();
@@ -124,17 +128,18 @@ public class CTB_Scenario {
 
 //be kell tallózni a text filet
         FileNameExtensionFilter filter = new FileNameExtensionFilter("Scenario", "scen");
-        JFileChooser chooser = new JFileChooser();
+        JFileChooser chooser = CTB_Filechooser.getFileChooser();
         chooser.setFileFilter(filter);
         int filename = chooser.showOpenDialog(null);
 
         if (filename == JFileChooser.APPROVE_OPTION) {
-            //et lesz a fileunk           
+            //et lesz a fileunk 
+            CTB_Filechooser.setLastDir(chooser.getSelectedFile());
             File f = chooser.getSelectedFile();
 //kell egy bufferedreader is
 
             //kitöröljük az összes tábla adatát
-            JTable[] tablakneve = new JTable[8];
+            JTable[] tablakneve = new JTable[9];
             tablakneve[0] = c.jTable1;
             tablakneve[1] = c.jTable2;
             tablakneve[2] = c.jTable3;
@@ -143,6 +148,7 @@ public class CTB_Scenario {
             tablakneve[5] = c.jTable6;
             tablakneve[6] = c.jTable7;
             tablakneve[7] = c.jTable8;
+            tablakneve[8] = c.jTable11;
 
             outerloop:
             for (int i = 0; i < tablakneve.length; i++) {
@@ -187,8 +193,11 @@ public class CTB_Scenario {
                 }
 
             }
+            
+            CTB.jLabel6.setText(f.getName().replace(".scen",""));
 
         }
+        
         infobox info = new infobox();
         info.infoBox("Import kész!", "Betöltés!");
 

@@ -38,10 +38,30 @@ public class CTB_Tablarenderer extends DefaultTableCellRenderer {
         JLabel c = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
         c.setHorizontalAlignment(CENTER);
         c.setBorder(BorderFactory.createEtchedBorder());
-        if (column < 4) {
+        if (column == 0) {
 
-            c.setBackground(new Color(244, 149, 71, 30));
-            c.setBorder(BorderFactory.createLineBorder(Color.black));
+           c.setBackground(new Color(229, 246, 33, 100));
+           c.setBorder(BorderFactory.createEtchedBorder());
+
+        } else if (column == 1) {
+
+            c.setBackground(new Color(229, 246, 33, 80));
+            c.setBorder(BorderFactory.createEtchedBorder());
+
+        } else if (column == 2) {
+
+            c.setBackground(new Color(229, 246, 33, 60));
+            c.setBorder(BorderFactory.createEtchedBorder());
+
+        } else if (column == 3) {
+
+            c.setBackground(new Color(229, 246, 33, 40));
+           c.setBorder(BorderFactory.createEtchedBorder());
+
+        } else if (column == 4) {
+
+            c.setBackground(new Color(229, 246, 33, 20));
+            c.setBorder(BorderFactory.createEtchedBorder());
 
         } else if (column == 5) {
 
@@ -66,10 +86,6 @@ public class CTB_Tablarenderer extends DefaultTableCellRenderer {
                 }
             } catch (Exception e) {
             }
-
-        } else if (column == 4) {
-
-            c.setBackground(new Color(66, 134, 244));
 
         } else if (column == 6) {
             try {

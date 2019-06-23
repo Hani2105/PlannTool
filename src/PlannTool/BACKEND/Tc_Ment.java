@@ -29,6 +29,9 @@ public class Tc_Ment {
         planconnect pc = new planconnect();
         List<String[][]> gyujto = new ArrayList<String[][]>();
         gyujto.clear();
+//felengedjük a szűrőt
+
+         
 
         try {
             int i = 0;
@@ -113,6 +116,11 @@ public class Tc_Ment {
         //kitalaljuk a sheet nevet
         int n = Tc_Betervezo.Tervezotabbed.getSelectedIndex();
         String neve = Tc_Betervezo.Tervezotabbed.getTitleAt(n);
+        
+//felengedjük a szűrőt
+
+        Besheets.get(neve).jTable2.setRowSorter(null);
+        
         String tol = Besheets.get(neve).jTable2.getColumnName(4).substring(0, 10) + " 06:00:00";
         String ig = "";
 

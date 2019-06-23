@@ -25,15 +25,14 @@ public class CTB_TabbedUI extends BasicTabbedPaneUI {
     private static final int ADDED_TAB_HEIGTH = 0;
     private static final int ADDED_TAB_WIDTH = 0;
     private static final int SPACE_BETWEEN_TAB = 0;
-    private static final Color TAB_COLOR = new Color(197, 200, 204);
-    private static final Color SELECTED_TAB_COLOR = Color.GREEN;
+    private static final Color TAB_COLOR = new Color(229, 246, 33, 40);
+    private static final Color SELECTED_TAB_COLOR = new Color(229, 246, 33, 100);
 
     public static ComponentUI createUI(JComponent c) {
         return new CTB_TabbedUI((JTabbedPane) c);
     }
 
     public CTB_TabbedUI(JTabbedPane tabbedPane) {
-
         // FONT: BOLD
         tabbedPane.setFont(tabbedPane.getFont().deriveFont(Font.BOLD));
 
@@ -70,9 +69,6 @@ public class CTB_TabbedUI extends BasicTabbedPaneUI {
         // because we wants a different color for the background of the tabs
         // and the background of the tabpane (the line just below the tabs)
         g.setColor((!isSelected) ? TAB_COLOR : SELECTED_TAB_COLOR);
-
-      
-
         switch (tabPlacement) {
             case LEFT:
                 g.fillRect(x + 1, y + 1, w - 1, h - 3);
@@ -112,5 +108,4 @@ public class CTB_TabbedUI extends BasicTabbedPaneUI {
             };
         }
     }
-
 }

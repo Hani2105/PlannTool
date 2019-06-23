@@ -97,20 +97,29 @@ public class ExcelAdapter implements ActionListener {
                 String trstring = (String) (system.getContents(this)
                         .getTransferData(DataFlavor.stringFlavor));
                 //System.out.println("String is:" + trstring);
+                String[] arr = trstring.split("\n");
                 StringTokenizer st1 = new StringTokenizer(trstring, "\n");
-                for (int i = 0; st1.hasMoreTokens(); i++) {
-                    rowstring = st1.nextToken();
+                for (int i = 0; i < arr.length; i++) {
+                    rowstring = arr[i];
                     StringTokenizer st2 = new StringTokenizer(rowstring, "\t");
-                    for (int j = 0; st2.hasMoreTokens(); j++) {
-                        value = (String) st2.nextToken();
-                        if (startRow + i < jTable1.getRowCount()
-                                && startCol + j < jTable1.getColumnCount()) {
-                            jTable1.setValueAt(value, startRow + i, startCol
-                                    + j);
+                    if (st2.hasMoreTokens()) {
+                        for (int j = 0; st2.hasMoreTokens(); j++) {
+                            value = (String) st2.nextToken();
+                            if (startRow + i < jTable1.getRowCount()
+                                    && startCol + j < jTable1.getColumnCount()) {
+                                jTable1.setValueAt(value, startRow + i, startCol
+                                        + j);
+                            }
+                            //System.out.println("Putting" + value + "at row ="
+                            //+ startRow + i + "column =" + startCol + j);
                         }
-                        //System.out.println("Putting" + value + "at row ="
-                        //+ startRow + i + "column =" + startCol + j);
+                    } else {
+                        try {
+                            jTable1.setValueAt("", startRow + i, startCol);
+                        } catch (Exception ex) {
+                        }
                     }
+
                 }
             } catch (Exception ex) {
                 ex.printStackTrace();

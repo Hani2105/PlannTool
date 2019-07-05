@@ -36,7 +36,7 @@ public class Tc_Segedletablak extends javax.swing.JFrame {
     
     private void seticon() {
         
-        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("PICTURES/segedlet2.png")));
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/PlannTool/PICTURES/segedlet2.png")));
         
     }
 

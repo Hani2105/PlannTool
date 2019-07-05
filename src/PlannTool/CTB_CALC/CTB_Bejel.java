@@ -398,7 +398,7 @@ public class CTB_Bejel extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPasswordField jPasswordField1;
+    public javax.swing.JPasswordField jPasswordField1;
     public static javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }

@@ -60,17 +60,16 @@ public class xmlfeldolg {
         } catch (IOException ex) {
             Logger.getLogger(ablak.class
                     .getName()).log(Level.SEVERE, null, ex);
-            
-           
-            
-
 
         } catch (SAXException ex) {
             Logger.getLogger(ablak.class
                     .getName()).log(Level.SEVERE, null, ex);
 
         }
-        doc.getDocumentElement().normalize();
+        try {
+            doc.getDocumentElement().normalize();
+        } catch (Exception e) {
+        }
 
         NodeList nList = doc.getElementsByTagName(nodelist);
         Object RowData[][] = new String[nList.getLength()][lista.size()];
@@ -135,8 +134,6 @@ public class xmlfeldolg {
 
         String[] adat = new String[model.getColumnCount()];
 
-        
-        
         for (int i = 0; i < obi.length; i++) {
             model.addRow(new Object[model.getColumnCount()]);
             for (int j = 0; j < model.getColumnCount(); j++) {

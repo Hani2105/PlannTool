@@ -40,7 +40,7 @@ public class CTB_PartsToPlanTableRenderer extends DefaultTableCellRenderer {
         c.setBorder(BorderFactory.createEtchedBorder());
         c.setBackground(new Color(0, 0, 0, 10));
 
-        if (column == 2) {
+        if (column == 3) {
 
             try {
                 if (Integer.parseInt(table.getValueAt(row, column).toString()) > 0) {
@@ -61,6 +61,10 @@ public class CTB_PartsToPlanTableRenderer extends DefaultTableCellRenderer {
         } else if (column == 1) {
 
             c.setBackground(new Color(229, 246, 33, 80));
+
+        } else if (column == 2) {
+
+            c.setBackground(new Color(229, 246, 33, 60));
 
         } else {
 

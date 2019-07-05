@@ -9,26 +9,23 @@ import PlannTool.CONNECTS.szaifconn;
 import PlannTool.CONNECTS.neximconnect;
 import PlannTool.CONNECTS.postgreconnect;
 import PlannTool.BACKEND.Tc_Bejelentkezes;
+import static PlannTool.CTB_CALC.CTB.jTable1;
+import static PlannTool.CTB_CALC.CTB.jTable11;
 import PlannTool.CTB_CALC.CTB_Bejel;
-import com.mysql.jdbc.RowData;
+import PlannTool.CTB_CALC.CTB_Columnrenderer;
+import PlannTool.CTB_CALC.CTB_PartsToPlanTableRenderer;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.HeadlessException;
-import java.awt.Image;
-import java.awt.Toolkit;
 import java.io.File;
 import javax.swing.RowFilter;
 
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import static java.time.Instant.now;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -49,18 +46,19 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 import javax.swing.table.TableCellRenderer;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
-import java.sql.CallableStatement;
-import javax.swing.Timer;
-import java.util.TimerTask;
-import javax.swing.DefaultListSelectionModel;
-import javax.swing.ListModel;
+import static java.time.LocalDateTime.now;
+import java.time.temporal.IsoFields;
 import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import static java.time.LocalDateTime.now;
+import java.time.temporal.WeekFields;
 
 public class ablak extends javax.swing.JFrame {
-    
+
     public static DefaultTableModel model = new DefaultTableModel();
     public static DefaultTableModel model1 = new DefaultTableModel();
     public static DefaultTableModel modelacti = new DefaultTableModel();
@@ -83,74 +81,111 @@ public class ablak extends javax.swing.JFrame {
     public static List<String[][]> modelactilist = new ArrayList<>();
     public static List<String[]> wiplist = new ArrayList<>();
     public static String[][] alkatreszkereso = null;
-    
+
     public ablak() throws SQLException {
-        
+
         initComponents();
         jTabbedPane1.setUI(new MyTabbedPaneUI(jTabbedPane1));
         seticon();
-        
+
         jTextField4.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
-                
+
                 String query = jTextField4.getText().trim();
                 filter1(query);
             }
-            
+
             @Override
             public void removeUpdate(DocumentEvent e) {
                 String query = jTextField4.getText().trim();
                 filter1(query);
             }
-            
+
             @Override
             public void changedUpdate(DocumentEvent e) {
                 String query = jTextField4.getText().trim();
                 filter1(query);
             }
         });
-        
+
         jTextField1.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
-                
+
                 String query = jTextField1.getText().trim();
                 filter(query);
             }
-            
+
             @Override
             public void removeUpdate(DocumentEvent e) {
                 String query = jTextField1.getText().trim();
                 filter(query);
             }
-            
+
             @Override
             public void changedUpdate(DocumentEvent e) {
                 String query = jTextField1.getText().trim();
                 filter(query);
             }
         });
-        
+
         new ExcelAdapter(jTable4);
         new ExcelAdapter(jTable18);
         new ExcelAdapter(jTable19);
         new ExcelAdapter(jTable16);
         new ExcelAdapter(jTable17);
-        
+
         jTable11.getColumnModel().getColumn(0).setCellRenderer(new Tooltiprenderer());
 
         //beillesztehtővé tétele a gyártás infónak
         new ExcelAdapter(jTable15);
-        
+
+//renderereljük a prio táblát
+        jTable25.getTableHeader().setDefaultRenderer(new Prio_Columnrenderer());
+        jTable25.setDefaultRenderer(Object.class, new Prio_Tablerenderer());
+
     }
-    
+
     private void seticon() {
-        
+
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("PICTURES/1.jpg")));
-        
+
     }
-    
+
+    public void TablaOszlopSzelesseg(JTable table) {
+        table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        final TableColumnModel columnModel = table.getColumnModel();
+        for (int column = 0; column < table.getColumnCount(); column++) {
+            int width = 15; // Min width
+            for (int row = 0; row < table.getRowCount(); row++) {
+                TableCellRenderer renderer = table.getCellRenderer(row, column);
+                Component comp = table.prepareRenderer(renderer, row, column);
+                width = Math.max(comp.getPreferredSize().width + 1, width);
+            }
+//            if (width > 300) {
+//                width = 300;
+//            }
+
+//a column szelesseget is megvizsgaljuk
+            int maxWidth = 0;
+            TableColumn column1 = columnModel.getColumn(column);
+            TableCellRenderer headerRenderer = column1.getHeaderRenderer();
+            if (headerRenderer == null) {
+                headerRenderer = table.getTableHeader().getDefaultRenderer();
+            }
+            Object headerValue = column1.getHeaderValue();
+            Component headerComp = headerRenderer.getTableCellRendererComponent(table, headerValue, false, false, 0, column);
+            maxWidth = Math.max(maxWidth, headerComp.getPreferredSize().width);
+
+            if (width > maxWidth) {
+                columnModel.getColumn(column).setPreferredWidth(width);
+            } else {
+                columnModel.getColumn(column).setPreferredWidth(maxWidth);
+            }
+        }
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -390,6 +425,14 @@ public class ablak extends javax.swing.JFrame {
             jButton28 = new javax.swing.JButton();
             jPanel20 = new javax.swing.JPanel();
             jPanel21 = new javax.swing.JPanel();
+            jPanel22 = new javax.swing.JPanel();
+            jScrollPane28 = new javax.swing.JScrollPane();
+            jTable25 = new javax.swing.JTable();
+            jLabel54 = new javax.swing.JLabel();
+            jComboBox2 = new javax.swing.JComboBox<>();
+            jButton29 = new javax.swing.JButton();
+            jLabel55 = new javax.swing.JLabel();
+            jComboBox3 = new javax.swing.JComboBox<>();
 
             jMenuItem1.setText("Bontás SN-re!");
             jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
@@ -582,7 +625,7 @@ public class ablak extends javax.swing.JFrame {
                                     .addComponent(jLabel18)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                     .addComponent(jTextField13, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 2346, Short.MAX_VALUE)
                                     .addComponent(jLabel10)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                     .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -2071,7 +2114,7 @@ public class ablak extends javax.swing.JFrame {
                         .addGroup(jPanel3Layout.createSequentialGroup()
                             .addGap(38, 38, 38)
                             .addComponent(jLabel29, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addContainerGap(14, Short.MAX_VALUE))
+                    .addContainerGap(2348, Short.MAX_VALUE))
             );
             jPanel3Layout.setVerticalGroup(
                 jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -2091,7 +2134,7 @@ public class ablak extends javax.swing.JFrame {
                             .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGap(0, 10, Short.MAX_VALUE))
+                    .addGap(0, 191, Short.MAX_VALUE))
             );
 
             jTabbedPane1.addTab("SN infó", jPanel3);
@@ -2257,7 +2300,7 @@ public class ablak extends javax.swing.JFrame {
                 .addGroup(jPanel4Layout.createSequentialGroup()
                     .addContainerGap()
                     .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jScrollPane19, javax.swing.GroupLayout.DEFAULT_SIZE, 485, Short.MAX_VALUE)
+                        .addComponent(jScrollPane19, javax.swing.GroupLayout.DEFAULT_SIZE, 666, Short.MAX_VALUE)
                         .addGroup(jPanel4Layout.createSequentialGroup()
                             .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -2347,7 +2390,7 @@ public class ablak extends javax.swing.JFrame {
                             .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                     .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 892, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(70, Short.MAX_VALUE))
+                    .addContainerGap(2404, Short.MAX_VALUE))
             );
             jPanel5Layout.setVerticalGroup(
                 jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -2653,7 +2696,7 @@ public class ablak extends javax.swing.JFrame {
                                 .addGroup(jPanel7Layout.createSequentialGroup()
                                     .addGap(6, 6, 6)
                                     .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                    .addContainerGap(18, Short.MAX_VALUE))
+                    .addContainerGap(2352, Short.MAX_VALUE))
             );
             jPanel7Layout.setVerticalGroup(
                 jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -2868,14 +2911,14 @@ public class ablak extends javax.swing.JFrame {
                 .addGroup(jPanel9Layout.createSequentialGroup()
                     .addGap(132, 132, 132)
                     .addComponent(jLabel34, javax.swing.GroupLayout.PREFERRED_SIZE, 829, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(139, Short.MAX_VALUE))
+                    .addContainerGap(2473, Short.MAX_VALUE))
             );
             jPanel9Layout.setVerticalGroup(
                 jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel9Layout.createSequentialGroup()
                     .addGap(24, 24, 24)
                     .addComponent(jLabel34)
-                    .addContainerGap(23, Short.MAX_VALUE))
+                    .addContainerGap(204, Short.MAX_VALUE))
             );
 
             jTabbedPane1.addTab("BeTervező", jPanel9);
@@ -2942,7 +2985,7 @@ public class ablak extends javax.swing.JFrame {
                             .addComponent(jButton18, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(jCheckBox5)
-                            .addGap(0, 396, Short.MAX_VALUE))
+                            .addGap(0, 2730, Short.MAX_VALUE))
                         .addComponent(jScrollPane16))
                     .addContainerGap())
             );
@@ -3063,15 +3106,15 @@ public class ablak extends javax.swing.JFrame {
                 jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel11Layout.createSequentialGroup()
                     .addComponent(jScrollPane17, javax.swing.GroupLayout.PREFERRED_SIZE, 992, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 1184, Short.MAX_VALUE)
                     .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jButton20, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton19, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                    .addContainerGap(17, Short.MAX_VALUE))
+                    .addContainerGap(1183, Short.MAX_VALUE))
             );
             jPanel11Layout.setVerticalGroup(
                 jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jScrollPane17, javax.swing.GroupLayout.DEFAULT_SIZE, 497, Short.MAX_VALUE)
+                .addComponent(jScrollPane17, javax.swing.GroupLayout.DEFAULT_SIZE, 678, Short.MAX_VALUE)
                 .addGroup(jPanel11Layout.createSequentialGroup()
                     .addComponent(jButton20, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(18, 18, 18)
@@ -3145,11 +3188,11 @@ public class ablak extends javax.swing.JFrame {
                     .addComponent(jScrollPane18, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(18, 18, 18)
                     .addComponent(jButton21)
-                    .addContainerGap(492, Short.MAX_VALUE))
+                    .addContainerGap(2826, Short.MAX_VALUE))
             );
             jPanel13Layout.setVerticalGroup(
                 jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jScrollPane18, javax.swing.GroupLayout.DEFAULT_SIZE, 491, Short.MAX_VALUE)
+                .addComponent(jScrollPane18, javax.swing.GroupLayout.DEFAULT_SIZE, 672, Short.MAX_VALUE)
                 .addGroup(jPanel13Layout.createSequentialGroup()
                     .addComponent(jButton21)
                     .addGap(0, 0, Short.MAX_VALUE))
@@ -3283,7 +3326,7 @@ public class ablak extends javax.swing.JFrame {
                 jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel15Layout.createSequentialGroup()
                     .addContainerGap()
-                    .addComponent(jScrollPane20, javax.swing.GroupLayout.DEFAULT_SIZE, 485, Short.MAX_VALUE))
+                    .addComponent(jScrollPane20, javax.swing.GroupLayout.DEFAULT_SIZE, 666, Short.MAX_VALUE))
                 .addGroup(jPanel15Layout.createSequentialGroup()
                     .addGap(14, 14, 14)
                     .addComponent(jLabel12)
@@ -3306,7 +3349,7 @@ public class ablak extends javax.swing.JFrame {
             jPanel14Layout.setHorizontalGroup(
                 jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel14Layout.createSequentialGroup()
-                    .addComponent(jPanel15, javax.swing.GroupLayout.PREFERRED_SIZE, 1094, Short.MAX_VALUE)
+                    .addComponent(jPanel15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addContainerGap())
             );
             jPanel14Layout.setVerticalGroup(
@@ -3417,7 +3460,7 @@ public class ablak extends javax.swing.JFrame {
                             .addComponent(jLabel42, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(jDateChooser6, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 2346, Short.MAX_VALUE)
                             .addComponent(jLabel43, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(jDateChooser7, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -3468,7 +3511,7 @@ public class ablak extends javax.swing.JFrame {
                         .addGroup(jPanel17Layout.createSequentialGroup()
                             .addComponent(jScrollPane24, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addContainerGap())
-                        .addComponent(jScrollPane25, javax.swing.GroupLayout.DEFAULT_SIZE, 379, Short.MAX_VALUE)))
+                        .addComponent(jScrollPane25, javax.swing.GroupLayout.DEFAULT_SIZE, 560, Short.MAX_VALUE)))
             );
 
             javax.swing.GroupLayout jPanel16Layout = new javax.swing.GroupLayout(jPanel16);
@@ -3598,7 +3641,7 @@ public class ablak extends javax.swing.JFrame {
                             .addComponent(jLabel51)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(jTextField26, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 2371, Short.MAX_VALUE)
                             .addComponent(jLabel53)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(jTextField24, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -3667,11 +3710,11 @@ public class ablak extends javax.swing.JFrame {
             jPanel21.setLayout(jPanel21Layout);
             jPanel21Layout.setHorizontalGroup(
                 jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGap(0, 1094, Short.MAX_VALUE)
+                .addGap(0, 3428, Short.MAX_VALUE)
             );
             jPanel21Layout.setVerticalGroup(
                 jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGap(0, 491, Short.MAX_VALUE)
+                .addGap(0, 672, Short.MAX_VALUE)
             );
 
             javax.swing.GroupLayout jPanel20Layout = new javax.swing.GroupLayout(jPanel20);
@@ -3691,6 +3734,85 @@ public class ablak extends javax.swing.JFrame {
 
             jTabbedPane1.addTab("CTB calc.", jPanel20);
 
+            jTable25.setModel(new javax.swing.table.DefaultTableModel(
+                new Object [][] {
+
+                },
+                new String [] {
+                    "Prioritás", "Title1", "Title 2", "Title 4", "Title 5", "Title 6", "Title 7", "Title 8", "Title 9", "Title 10", "Title 11", "Title 12", "Title 13", "null", "Title 15"
+                }
+            ));
+            jTable25.setCellSelectionEnabled(true);
+            jTable25.setOpaque(false);
+            jScrollPane28.setViewportView(jTable25);
+            jTable25.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+            if (jTable25.getColumnModel().getColumnCount() > 0) {
+                jTable25.getColumnModel().getColumn(0).setMinWidth(50);
+                jTable25.getColumnModel().getColumn(0).setPreferredWidth(100);
+                jTable25.getColumnModel().getColumn(0).setMaxWidth(200);
+            }
+
+            jLabel54.setText("Hét száma:");
+
+            jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51", "52", "53" }));
+
+            jButton29.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/PICTURES/savement.png"))); // NOI18N
+            jButton29.setToolTipText("Mentés");
+            jButton29.setAlignmentY(0.0F);
+            jButton29.setEnabled(false);
+            jButton29.setIconTextGap(0);
+            jButton29.addMouseListener(new java.awt.event.MouseAdapter() {
+                public void mouseClicked(java.awt.event.MouseEvent evt) {
+                    jButton29MouseClicked(evt);
+                }
+            });
+            jButton29.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    jButton29ActionPerformed(evt);
+                }
+            });
+
+            jLabel55.setText("Év:");
+
+            javax.swing.GroupLayout jPanel22Layout = new javax.swing.GroupLayout(jPanel22);
+            jPanel22.setLayout(jPanel22Layout);
+            jPanel22Layout.setHorizontalGroup(
+                jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel22Layout.createSequentialGroup()
+                    .addComponent(jScrollPane28, javax.swing.GroupLayout.DEFAULT_SIZE, 1094, Short.MAX_VALUE)
+                    .addContainerGap())
+                .addGroup(jPanel22Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(jLabel55)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jLabel54, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jButton29, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            );
+            jPanel22Layout.setVerticalGroup(
+                jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel22Layout.createSequentialGroup()
+                    .addGap(10, 10, 10)
+                    .addGroup(jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel54)
+                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButton29)
+                        .addComponent(jLabel55)
+                        .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jScrollPane28, javax.swing.GroupLayout.DEFAULT_SIZE, 448, Short.MAX_VALUE)
+                    .addContainerGap())
+            );
+
+            jPanel22Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButton29, jComboBox2, jComboBox3, jLabel54, jLabel55});
+
+            jTabbedPane1.addTab("Prioritások", jPanel22);
+
             jScrollPane7.setViewportView(jTabbedPane1);
 
             jPanel6.add(jScrollPane7, java.awt.BorderLayout.CENTER);
@@ -3702,9 +3824,9 @@ public class ablak extends javax.swing.JFrame {
         }// </editor-fold>//GEN-END:initComponents
 
     private void jTabbedPane1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabbedPane1StateChanged
-        
+
         int i = jTabbedPane1.getSelectedIndex();
-        
+
         if (i == 5) {
 
             //oh query
@@ -3726,74 +3848,74 @@ public class ablak extends javax.swing.JFrame {
             model = (DefaultTableModel) jTable9.getModel();
             model.setRowCount(0);
             jTable9.setModel(model);
-            
+
             planconnect pc = new planconnect();
-            
+
             try {
-                
+
                 ResultSet rs = (ResultSet) pc.lekerdez(query);
-                
+
                 if (rs.next()) {
                     datum = rs.getDate(1);
                     jDateChooser2.setDate(datum);
                 }
-                
+
             } catch (SQLException ex) {
                 Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
+
             try {
                 i = 0;
-                
+
                 ResultSet rs = (ResultSet) pc.lekerdez(prefquery);
                 while (rs.next()) {
-                    
+
                     jTable8.setValueAt(rs.getString(1), i, 0);
                     i++;
-                    
+
                 }
-                
+
             } catch (SQLException ex) {
                 Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
+
             try {
                 ResultSet rs = (ResultSet) pc.lekerdez(kivetelquery);
                 i = 0;
                 while (rs.next()) {
-                    
+
                     jTable10.setValueAt(rs.getString(1), i, 0);
                     i++;
-                    
+
                 }
-                
+
                 pc.kinyir();
-                
+
             } catch (SQLException ex) {
                 Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
+
         } else if (i == 1) {
-            
+
             wgcounter = 0;
             elso = LocalDateTime.now();
-            
+
         }
 //backend terv
         if (i == 7) {
-            
+
             Tc_Bejelentkezes.nyit = true;
             Tc_Bejelentkezes a = new Tc_Bejelentkezes(this);
             a.setVisible(true);
-            
+
         }
-        
+
         if (i == 8) {
 
 //job figyelő
@@ -3803,25 +3925,25 @@ public class ablak extends javax.swing.JFrame {
             planconnect pc = new planconnect();
             try {
                 pc.lekerdez(Query);
-                
+
             } catch (SQLException ex) {
                 Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
+
             try {
                 while (pc.rs.next()) {
-                    
+
                     lm.addElement(pc.rs.getString(1));
-                    
+
                 }
             } catch (SQLException ex) {
                 Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
             }
 //beterv állomások
             Query = "SELECT * FROM planningdb.tc_becells order by cellname asc";
-            
+
             try {
                 pc.lekerdez(Query);
             } catch (SQLException ex) {
@@ -3829,53 +3951,79 @@ public class ablak extends javax.swing.JFrame {
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
+
             try {
                 while (pc.rs.next()) {
-                    
+
                     lm.addElement(pc.rs.getString(2));
-                    
+
                 }
             } catch (SQLException ex) {
                 Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
             }
             pc.kinyir();
             jList1.setModel(lm);
-            
+
         }
 
 //kiszállítások
         if (jTabbedPane1.getTitleAt(jTabbedPane1.getSelectedIndex()).equals("Kiszállítások")) {
-            
+
             postgreconnect pc = new postgreconnect();
             try {
                 pc.lekerdez("select distinct \"HBPackage\".customer_type.name from \"HBPackage\".customer_type");
                 DefaultListModel listModel = new DefaultListModel();
-                
+
                 listModel.removeAllElements();
-                
+
                 while (pc.rs.next()) {
-                    
+
                     listModel.addElement(pc.rs.getString(1));
-                    
+
                 }
-                
+
                 jList2.setModel(listModel);
                 pc.kinyir();
-                
+
             } catch (SQLException ex) {
                 Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
+
         }
         //ctb calc
         if (jTabbedPane1.getTitleAt(jTabbedPane1.getSelectedIndex()).equals("CTB calc.")) {
-            
+
             CTB_Bejel b = new CTB_Bejel();
             b.setVisible(true);
-            
+
+        }
+        //ha a prioritások tabot választjuk     
+
+        if (jTabbedPane1.getTitleAt(jTabbedPane1.getSelectedIndex()).equals("Prioritások")) {
+
+            Prioritasok p = new Prioritasok();
+            try {
+                p.legordulokbeallit();
+                p.setdatetotableheader();
+                p.feltolttabla();
+
+                int weeknumber = LocalDateTime.now().get(IsoFields.WEEK_OF_WEEK_BASED_YEAR);
+                //System.out.print(weeknumber);
+
+            } catch (SQLException ex) {
+                Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            prioment();
+
+        } else {
+
+            planner = false;
+
         }
 
 //ez a legvége a change tabbedpainnek
@@ -3891,11 +4039,26 @@ public class ablak extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jButton18ActionPerformed
 
+    //prioritas mentes gomb kezelese
+    static public void prioment() {
+
+        if (planner) {
+
+            jButton29.setEnabled(true);
+
+        } else {
+
+            jButton29.setEnabled(false);
+        }
+
+    }
+
+
     private void jButton16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton16ActionPerformed
         // TODO add your handling code here:
 
         try {
-            
+
             int valai = Integer.parseInt(jTextField19.getText());
             String value;
             String query = "SELECT cycletime_prog.ID as cpID, oraclepn ,smtprogname, smtline as sline, sequence , boardnumber ,(SELECT value FROM cycletime_data WHERE cycletime_prog_id = cpID AND priority = 1 AND cycletime_data.active = 1 ORDER BY ID DESC LIMIT 1) as mertido,(SELECT value FROM cycletime_data WHERE cycletime_prog_id = cpID AND priority = 2 AND cycletime_data.active = 1 ORDER BY ID DESC LIMIT 1) as gyorsmeres,(SELECT value FROM cycletime_data WHERE cycletime_prog_id = cpID AND priority = 3 AND cycletime_data.active = 1 ORDER BY ID DESC LIMIT 1) as kalkulalt,IFNULL(expectedeffbyprog,COALESCE((SELECT expectedeff FROM cycletime_config WHERE smtline = sline),(SELECT expectedeff FROM cycletime_config WHERE smtline = 'ALL'))) as eff FROM `cycletime_prog` WHERE cycletime_prog.active=1 and oraclepn like '%" + jTextField18.getText().trim() + "%'ORDER BY smtprogname;";
@@ -3906,66 +4069,66 @@ public class ablak extends javax.swing.JFrame {
             model.setRowCount(0);
             try {
                 szaifconn con = new szaifconn("com.mysql.jdbc.driver", "jdbc:mysql://143.116.140.113/plrdb", "cpi", "cpi602");
-                
+
                 ResultSet rs = (ResultSet) con.lekerdez(query);
-                
+
                 while (rs.next()) {
-                    
+
                     model.addRow(new Object[]{rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getString(10)});
-                    
+
                     if (rs.getString(7) != null) {
-                        
+
                         jTable12.setValueAt(((((Double.parseDouble(rs.getString(7)) / Double.parseDouble(rs.getString(6)))) / ((Double.parseDouble(rs.getString(10))) / 100)) * Integer.parseInt(jTextField19.getText())) / 3600, i, 9);
-                        
+
                     } else if (rs.getString(8) != null) {
-                        
+
                         jTable12.setValueAt(((((Double.parseDouble(rs.getString(8)) / Double.parseDouble(rs.getString(6)))) / ((Double.parseDouble(rs.getString(10))) / 100)) * Integer.parseInt(jTextField19.getText())) / 3600, i, 9);
-                        
+
                     } else if (rs.getString(9) != null) {
-                        
+
                         jTable12.setValueAt(((((Double.parseDouble(rs.getString(9)) / Double.parseDouble(rs.getString(6)))) / ((Double.parseDouble(rs.getString(10))) / 100)) * Integer.parseInt(jTextField19.getText())) / 3600, i, 9);
-                        
+
                     }
-                    
+
                     i++;
                 }
-                
+
             } catch (ClassNotFoundException | SQLException ex) {
                 Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
             } catch (Exception e) {
             }
-            
+
             jTable12.setModel(model);
-            
+
             model1 = (DefaultTableModel) jTable13.getModel();
             model1.setRowCount(0);
-            
+
             planconnect pc = new planconnect();
             query = "SELECT distinct beciklusidok.WS , beciklusidok.PN , beciklusidok.CELL, beciklusidok.DBPO FROM planningdb.beciklusidok where active = 1 and PN like ('%" + jTextField18.getText().trim() + "%') order by beciklusidok.ID";
-            
+
             try {
                 ResultSet rs = (ResultSet) pc.lekerdez(query);
                 while (rs.next()) {
-                    
+
                     model1.addRow(new Object[]{rs.getString(2), rs.getString(1), rs.getString(2), rs.getString(4), (Integer.parseInt(jTextField19.getText())) / Double.parseDouble(rs.getString(4))});
-                    
+
                 }
-                
+
             } catch (SQLException ex) {
                 Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
+
             pc.kinyir();
-            
+
             jTable13.setModel(model1);
-            
+
         } catch (Exception e) {
             infobox info = new infobox();
             info.infoBox("Nem adtál meg darabszámot!", "Hiba!");
         }
-        
+
         stat.beir(System.getProperty("user.name"), jTabbedPane1.getTitleAt(jTabbedPane1.getSelectedIndex()), "", "gabor.hanacsek@sanmina.com");
     }//GEN-LAST:event_jButton16ActionPerformed
 
@@ -3974,11 +4137,11 @@ public class ablak extends javax.swing.JFrame {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setAcceptAllFileFilterUsed(true);
         fileChooser.setDialogTitle("Specify a file to save");
-        
+
         int userSelection = fileChooser.showSaveDialog(this);
-        
+
         if (userSelection == JFileChooser.APPROVE_OPTION) {
-            
+
             File fileToSave = fileChooser.getSelectedFile();
             ExcelExporter exp = new ExcelExporter();
             exp.fillData(jTable7, new File(fileToSave.getAbsolutePath() + ".xls"));
@@ -3988,28 +4151,28 @@ public class ablak extends javax.swing.JFrame {
     private void jButton15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton15ActionPerformed
         // TODO add your handling code here:
         String query = "TRUNCATE TABLE oh_kivetelek";
-        
+
         planconnect pc = new planconnect();
         pc.feltolt(query, true);
         query = "INSERT INTO oh_kivetelek(partnumber) VALUES ()";
-        
+
         String prefixlist = "";
-        
+
         for (int i = 0; i < jTable10.getRowCount(); i++) {
-            
+
             if (jTable10.getValueAt(i, 0) != null) {
-                
+
                 prefixlist += jTable10.getValueAt(i, 0).toString().trim() + "'),('";
-                
+
             }
-            
+
         }
-        
+
         prefixlist = prefixlist.substring(0, prefixlist.length() - 4);
         query = "INSERT INTO oh_kivetelek(partnumber) VALUES ('" + prefixlist + ")";
-        
+
         pc.feltolt(query, true);
-        
+
         infobox inf = new infobox();
         inf.infoBox("A mentés sikeres!", "Üzenet!");
     }//GEN-LAST:event_jButton15ActionPerformed
@@ -4017,13 +4180,13 @@ public class ablak extends javax.swing.JFrame {
     private void jCheckBox1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCheckBox1ItemStateChanged
         // TODO add your handling code here:
         if (jCheckBox1.isSelected()) {
-            
+
             for (int i = 0; i < jTable7.getRowCount(); i++) {
                 jTable7.getModel().setValueAt(true, i, 4);
             }
-            
+
         } else {
-            
+
             for (int i = 0; i < jTable7.getRowCount(); i++) {
                 jTable7.getModel().setValueAt(false, i, 4);
             }
@@ -4035,21 +4198,21 @@ public class ablak extends javax.swing.JFrame {
         // TODO add your handling code here:
 
         String pn = jTable9.getValueAt(jTable9.getSelectedRow(), 0).toString();
-        
+
         for (int i = 0; i < jTable7.getRowCount(); i++) {
-            
+
             if (jTable7.getValueAt(i, 0).toString().equals(pn) && (Boolean) jTable9.getValueAt(jTable9.getSelectedRow(), 2) == true) {
-                
+
                 jTable7.setValueAt(true, i, 4);
-                
+
             }
-            
+
             if (jTable7.getValueAt(i, 0).toString().equals(pn) && (Boolean) jTable9.getValueAt(jTable9.getSelectedRow(), 2) == false) {
-                
+
                 jTable7.setValueAt(false, i, 4);
-                
+
             }
-            
+
         }
 
     }//GEN-LAST:event_jTable9MouseClicked
@@ -4063,40 +4226,40 @@ public class ablak extends javax.swing.JFrame {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String tol = dateFormat.format(jDateChooser2.getDate());
         String ig = dateFormat.format(jDateChooser4.getDate());
-        
+
         String query = "select * from oh_querymain where oh_querymain.lekerdezesidopont between '" + tol + " 00:00:00' and '" + ig + " 23:59:59'";
-        
+
         planconnect pc = new planconnect();
-        
+
         try {
             ResultSet rs = (ResultSet) pc.lekerdez(query);
-            
+
             int sor = 0;
-            
+
             while (rs.next()) {
-                
+
                 oh_main.addRow(new Object[]{rs.getString(3), rs.getString(2), rs.getString(4), rs.getString(5)/*, rs.getString(6)*/});
-                
+
                 if (rs.getString(6).equals("Y")) {
-                    
+
                     oh_main.setValueAt(true, sor, 4);
-                    
+
                 } else {
                     oh_main.setValueAt(false, sor, 4);
                 }
-                
+
                 sor++;
-                
+
             }
-            
+
             jTable7.setModel(oh_main);
-            
+
         } catch (SQLException ex) {
             Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         pc.kinyir();
 
         //kitoltjuk a summa táblát
@@ -4107,41 +4270,41 @@ public class ablak extends javax.swing.JFrame {
         DefaultTableModel sumtabla = new DefaultTableModel();
         sumtabla = (DefaultTableModel) jTable9.getModel();
         sumtabla.setRowCount(0);
-        
+
         for (int i = 0; i < jTable7.getRowCount(); i++) {
-            
+
             pn = jTable7.getValueAt(i, 0).toString();
             vanemar = false;
             pndarab = 0;
-            
+
             for (int m = 0; m < sumtabla.getRowCount(); m++) {
                 if (pn.equals(sumtabla.getValueAt(m, 0).toString())) {
                     vanemar = true;
-                    
+
                 }
             }
-            
+
             if (vanemar == false) {
                 for (int n = i; n < jTable7.getRowCount(); n++) {
-                    
+
                     if (pn.equals(jTable7.getValueAt(n, 0).toString())) {
                         pndarab++;
                     }
-                    
+
                 }
-                
+
                 try {
-                    
+
                     sumtabla.addRow(new Object[]{pn, pndarab, false});
-                    
+
                 } catch (Exception e) {
                     System.out.println("nem jott ossze");
                 }
-                
+
             }
-            
+
         }
-        
+
         jTable9.setModel(sumtabla);
     }//GEN-LAST:event_jButton14ActionPerformed
 
@@ -4149,28 +4312,28 @@ public class ablak extends javax.swing.JFrame {
         // TODO add your handling code here:
 
         String query = "TRUNCATE TABLE oh_prefixes";
-        
+
         planconnect pc = new planconnect();
         pc.feltolt(query, true);
         query = "INSERT INTO oh_prefixes(prefix) VALUES ()";
-        
+
         String prefixlist = "";
-        
+
         for (int i = 0; i < jTable8.getRowCount(); i++) {
-            
+
             if (jTable8.getValueAt(i, 0) != null) {
-                
+
                 prefixlist += jTable8.getValueAt(i, 0).toString() + "'),('";
-                
+
             }
-            
+
         }
-        
+
         prefixlist = prefixlist.substring(0, prefixlist.length() - 4);
         query = "INSERT INTO oh_prefixes(prefix) VALUES ('" + prefixlist + ")";
-        
+
         pc.feltolt(query, true);
-        
+
         infobox inf = new infobox();
         inf.infoBox("A mentés sikeres!", "Üzenet!");
     }//GEN-LAST:event_jButton13ActionPerformed
@@ -4197,54 +4360,54 @@ public class ablak extends javax.swing.JFrame {
             //System.out.println(jTable7.getValueAt(i, 4));
             try {
                 if (jTable7.getValueAt(i, 4).equals(true)) {
-                    
+
                     mentve = "Y";
-                    
+
                 } else {
                     mentve = "N";
                 }
             } catch (Exception e) {
-                
+
                 mentve = "N";
             }
-            
+
             adatok += "('" + jTable7.getValueAt(i, 1) + "','" + jTable7.getValueAt(i, 0) + "','" + jTable7.getValueAt(i, 2) + "','" + jTable7.getValueAt(i, 3) + "','" + mentve + "','" + user + "'),";
-            
+
         }
-        
+
         adatok = adatok.substring(0, adatok.length() - 1);
-        
+
         String query = "insert into oh_querymain (serial,partnumber,tol,ig,megcsinalva,felhasznalo) values" + adatok + "on duplicate key update megcsinalva = values (megcsinalva) , felhasznalo = values (felhasznalo)";
-        
+
         planconnect pc = new planconnect();
-        
+
         try {
             pc.feltolt(query, true);
-            
+
             infobox inf = new infobox();
             inf.infoBox("A feltöltés sikeres!", "Feltöltés!");
         } catch (Exception e) {
-            
+
             infobox inf = new infobox();
             inf.infoBox("A feltöltés sikertelen!", "Feltöltés!");
-            
+
         }
-        
+
         String levelbe = " \n Figyelem! \n Feltöltés történt az OH query adatbázisba a következő tételekkel: \n";
         String yn = "";
         for (int i = 0; i < jTable7.getRowCount(); i++) {
-            
+
             if ((Boolean) jTable7.getValueAt(i, 4) == null || (Boolean) jTable7.getValueAt(i, 4) == false) {
-                
+
                 yn = "Nincs megcsinálva!";
             } else {
                 yn = "Elkészült az OH!";
             }
-            
+
             levelbe += jTable7.getValueAt(i, 0).toString() + "  " + jTable7.getValueAt(i, 1).toString() + "  " + jTable7.getValueAt(i, 2) + "  " + jTable7.getValueAt(i, 3) + "  " + yn + "\n";
-            
+
         }
-        
+
         stat.beir(System.getProperty("user.name"), jTabbedPane1.getTitleAt(jTabbedPane1.getSelectedIndex()), levelbe, "gabor.hanacsek@sanmina.com,roland.bognar@sanmina.com,gina.gerecz@sanmina.com,eva.inczedi@sanmina.com");
 
     }//GEN-LAST:event_jButton11ActionPerformed
@@ -4254,25 +4417,25 @@ public class ablak extends javax.swing.JFrame {
 
         String pn = jTextField10.getText().trim();
         String pcb = jTextField11.getText().trim();
-        
+
         if ((pn.equals("") && pcb.equals("")) || (pn.length() > 0 && pcb.length() > 0)) {
-            
+
             infobox.infoBox("Vagy Partnumbert vagy PCB számot adj meg!", "Hiba!");
-            
+
         } else {
-            
+
             pcbtabla = (DefaultTableModel) jTable6.getModel();
-            
+
             if (pn.length() > 0) {
-                
+
                 String query = "SELECT  harman_tipusok.PCB as Board_PN  FROM planningdb.harman_tipusok where harman_tipusok.PN_SMD_Mainboard_PCBA like '" + jTextField10.getText().trim() + "'";
                 planconnect pc = new planconnect();
-                
+
                 ResultSet rs;
-                
+
                 try {
                     rs = (ResultSet) pc.lekerdez(query);
-                    
+
                     pcbtabla.setValueAt(pn, 0, 0);
                     pcbtabla = (DefaultTableModel) pc.resultSetToTableModel(rs, pcbtabla, 1);
                     // jTable6.setModel(pcbtabla);
@@ -4282,12 +4445,12 @@ public class ablak extends javax.swing.JFrame {
                 } catch (ClassNotFoundException ex) {
                     Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                
+
                 pc.kinyir();
                 query = "SELECT ifnull(sum(oracle_backup_subinv.quantity),0) as qty from oracle_backup_subinv where oracle_backup_subinv.item ='" + pcbtabla.getValueAt(0, 1).toString().trim() + "'";
-                
+
                 connect con = new connect(query);
-                
+
                 try {
                     if (con.rs.next()) {
                         pcbtabla.setValueAt(con.rs.getString("qty"), 0, 2);
@@ -4296,11 +4459,11 @@ public class ablak extends javax.swing.JFrame {
                 } catch (SQLException ex) {
                     Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                
+
             }
-            
+
             if (pcb.length() > 0) {
-                
+
                 String query = "SELECT  harman_tipusok.PN_SMD_Mainboard_PCBA as Part  FROM planningdb.harman_tipusok where harman_tipusok.PCB like '" + jTextField11.getText().trim() + "'";
                 planconnect con = new planconnect();
                 try {
@@ -4317,11 +4480,11 @@ public class ablak extends javax.swing.JFrame {
                 } catch (ClassNotFoundException ex) {
                     Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                
+
                 query = "SELECT ifnull(sum(oracle_backup_subinv.quantity),0) as qty from oracle_backup_subinv where oracle_backup_subinv.item ='" + pcbtabla.getValueAt(0, 1).toString().trim() + "'";
-                
+
                 connect con1 = new connect(query);
-                
+
                 try {
                     if (con1.rs.next()) {
                         pcbtabla.setValueAt(con1.rs.getString("qty"), 0, 2);
@@ -4330,11 +4493,11 @@ public class ablak extends javax.swing.JFrame {
                 } catch (SQLException ex) {
                     Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                
+
             }
-            
+
         }
-        
+
         stat.beir(System.getProperty("user.name"), jTabbedPane1.getTitleAt(jTabbedPane1.getSelectedIndex()), "", "gabor.hanacsek@sanmina.com");
     }//GEN-LAST:event_jButton10ActionPerformed
 
@@ -4343,7 +4506,7 @@ public class ablak extends javax.swing.JFrame {
         if (jTextField11.getText().length() > 0) {
             jTextField10.setEnabled(false);
         } else {
-            
+
             jTextField10.setEnabled(true);
         }
     }//GEN-LAST:event_jTextField11KeyPressed
@@ -4354,7 +4517,7 @@ public class ablak extends javax.swing.JFrame {
         if (jTextField10.getText().length() > 0) {
             jTextField11.setEnabled(false);
         } else {
-            
+
             jTextField11.setEnabled(true);
         }
     }//GEN-LAST:event_jTextField10KeyPressed
@@ -4366,23 +4529,23 @@ public class ablak extends javax.swing.JFrame {
         a.start();
         Jobinfoszal j = new Jobinfoszal();
         j.start();
-        
+
 
     }//GEN-LAST:event_jButton9ActionPerformed
 
     private void jTable5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable5MouseClicked
-        
+
         Integer osszeg = 0;
         int[] selectedrows = jTable5.getSelectedRows();
-        
+
         for (int i = 0; i < selectedrows.length; i++) {
             try {
                 osszeg += Integer.parseInt(jTable5.getValueAt(selectedrows[i], 3).toString());
             } catch (Exception e) {
             }
-            
+
         }
-        
+
         jTextField12.setText(osszeg.toString());
     }//GEN-LAST:event_jTable5MouseClicked
 
@@ -4391,11 +4554,11 @@ public class ablak extends javax.swing.JFrame {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setAcceptAllFileFilterUsed(true);
         fileChooser.setDialogTitle("Specify a file to save");
-        
+
         int userSelection = fileChooser.showSaveDialog(this);
-        
+
         if (userSelection == JFileChooser.APPROVE_OPTION) {
-            
+
             File fileToSave = fileChooser.getSelectedFile();
             ExcelExporter exp = new ExcelExporter();
             exp.fillData(jTable4, new File(fileToSave.getAbsolutePath() + ".xls"));
@@ -4409,7 +4572,7 @@ public class ablak extends javax.swing.JFrame {
         s.start();
         animation a = new animation();
         a.start();
-        
+
 
     }//GEN-LAST:event_jButton7ActionPerformed
 
@@ -4419,13 +4582,13 @@ public class ablak extends javax.swing.JFrame {
         modelstatus = (DefaultTableModel) jTable4.getModel();
         for (int i = 0; i < modelstatus.getRowCount(); i++) {
             for (int j = 0; j < modelstatus.getColumnCount(); j++) {
-                
+
                 modelstatus.setValueAt(null, i, j);
-                
+
             }
-            
+
         }
-        
+
         jButton7.setEnabled(false);
         jTable4.setModel(modelstatus);
     }//GEN-LAST:event_jButton6ActionPerformed
@@ -4437,7 +4600,7 @@ public class ablak extends javax.swing.JFrame {
         a.start();
         snlekerszal sn = new snlekerszal();
         sn.start();
-        
+
 
     }//GEN-LAST:event_jButton5ActionPerformed
 
@@ -4446,11 +4609,11 @@ public class ablak extends javax.swing.JFrame {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setAcceptAllFileFilterUsed(true);
         fileChooser.setDialogTitle("Specify a file to save");
-        
+
         int userSelection = fileChooser.showSaveDialog(this);
-        
+
         if (userSelection == JFileChooser.APPROVE_OPTION) {
-            
+
             File fileToSave = fileChooser.getSelectedFile();
             ExcelExporter exp = new ExcelExporter();
             exp.fillData(jTable3, new File(fileToSave.getAbsolutePath() + ".xls"));
@@ -4473,13 +4636,13 @@ public class ablak extends javax.swing.JFrame {
         //jTextField4.setText((String) jTable3.getValueAt(jTable3.getSelectedRow(), jTable3.getSelectedColumn()));
         Integer osszeg = 0;
         int[] selectedrows = jTable3.getSelectedRows();
-        
+
         for (int i = 0; i < selectedrows.length; i++) {
-            
+
             osszeg += Integer.parseInt(jTable3.getValueAt(selectedrows[i], 4).toString());
-            
+
         }
-        
+
         jTextField17.setText(osszeg.toString());
     }//GEN-LAST:event_jTable3MouseClicked
 
@@ -4491,9 +4654,9 @@ public class ablak extends javax.swing.JFrame {
         animation an = new animation();
         an.start();
         if (jTable18.isEditing()) {
-            
+
             jTable18.getCellEditor().cancelCellEditing();
-            
+
         }
         if (jTable19.isEditing()) {
             jTable19.getCellEditor().cancelCellEditing();
@@ -4507,11 +4670,11 @@ public class ablak extends javax.swing.JFrame {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setAcceptAllFileFilterUsed(true);
         fileChooser.setDialogTitle("Specify a file to save");
-        
+
         int userSelection = fileChooser.showSaveDialog(this);
-        
+
         if (userSelection == JFileChooser.APPROVE_OPTION) {
-            
+
             File fileToSave = fileChooser.getSelectedFile();
             ExcelExporter exp = new ExcelExporter();
             exp.fillData(jTable1, new File(fileToSave.getAbsolutePath() + "_WIP" + ".xls"));
@@ -4534,13 +4697,13 @@ public class ablak extends javax.swing.JFrame {
         // jTextField1.setText((String) jTable2.getValueAt(jTable2.getSelectedRow(), jTable2.getSelectedColumn()));
         Integer osszeg = 0;
         int[] selectedrows = jTable2.getSelectedRows();
-        
+
         for (int i = 0; i < selectedrows.length; i++) {
-            
+
             osszeg += Integer.parseInt(jTable2.getValueAt(selectedrows[i], 3).toString().substring(0, jTable2.getValueAt(selectedrows[i], 3).toString().length() - 3));
-            
+
         }
-        
+
         jTextField13.setText(osszeg.toString());
     }//GEN-LAST:event_jTable2MouseClicked
 
@@ -4550,17 +4713,17 @@ public class ablak extends javax.swing.JFrame {
 
         Integer osszeg = 0;
         int[] selectedrows = jTable1.getSelectedRows();
-        
+
         for (int i = 0; i < selectedrows.length; i++) {
-            
+
             osszeg += Integer.parseInt(jTable1.getValueAt(selectedrows[i], 2).toString());
-            
+
         }
-        
+
         jTextField13.setText(osszeg.toString());
 
     }//GEN-LAST:event_jTable1MouseClicked
-    
+
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
@@ -4568,17 +4731,17 @@ public class ablak extends javax.swing.JFrame {
 
         //ha jatek van irva inditjuk a jatekot
         if (jTextField2.getText().equals("Játék!")) {
-            
+
             jatek j = new jatek();
             j.setVisible(true);
-            
+
         } else {
             animation a = new animation();
             a.start();
             keszletszal k = new keszletszal(this);
             k.start();
         }
-        
+
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -4769,15 +4932,15 @@ public class ablak extends javax.swing.JFrame {
         // TODO add your handling code here:
         DefaultTableModel model = new DefaultTableModel();
         model = (DefaultTableModel) jTable15.getModel();
-        
+
         for (int o = 0; o < jTable15.getColumnCount(); o++) {
-            
+
             for (int r = 0; r < jTable15.getRowCount(); r++) {
-                
+
                 model.setValueAt("", r, o);
-                
+
             }
-            
+
         }
 
     }//GEN-LAST:event_jButton19ActionPerformed
@@ -4808,7 +4971,7 @@ public class ablak extends javax.swing.JFrame {
         sz.listabolszurok();
         sz.activitygroup();
         sz.firstpass();
-        
+
 
     }//GEN-LAST:event_jTable18KeyReleased
 
@@ -4831,7 +4994,7 @@ public class ablak extends javax.swing.JFrame {
         sz.listabolszurok();
         sz.activitygroup();
         sz.firstpass();
-        
+
 
     }//GEN-LAST:event_jCheckBox2ActionPerformed
 
@@ -4859,17 +5022,17 @@ public class ablak extends javax.swing.JFrame {
             String snlist = "";
             //összeszedjük az sn eket a querynek megfelelő formátummá
             for (int i = 0; i < jTable16.getRowCount(); i++) {
-                
+
                 if (jTable16.getValueAt(i, 0) != null && !jTable16.getValueAt(0, 0).toString().equals("")) {
-                    
+
                     snlist += "'" + jTable16.getValueAt(i, 0).toString().trim() + "',";
-                    
+
                 }
-                
+
             }
-            
+
             if (snlist.length() > 0) {
-                
+
                 snlist = snlist.substring(0, snlist.length() - 1);
                 snlist = snlist.replace("-SMT", "");
                 String query = "select barcode.container_ID from barcode where barcode in (" + snlist + ")";
@@ -4880,64 +5043,64 @@ public class ablak extends javax.swing.JFrame {
                     DefaultTableModel model = new DefaultTableModel();
                     model = (DefaultTableModel) jTable16.getModel();
                     for (int i = 0; i < model.getRowCount(); i++) {
-                        
+
                         for (int r = 0; r < model.getColumnCount(); r++) {
-                            
+
                             model.setValueAt("", i, r);
-                            
+
                         }
-                        
+
                     }
-                    
+
                     con = new szaifconn("com.mysql.jdbc.driver", "jdbc:mysql://143.116.140.113/plrdb", "cpi", "cpi602");
                     ResultSet rs = (ResultSet) con.lekerdez(query);
                     String contlist = "";
                     while (rs.next()) {
-                        
+
                         contlist += "'" + rs.getString(1) + "',";
-                        
+
                     }
-                    
+
                     if (contlist.length() > 0) {
-                        
+
                         contlist = contlist.substring(0, contlist.length() - 1);
                         query = "SELECT barcode.barcode , container.container , container.insertDate \n"
                                 + "FROM plrdb.container\n"
                                 + "left join plrdb.barcode on container.ID = barcode.container_ID \n"
                                 + "where container.id in (" + contlist + ")";
-                        
+
                         rs = (ResultSet) con.lekerdez(query);
                         int sorszam = 0;
                         while (rs.next()) {
-                            
+
                             model.setValueAt(rs.getString(1), sorszam, 0);
                             model.setValueAt(rs.getString(2), sorszam, 1);
                             model.setValueAt(rs.getString(3), sorszam, 2);
                             sorszam++;
                         }
-                        
+
                         jTable16.setModel(model);
-                        
+
                     }
-                    
+
                     con.kinyir();
                 } catch (ClassNotFoundException ex) {
                     Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (Exception ex) {
                     Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                
+
             }
-            
+
         }
-        
+
         ablak.stat.beir(System.getProperty("user.name"), ablak.jTabbedPane1.getTitleAt(ablak.jTabbedPane1.getSelectedIndex()), "", "gabor.hanacsek@sanmina.com");
-        
+
 
     }//GEN-LAST:event_jButton21ActionPerformed
 
     private void jButton22MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton22MouseEntered
-        
+
         jButton22.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/PICTURES/excel.png")));
 
     }//GEN-LAST:event_jButton22MouseEntered
@@ -4953,15 +5116,15 @@ public class ablak extends javax.swing.JFrame {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setAcceptAllFileFilterUsed(true);
         fileChooser.setDialogTitle("Specify a file to save");
-        
+
         int userSelection = fileChooser.showSaveDialog(this);
-        
+
         if (userSelection == JFileChooser.APPROVE_OPTION) {
-            
+
             File fileToSave = fileChooser.getSelectedFile();
             ExcelExporter exp = new ExcelExporter();
             exp.fillData(jTable5, new File(fileToSave.getAbsolutePath() + ".xls"));
-            
+
         }
 
     }//GEN-LAST:event_jButton22ActionPerformed
@@ -4980,21 +5143,21 @@ public class ablak extends javax.swing.JFrame {
         //jobinfo tábák adatainak törlése
 
         for (int i = 0; i < ablak.jTable17.getRowCount(); i++) {
-            
+
             ablak.jTable17.setValueAt("", i, 0);
-            
+
         }
-        
+
         DefaultTableModel model = new DefaultTableModel();
         model = (DefaultTableModel) ablak.jTable5.getModel();
         model.setRowCount(0);
         ablak.jTable5.setModel(model);
-        
+
 
     }//GEN-LAST:event_jButton23ActionPerformed
 
     private void jButton24ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton24ActionPerformed
-        
+
         ablak.stat.beir(System.getProperty("user.name"), ablak.jTabbedPane1.getTitleAt(ablak.jTabbedPane1.getSelectedIndex()), "", "gabor.hanacsek@sanmina.com");
 
 // nexim konnect
@@ -5004,7 +5167,7 @@ public class ablak extends javax.swing.JFrame {
             model.setRowCount(0);
             neximconnect nc = new neximconnect();
             try {
-                
+
                 String query = "SELECT DISTINCT JOBNAME, PARTNUMBERNAME, MODEL.NAME AS \"Gép\" , case SETUP.TOPBOTTOM when 0 then 'Top' else 'Bottom' end as oldal ,   FLOOR(FEEDERSETUP.FEEDERID/10000) as MODULE,\n"
                         + "FLOOR(MOD(FEEDERSETUP.FEEDERID,10000)/1000) as SIDE, \n"
                         + "MOD(FEEDERSETUP.FEEDERID,1000) AS SLOT,\n"
@@ -5043,10 +5206,10 @@ public class ablak extends javax.swing.JFrame {
                         + "     AND SETUP.MASTERSETUP = 1\n"
                         + "GROUP BY JOBNAME,  SETUP.TOPBOTTOM, FEEDERSETUP.PARTNUMBER, FEEDERNAME, FEEDERSETUP.FEEDERID, MODEL.NAME, PARTSHAPENAME, VENDERLOTPARTNUMBER.PMAPP, SETUP.TOPBOTTOM, PARTNUMBERNAME\n"
                         + "ORDER BY jobname ";
-                
+
                 nc.planconnect(query);
                 int merete = 0;
-                
+
                 if (nc.rs != null) {
                     nc.rs.last();
                     merete = nc.rs.getRow();
@@ -5055,9 +5218,9 @@ public class ablak extends javax.swing.JFrame {
 //beallitjuk az adatstring meretet amiből mindig vissza tudjuk tolteni az adatokat
 
                     alkatreszkereso = new String[merete][8];
-                    
+
                     while (nc.rs.next()) {
-                        
+
                         model.addRow(new Object[]{nc.rs.getString(1), nc.rs.getString(2), nc.rs.getString(3), nc.rs.getString(4), nc.rs.getString(5), nc.rs.getString(6), nc.rs.getString(7), nc.rs.getString(8)});
                         jLabel39.setText(nc.rs.getString(9));
                         alkatreszkereso[i][0] = nc.rs.getString(1);
@@ -5068,11 +5231,11 @@ public class ablak extends javax.swing.JFrame {
                         alkatreszkereso[i][5] = nc.rs.getString(6);
                         alkatreszkereso[i][6] = nc.rs.getString(7);
                         alkatreszkereso[i][7] = nc.rs.getString(8);
-                        
+
                         i++;
-                        
+
                     }
-                    
+
                     nc.kinyir();
                     jTable20.setModel(model);
 
@@ -5086,21 +5249,21 @@ public class ablak extends javax.swing.JFrame {
 //bejarjuk a tablat es összerakjuk a pn stringet a querybe
                     outerloop:
                     for (int n = 0; n < jTable20.getRowCount(); n++) {
-                        
+
                         for (int k = 0; k < pns.size(); k++) {
-                            
+
                             if (pns.get(k).equals(jTable20.getValueAt(n, 0).toString())) {
-                                
+
                                 continue outerloop;
-                                
+
                             }
-                            
+
                         }
                         pns.add(jTable20.getValueAt(n, 0).toString());
                         pnek += jTable20.getValueAt(n, 0).toString() + "|";
-                        
+
                     }
-                    
+
                     pnek = pnek.substring(0, pnek.length() - 1);
 
 //összerakjuk a queryt
@@ -5118,16 +5281,16 @@ public class ablak extends javax.swing.JFrame {
                     while (pc.rs.next()) {
                         boolean pipa = false;
                         if (pc.rs.getString(4).contains("Gyűjtsétek")) {
-                            
+
                             pipa = true;
-                            
+
                         }
                         model1.addRow(new Object[]{pc.rs.getString(1).toUpperCase(), pc.rs.getString(2), pc.rs.getString(3), null, pipa});
                         qty[i] = pc.rs.getInt(5);
                         i++;
-                        
+
                     }
-                    
+
                     jTable21.setModel(model1);
                     pc.kinyir();
 
@@ -5137,28 +5300,28 @@ public class ablak extends javax.swing.JFrame {
                         for (int n = 0; n < jTable20.getRowCount(); n++) {  // az alkatrészes nagy tábla
 //ha a programnevek közül az egyik megvan a másikban és a sor stimmel
                             if ((jTable21.getValueAt(k, 1).toString().contains(jTable20.getValueAt(n, 0).toString()) || jTable20.getValueAt(n, 0).toString().contains(jTable21.getValueAt(k, 1).toString())) && jTable21.getValueAt(k, 0).toString().equals(jTable20.getValueAt(n, 2).toString().substring(0, 1))) {
-                                
+
                                 osszeg += (Integer.parseInt(jTable20.getValueAt(n, 7).toString()) * qty[k]);
-                                
+
                             }
-                            
+
                         }
-                        
+
                         jTable21.setValueAt(osszeg, k, 3);
-                        
+
                     }
-                    
+
                 }
-                
+
                 System.err.println("");
-                
+
             } catch (SQLException ex) {
                 Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
                 ex.printStackTrace();
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
+
         }
     }//GEN-LAST:event_jButton24ActionPerformed
 
@@ -5172,24 +5335,24 @@ public class ablak extends javax.swing.JFrame {
 
 //visszatöltjük a stringtömbböl az adatokat
         model.setRowCount(0);
-        
+
         for (int i = 0; i < alkatreszkereso.length; i++) {
-            
+
             model.addRow(new Object[]{alkatreszkereso[i][0], alkatreszkereso[i][1], alkatreszkereso[i][2], alkatreszkereso[i][3], alkatreszkereso[i][4], alkatreszkereso[i][5], alkatreszkereso[i][6], alkatreszkereso[i][7]});
-            
+
         }
-        
+
         for (int n = 0; n < model.getRowCount(); n++) {  // az alkatrészes nagy tábla
 //ha a programnevek közül az egyik megvan a másikban és a sor stimmel
             if (((program.contains(model.getValueAt(n, 0).toString()) || model.getValueAt(n, 0).toString().contains(program)) && sor.equals(model.getValueAt(n, 2).toString().substring(0, 1))) == false) {
-                
+
                 model.removeRow(n);
                 n--;
-                
+
             }
-            
+
         }
-        
+
         jTable20.setModel(model);
 
     }//GEN-LAST:event_jTable21MouseClicked
@@ -5197,19 +5360,19 @@ public class ablak extends javax.swing.JFrame {
     private void jTextField2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField2KeyPressed
         // TODO add your handling code here:
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            
+
             if (jTextField2.getText().equals("Játék!")) {
-                
+
                 jatek j = new jatek();
                 j.setVisible(true);
-                
+
             } else {
                 animation a = new animation();
                 a.start();
                 keszletszal k = new keszletszal(this);
                 k.start();
             }
-            
+
         }
 
     }//GEN-LAST:event_jTextField2KeyPressed
@@ -5220,17 +5383,17 @@ public class ablak extends javax.swing.JFrame {
         DefaultTableModel model = new DefaultTableModel();
         model = (DefaultTableModel) jTable22.getModel();
         model.setRowCount(0);
-        
+
         tigerconnect tc = new tigerconnect();
-        
+
         try {
-            
+
             tc.storedSN(jTextField16.getText().trim());
-            
+
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
 
     }//GEN-LAST:event_jButton25ActionPerformed
 
@@ -5251,36 +5414,36 @@ public class ablak extends javax.swing.JFrame {
             String header[] = {"System", "Freq", "Type", "PN", "QTY", "FPY"};
             for (int i = 0; i < jTable23.getColumnCount(); i++) {
                 TableColumn column1 = jTable23.getTableHeader().getColumnModel().getColumn(i);
-                
+
                 column1.setHeaderValue(header[i]);
                 this.repaint();
             }
-            
+
             try {
                 tc.storedMPTTesters(stol, sig);
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
+
         }
 //ha UBT van kiválasztva
         if (jComboBox1.getSelectedItem().toString().equals("UBT")) {
             String header[] = {"System", "QTY", "PartNumber", "Pass", "Fail", "FPY"};
             for (int i = 0; i < jTable23.getColumnCount(); i++) {
                 TableColumn column1 = jTable23.getTableHeader().getColumnModel().getColumn(i);
-                
+
                 column1.setHeaderValue(header[i]);
                 this.repaint();
             }
-            
+
             try {
                 tc.storedUBTTesters(stol, sig);
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
+
         }
-        
+
 
     }//GEN-LAST:event_jButton26ActionPerformed
 
@@ -5291,7 +5454,7 @@ public class ablak extends javax.swing.JFrame {
         a.start();
         kiszallitasszal ksz = new kiszallitasszal();
         ksz.start();
-        
+
 
     }//GEN-LAST:event_jButton27ActionPerformed
 
@@ -5308,20 +5471,20 @@ public class ablak extends javax.swing.JFrame {
         DefaultTableModel model = new DefaultTableModel();
         model = (DefaultTableModel) jTable24.getModel();
         TableRowSorter<DefaultTableModel> tr = new TableRowSorter<DefaultTableModel>(model);
-        
+
         jTable24.setRowSorter(tr);
-        
+
         tr.setRowFilter(RowFilter.regexFilter(jTextField26.getText().trim()));
-        
+
         int total = 0;
-        
+
         for (int i = 0; i < jTable24.getRowCount(); i++) {
             String value = (String) jTable24.getValueAt(i, 1);
             total += Integer.parseInt(value);
         }
-        
+
         jTextField25.setText(Integer.toString(total));
-        
+
 
     }//GEN-LAST:event_jTextField26KeyReleased
 
@@ -5329,13 +5492,13 @@ public class ablak extends javax.swing.JFrame {
         //kijelölések összege a kiszállítások fülön
         Integer osszeg = 0;
         int[] selectedrows = jTable24.getSelectedRows();
-        
+
         for (int i = 0; i < selectedrows.length; i++) {
-            
+
             osszeg += Integer.parseInt(jTable24.getValueAt(selectedrows[i], 1).toString());
-            
+
         }
-        
+
         jTextField24.setText(osszeg.toString());
     }//GEN-LAST:event_jTable24MouseClicked
 
@@ -5344,56 +5507,102 @@ public class ablak extends javax.swing.JFrame {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setAcceptAllFileFilterUsed(true);
         fileChooser.setDialogTitle("Specify a file to save");
-        
+
         int userSelection = fileChooser.showSaveDialog(this);
-        
+
         if (userSelection == JFileChooser.APPROVE_OPTION) {
-            
+
             File fileToSave = fileChooser.getSelectedFile();
             ExcelExporter exp = new ExcelExporter();
             exp.fillData(jTable24, new File(fileToSave.getAbsolutePath() + ".xls"));
-            
+
         }
     }//GEN-LAST:event_jButton28ActionPerformed
-    
+
+    private void jButton29ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton29ActionPerformed
+        // a sorok priojának mentése
+
+        //kell egy insert string , ami updatel az adatbázisban ha a prio és a dátum már létezik
+        String query = "insert into sorokprioja (prio ,sor , datum , priodatum) values";
+        //bejárjuk a táblát és beletesszük az adatokat a querybe
+        String adatok = "";
+        for (int c = 1; c < jTable25.getColumnCount(); c++) {
+
+            for (int r = 0; r < jTable25.getRowCount(); r++) {
+
+                String sor = "";
+                try {
+
+                    sor = jTable25.getValueAt(r, c).toString();
+
+                } catch (Exception e) {
+
+                }
+                if(!sor.equals("")){
+                    adatok += "('" + jTable25.getValueAt(r, 0).toString() + "','" + sor + "','" + jTable25.getColumnModel().getColumn(c).getHeaderValue() + "','" + jTable25.getValueAt(r, 0).toString() + jTable25.getColumnModel().getColumn(c).getHeaderValue() + "'),";
+                }
+            }
+
+        }
+        adatok = adatok.substring(0, adatok.length() - 1);
+
+        query += adatok + "on duplicate key update sor = values(sor)";
+        //System.out.println();
+        planconnect pc = new planconnect();
+        pc.feltolt(query, true);
+        pc.kinyir();
+
+    }//GEN-LAST:event_jButton29ActionPerformed
+
+    private void jButton29MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton29MouseClicked
+        //ha nem aktiva gomb
+
+        if (!planner) {
+
+            Prio_Bejel p = new Prio_Bejel();
+            p.setVisible(true);
+
+        }
+    }//GEN-LAST:event_jButton29MouseClicked
+
     public void gombenged() {
-        
+
         try {
             jButton12.setEnabled(true);
             jButton11.setEnabled(true);
             jButton13.setEnabled(true);
             jButton15.setEnabled(true);
-            
+
         } catch (Exception e) {
-            
+
             System.err.println(e.getStackTrace());
-            
+
         }
-        
+
     }
-    
+
     private void filter(String query) {
-        
+
         TableRowSorter<DefaultTableModel> tr = new TableRowSorter<DefaultTableModel>(model);
         TableRowSorter<DefaultTableModel> tr1 = new TableRowSorter<DefaultTableModel>(model1);
         jTable1.setRowSorter(tr);
         jTable2.setRowSorter(tr1);
         tr.setRowFilter(RowFilter.regexFilter(query));
         tr1.setRowFilter(RowFilter.regexFilter(query));
-        
+
         int total = 0;
-        
+
         for (int i = 0; i < jTable1.getRowCount(); i++) {
             String value = (String) jTable1.getValueAt(i, 2);
             total += Integer.parseInt(value);
         }
-        
+
         jTextField6.setText(Integer.toString(total));
-        
+
     }
-    
+
     public ablak(JButton jButton1, JButton jButton2, JLabel jLabel1, JLabel jLabel2, JLabel jLabel3, JLabel jLabel4, JLabel jLabel5, JLabel jLabel6, JLabel jLabel7, JLabel jLabel8, JLabel jLabel9, JMenuItem jMenuItem1, JPanel jPanel1, JPanel jPanel2, JScrollPane jScrollPane1, JScrollPane jScrollPane2, JScrollPane jScrollPane3, JTabbedPane jTabbedPane1, JTable jTable1, JTable jTable2, JTable jTable3, JTextField jTextField1, JTextField jTextField2, JTextField jTextField3, JTextField jTextField5) throws HeadlessException {
-        
+
         this.jButton1 = jButton1;
         this.jButton2 = jButton2;
         this.jLabel1 = jLabel1;
@@ -5419,25 +5628,25 @@ public class ablak extends javax.swing.JFrame {
         this.jTextField3 = jTextField3;
         this.jTextField5 = jTextField5;
     }
-    
+
     private void filter1(String query) {
-        
+
         TableRowSorter<DefaultTableModel> tr = new TableRowSorter<DefaultTableModel>(modelacti);
         tr = new TableRowSorter<DefaultTableModel>(modelacti);
         jTable3.setRowSorter(tr);
         tr.setRowFilter(RowFilter.regexFilter(query));
-        
+
         int total = 0;
-        
+
         for (int i = 0; i < jTable3.getRowCount(); i++) {
             String value = (String) jTable3.getValueAt(i, 4);
             total += Integer.parseInt(value);
         }
-        
+
         jTextField5.setText(Integer.toString(total));
-        
+
     }
-    
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -5449,21 +5658,21 @@ public class ablak extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
-                    
+
                 }
             }
         } catch (ClassNotFoundException ex) {
             java.util.logging.Logger.getLogger(ablak.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
-            
+
         } catch (InstantiationException ex) {
             java.util.logging.Logger.getLogger(ablak.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
-            
+
         } catch (IllegalAccessException ex) {
             java.util.logging.Logger.getLogger(ablak.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
-            
+
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(ablak.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
@@ -5506,6 +5715,7 @@ public class ablak extends javax.swing.JFrame {
     private javax.swing.JButton jButton26;
     private javax.swing.JButton jButton27;
     private javax.swing.JButton jButton28;
+    public static javax.swing.JButton jButton29;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
@@ -5519,6 +5729,8 @@ public class ablak extends javax.swing.JFrame {
     public static javax.swing.JCheckBox jCheckBox4;
     public static javax.swing.JCheckBox jCheckBox5;
     private javax.swing.JComboBox<String> jComboBox1;
+    public static javax.swing.JComboBox<String> jComboBox2;
+    public static javax.swing.JComboBox<String> jComboBox3;
     public static com.toedter.calendar.JDateChooser jDateChooser1;
     public static com.toedter.calendar.JDateChooser jDateChooser2;
     public static com.toedter.calendar.JDateChooser jDateChooser3;
@@ -5577,6 +5789,8 @@ public class ablak extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel51;
     private javax.swing.JLabel jLabel52;
     private javax.swing.JLabel jLabel53;
+    private javax.swing.JLabel jLabel54;
+    private javax.swing.JLabel jLabel55;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
@@ -5598,6 +5812,7 @@ public class ablak extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel20;
     private javax.swing.JPanel jPanel21;
+    private javax.swing.JPanel jPanel22;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
@@ -5626,6 +5841,7 @@ public class ablak extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane25;
     private javax.swing.JScrollPane jScrollPane26;
     private javax.swing.JScrollPane jScrollPane27;
+    private javax.swing.JScrollPane jScrollPane28;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
@@ -5651,6 +5867,7 @@ public class ablak extends javax.swing.JFrame {
     public static javax.swing.JTable jTable22;
     public static javax.swing.JTable jTable23;
     public static javax.swing.JTable jTable24;
+    public static javax.swing.JTable jTable25;
     public static javax.swing.JTable jTable3;
     public static javax.swing.JTable jTable4;
     public static javax.swing.JTable jTable5;

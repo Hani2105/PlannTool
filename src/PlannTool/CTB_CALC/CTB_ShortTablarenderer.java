@@ -38,7 +38,7 @@ public class CTB_ShortTablarenderer extends DefaultTableCellRenderer {
         JLabel c = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
         c.setHorizontalAlignment(CENTER);
         c.setBorder(BorderFactory.createEtchedBorder());
-        if (column > 2) {
+        if (column == 3) {
 
             c.setBackground(new Color(167, 181, 204, 60));
             //c.setForeground(Color.BLACK);
@@ -53,6 +53,7 @@ public class CTB_ShortTablarenderer extends DefaultTableCellRenderer {
         if (isSelected) {
  
             c.setForeground(Color.RED);
+            c.setBorder(BorderFactory.createLineBorder(new Color(55, 52, 249), 2));
             
         }
         

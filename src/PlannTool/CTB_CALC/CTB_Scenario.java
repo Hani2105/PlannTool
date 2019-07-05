@@ -52,14 +52,14 @@ public class CTB_Scenario {
         if (userSelection == JFileChooser.APPROVE_OPTION) {
             CTB_Filechooser.setLastDir(fileChooser.getSelectedFile());
             File fileToSave = fileChooser.getSelectedFile();
-            File file = new File(fileToSave.getAbsolutePath() + ".scen");
+            File file = new File(fileToSave.getAbsolutePath().replace(".scen", "") + ".scen");
             FileWriter fw = new FileWriter(file);
             BufferedWriter bw = new BufferedWriter(fw);
             //beirunk valami faszssagot
             bw.write("Kezdodik a file!");
             bw.newLine();
 
-            JTable[] tablakneve = new JTable[9];
+            JTable[] tablakneve = new JTable[10];
             tablakneve[0] = c.jTable1;
             tablakneve[1] = c.jTable2;
             tablakneve[2] = c.jTable3;
@@ -69,6 +69,7 @@ public class CTB_Scenario {
             tablakneve[6] = c.jTable7;
             tablakneve[7] = c.jTable8;
             tablakneve[8] = c.jTable11;
+            tablakneve[9] = c.jTable10;
 
             for (int i = 0; i < tablakneve.length; i++) {
 
@@ -90,7 +91,7 @@ public class CTB_Scenario {
 
     }
 
-    public void TableToText(JTable j, File f, BufferedWriter bw) throws IOException {
+    public static void TableToText(JTable j, File f, BufferedWriter bw) throws IOException {
 
 //beirjuk h kezdodik a columneve oszlop
         bw.write(j.getName() + ";" + "!!COLNAME" + ";");
@@ -135,11 +136,11 @@ public class CTB_Scenario {
         if (filename == JFileChooser.APPROVE_OPTION) {
             //et lesz a fileunk 
             CTB_Filechooser.setLastDir(chooser.getSelectedFile());
-            File f = chooser.getSelectedFile();
+            CTB.f = chooser.getSelectedFile();
 //kell egy bufferedreader is
 
             //kitöröljük az összes tábla adatát
-            JTable[] tablakneve = new JTable[9];
+            JTable[] tablakneve = new JTable[10];
             tablakneve[0] = c.jTable1;
             tablakneve[1] = c.jTable2;
             tablakneve[2] = c.jTable3;
@@ -149,11 +150,12 @@ public class CTB_Scenario {
             tablakneve[6] = c.jTable7;
             tablakneve[7] = c.jTable8;
             tablakneve[8] = c.jTable11;
+            tablakneve[9] = c.jTable10;
 
             outerloop:
             for (int i = 0; i < tablakneve.length; i++) {
                 BufferedReader in;
-                in = new BufferedReader(new FileReader(f));
+                in = new BufferedReader(new FileReader(CTB.f));
 
 //kiszedjuk a modellt majd kinullazuk a sorokat es az oszlopokat
                 DefaultTableModel model = new DefaultTableModel();
@@ -194,10 +196,11 @@ public class CTB_Scenario {
 
             }
             
-            CTB.jLabel6.setText(f.getName().replace(".scen",""));
+            CTB.jLabel6.setText(CTB.f.getName().replace(".scen",""));
 
         }
-        
+        CTB_Wipquery wip = new CTB_Wipquery(CTB.jTable1);
+        wip.start();
         infobox info = new infobox();
         info.infoBox("Import kész!", "Betöltés!");
 

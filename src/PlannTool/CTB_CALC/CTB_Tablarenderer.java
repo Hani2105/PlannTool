@@ -40,28 +40,61 @@ public class CTB_Tablarenderer extends DefaultTableCellRenderer {
         c.setBorder(BorderFactory.createEtchedBorder());
         if (column == 0) {
 
-           c.setBackground(new Color(229, 246, 33, 100));
-           c.setBorder(BorderFactory.createEtchedBorder());
+            c.setBackground(new Color(229, 246, 33, 100));
+            c.setBorder(BorderFactory.createEtchedBorder());
+
+//összeszedjük a pn hez a darabokat
+            String pn = "";
+
+            try {
+                pn = table.getValueAt(row, column).toString();
+            } catch (Exception e) {
+
+            }
+
+            if (!pn.equals("") && CTB_Wipquery.rowdata != null) {
+                String tooltip = "<html>";
+                for (int i = 0; i < CTB_Wipquery.rowdata.length; i++) {
+
+                    if (pn.equals(CTB_Wipquery.rowdata[i][0].toString())) {
+
+                        //tooltip += CTB_Wipquery.rowdata[i][0].toString() + "<br>";
+                        tooltip += CTB_Wipquery.rowdata[i][1].toString() + ": ";
+                        tooltip += CTB_Wipquery.rowdata[i][2].toString() + "DB<br>";
+
+                    }
+
+                }
+
+                tooltip += "</html>";
+                c.setToolTipText(tooltip);
+            } else {
+                c.setToolTipText(null);
+            }
 
         } else if (column == 1) {
 
             c.setBackground(new Color(229, 246, 33, 80));
             c.setBorder(BorderFactory.createEtchedBorder());
+            c.setToolTipText(null);
 
         } else if (column == 2) {
 
             c.setBackground(new Color(229, 246, 33, 60));
             c.setBorder(BorderFactory.createEtchedBorder());
+            c.setToolTipText(null);
 
         } else if (column == 3) {
 
             c.setBackground(new Color(229, 246, 33, 40));
-           c.setBorder(BorderFactory.createEtchedBorder());
+            c.setBorder(BorderFactory.createEtchedBorder());
+            c.setToolTipText(null);
 
         } else if (column == 4) {
 
             c.setBackground(new Color(229, 246, 33, 20));
             c.setBorder(BorderFactory.createEtchedBorder());
+            c.setToolTipText(null);
 
         } else if (column == 5) {
 
@@ -69,6 +102,7 @@ public class CTB_Tablarenderer extends DefaultTableCellRenderer {
                 if (table.getValueAt(row, column).toString().equals("BOM hiba!")) {
 
                     c.setBackground(new Color(255, 166, 22));
+                    c.setToolTipText(null);
 
                 }
             } catch (Exception e) {
@@ -86,7 +120,7 @@ public class CTB_Tablarenderer extends DefaultTableCellRenderer {
                 }
             } catch (Exception e) {
             }
-
+            c.setToolTipText(null);
         } else if (column == 6) {
             try {
                 if (table.getValueAt(row, column).toString().equals("BOMhiba!")) {
@@ -109,11 +143,12 @@ public class CTB_Tablarenderer extends DefaultTableCellRenderer {
                 }
             } catch (Exception e) {
             }
-
+            c.setToolTipText(null);
         } else {
 
             c.setBorder(BorderFactory.createEtchedBorder());
             c.setBackground(new Color(0, 0, 0, 10));
+            c.setToolTipText(null);
 
         }
 

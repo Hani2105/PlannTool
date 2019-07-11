@@ -33,6 +33,7 @@ public class CTB_ExportShorty extends javax.swing.JFrame {
     /**
      * Creates new form CTB_ExportShorty
      */
+//figyeljük azt a nyomi szálat
     public CTB_ExportShorty() {
         initComponents();
     }
@@ -186,9 +187,19 @@ public class CTB_ExportShorty extends javax.swing.JFrame {
 //lefuttatjuk a shorty osztályt
             CTB_TopshortThread t = new CTB_TopshortThread();
             t.start();
+
+// várunk amíg végez a szál
+//            while (!IsReady) {
+//                try {
+//                    this.wait();
+//                } catch (InterruptedException ex) {
+//                    Logger.getLogger(CTB_ExportShorty.class.getName()).log(Level.SEVERE, null, ex);
+//                }
+//            }
             try {
-                //várunk egy kicsit
+//                várunk egy kicsit
                 Thread.sleep(500);
+
             } catch (InterruptedException ex) {
                 Logger.getLogger(CTB_ExportShorty.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -316,7 +327,15 @@ public class CTB_ExportShorty extends javax.swing.JFrame {
                 if (tovabbmenni) {
 //átállítjuk falsra
                     tovabbmenni = false;
+//ha nincs megadva darab , sikítunk
 
+                    if (jTextField1.getText().equals("")) {
+
+                        infobox info = new infobox();
+                        info.infoBox("Nem adtál meg darabszámot!", "Figyelem!");
+                        return;
+                        
+                    }
                     if (Integer.parseInt(lista.get(i)[s][2]) <= Integer.parseInt(jTextField1.getText())) {
                         tovabbmenni = true;
                     }

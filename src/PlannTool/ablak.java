@@ -4022,7 +4022,7 @@ public class ablak extends javax.swing.JFrame {
 
         } else {
 
-            planner = false;
+            //planner = false;
 
         }
 

@@ -31,8 +31,6 @@ public class Tc_Ment {
         gyujto.clear();
 //felengedjük a szűrőt
 
-         
-
         try {
             int i = 0;
             pc.lekerdez(query);
@@ -116,11 +114,10 @@ public class Tc_Ment {
         //kitalaljuk a sheet nevet
         int n = Tc_Betervezo.Tervezotabbed.getSelectedIndex();
         String neve = Tc_Betervezo.Tervezotabbed.getTitleAt(n);
-        
-//felengedjük a szűrőt
 
+//felengedjük a szűrőt
         Besheets.get(neve).jTable2.setRowSorter(null);
-        
+
         String tol = Besheets.get(neve).jTable2.getColumnName(4).substring(0, 10) + " 06:00:00";
         String ig = "";
 
@@ -379,8 +376,7 @@ public class Tc_Ment {
             }
         }
 
-        if (feltoltadat.length()
-                > 0) {
+        if (feltoltadat.length() > 0) {
             feltoltadat = feltoltadat.substring(0, feltoltadat.length() - 1);
 
             // ha planner akkor updatelunk , ezzel torlunk ki a tervbol teteleket , a tervezett darabszamot nullara allitjuk , hogy ha visszaupdatelodik mert a termeles megis csinalja ne legyen bebne a terv darabszam

@@ -765,6 +765,7 @@ public class CTB extends javax.swing.JFrame {
             }
         });
         jTable9.setToolTipText("A mennyiségek szerkesztéséhez klikk a Raw OH oszlopra!");
+        jTable9.setCellSelectionEnabled(true);
         jTable9.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTable9MouseClicked(evt);

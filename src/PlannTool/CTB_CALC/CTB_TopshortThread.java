@@ -16,6 +16,10 @@ import javax.swing.table.DefaultTableModel;
  */
 public class CTB_TopshortThread extends Thread {
 
+  
+
+    
+    
     public void run() {
 
         //betesszük a használatos anyagokat atáblába
@@ -140,6 +144,7 @@ public class CTB_TopshortThread extends Thread {
         CTB.jTable9.setModel(shortmodel);
         CTB.TablaOszlopSzelesseg(CTB.jTable9);
         CTB.jTable9.repaint();
+        
     }
 
 }

@@ -43,14 +43,17 @@ public class CTB_Scenario {
 //gyakorlatilag azt szeretnenk csinalni , hogy vegigmegyünk a tabokon es elmentjuk egy textbe az adatokat.
 
 //ki kell tallozni , hogy hova szeretnenk menteni
-        JFileChooser fileChooser = CTB_Filechooser.getFileChooser();
+        JFileChooser fileChooser = CTB_Filechooser.getFileChooserScen();
         fileChooser.setAcceptAllFileFilterUsed(true);
         fileChooser.setDialogTitle("Mentés helye!");
 
         int userSelection = fileChooser.showSaveDialog(c);
 
         if (userSelection == JFileChooser.APPROVE_OPTION) {
-            CTB_Filechooser.setLastDir(fileChooser.getSelectedFile());
+            CTB_Filechooser.setLastDirScen(fileChooser.getSelectedFile());
+//eltesszük fileba
+            CTB_Ini q = new CTB_Ini(c.jTable11);
+            q.inikezel(CTB_Ini.indit.scenpath);
             File fileToSave = fileChooser.getSelectedFile();
             File file = new File(fileToSave.getAbsolutePath().replace(".scen", "") + ".scen");
             FileWriter fw = new FileWriter(file);
@@ -129,13 +132,13 @@ public class CTB_Scenario {
 
 //be kell tallózni a text filet
         FileNameExtensionFilter filter = new FileNameExtensionFilter("Scenario", "scen");
-        JFileChooser chooser = CTB_Filechooser.getFileChooser();
+        JFileChooser chooser = CTB_Filechooser.getFileChooserScen();
         chooser.setFileFilter(filter);
         int filename = chooser.showOpenDialog(null);
 
         if (filename == JFileChooser.APPROVE_OPTION) {
             //et lesz a fileunk 
-            CTB_Filechooser.setLastDir(chooser.getSelectedFile());
+            CTB_Filechooser.setLastDirScen(chooser.getSelectedFile());
             CTB.f = chooser.getSelectedFile();
 //kell egy bufferedreader is
 

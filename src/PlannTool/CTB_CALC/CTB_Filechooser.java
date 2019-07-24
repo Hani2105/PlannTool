@@ -16,9 +16,18 @@ public class CTB_Filechooser {
 
     private static String lastDir = null;
 
-    public static JFileChooser getFileChooser() {
-        if (lastDir != null) {
-            JFileChooser fc = new JFileChooser(lastDir);
+    public static JFileChooser getFileChooserRiport() {
+        if (!CTB.riportpath.equals("")) {
+            JFileChooser fc = new JFileChooser(CTB.riportpath);
+            return fc;
+        } else {
+            JFileChooser fc = new JFileChooser();
+            return fc;
+        }
+    }
+     public static JFileChooser getFileChooserScen() {
+        if (!CTB.scenpath.equals("")) {
+            JFileChooser fc = new JFileChooser(CTB.scenpath);
             return fc;
         } else {
             JFileChooser fc = new JFileChooser();
@@ -26,8 +35,14 @@ public class CTB_Filechooser {
         }
     }
 
-    public static void setLastDir(File file) {
+    public static void setLastDirScen(File file) {
         lastDir = file.getParent();
+        CTB.scenpath = file.getAbsolutePath() + ".scen";
+    }
+
+    public static void setLastDirRiports(File file) {
+        lastDir = file.getParent();
+        CTB.riportpath = file.getParent();
     }
 
 }

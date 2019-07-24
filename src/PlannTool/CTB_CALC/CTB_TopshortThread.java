@@ -16,10 +16,6 @@ import javax.swing.table.DefaultTableModel;
  */
 public class CTB_TopshortThread extends Thread {
 
-  
-
-    
-    
     public void run() {
 
         //betesszük a használatos anyagokat atáblába
@@ -27,7 +23,10 @@ public class CTB_TopshortThread extends Thread {
         model = (DefaultTableModel) jTable1.getModel();
         DefaultTableModel shortmodel = new DefaultTableModel();
         shortmodel = (DefaultTableModel) CTB.jTable9.getModel();
-        shortmodel.setRowCount(0);
+        try {
+            shortmodel.setRowCount(0);
+        } catch (Exception e) {
+        }
         DefaultTableModel rawohmodel = new DefaultTableModel();
         rawohmodel = (DefaultTableModel) jTable8.getModel();
         DefaultTableModel ohmodel = new DefaultTableModel();
@@ -83,7 +82,10 @@ public class CTB_TopshortThread extends Thread {
         for (i = 0; i < tmppns.length; i++) {
 
             if (!tmppns[i][1].toString().equals("99999999")) {
-                shortmodel.addRow(new Object[]{tmppns[i][0], tmppns[i][1]});
+                try {
+                    shortmodel.addRow(new Object[]{tmppns[i][0], tmppns[i][1]});
+                } catch (Exception e) {
+                }
             }
 
         }
@@ -131,6 +133,8 @@ public class CTB_TopshortThread extends Thread {
                         shortmodel.setValueAt(indentedmodel.getValueAt(k, 11).toString(), i, 6);
 //desc
                         shortmodel.setValueAt(indentedmodel.getValueAt(k, 9).toString(), i, 2);
+//qty/board                       
+                        shortmodel.setValueAt(indentedmodel.getValueAt(k, 13).toString(), i, 7);
                         break;
 
                     }
@@ -144,7 +148,7 @@ public class CTB_TopshortThread extends Thread {
         CTB.jTable9.setModel(shortmodel);
         CTB.TablaOszlopSzelesseg(CTB.jTable9);
         CTB.jTable9.repaint();
-        
+
     }
 
 }

@@ -6,7 +6,7 @@
 package PlannTool.BACKEND;
 
 
-import PlannTool.ANIMATIONS.stitch;
+
 import PlannTool.ablak;
 import PlannTool.ANIMATIONS.animation;
 import PlannTool.CONNECTS.connect;
@@ -102,20 +102,7 @@ public class Tc_KeszletfromTervszal extends Thread {
         k.jTable2.setModel(model1);
 
         //fun
-        if (System.getProperty("user.name").toString().equals("eva_istenes")) {
-
-            stitch s = new stitch();
-            s.setVisible(true);
-            try {
-                Thread.sleep(2000);
-            } catch (InterruptedException ex) {
-
-            }
-
-            s.dispose();
-
-        }
-
+      
         animation.rajzol = false;
 
         ablak.stat.beir(System.getProperty("user.name"), ablak.jTabbedPane1.getTitleAt(ablak.jTabbedPane1.getSelectedIndex()), "", "gabor.hanacsek@sanmina.com");

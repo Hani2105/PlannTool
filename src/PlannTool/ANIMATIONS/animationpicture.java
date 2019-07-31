@@ -22,6 +22,9 @@ public class animationpicture extends javax.swing.JFrame {
     public animationpicture() {
 
         initComponents();
+        jLabel1.setIcon(ablak.defaulticon);
+        jLabel1.setSize(ablak.defaulticon.getIconHeight(),ablak.defaulticon.getIconWidth());
+        pack();
         setBackground(new Color(0, 0, 0, 0));
         this.setLocationRelativeTo(ablak.jTabbedPane1);
         jLabel1.setHorizontalAlignment(SwingConstants.CENTER);
@@ -44,21 +47,10 @@ public class animationpicture extends javax.swing.JFrame {
         setLocationByPlatform(true);
         setUndecorated(true);
         setOpacity(0.8F);
+        getContentPane().setLayout(new java.awt.GridLayout());
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/PICTURES/planning.gif"))); // NOI18N
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jLabel1)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
-        );
+        getContentPane().add(jLabel1);
 
         pack();
         setLocationRelativeTo(null);
@@ -89,6 +81,9 @@ public class animationpicture extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(animationpicture.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */

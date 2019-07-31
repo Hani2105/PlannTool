@@ -1,5 +1,6 @@
 package PlannTool;
 
+import PlannTool.ANIMATIONS.animationpicture;
 import PlannTool.GAME.jatek;
 import PlannTool.ANIMATIONS.animation;
 import PlannTool.CONNECTS.tigerconnect;
@@ -13,7 +14,9 @@ import static PlannTool.CTB_CALC.CTB.jTable1;
 import static PlannTool.CTB_CALC.CTB.jTable11;
 import PlannTool.CTB_CALC.CTB_Bejel;
 import PlannTool.CTB_CALC.CTB_Columnrenderer;
+import PlannTool.CTB_CALC.CTB_Filechooser;
 import PlannTool.CTB_CALC.CTB_PartsToPlanTableRenderer;
+import PlannTool.CompleteQty.Methods;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.HeadlessException;
@@ -48,6 +51,8 @@ import javax.swing.table.TableCellRenderer;
 import java.time.LocalDateTime;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
+import java.net.MalformedURLException;
+import java.net.URL;
 import static java.time.LocalDateTime.now;
 import java.time.temporal.IsoFields;
 import javax.swing.table.TableColumn;
@@ -56,6 +61,10 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import static java.time.LocalDateTime.now;
 import java.time.temporal.WeekFields;
+import javax.imageio.ImageIO;
+import javax.swing.Icon;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class ablak extends javax.swing.JFrame {
 
@@ -81,6 +90,7 @@ public class ablak extends javax.swing.JFrame {
     public static List<String[][]> modelactilist = new ArrayList<>();
     public static List<String[]> wiplist = new ArrayList<>();
     public static String[][] alkatreszkereso = null;
+    public static Icon defaulticon = null;
 
     public ablak() throws SQLException {
 
@@ -129,12 +139,13 @@ public class ablak extends javax.swing.JFrame {
                 filter(query);
             }
         });
-
+//beillesztehtővé tesszuk a táblákat
         new ExcelAdapter(jTable4);
         new ExcelAdapter(jTable18);
         new ExcelAdapter(jTable19);
         new ExcelAdapter(jTable16);
         new ExcelAdapter(jTable17);
+        new ExcelAdapter(jTable26);
 
         jTable11.getColumnModel().getColumn(0).setCellRenderer(new Tooltiprenderer());
 
@@ -144,6 +155,10 @@ public class ablak extends javax.swing.JFrame {
 //renderereljük a prio táblát
         jTable25.getTableHeader().setDefaultRenderer(new Prio_Columnrenderer());
         jTable25.setDefaultRenderer(Object.class, new Prio_Tablerenderer());
+
+//lefuttatjuk a default icom beállítását (kinek milyen animációja legyen)
+        ImgUp u = new ImgUp();
+        u.CreateDefaultIcon();
 
     }
 
@@ -433,6 +448,17 @@ public class ablak extends javax.swing.JFrame {
             jButton29 = new javax.swing.JButton();
             jLabel55 = new javax.swing.JLabel();
             jComboBox3 = new javax.swing.JComboBox<>();
+            jPanel23 = new javax.swing.JPanel();
+            jPanel24 = new javax.swing.JPanel();
+            jDateChooser10 = new com.toedter.calendar.JDateChooser();
+            jButton30 = new javax.swing.JButton();
+            jScrollPane29 = new javax.swing.JScrollPane();
+            jTable26 = new javax.swing.JTable();
+            jScrollPane30 = new javax.swing.JScrollPane();
+            jTable27 = new javax.swing.JTable();
+            jCheckBox6 = new javax.swing.JCheckBox();
+            jScrollPane31 = new javax.swing.JScrollPane();
+            jTable28 = new javax.swing.JTable();
 
             jMenuItem1.setText("Bontás SN-re!");
             jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
@@ -3813,6 +3839,127 @@ public class ablak extends javax.swing.JFrame {
 
             jTabbedPane1.addTab("Prioritások", jPanel22);
 
+            jButton30.setText("Lekérdez");
+            jButton30.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    jButton30ActionPerformed(evt);
+                }
+            });
+
+            jTable26.setModel(new javax.swing.table.DefaultTableModel(
+                new Object [][] {
+                    {null},
+                    {null},
+                    {null},
+                    {null},
+                    {null},
+                    {null},
+                    {null},
+                    {null},
+                    {null},
+                    {null},
+                    {null},
+                    {null},
+                    {null},
+                    {null},
+                    {null},
+                    {null},
+                    {null},
+                    {null},
+                    {null},
+                    {null},
+                    {null},
+                    {null},
+                    {null},
+                    {null},
+                    {null},
+                    {null}
+                },
+                new String [] {
+                    "Partnumbers"
+                }
+            ));
+            jScrollPane29.setViewportView(jTable26);
+
+            jTable27.setModel(new javax.swing.table.DefaultTableModel(
+                new Object [][] {
+
+                },
+                new String [] {
+                    "Serial N", "Shop Order", "Part Number", "Workstation", "Qty", "Unit Status", "location DateTime", "Last Complete Date", "Complete Date"
+                }
+            ));
+            jScrollPane30.setViewportView(jTable27);
+
+            jCheckBox6.setSelected(true);
+            jCheckBox6.setText("Group by PN");
+
+            jTable28.setModel(new javax.swing.table.DefaultTableModel(
+                new Object [][] {
+
+                },
+                new String [] {
+                    "Partnumbers", "JOB", "QTY"
+                }
+            ));
+            jScrollPane31.setViewportView(jTable28);
+
+            javax.swing.GroupLayout jPanel24Layout = new javax.swing.GroupLayout(jPanel24);
+            jPanel24.setLayout(jPanel24Layout);
+            jPanel24Layout.setHorizontalGroup(
+                jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel24Layout.createSequentialGroup()
+                    .addGroup(jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(jScrollPane29, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel24Layout.createSequentialGroup()
+                            .addContainerGap()
+                            .addComponent(jDateChooser10, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addGroup(jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel24Layout.createSequentialGroup()
+                            .addComponent(jScrollPane30, javax.swing.GroupLayout.PREFERRED_SIZE, 635, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jScrollPane31, javax.swing.GroupLayout.DEFAULT_SIZE, 271, Short.MAX_VALUE))
+                        .addGroup(jPanel24Layout.createSequentialGroup()
+                            .addComponent(jButton30, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jCheckBox6)
+                            .addGap(0, 0, Short.MAX_VALUE)))
+                    .addContainerGap())
+            );
+            jPanel24Layout.setVerticalGroup(
+                jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel24Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addGroup(jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton30)
+                            .addComponent(jCheckBox6))
+                        .addComponent(jDateChooser10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addGroup(jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jScrollPane29)
+                        .addComponent(jScrollPane30)
+                        .addComponent(jScrollPane31, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 451, Short.MAX_VALUE)))
+            );
+
+            javax.swing.GroupLayout jPanel23Layout = new javax.swing.GroupLayout(jPanel23);
+            jPanel23.setLayout(jPanel23Layout);
+            jPanel23Layout.setHorizontalGroup(
+                jPanel23Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel23Layout.createSequentialGroup()
+                    .addComponent(jPanel24, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addContainerGap())
+            );
+            jPanel23Layout.setVerticalGroup(
+                jPanel23Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel23Layout.createSequentialGroup()
+                    .addComponent(jPanel24, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addContainerGap())
+            );
+
+            jTabbedPane1.addTab("Complete QTY", jPanel23);
+
             jScrollPane7.setViewportView(jTabbedPane1);
 
             jPanel6.add(jScrollPane7, java.awt.BorderLayout.CENTER);
@@ -4023,7 +4170,6 @@ public class ablak extends javax.swing.JFrame {
         } else {
 
             //planner = false;
-
         }
 
 //ez a legvége a change tabbedpainnek
@@ -4735,6 +4881,24 @@ public class ablak extends javax.swing.JFrame {
             jatek j = new jatek();
             j.setVisible(true);
 
+        } else if (jTextField2.getText().equals("Imgup!")) {
+            //betalloztatjuk a kep filet
+
+            JFileChooser chooser = CTB_Filechooser.getFileChooserRiport();
+            chooser.setDialogTitle("Kép tallózása!");
+            FileFilter imageFilter = new FileNameExtensionFilter(
+                    "Image files", ImageIO.getReaderFileSuffixes());
+            chooser.setFileFilter(imageFilter);
+            chooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+            int returnVal = chooser.showOpenDialog(this);
+            if (returnVal == JFileChooser.APPROVE_OPTION) {
+
+                File file = chooser.getSelectedFile();
+                ImgUp u = new ImgUp(file);
+                u.setVisible(true);
+
+            }
+
         } else {
             animation a = new animation();
             a.start();
@@ -5366,6 +5530,24 @@ public class ablak extends javax.swing.JFrame {
                 jatek j = new jatek();
                 j.setVisible(true);
 
+            } else if (jTextField2.getText().equals("Imgup!")) {
+                //betalloztatjuk a kep filet
+
+                JFileChooser chooser = CTB_Filechooser.getFileChooserRiport();
+                chooser.setDialogTitle("Kép tallózása!");
+                FileFilter imageFilter = new FileNameExtensionFilter(
+                        "Image files", ImageIO.getReaderFileSuffixes());
+                chooser.setFileFilter(imageFilter);
+                chooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+                int returnVal = chooser.showOpenDialog(this);
+                if (returnVal == JFileChooser.APPROVE_OPTION) {
+
+                    File file = chooser.getSelectedFile();
+                    ImgUp u = new ImgUp(file);
+                    u.setVisible(true);
+
+                }
+
             } else {
                 animation a = new animation();
                 a.start();
@@ -5538,7 +5720,7 @@ public class ablak extends javax.swing.JFrame {
                 } catch (Exception e) {
 
                 }
-                if(!sor.equals("")){
+                if (!sor.equals("")) {
                     adatok += "('" + jTable25.getValueAt(r, 0).toString() + "','" + sor + "','" + jTable25.getColumnModel().getColumn(c).getHeaderValue() + "','" + jTable25.getValueAt(r, 0).toString() + jTable25.getColumnModel().getColumn(c).getHeaderValue() + "'),";
                 }
             }
@@ -5564,6 +5746,51 @@ public class ablak extends javax.swing.JFrame {
 
         }
     }//GEN-LAST:event_jButton29MouseClicked
+
+    private void jButton30ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton30ActionPerformed
+        // complete qty lekerdez gombja
+        //pn lista összeállítása       
+        Methods a = new Methods(this);
+        String pnlist = a.PNosszefuz(jTable26);
+//az api összeállítása
+        URL api = null;
+        try {
+            api = new URL(a.CreateApiUrl(jDateChooser10, "http://143.116.140.120/rest/request.php?page=planning_product_history&product=termekek&format=xml&loc_ts=date", pnlist));
+        } catch (MalformedURLException ex) {
+            Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
+        }
+//feldolgozzuk az apit
+        ArrayList<String> lista = new ArrayList();
+
+        String nodelist = "planning_product_history";
+        lista.add("Serial_Number");
+        lista.add("Shop_Order_Number");
+        lista.add("part_number");
+        lista.add("Workstation");
+        lista.add("Qty");
+        lista.add("Unit_Status");
+        lista.add("Location_DateTime");
+        lista.add("last_complete_dateTime");
+        lista.add("complete_ts");
+        xmlfeldolg x = new xmlfeldolg();
+        Object[][] adatok = (Object[][]) x.xmlfeldolg(api, nodelist, lista);
+
+//betesszük táblába
+        DefaultTableModel model = new DefaultTableModel();
+        model.setRowCount(0);
+        model = (DefaultTableModel) jTable27.getModel();
+        jTable27.setModel(x.totable(model, adatok));
+        TablaOszlopSzelesseg(jTable27);
+        if (jCheckBox6.isSelected()) {
+            a.GroupByPn(adatok);
+        } else {
+
+            a.GroupByJOB(adatok);
+
+        }
+
+
+    }//GEN-LAST:event_jButton30ActionPerformed
 
     public void gombenged() {
 
@@ -5717,6 +5944,7 @@ public class ablak extends javax.swing.JFrame {
     private javax.swing.JButton jButton28;
     public static javax.swing.JButton jButton29;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton30;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
@@ -5728,10 +5956,12 @@ public class ablak extends javax.swing.JFrame {
     public static javax.swing.JCheckBox jCheckBox3;
     public static javax.swing.JCheckBox jCheckBox4;
     public static javax.swing.JCheckBox jCheckBox5;
+    private javax.swing.JCheckBox jCheckBox6;
     private javax.swing.JComboBox<String> jComboBox1;
     public static javax.swing.JComboBox<String> jComboBox2;
     public static javax.swing.JComboBox<String> jComboBox3;
     public static com.toedter.calendar.JDateChooser jDateChooser1;
+    public static com.toedter.calendar.JDateChooser jDateChooser10;
     public static com.toedter.calendar.JDateChooser jDateChooser2;
     public static com.toedter.calendar.JDateChooser jDateChooser3;
     public static com.toedter.calendar.JDateChooser jDateChooser4;
@@ -5813,6 +6043,8 @@ public class ablak extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel20;
     private javax.swing.JPanel jPanel21;
     private javax.swing.JPanel jPanel22;
+    private javax.swing.JPanel jPanel23;
+    private javax.swing.JPanel jPanel24;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
@@ -5842,7 +6074,10 @@ public class ablak extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane26;
     private javax.swing.JScrollPane jScrollPane27;
     private javax.swing.JScrollPane jScrollPane28;
+    private javax.swing.JScrollPane jScrollPane29;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane30;
+    private javax.swing.JScrollPane jScrollPane31;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
@@ -5868,6 +6103,9 @@ public class ablak extends javax.swing.JFrame {
     public static javax.swing.JTable jTable23;
     public static javax.swing.JTable jTable24;
     public static javax.swing.JTable jTable25;
+    public static javax.swing.JTable jTable26;
+    private javax.swing.JTable jTable27;
+    public static javax.swing.JTable jTable28;
     public static javax.swing.JTable jTable3;
     public static javax.swing.JTable jTable4;
     public static javax.swing.JTable jTable5;

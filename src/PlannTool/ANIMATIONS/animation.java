@@ -5,6 +5,8 @@
  */
 package PlannTool.ANIMATIONS;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 
 /**
@@ -17,38 +19,25 @@ public class animation extends Thread {
 
     public void run() {
 
-        if (System.getProperty("user.name").equals("viktor_feher")) {
+        animationpicture a = new animationpicture();
+        //animationpicture a = new animationpicture();
+        a.setVisible(true);
 
-            animationzsiraf a = new animationzsiraf();
-            a.setVisible(true);
+        while (rajzol) {
 
-            while (rajzol == true) {
-
-                a.repaint();
-
+            a.repaint();
+            try {
+                Thread.sleep(1000);
+                
                 //System.out.println("futok");
+            } catch (InterruptedException ex) {
+                Logger.getLogger(animation.class.getName()).log(Level.SEVERE, null, ex);
             }
-
-            a.dispose();
-            //System.out.println("megalltam");
-            rajzol = true;
-
-        } else {
-
-            animationpicture a = new animationpicture();
-            a.setVisible(true);
-
-            while (rajzol == true) {
-
-                a.repaint();
-
-                //System.out.println("futok");
-            }
-
-            a.dispose();
-            //System.out.println("megalltam");
-            rajzol = true;
         }
+
+        a.dispose();
+        //System.out.println("megalltam");
+        rajzol = true;
     }
 
 }

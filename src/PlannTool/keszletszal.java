@@ -7,7 +7,6 @@ package PlannTool;
 
 
 import PlannTool.ANIMATIONS.animation;
-import PlannTool.ANIMATIONS.stitch;
 import PlannTool.CONNECTS.connect;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -116,20 +115,7 @@ public class keszletszal extends Thread {
         a.jLabel21.setText("Az oracle export parserer futott: " + exportdate);
         ablak.jTable2.setModel(ablak.model1);
 
-        //fun
-        if (System.getProperty("user.name").toString().equals("eva_istenes")) {
-
-            stitch s = new stitch();
-            s.setVisible(true);
-            try {
-                Thread.sleep(2000);
-            } catch (InterruptedException ex) {
-
-            }
-
-            s.dispose();
-
-        }
+      
 
         animation.rajzol = false;
 

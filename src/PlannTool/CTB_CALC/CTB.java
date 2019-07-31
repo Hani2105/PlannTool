@@ -81,6 +81,8 @@ public class CTB extends javax.swing.JFrame {
 //riportok elérési utja
     public static String scenpath = "";
     public static String riportpath = "";
+//a pn hez tartozó adatok tömbje amit tooltipbe teszünk ki
+    public static ArrayList<String[]> PnDatas = new ArrayList<>();
 
     public CTB(CTB_Bejel c) throws SQLException, ClassNotFoundException, IOException {
 
@@ -121,6 +123,10 @@ public class CTB extends javax.swing.JFrame {
 //betöltjük az ini filet
         CTB_Ini i = new CTB_Ini(jTable11);
         i.Olvas();
+        
+//lekerjuk a PN adatokat a tooltiphez
+         CTB_PnDatas p = new CTB_PnDatas();
+         p.adatleker();
 
     }
 
@@ -607,6 +613,8 @@ public class CTB extends javax.swing.JFrame {
         jPopupMenu1 = new javax.swing.JPopupMenu();
         torles = new javax.swing.JMenuItem();
         buttonGroup2 = new javax.swing.ButtonGroup();
+        jPopupMenu2 = new javax.swing.JPopupMenu();
+        jMenuItem2 = new javax.swing.JMenuItem();
         jPanel2 = new javax.swing.JPanel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
@@ -709,6 +717,14 @@ public class CTB extends javax.swing.JFrame {
         });
         jPopupMenu1.add(torles);
 
+        jMenuItem2.setText("PN komment");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        jPopupMenu2.add(jMenuItem2);
+
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
@@ -733,6 +749,7 @@ public class CTB extends javax.swing.JFrame {
             }
         ));
         jTable1.setCellSelectionEnabled(true);
+        jTable1.setComponentPopupMenu(jPopupMenu2);
         jTable1.setName("CTB_Table"); // NOI18N
         jTable1.setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         jTable1.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
@@ -1111,13 +1128,14 @@ public class CTB extends javax.swing.JFrame {
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(jLabel18)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                            .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jButton1)
-                                            .addComponent(jButton5)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                                 .addComponent(jTextField13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(jButton3)))
+                                                .addComponent(jButton3))
+                                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(jButton1)
+                                                .addComponent(jButton5)))
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                             .addComponent(jLabel21)
@@ -2765,6 +2783,19 @@ public class CTB extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_formWindowClosing
 
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        try {
+            //pn kommentelés
+            CTB_PnKomment p = new CTB_PnKomment(jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString());
+            p.setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(CTB.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(CTB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
     public void fullcalc(boolean eriggye) {
 
         if (jTable1.isEditing()) {
@@ -3057,7 +3088,7 @@ public class CTB extends javax.swing.JFrame {
 
     private void seticon() {
 
-        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/PlannTool/PICTURES/ctbicon.png")));
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/PlannTool/PICTURES/ctb1.jpg")));
 
     }
 
@@ -3235,6 +3266,7 @@ public class CTB extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem13;
     private javax.swing.JMenuItem jMenuItem14;
+    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
@@ -3247,6 +3279,7 @@ public class CTB extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JPopupMenu jPopupMenu1;
+    private javax.swing.JPopupMenu jPopupMenu2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane10;
     public static javax.swing.JScrollPane jScrollPane11;

@@ -123,10 +123,10 @@ public class CTB extends javax.swing.JFrame {
 //betöltjük az ini filet
         CTB_Ini i = new CTB_Ini(jTable11);
         i.Olvas();
-        
+
 //lekerjuk a PN adatokat a tooltiphez
-         CTB_PnDatas p = new CTB_PnDatas();
-         p.adatleker();
+        CTB_PnDatas p = new CTB_PnDatas();
+        p.adatleker();
 
     }
 
@@ -272,7 +272,7 @@ public class CTB extends javax.swing.JFrame {
             String path = file.getParent();
             path = path.replace("\\", "\\\\");
 //kiirjuk fileba
-            
+
 //oh behúzása
             String pathfile = path + "\\\\On Hand.tab";
             File File = new File(pathfile);
@@ -341,7 +341,7 @@ public class CTB extends javax.swing.JFrame {
             }
         } catch (Exception e) {
 
-            JOptionPane.showMessageDialog(this, "Nem találom az Alloction filet!");
+            JOptionPane.showMessageDialog(this, "Nem találom az Allocation filet!");
 
         }
 
@@ -441,6 +441,17 @@ public class CTB extends javax.swing.JFrame {
         DefaultTableModel indentedmodel = new DefaultTableModel();
         indentedmodel = (DefaultTableModel) jTable6.getModel();
 
+//beallitjuk a valtozot , hogy csak az aktualis szintre nezzunk e ctb-t vagy vilagitsuk e at az egeszet
+//ha az egeszet nezzük , ki kell venni az sa-kat!!! , ha nem , akkor maradhatnak de csak level 1 kell!!
+        int lvl = 100;
+        String sa = "SA";
+        if (jCheckBoxMenuItem6.isSelected()) {
+
+            lvl = 1;
+            sa = "kiskutyafüle";
+
+        }
+
 //miután ez megvan végigmegyünk rajta oszlopszor és megpróbáljuk megkereseni az adott oszlop pn-ét az intended bom ban,
         for (int o = 1; o < model.getColumnCount(); o++) {
 //felvesszük pn-nek a pn-t :p
@@ -448,8 +459,8 @@ public class CTB extends javax.swing.JFrame {
 
             for (int r = 0; r < indentedmodel.getRowCount(); r++) {
                 boolean tovabb = false;
-//ha egyezik a pn az intended bom pn jével és nem phantom az item
-                if (pn.equals(indentedmodel.getValueAt(r, 0).toString().trim()) && !indentedmodel.getValueAt(r, 8).toString().equals("") && !indentedmodel.getValueAt(r, 8).toString().equals("PH")) {
+//ha egyezik a pn az intended bom pn -ével és van ora type
+                if (pn.equals(indentedmodel.getValueAt(r, 0).toString().trim()) && !indentedmodel.getValueAt(r, 8).toString().equals(sa) && !indentedmodel.getValueAt(r, 5).toString().equals("0") && Integer.parseInt(indentedmodel.getValueAt(r, 5).toString())<= lvl) {
 
 //itt megvizsgáljuk , hogy kell a a phantom item vagy nem
 //ha nincs kipipálva az azt jelenti , hogy nem kell beletenni , ergo ha az akkor ugrunk a ciklusban
@@ -701,6 +712,7 @@ public class CTB extends javax.swing.JFrame {
         jMenuItem13 = new javax.swing.JMenuItem();
         jMenuItem14 = new javax.swing.JMenuItem();
         jMenu1 = new javax.swing.JMenu();
+        jCheckBoxMenuItem6 = new javax.swing.JCheckBoxMenuItem();
         jCheckBoxMenuItem1 = new javax.swing.JCheckBoxMenuItem();
         jCheckBoxMenuItem2 = new javax.swing.JCheckBoxMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
@@ -1591,6 +1603,14 @@ public class CTB extends javax.swing.JFrame {
                 jMenu1ActionPerformed(evt);
             }
         });
+
+        jCheckBoxMenuItem6.setText("CTB Current LVL Only");
+        jCheckBoxMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBoxMenuItem6ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jCheckBoxMenuItem6);
 
         jCheckBoxMenuItem1.setText("CTB Include Phantom ");
         jCheckBoxMenuItem1.addActionListener(new java.awt.event.ActionListener() {
@@ -2793,8 +2813,15 @@ public class CTB extends javax.swing.JFrame {
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(CTB.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jCheckBoxMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxMenuItem6ActionPerformed
+        // TODO add your handling code here:
+        fullcalc(true);
+        CTB_TopshortThread t = new CTB_TopshortThread();
+        t.start();
+    }//GEN-LAST:event_jCheckBoxMenuItem6ActionPerformed
 
     public void fullcalc(boolean eriggye) {
 
@@ -2882,8 +2909,7 @@ public class CTB extends javax.swing.JFrame {
 
 //összekapcsolódás
             new CTB_LinkTables(jScrollPane1, jTable1, jScrollPane11, jTable11, this, 1);
-            // Cursor normalCursor = new Cursor(Cursor.DEFAULT_CURSOR);
-            // setCursor(normalCursor);
+
             ablak.stat.beir(System.getProperty("user.name"), "CTB kapcsolodas!", "", "gabor.hanacsek@sanmina.com");
 
         }
@@ -3155,8 +3181,11 @@ public class CTB extends javax.swing.JFrame {
             int width = 15; // Min width
             for (int row = 0; row < table.getRowCount(); row++) {
                 TableCellRenderer renderer = table.getCellRenderer(row, column);
-                Component comp = table.prepareRenderer(renderer, row, column);
-                width = Math.max(comp.getPreferredSize().width + 1, width);
+                try {
+                    Component comp = table.prepareRenderer(renderer, row, column);
+                    width = Math.max(comp.getPreferredSize().width + 1, width);
+                } catch (Exception e) {
+                }
             }
 //            if (width > 300) {
 //                width = 300;
@@ -3237,6 +3266,7 @@ public class CTB extends javax.swing.JFrame {
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem3;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem4;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem5;
+    private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem6;
     public static javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

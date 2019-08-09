@@ -151,7 +151,17 @@ public class CTB_PnKomment extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // mentés
-        String query = "insert into CTB_PN_Datas (PN, Comment) values ('" + jTextField1.getText().trim() + "' , '" + jTextArea1.getText().trim() + "') on duplicate key update Comment = values(Comment)";
+//ha üres , kitöröljük
+
+        String query;
+        if (jTextArea1.getText().equals("")) {
+
+            query = "delete from planningdb.CTB_PN_Datas where PN ='" + jTextField1.getText().trim() + "'";
+
+        } else {
+
+            query = "insert into CTB_PN_Datas (PN, Comment) values ('" + jTextField1.getText().trim() + "' , '" + jTextArea1.getText().trim() + "') on duplicate key update Comment = values(Comment)";
+        }
         planconnect pc = new planconnect();
         pc.feltolt(query, true);
 

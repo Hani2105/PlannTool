@@ -459,6 +459,7 @@ public class ablak extends javax.swing.JFrame {
             jCheckBox6 = new javax.swing.JCheckBox();
             jScrollPane31 = new javax.swing.JScrollPane();
             jTable28 = new javax.swing.JTable();
+            jPanel25 = new javax.swing.JPanel();
 
             jMenuItem1.setText("Bontás SN-re!");
             jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
@@ -3960,6 +3961,19 @@ public class ablak extends javax.swing.JFrame {
 
             jTabbedPane1.addTab("Complete QTY", jPanel23);
 
+            javax.swing.GroupLayout jPanel25Layout = new javax.swing.GroupLayout(jPanel25);
+            jPanel25.setLayout(jPanel25Layout);
+            jPanel25Layout.setHorizontalGroup(
+                jPanel25Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(0, 1100, Short.MAX_VALUE)
+            );
+            jPanel25Layout.setVerticalGroup(
+                jPanel25Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(0, 497, Short.MAX_VALUE)
+            );
+
+            jTabbedPane1.addTab("Kapacitás", jPanel25);
+
             jScrollPane7.setViewportView(jTabbedPane1);
 
             jPanel6.add(jScrollPane7, java.awt.BorderLayout.CENTER);
@@ -6045,6 +6059,7 @@ public class ablak extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel22;
     private javax.swing.JPanel jPanel23;
     private javax.swing.JPanel jPanel24;
+    private javax.swing.JPanel jPanel25;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;

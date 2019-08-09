@@ -37,8 +37,10 @@ public class CTB_TopshortThread extends Thread {
 
 //betesszük az adatokat a tömbbe , első a pn , aztán a darab
         for (int i = 7; i < model.getColumnCount(); i++) {
-
-            tmppns[i - 7][0] = model.getColumnName(i);
+            try {
+                tmppns[i - 7][0] = model.getColumnName(i);
+            } catch (Exception e) {
+            }
 
             try {
                 tmppns[i - 7][1] = model.getValueAt(jTable1.getSelectedRow(), i).toString();

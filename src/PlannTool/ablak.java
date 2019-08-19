@@ -17,6 +17,7 @@ import PlannTool.CTB_CALC.CTB_Columnrenderer;
 import PlannTool.CTB_CALC.CTB_Filechooser;
 import PlannTool.CTB_CALC.CTB_PartsToPlanTableRenderer;
 import PlannTool.CompleteQty.Methods;
+import PlannTool.KAPACITAS.Kapacitas;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.HeadlessException;
@@ -4184,6 +4185,14 @@ public class ablak extends javax.swing.JFrame {
         } else {
 
             //planner = false;
+        }
+//ha kapacitást választjuk
+        
+        if (jTabbedPane1.getTitleAt(jTabbedPane1.getSelectedIndex()).equals("Kapacitás")) {
+
+            Kapacitas k = new Kapacitas();
+            k.setVisible(true);
+
         }
 
 //ez a legvége a change tabbedpainnek

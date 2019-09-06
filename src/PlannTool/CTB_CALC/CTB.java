@@ -58,6 +58,7 @@ import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import static oracle.net.aso.C11.f;
+import org.apache.xmlbeans.impl.xb.xsdschema.Public;
 
 /**
  *
@@ -83,6 +84,9 @@ public class CTB extends javax.swing.JFrame {
     public static String riportpath = "";
 //a pn hez tartozó adatok tömbje amit tooltipbe teszünk ki
     public static ArrayList<String[]> PnDatas = new ArrayList<>();
+//ez lesz a shorttáblából lekérdezett pn készlet adata
+    public static Object[][] WipStockData = null;
+    public static Object[][] OraStockData = null;
 
     public CTB(CTB_Bejel c) throws SQLException, ClassNotFoundException, IOException {
 
@@ -460,7 +464,7 @@ public class CTB extends javax.swing.JFrame {
             for (int r = 0; r < indentedmodel.getRowCount(); r++) {
                 boolean tovabb = false;
 //ha egyezik a pn az intended bom pn -ével és van ora type
-                if (pn.equals(indentedmodel.getValueAt(r, 0).toString().trim()) && !indentedmodel.getValueAt(r, 8).toString().equals(sa) && !indentedmodel.getValueAt(r, 5).toString().equals("0") && Integer.parseInt(indentedmodel.getValueAt(r, 5).toString())<= lvl) {
+                if (pn.equals(indentedmodel.getValueAt(r, 0).toString().trim()) && !indentedmodel.getValueAt(r, 8).toString().equals(sa) && !indentedmodel.getValueAt(r, 5).toString().equals("0") && Integer.parseInt(indentedmodel.getValueAt(r, 5).toString()) <= lvl) {
 
 //itt megvizsgáljuk , hogy kell a a phantom item vagy nem
 //ha nincs kipipálva az azt jelenti , hogy nem kell beletenni , ergo ha az akkor ugrunk a ciklusban
@@ -626,6 +630,9 @@ public class CTB extends javax.swing.JFrame {
         buttonGroup2 = new javax.swing.ButtonGroup();
         jPopupMenu2 = new javax.swing.JPopupMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
+        jPopupMenu3 = new javax.swing.JPopupMenu();
+        jMenuItem3 = new javax.swing.JMenuItem();
+        jMenuItem4 = new javax.swing.JMenuItem();
         jPanel2 = new javax.swing.JPanel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
@@ -737,6 +744,22 @@ public class CTB extends javax.swing.JFrame {
         });
         jPopupMenu2.add(jMenuItem2);
 
+        jMenuItem3.setText("Készlet infó");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
+        jPopupMenu3.add(jMenuItem3);
+
+        jMenuItem4.setText("Mi használja");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
+        jPopupMenu3.add(jMenuItem4);
+
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
@@ -840,8 +863,9 @@ public class CTB extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jTable9.setToolTipText("A mennyiségek szerkesztéséhez klikk a Raw OH oszlopra!");
+        jTable9.setToolTipText("<html>A mennyiségek szerkesztéséhez klikk a Raw OH oszlopra! <br>Egyéb infók , jobb klikk a PN -en!</html>");
         jTable9.setCellSelectionEnabled(true);
+        jTable9.setComponentPopupMenu(jPopupMenu3);
         jTable9.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTable9MouseClicked(evt);
@@ -2562,7 +2586,14 @@ public class CTB extends javax.swing.JFrame {
 
             }
 
-        }
+        } //ha a pn-re klikkelünk lekérdezzük a készlletet és beírjuk tooltipként
+//        else if (jTable9.getSelectedColumn() == 0) {
+////kiszedjük a PN-t
+//            String pn = jTable9.getValueAt(jTable9.getSelectedRow(), 0).toString();
+//
+//            CTB_StockFromShort st = new CTB_StockFromShort(pn);
+//            st.start();
+//        }
 
     }//GEN-LAST:event_jTable9MouseClicked
 
@@ -2823,11 +2854,28 @@ public class CTB extends javax.swing.JFrame {
         t.start();
     }//GEN-LAST:event_jCheckBoxMenuItem6ActionPerformed
 
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        // készlet infó a short táblából
+        CTB_StockInfo si = new CTB_StockInfo(jTable9.getValueAt(jTable9.getSelectedRow(), 0).toString());
+        si.setVisible(true);
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        // mi használja az anyagot
+        CTB_WhereUsed w = new CTB_WhereUsed(jTable9.getValueAt(jTable9.getSelectedRow(), 0).toString());
+        w.setVisible(true);
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
+
     public void fullcalc(boolean eriggye) {
 
         if (jTable1.isEditing()) {
 
             jTable1.getCellEditor().stopCellEditing();
+
+        }
+        if (jTable11.isEditing()) {
+
+            jTable11.getCellEditor().stopCellEditing();
 
         }
 
@@ -2995,11 +3043,17 @@ public class CTB extends javax.swing.JFrame {
         jTable11.setModel(tervmodel);
 
         jTable1.revalidate();
+        //System.out.println(System.currentTimeMillis());
         tervszamol();
+        //System.out.println(System.currentTimeMillis() + "--tervszamol");
         Ohcalc(1);
+        //System.out.println(System.currentTimeMillis() + "--ohcalc");
         CompToCtb();
+        //System.out.println(System.currentTimeMillis() + "--comptoctb");
         CtbKalk();
+        //System.out.println(System.currentTimeMillis() + "--ctbkalk");
         NeedToBuild();
+        //System.out.println(System.currentTimeMillis() + "--needtobuild");
         TablaOszlopSzelesseg(jTable1);
         TablaOszlopSzelesseg(jTable11);
 
@@ -3135,6 +3189,7 @@ public class CTB extends javax.swing.JFrame {
             ctbmodel.addColumn(component);
 
 //forgatom a ctbmodelt is , és megnézem , hogy az adott pn hez tartozik e ez az alkatrész
+            outerloop:
             for (int ctb = 0; ctb < ctbmodel.getRowCount(); ctb++) {
                 String pn = ctbmodel.getValueAt(ctb, 0).toString();
 
@@ -3153,6 +3208,8 @@ public class CTB extends javax.swing.JFrame {
                                     ctbmodel.setValueAt(ohosszeg / Math.round(Float.valueOf(bommodel.getValueAt(i, bomoszlop).toString()).intValue()), ctb, 7 + i);
                                 } catch (Exception e) {
                                 }
+
+                                //continue outerloop;
                                 break;
 
                             }
@@ -3207,6 +3264,10 @@ public class CTB extends javax.swing.JFrame {
             } else {
                 columnModel.getColumn(column).setPreferredWidth(maxWidth);
             }
+        }
+        try {
+            table.repaint();
+        } catch (Exception e) {
         }
     }
 
@@ -3297,6 +3358,8 @@ public class CTB extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem13;
     private javax.swing.JMenuItem jMenuItem14;
     private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
@@ -3310,6 +3373,7 @@ public class CTB extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel9;
     private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JPopupMenu jPopupMenu2;
+    private javax.swing.JPopupMenu jPopupMenu3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane10;
     public static javax.swing.JScrollPane jScrollPane11;

@@ -35,7 +35,7 @@ public class Kapacitas_Station extends javax.swing.JPanel {
 
             },
             new String [] {
-                "PartNumber"
+                "PartNumber", "Customer"
             }
         ));
         jScrollPane1.setViewportView(jTable1);

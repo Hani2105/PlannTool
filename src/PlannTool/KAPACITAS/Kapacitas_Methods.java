@@ -90,11 +90,13 @@ public class Kapacitas_Methods {
 //elindulunk bejárni a plannmodelt
         String pn = "";
         String datum = "";
+        String customer = "";
         int db = 0;
         outerloop:
         for (int p = 0; p < plannedmodel.getRowCount(); p++) {
 //felvesszük a pn-t és a dátumot
             pn = plannedmodel.getValueAt(p, 1).toString();
+            customer = plannedmodel.getValueAt(p, 0).toString();
             datum = plannedmodel.getValueAt(p, 7).toString();
             db = Integer.parseInt(plannedmodel.getValueAt(p, 13).toString().replace(",", ""));
             //boolean irjunke = false;
@@ -111,7 +113,7 @@ public class Kapacitas_Methods {
                 cal.setTime(date);
                 //az évet és a hetet összefűzzük
                 String week = datum.substring(datum.length() - 2, datum.length()) + String.format("%02d", cal.get(Calendar.WEEK_OF_YEAR));
-                rawmodel.addRow(new Object[]{pn, datum, week, db});
+                rawmodel.addRow(new Object[]{pn, datum, week, db,customer});
 
             } else {
 
@@ -141,7 +143,7 @@ public class Kapacitas_Methods {
                 cal.setTime(date);
                 //az évet és a hetet összefűzzük
                 String week = datum.substring(datum.length() - 2, datum.length()) + String.format("%02d", cal.get(Calendar.WEEK_OF_YEAR));
-                rawmodel.addRow(new Object[]{pn, datum, week, db});
+                rawmodel.addRow(new Object[]{pn, datum, week, db,customer});
 
             }
 
@@ -178,11 +180,11 @@ public class Kapacitas_Methods {
 //felvesszük a darab / órát
             double szorzo = 0;
             try {
-                szorzo = Integer.parseInt(rawdatamodel.getValueAt(r, 5).toString());
+                szorzo = Double.parseDouble(rawdatamodel.getValueAt(r, 6).toString());
             } catch (Exception e) {
             }
             try {
-                allomas = rawdatamodel.getValueAt(r, 4).toString();
+                allomas = rawdatamodel.getValueAt(r, 5).toString();
             } catch (Exception e) {
             }
 //vegigjarjuk a tabokat es megnezzuk h van e ilyen nevű tab
@@ -195,6 +197,7 @@ public class Kapacitas_Methods {
                     model = (DefaultTableModel) k.allomasok.get(allomas).jTable1.getModel();
 //felvesszük a pn-t a rawdatából
                     String pn = rawdatamodel.getValueAt(r, 0).toString();
+                    String customer = rawdatamodel.getValueAt(r, 4).toString();
 //megnezzuk , hogy van e ilyen a modellben
                     for (int m = 0; m < model.getRowCount(); m++) {
                         if (pn.equals(model.getValueAt(m, 0))) {
@@ -208,7 +211,7 @@ public class Kapacitas_Methods {
 //hozzaadjuk a darabot az ott szereplo darabszamhoz 
 
                                     //int elozodarab = Integer.parseInt(model.getValueAt(m, o).toString());
-                                    double darab = Integer.parseInt(rawdatamodel.getValueAt(r, 3).toString());
+                                    double darab = Double.parseDouble(rawdatamodel.getValueAt(r, 3).toString());
                                     try {
                                         model.setValueAt(darab / szorzo, m, o);
                                     } catch (Exception e) {
@@ -222,7 +225,7 @@ public class Kapacitas_Methods {
 
                             model.addColumn(het);
 //be kell irni ide a darabot is
-                            double darab = Integer.parseInt(rawdatamodel.getValueAt(r, 3).toString());
+                            double darab = Double.parseDouble(rawdatamodel.getValueAt(r, 3).toString());
                             try {
                                 model.setValueAt(darab / szorzo, m, model.getColumnCount() - 1);
                             } catch (Exception e) {
@@ -235,15 +238,15 @@ public class Kapacitas_Methods {
                         }
                     }
 
-                    //ha eljutunk eddig az azt jelenti , hogy nincs , kell hozzáadni egy sört
-                    model.addRow(new Object[]{pn});
+                    //ha eljutunk eddig az azt jelenti , hogy nincs , kell hozzáadni egy pn-t és egy customert
+                    model.addRow(new Object[]{pn,customer});
 //fel kell venni a hetet és be kell járni a modellt , hogy va e ilyen hét
                     String het = rawdatamodel.getValueAt(r, 2).toString();
                     for (int o = 0; o < model.getColumnCount(); o++) {
 //ha egyezik a hét az oszlop nevével
                         if (het.equals(model.getColumnName(o))) {
 //hozzaadjuk a darabot az ott szereplo darabszamhoz                             
-                            double darab = Integer.parseInt(rawdatamodel.getValueAt(r, 3).toString());
+                            double darab = Double.parseDouble(rawdatamodel.getValueAt(r, 3).toString());
                             try {
                                 model.setValueAt(darab / szorzo, model.getRowCount() - 1, o);
                             } catch (Exception e) {
@@ -259,7 +262,7 @@ public class Kapacitas_Methods {
 //ha eljutunk ide , akkor kell egy hetet is hozzáadni a modellhez
                     model.addColumn(het);
 //be kell allitani a darabot
-                    double darab = Integer.parseInt(rawdatamodel.getValueAt(r, 3).toString());
+                    double darab = Double.parseDouble(rawdatamodel.getValueAt(r, 3).toString());
                     try {
                         model.setValueAt(darab / szorzo, model.getRowCount() - 1, model.getColumnCount() - 1);
                     } catch (Exception e) {

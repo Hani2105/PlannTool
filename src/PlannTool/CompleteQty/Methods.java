@@ -56,14 +56,17 @@ public class Methods {
 
     }
 
-    public String CreateApiUrl(JDateChooser j, String api, String PNList) {
+    public String CreateApiUrl(JDateChooser j, JDateChooser j2, String api, String PNList) {
         String fullurl = "";
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd 00:00:00");
-        Date newDate = j.getDate();
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date StartDate = j.getDate();
+        Date EndDate = j2.getDate();
 
         fullurl = api.replace("termekek", PNList);
         try {
-            fullurl = fullurl.replace("date", dateFormat.format(newDate));
+            fullurl = fullurl.replace("startdate", dateFormat.format(StartDate));
+            fullurl = fullurl.replace("enddate", dateFormat.format(EndDate));
+
         } catch (Exception e) {
 
             JOptionPane.showMessageDialog(a,
@@ -86,35 +89,31 @@ public class Methods {
         outerloop:
         for (int i = 0; i < obi.length; i++) {
 
-//ha a complete státusz nem üres
-            if (!obi[i][8].toString().equals("")) {
-
 //bejárjuk a modellt és megnézzük , hogy van e már ilyen pn
-                for (int m = 0; m < model.getRowCount() + 1; m++) {
+            for (int m = 0; m < model.getRowCount() + 1; m++) {
 
-//ha találunk ilyen pn-t
-                    try {
-                        if (model.getValueAt(m, 0).toString().equals(obi[i][2].toString())) {
-                            int osszeg = 0;
-                            try {
-                                osszeg = Integer.parseInt(model.getValueAt(m, 2).toString()) + 1;
-                            } catch (Exception e) {
+//ha találunk ilyen pn-t és complete a státusz
+                try {
+                    if (model.getValueAt(m, 0).toString().equals(obi[i][1].toString()) && obi[i][2].toString().equals("COMP Complete")) {
+                        int osszeg = 0;
+                        try {
+                            osszeg = Integer.parseInt(model.getValueAt(m, 2).toString()) + Integer.parseInt(obi[i][3].toString());
+                        } catch (Exception e) {
 
-                                osszeg = 0;
-                            }
-                            model.setValueAt(osszeg, m, 2);
-                            continue outerloop;
+                            osszeg = 0;
                         }
-                    } catch (Exception e) {
-                        //continue outerloop;
+                        model.setValueAt(osszeg, m, 2);
+                        continue outerloop;
                     }
 
+                } catch (Exception e) {
+                    //continue outerloop;
                 }
 
-                //ha nem találunk , hozzáadunk egy sort és beállítjuk az adatokat
-                model.addRow(new Object[]{obi[i][2].toString(), "", 1});
-                continue outerloop;
+            }
 
+            if (obi[i][2].toString().equals("COMP Complete")) {
+                model.addRow(new Object[]{obi[i][1].toString(), "", obi[i][3]});
             }
 
         }
@@ -131,35 +130,31 @@ public class Methods {
         outerloop:
         for (int i = 0; i < obi.length; i++) {
 
-//ha a complete státusz nem üres
-            if (!obi[i][8].toString().equals("")) {
-
 //bejárjuk a modellt és megnézzük , hogy van e már ilyen pn
-                for (int m = 0; m < model.getRowCount() + 1; m++) {
+            for (int m = 0; m < model.getRowCount() + 1; m++) {
 
 //ha találunk ilyen job-ot és pn-t
-                    try {
-                        if ((model.getValueAt(m, 1).toString().equals(obi[i][1].toString()))&& model.getValueAt(m, 0).toString().equals(obi[i][2].toString()) ) {
-                            int osszeg = 0;
-                            try {
-                                osszeg = Integer.parseInt(model.getValueAt(m, 2).toString()) + 1;
-                            } catch (Exception e) {
+                try {
+                    if ((model.getValueAt(m, 0).toString().equals(obi[i][1].toString())) && model.getValueAt(m, 1).toString().equals(obi[i][0].toString()) && obi[i][2].toString().equals("COMP Complete")) {
+                        int osszeg = 0;
+                        try {
+                            osszeg = Integer.parseInt(model.getValueAt(m, 2).toString()) + Integer.parseInt(obi[i][3].toString());
+                        } catch (Exception e) {
 
-                                osszeg = 0;
-                            }
-                            model.setValueAt(osszeg, m, 2);
-                            continue outerloop;
+                            osszeg = 0;
                         }
-                    } catch (Exception e) {
-                        //continue outerloop;
+                        model.setValueAt(osszeg, m, 2);
+                        continue outerloop;
                     }
-
+                } catch (Exception e) {
+                    //continue outerloop;
                 }
 
-                //ha nem találunk , hozzáadunk egy sort és beállítjuk az adatokat
-                model.addRow(new Object[]{obi[i][2].toString(), obi[i][1], 1});
-                continue outerloop;
+            }
 
+            //ha nem találunk , hozzáadunk egy sort és beállítjuk az adatokat
+            if (obi[i][2].toString().equals("COMP Complete")) {
+                model.addRow(new Object[]{obi[i][1].toString(), obi[i][0].toString(), obi[i][3]});
             }
 
         }

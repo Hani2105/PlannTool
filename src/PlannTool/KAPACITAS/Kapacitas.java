@@ -87,10 +87,9 @@ public class Kapacitas extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Parts", "Start  Date", "WeekNum", "Qty", "Állomás/Sor", "DB/Óra"
+                "Parts", "Start  Date", "WeekNum", "Qty", "Customer", "Állomás/Sor", "DB/Óra", "Másodlagos Sor/Állomás", "DB/Óra"
             }
         ));
-        jTable2.setColumnSelectionAllowed(false);
         jScrollPane2.setViewportView(jTable2);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);

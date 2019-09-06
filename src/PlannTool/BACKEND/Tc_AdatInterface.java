@@ -94,7 +94,7 @@ public class Tc_AdatInterface {
 
                 for (int o = 0; o < temp[1].length; o++) {
 
-                    temp[r][o] = new Tc_CellClass("", 0, 0.0, 0);
+                    temp[r][o] = new Tc_CellClass("", 0, 0.0, 0, "", "");
 //mivel minden cella mögött kell h legyen class , nem szabadna hibára futnia  
 
                     temp[r][o] = b.tablaadat[r][o];
@@ -113,7 +113,7 @@ public class Tc_AdatInterface {
 
             for (int o = 0; o < b.tablaadat[1].length; o++) {
 
-                b.tablaadat[r][o] = new Tc_CellClass("", 0, 0.0, 0);
+                b.tablaadat[r][o] = new Tc_CellClass("", 0, 0.0, 0, "", "");
 
                 try {
                     b.tablaadat[r][o].value = model.getValueAt(r + infsor, o).toString();
@@ -201,7 +201,7 @@ public class Tc_AdatInterface {
 
             for (int o = 0; o < temp[1].length; o++) {
 
-                temp[r][o] = new Tc_CellClass("", 0, 0.0, 0);
+                temp[r][o] = new Tc_CellClass("", 0, 0.0, 0, "", "");
 
                 if (r != ujsorszam1 && r != ujsorszam2) {
                     try {
@@ -303,7 +303,7 @@ public class Tc_AdatInterface {
 
                 for (int o = 0; o < temp[1].length; o++) {
 
-                    temp[r][o] = new Tc_CellClass("", 0, 0.0, 0);
+                    temp[r][o] = new Tc_CellClass("", 0, 0.0, 0, "", "");
 
                 }
 
@@ -396,4 +396,32 @@ public class Tc_AdatInterface {
         }
     }
 
+    public String pktomig() {
+
+        String pktomig = "";
+        //megszamoljuk az info sorokat , hogy ki tudjuk vonni a selected row ból
+        int infsor = 0;
+
+        for (int i = 0; i < b.jTable2.getRowCount(); i++) {
+
+            if (b.jTable2.getValueAt(i, 3).toString().equals("Infó")) {
+
+                infsor++;
+
+            }
+
+        }
+
+        pktomig = b.tablaadat[b.jTable2.getSelectedRow() - infsor][b.jTable2.getSelectedColumn()].pktomig;
+
+        if (pktomig.equals("")) {
+
+            pktomig = b.tablaadat[b.jTable2.getSelectedRow() - infsor - 1][b.jTable2.getSelectedColumn()].pktomig;
+
+        }
+
+        return pktomig;
+    }
+
+   
 }

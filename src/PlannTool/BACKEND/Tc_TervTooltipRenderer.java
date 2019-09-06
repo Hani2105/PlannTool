@@ -179,11 +179,13 @@ public class Tc_TervTooltipRenderer extends DefaultTableCellRenderer {
             boolean cian = true;
 
             for (int n = 0; n < Tc_Betervezo.ciklusidok.get(0).length; n++) {
+                try {
+                    if (Tc_Betervezo.ciklusidok.get(0)[n][0].equals(Tc_Betervezo.Tervezotabbed.getTitleAt(Tc_Betervezo.Tervezotabbed.getSelectedIndex())) && Tc_Betervezo.ciklusidok.get(0)[n][1].equals(table.getValueAt(row, 0).toString()) && Tc_Betervezo.ciklusidok.get(0)[n][2].equals(table.getValueAt(row, 2).toString())) {
 
-                if (Tc_Betervezo.ciklusidok.get(0)[n][0].equals(Tc_Betervezo.Tervezotabbed.getTitleAt(Tc_Betervezo.Tervezotabbed.getSelectedIndex())) && Tc_Betervezo.ciklusidok.get(0)[n][1].equals(table.getValueAt(row, 0).toString()) && Tc_Betervezo.ciklusidok.get(0)[n][2].equals(table.getValueAt(row, 2).toString())) {
+                        cian = false;
 
-                    cian = false;
-
+                    }
+                } catch (Exception e) {
                 }
 
             }
@@ -394,6 +396,25 @@ public class Tc_TervTooltipRenderer extends DefaultTableCellRenderer {
 
         } catch (Exception e) {
         }
+        //ha tény részen vagyunk beállítjuk az anyaghiányt
+
+        try {
+
+            //ha a tény részen vagyunk
+            if (column > 3 && !table.getValueAt(row, 3).toString().equals("Infó") && table.getValueAt(row, 3).toString().equals("Tény")) {
+
+                //beallitjuk az ah ikont is ha anyaghianyos
+                if (!b.tablaadat[row - infsor][column].ah.equals("") || !b.tablaadat[row - infsor - 1][column].ah.equals("")) {
+
+                    c.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/PICTURES/ah.jpg")));
+
+                }
+
+            }
+
+        } catch (Exception e) {
+        }
+
 //
 //beállítjuk a cella színét ha a terv részen vagyunk
         try {

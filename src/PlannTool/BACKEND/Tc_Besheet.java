@@ -15,6 +15,7 @@ import static PlannTool.BACKEND.Tc_Betervezo.first;
 import static PlannTool.BACKEND.Tc_Betervezo.one;
 import static PlannTool.BACKEND.Tc_Betervezo.second;
 import static PlannTool.BACKEND.Tc_Betervezo.two;
+import java.awt.Component;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -43,6 +44,7 @@ public class Tc_Besheet extends javax.swing.JPanel {
 
     public List<String[]> partnumbers = new ArrayList<String[]>();
     public List<String> workstations = new ArrayList<String>();
+    //it tároljuk a jobok sfdc adatait
     public List<String[][]> jobadat = new ArrayList<String[][]>();
     //ez az azonos jobok megkereséséhez kell a renderernek
     public String jobaszinezeshez = "";
@@ -109,6 +111,8 @@ public class Tc_Besheet extends javax.swing.JPanel {
         JPopupMenu1 = new javax.swing.JPopupMenu();
         Szinezo = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
+        kereses = new javax.swing.JMenuItem();
+        jSeparator5 = new javax.swing.JPopupMenu.Separator();
         CellaAdatok = new javax.swing.JMenuItem();
         DeleteArea = new javax.swing.JMenuItem();
         MuveletekSorokkal = new javax.swing.JMenu();
@@ -118,9 +122,9 @@ public class Tc_Besheet extends javax.swing.JPanel {
         SFDClekeres = new javax.swing.JMenuItem();
         SFDCall = new javax.swing.JMenuItem();
         Termekleker = new javax.swing.JMenuItem();
-        kereses = new javax.swing.JMenuItem();
         pnkarbantarto = new javax.swing.JMenuItem();
         Mernoki = new javax.swing.JMenuItem();
+        anyaghiany = new javax.swing.JMenuItem();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
@@ -171,6 +175,15 @@ public class Tc_Besheet extends javax.swing.JPanel {
         });
         JPopupMenu1.add(Szinezo);
         JPopupMenu1.add(jSeparator1);
+
+        kereses.setText("Keresés a kijelölt cellára!");
+        kereses.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                keresesActionPerformed(evt);
+            }
+        });
+        JPopupMenu1.add(kereses);
+        JPopupMenu1.add(jSeparator5);
 
         CellaAdatok.setText("Elérhető PN / WS");
         CellaAdatok.addActionListener(new java.awt.event.ActionListener() {
@@ -238,14 +251,6 @@ public class Tc_Besheet extends javax.swing.JPanel {
 
         JPopupMenu1.add(SFDCmuveletek);
 
-        kereses.setText("Keresés a kijelölt cellára!");
-        kereses.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                keresesActionPerformed(evt);
-            }
-        });
-        JPopupMenu1.add(kereses);
-
         pnkarbantarto.setText("PN karbantartó");
         pnkarbantarto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -272,6 +277,14 @@ public class Tc_Besheet extends javax.swing.JPanel {
             }
         });
         JPopupMenu1.add(Mernoki);
+
+        anyaghiany.setText("Anyaghiány felvétele");
+        anyaghiany.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                anyaghianyActionPerformed(evt);
+            }
+        });
+        JPopupMenu1.add(anyaghiany);
 
         setComponentPopupMenu(JPopupMenu1);
         setPreferredSize(new java.awt.Dimension(1800, 700));
@@ -1391,6 +1404,21 @@ public class Tc_Besheet extends javax.swing.JPanel {
 
     }//GEN-LAST:event_jButton4ActionPerformed
 
+    private void anyaghianyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_anyaghianyActionPerformed
+        try {
+            // anyaghiany megnyitasa
+            Tc_Anyaghiany a;
+
+            a = new Tc_Anyaghiany(this);
+
+            a.setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(Tc_Besheet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Tc_Besheet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_anyaghianyActionPerformed
+
     private void filter(String query, Tc_Besheet b) {
 
         DefaultTableModel model = new DefaultTableModel();
@@ -1415,6 +1443,7 @@ public class Tc_Besheet extends javax.swing.JPanel {
     private javax.swing.JMenu SFDCmuveletek;
     public javax.swing.JMenuItem Szinezo;
     private javax.swing.JMenuItem Termekleker;
+    private javax.swing.JMenuItem anyaghiany;
     public javax.swing.JButton jButton10;
     public javax.swing.JButton jButton11;
     private javax.swing.JButton jButton4;
@@ -1437,6 +1466,7 @@ public class Tc_Besheet extends javax.swing.JPanel {
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
+    private javax.swing.JPopupMenu.Separator jSeparator5;
     public javax.swing.JTable jTable2;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;

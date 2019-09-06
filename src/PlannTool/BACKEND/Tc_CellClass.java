@@ -15,13 +15,19 @@ public class Tc_CellClass {
     String value = "";
     Double engtime = 0.0;
     int szin = 0;
+    String ah = "";
+    String pktomig = "";
 
-    public Tc_CellClass(String value, int eng, double engtime , int szin) {
+    public Tc_CellClass(String value, int eng, double engtime , int szin , String ah, String pktomig) {
 
         this.value = value;
         this.eng = eng;
         this.engtime = engtime;
         this.szin = szin;
+        this.ah = ah;
+        this.pktomig = pktomig;
+        
+        
 
     }
 

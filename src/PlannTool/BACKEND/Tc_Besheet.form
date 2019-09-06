@@ -30,6 +30,16 @@
         </MenuItem>
         <Component class="javax.swing.JPopupMenu$Separator" name="jSeparator1">
         </Component>
+        <MenuItem class="javax.swing.JMenuItem" name="kereses">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Keres&#xe9;s a kijel&#xf6;lt cell&#xe1;ra!"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="keresesActionPerformed"/>
+          </Events>
+        </MenuItem>
+        <Component class="javax.swing.JPopupMenu$Separator" name="jSeparator5">
+        </Component>
         <MenuItem class="javax.swing.JMenuItem" name="CellaAdatok">
           <Properties>
             <Property name="text" type="java.lang.String" value="El&#xe9;rhet&#x151; PN / WS"/>
@@ -105,14 +115,6 @@
             </MenuItem>
           </SubComponents>
         </Menu>
-        <MenuItem class="javax.swing.JMenuItem" name="kereses">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Keres&#xe9;s a kijel&#xf6;lt cell&#xe1;ra!"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="keresesActionPerformed"/>
-          </Events>
-        </MenuItem>
         <MenuItem class="javax.swing.JMenuItem" name="pnkarbantarto">
           <Properties>
             <Property name="text" type="java.lang.String" value="PN karbantart&#xf3;"/>
@@ -137,6 +139,14 @@
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
           </AuxValues>
+        </MenuItem>
+        <MenuItem class="javax.swing.JMenuItem" name="anyaghiany">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Anyaghi&#xe1;ny felv&#xe9;tele"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="anyaghianyActionPerformed"/>
+          </Events>
         </MenuItem>
       </SubComponents>
     </Container>

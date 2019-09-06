@@ -37,7 +37,7 @@ public class CTB_Filechooser {
 
     public static void setLastDirScen(File file) {
         lastDir = file.getParent();
-        CTB.scenpath = file.getAbsolutePath() + ".scen";
+        CTB.scenpath = file.getParent();
     }
 
     public static void setLastDirRiports(File file) {

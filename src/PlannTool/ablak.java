@@ -460,6 +460,9 @@ public class ablak extends javax.swing.JFrame {
             jCheckBox6 = new javax.swing.JCheckBox();
             jScrollPane31 = new javax.swing.JScrollPane();
             jTable28 = new javax.swing.JTable();
+            jLabel56 = new javax.swing.JLabel();
+            jLabel57 = new javax.swing.JLabel();
+            jDateChooser11 = new com.toedter.calendar.JDateChooser();
             jPanel25 = new javax.swing.JPanel();
 
             jMenuItem1.setText("Bontás SN-re!");
@@ -745,6 +748,7 @@ public class ablak extends javax.swing.JFrame {
 
             jLabel7.setText("Keresett termékszám:");
 
+            jTable3.setAutoCreateRowSorter(true);
             jTable3.setModel(new javax.swing.table.DefaultTableModel(
                 new Object [][] {
 
@@ -3888,7 +3892,7 @@ public class ablak extends javax.swing.JFrame {
 
                 },
                 new String [] {
-                    "Serial N", "Shop Order", "Part Number", "Workstation", "Qty", "Unit Status", "location DateTime", "Last Complete Date", "Complete Date"
+                    "Shop Order", "Part Number", "Workstation", "Qty", "Complete_Ts", "Unit Status", "Start Date", "End Date"
                 }
             ));
             jScrollPane30.setViewportView(jTable27);
@@ -3906,38 +3910,48 @@ public class ablak extends javax.swing.JFrame {
             ));
             jScrollPane31.setViewportView(jTable28);
 
+            jLabel56.setText("Tól:");
+
+            jLabel57.setText("Ig:");
+
             javax.swing.GroupLayout jPanel24Layout = new javax.swing.GroupLayout(jPanel24);
             jPanel24.setLayout(jPanel24Layout);
             jPanel24Layout.setHorizontalGroup(
                 jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel24Layout.createSequentialGroup()
-                    .addGroup(jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jScrollPane29, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel24Layout.createSequentialGroup()
-                            .addContainerGap()
-                            .addComponent(jDateChooser10, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jScrollPane29, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                     .addGroup(jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel24Layout.createSequentialGroup()
-                            .addComponent(jScrollPane30, javax.swing.GroupLayout.PREFERRED_SIZE, 635, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel56, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jScrollPane31, javax.swing.GroupLayout.DEFAULT_SIZE, 271, Short.MAX_VALUE))
-                        .addGroup(jPanel24Layout.createSequentialGroup()
+                            .addComponent(jDateChooser10, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jLabel57, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jDateChooser11, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(jButton30, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(jCheckBox6)
-                            .addGap(0, 0, Short.MAX_VALUE)))
+                            .addGap(0, 0, Short.MAX_VALUE))
+                        .addGroup(jPanel24Layout.createSequentialGroup()
+                            .addComponent(jScrollPane30, javax.swing.GroupLayout.PREFERRED_SIZE, 635, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jScrollPane31, javax.swing.GroupLayout.DEFAULT_SIZE, 271, Short.MAX_VALUE)))
                     .addContainerGap())
             );
             jPanel24Layout.setVerticalGroup(
                 jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel24Layout.createSequentialGroup()
                     .addContainerGap()
-                    .addGroup(jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton30)
-                            .addComponent(jCheckBox6))
-                        .addComponent(jDateChooser10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                        .addComponent(jLabel56)
+                        .addComponent(jDateChooser10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButton30)
+                        .addComponent(jCheckBox6)
+                        .addComponent(jLabel57)
+                        .addComponent(jDateChooser11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                     .addGroup(jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jScrollPane29)
@@ -5778,23 +5792,22 @@ public class ablak extends javax.swing.JFrame {
 //az api összeállítása
         URL api = null;
         try {
-            api = new URL(a.CreateApiUrl(jDateChooser10, "http://143.116.140.120/rest/request.php?page=planning_product_history&product=termekek&format=xml&loc_ts=date", pnlist));
+            api = new URL(a.CreateApiUrl(jDateChooser10,jDateChooser11,"http://143.116.140.120/rest/request.php?page=planning_product_history_without_sn&product=termekek&starttime=startdate&endtime=enddate&format=xml",pnlist));
         } catch (MalformedURLException ex) {
             Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
         }
 //feldolgozzuk az apit
         ArrayList<String> lista = new ArrayList();
 
-        String nodelist = "planning_product_history";
-        lista.add("Serial_Number");
+        String nodelist = "planning_product_history_without_sn";
         lista.add("Shop_Order_Number");
-        lista.add("part_number");
+        lista.add("Part_Number");
         lista.add("Workstation");
         lista.add("Qty");
+        lista.add("Complete_Ts");
         lista.add("Unit_Status");
-        lista.add("Location_DateTime");
-        lista.add("last_complete_dateTime");
-        lista.add("complete_ts");
+        lista.add("Start_Time");
+        lista.add("End_Time");
         xmlfeldolg x = new xmlfeldolg();
         Object[][] adatok = (Object[][]) x.xmlfeldolg(api, nodelist, lista);
 
@@ -5802,6 +5815,7 @@ public class ablak extends javax.swing.JFrame {
         DefaultTableModel model = new DefaultTableModel();
         model.setRowCount(0);
         model = (DefaultTableModel) jTable27.getModel();
+        model.setRowCount(0);
         jTable27.setModel(x.totable(model, adatok));
         TablaOszlopSzelesseg(jTable27);
         if (jCheckBox6.isSelected()) {
@@ -5985,6 +5999,7 @@ public class ablak extends javax.swing.JFrame {
     public static javax.swing.JComboBox<String> jComboBox3;
     public static com.toedter.calendar.JDateChooser jDateChooser1;
     public static com.toedter.calendar.JDateChooser jDateChooser10;
+    public static com.toedter.calendar.JDateChooser jDateChooser11;
     public static com.toedter.calendar.JDateChooser jDateChooser2;
     public static com.toedter.calendar.JDateChooser jDateChooser3;
     public static com.toedter.calendar.JDateChooser jDateChooser4;
@@ -6044,6 +6059,8 @@ public class ablak extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel53;
     private javax.swing.JLabel jLabel54;
     private javax.swing.JLabel jLabel55;
+    private javax.swing.JLabel jLabel56;
+    private javax.swing.JLabel jLabel57;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
@@ -6128,7 +6145,7 @@ public class ablak extends javax.swing.JFrame {
     public static javax.swing.JTable jTable24;
     public static javax.swing.JTable jTable25;
     public static javax.swing.JTable jTable26;
-    private javax.swing.JTable jTable27;
+    public static javax.swing.JTable jTable27;
     public static javax.swing.JTable jTable28;
     public static javax.swing.JTable jTable3;
     public static javax.swing.JTable jTable4;

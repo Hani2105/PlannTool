@@ -38,11 +38,33 @@ public class CTB_ShortTablarenderer extends DefaultTableCellRenderer {
         JLabel c = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
         c.setHorizontalAlignment(CENTER);
         c.setBorder(BorderFactory.createEtchedBorder());
-        if (column == 3) {
+        if (column == 3 || column == 0) {
 
             c.setBackground(new Color(167, 181, 204, 60));
-            //c.setForeground(Color.BLACK);
-            //c.setBorder(BorderFactory.createLineBorder(Color.black));
+//ha nem üres a stockdata és egyezik a pn akkor beírjuk a tooltipet
+
+//            if (CTB.WipStockData != null || CTB.OraStockData != null) {
+//                String tooltip = "<html>";
+//                for (int i = 0; i < CTB.WipStockData.length; i++) {
+//
+//                    tooltip += CTB.WipStockData[i][0] + " " + CTB.WipStockData[i][1] + "<br>";
+//
+//                }
+//                try {
+//                    for (int i = 0; i < CTB.OraStockData.length; i++) {
+//
+//                        tooltip += CTB.OraStockData[i][0] + " " + CTB.OraStockData[i][1] + " " + CTB.OraStockData[i][2] + "<br>";
+//
+//                    }
+//                } catch (Exception e) {
+//                }
+//
+//                tooltip += "</html>";
+//                c.setToolTipText(tooltip);
+//
+//            } else {
+//                c.setToolTipText(null);
+//            }
 
         } else {
 
@@ -51,17 +73,16 @@ public class CTB_ShortTablarenderer extends DefaultTableCellRenderer {
         }
 
         if (isSelected) {
- 
+
             c.setForeground(Color.RED);
             c.setBorder(BorderFactory.createLineBorder(new Color(55, 52, 249), 2));
-            
-        }
-        
-        else{
-        
+
+        } else {
+
             c.setForeground(Color.BLACK);
-        
+
         }
+
         return c;
 
     }

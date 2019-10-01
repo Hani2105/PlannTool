@@ -124,7 +124,13 @@ public class Tc_Besheet extends javax.swing.JPanel {
         Termekleker = new javax.swing.JMenuItem();
         pnkarbantarto = new javax.swing.JMenuItem();
         Mernoki = new javax.swing.JMenuItem();
-        anyaghiany = new javax.swing.JMenuItem();
+        jSeparator6 = new javax.swing.JPopupMenu.Separator();
+        jMenu1 = new javax.swing.JMenu();
+        anyaghianyfelv = new javax.swing.JMenuItem();
+        ahkezel = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
+        allasidofelv = new javax.swing.JMenuItem();
+        allkezel = new javax.swing.JMenuItem();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
@@ -150,14 +156,9 @@ public class Tc_Besheet extends javax.swing.JPanel {
         jLabel5 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
 
-        JPopupMenu1.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                JPopupMenu1FocusGained(evt);
-            }
-        });
-        JPopupMenu1.addComponentListener(new java.awt.event.ComponentAdapter() {
-            public void componentShown(java.awt.event.ComponentEvent evt) {
-                JPopupMenu1ComponentShown(evt);
+        JPopupMenu1.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                JPopupMenu1PropertyChange(evt);
             }
         });
 
@@ -277,14 +278,47 @@ public class Tc_Besheet extends javax.swing.JPanel {
             }
         });
         JPopupMenu1.add(Mernoki);
+        JPopupMenu1.add(jSeparator6);
 
-        anyaghiany.setText("Anyaghiány felvétele");
-        anyaghiany.addActionListener(new java.awt.event.ActionListener() {
+        jMenu1.setText("Anyaghiányok kezelése");
+
+        anyaghianyfelv.setText("Anyaghiány felvétele");
+        anyaghianyfelv.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                anyaghianyActionPerformed(evt);
+                anyaghianyfelvActionPerformed(evt);
             }
         });
-        JPopupMenu1.add(anyaghiany);
+        jMenu1.add(anyaghianyfelv);
+
+        ahkezel.setText("Anyaghiányok lekérdezése , törlése");
+        ahkezel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ahkezelActionPerformed(evt);
+            }
+        });
+        jMenu1.add(ahkezel);
+
+        JPopupMenu1.add(jMenu1);
+
+        jMenu2.setText("Állásidők kezelése");
+
+        allasidofelv.setText("Állásidő felvétele");
+        allasidofelv.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                allasidofelvActionPerformed(evt);
+            }
+        });
+        jMenu2.add(allasidofelv);
+
+        allkezel.setText("Állásidők lekérdezése , törlése");
+        allkezel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                allkezelActionPerformed(evt);
+            }
+        });
+        jMenu2.add(allkezel);
+
+        JPopupMenu1.add(jMenu2);
 
         setComponentPopupMenu(JPopupMenu1);
         setPreferredSize(new java.awt.Dimension(1800, 700));
@@ -1316,16 +1350,6 @@ public class Tc_Besheet extends javax.swing.JPanel {
 
     }//GEN-LAST:event_MernokiActionPerformed
 
-    private void JPopupMenu1ComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_JPopupMenu1ComponentShown
-
-
-    }//GEN-LAST:event_JPopupMenu1ComponentShown
-
-    private void JPopupMenu1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_JPopupMenu1FocusGained
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_JPopupMenu1FocusGained
-
     private void MernokiComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_MernokiComponentShown
         // TODO add your handling code here:
 
@@ -1404,12 +1428,12 @@ public class Tc_Besheet extends javax.swing.JPanel {
 
     }//GEN-LAST:event_jButton4ActionPerformed
 
-    private void anyaghianyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_anyaghianyActionPerformed
+    private void anyaghianyfelvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_anyaghianyfelvActionPerformed
         try {
             // anyaghiany megnyitasa
-            Tc_Anyaghiany a;
+            Tc_AnyaghianyRogzito a;
 
-            a = new Tc_Anyaghiany(this);
+            a = new Tc_AnyaghianyRogzito(this);
 
             a.setVisible(true);
         } catch (SQLException ex) {
@@ -1417,7 +1441,56 @@ public class Tc_Besheet extends javax.swing.JPanel {
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Tc_Besheet.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_anyaghianyActionPerformed
+    }//GEN-LAST:event_anyaghianyfelvActionPerformed
+
+    private void allasidofelvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_allasidofelvActionPerformed
+        //allasido
+        Tc_AllasidoRogzito a = new Tc_AllasidoRogzito(this);
+        a.setVisible(true);
+    }//GEN-LAST:event_allasidofelvActionPerformed
+
+    private void ahkezelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ahkezelActionPerformed
+        try {
+            // ahkezel
+            Tc_AhkezelForm a = new Tc_AhkezelForm(this);
+            a.setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(Tc_Besheet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Tc_Besheet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_ahkezelActionPerformed
+
+    private void allkezelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_allkezelActionPerformed
+        //allkezel
+        Tc_AllkezelForm a = null;
+        try {
+            a = new Tc_AllkezelForm(this);
+        } catch (SQLException ex) {
+            Logger.getLogger(Tc_Besheet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Tc_Besheet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        a.setVisible(true);
+    }//GEN-LAST:event_allkezelActionPerformed
+
+    private void JPopupMenu1PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_JPopupMenu1PropertyChange
+        // ha terv részen vagyunk letiltjuk az anyagos és állásidős cuccot
+
+        if (jTable2.getValueAt(jTable2.getSelectedRow(), 3).toString().equals("Terv")) {
+
+            jMenu1.setEnabled(false);
+            jMenu2.setEnabled(false);
+
+        } else {
+
+            jMenu1.setEnabled(true);
+            jMenu2.setEnabled(true);
+
+        }
+
+
+    }//GEN-LAST:event_JPopupMenu1PropertyChange
 
     private void filter(String query, Tc_Besheet b) {
 
@@ -1443,7 +1516,10 @@ public class Tc_Besheet extends javax.swing.JPanel {
     private javax.swing.JMenu SFDCmuveletek;
     public javax.swing.JMenuItem Szinezo;
     private javax.swing.JMenuItem Termekleker;
-    private javax.swing.JMenuItem anyaghiany;
+    private javax.swing.JMenuItem ahkezel;
+    private javax.swing.JMenuItem allasidofelv;
+    private javax.swing.JMenuItem allkezel;
+    private javax.swing.JMenuItem anyaghianyfelv;
     public javax.swing.JButton jButton10;
     public javax.swing.JButton jButton11;
     private javax.swing.JButton jButton4;
@@ -1460,6 +1536,8 @@ public class Tc_Besheet extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     public javax.swing.JLabel jLabel7;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JPopupMenu.Separator jSeparator1;
@@ -1467,6 +1545,7 @@ public class Tc_Besheet extends javax.swing.JPanel {
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
     private javax.swing.JPopupMenu.Separator jSeparator5;
+    private javax.swing.JPopupMenu.Separator jSeparator6;
     public javax.swing.JTable jTable2;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;

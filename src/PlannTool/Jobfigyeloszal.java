@@ -221,6 +221,7 @@ public class Jobfigyeloszal extends Thread {
             }
 
 //backend adatok keresése
+
             query = "select b.cellname , b.partnumber , b.job2 , b.date , b.qty from (SELECT distinct  tc_terv.job as job1 FROM planningdb.tc_terv  where active=2 and tc_terv.date >= '" + stol + "') a right join  (SELECT distinct tc_becells.cellname , tc_bepns.partnumber  , tc_terv.date  , tc_terv.qty , tc_terv.job as job2 FROM planningdb.tc_terv left join tc_becells on tc_becells.idtc_cells = tc_terv.idtc_becells left join tc_bepns on tc_bepns.idtc_bepns = tc_terv.idtc_bepns  where active<2 and tc_terv.date >= '" + stol + "') b on a.job1=b.job2\n"
                     + "where job1 is null  group by job2";
 

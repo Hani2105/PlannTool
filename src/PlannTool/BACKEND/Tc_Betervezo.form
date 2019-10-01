@@ -190,7 +190,7 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem15">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Anyaghi&#xe1;nyok"/>
+                <Property name="text" type="java.lang.String" value="&#xc1;ll&#xe1;sid&#x151;k"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem15ActionPerformed"/>

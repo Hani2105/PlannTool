@@ -17,8 +17,9 @@ public class Tc_CellClass {
     int szin = 0;
     String ah = "";
     String pktomig = "";
+    int all = 0;
 
-    public Tc_CellClass(String value, int eng, double engtime , int szin , String ah, String pktomig) {
+    public Tc_CellClass(String value, int eng, double engtime, int szin, String ah, String pktomig, int all) {
 
         this.value = value;
         this.eng = eng;
@@ -26,8 +27,7 @@ public class Tc_CellClass {
         this.szin = szin;
         this.ah = ah;
         this.pktomig = pktomig;
-        
-        
+        this.all = all;
 
     }
 

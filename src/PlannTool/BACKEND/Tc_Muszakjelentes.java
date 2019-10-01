@@ -15,6 +15,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 /**
  *
@@ -47,7 +50,7 @@ public class Tc_Muszakjelentes extends javax.swing.JFrame {
 
             cimlista += pc.rs.getString(1) + ",\n";
         }
-        
+
         pc.kinyir();
 
         //levagjuk az utolso biszbaszt
@@ -306,7 +309,42 @@ public class Tc_Muszakjelentes extends javax.swing.JFrame {
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Tc_Muszakjelentes.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
+//le kell kerdezni az allasidőket és az anyaghiányokat is ------------------------------------------------------------------>>>>>>>
+        DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm");
+        DateTime dt = formatter.parseDateTime(b.jTable2.getColumnName(b.jTable2.getSelectedColumn()).substring(0, 16));
+        String startdate = dt.toString().replace("T", " ").substring(0, 16);
+        dt = dt.plusHours(12);
+        String enddate = dt.toString().replace("T", " ").substring(0, 16);
+
+        query = "select \"Állásidő\" , downtimes_production.datefrom as Tól , downtimes_production.dateto as Ig , \"\" as PartNumber  , downtimes_production.downtimename as Ok , tc_becells.cellname as Cella , tc_bepns.partnumber as Termék , downtimes_production.comments as Komment, timestampdiff(MINUTE,downtimes_production.datefrom,downtimes_production.dateto) as Perc\n"
+                + "from downtimes_production \n"
+                + "left join tc_terv on tc_terv.pktomig = downtimes_production.pktomig collate latin2_hungarian_ci \n"
+                + "left join tc_becells on tc_becells.idtc_cells = tc_terv.idtc_becells\n"
+                + "left join tc_bepns on tc_bepns.idtc_bepns = tc_terv.idtc_bepns\n"
+                + "where downtimes_production.datefrom >= '" + startdate + "' and downtimes_production.datefrom <= '" + enddate + "' and downtimes_production.pktomig <> '' and downtimes_production.line = '" + cellname + "' \n"
+                + "union \n"
+                + "select \"Anyaghiány\" , tc_anyaghiany.tol , tc_anyaghiany.ig , tc_anyaghiany.pn , tc_anyaghiany.felelos , tc_becells.cellname , tc_bepns.partnumber , tc_anyaghiany.comment ,  timestampdiff(MINUTE,tc_anyaghiany.tol,tc_anyaghiany.ig) from tc_anyaghiany\n"
+                + "left join tc_terv on tc_terv.pktomig = tc_anyaghiany.pktomig collate latin2_hungarian_ci \n"
+                + "left join tc_becells on tc_terv.idtc_becells = tc_becells.idtc_cells \n"
+                + "left join tc_bepns on tc_bepns.idtc_bepns = tc_terv.idtc_bepns \n"
+                + "where tc_anyaghiany.tol >= '" + startdate + "' and tc_anyaghiany.ig <= '" + enddate + "' and tc_anyaghiany.cella = '" + cellname + "' ";
+        String allasidok = "<tr align=\"center\"><td align=\"center\">Típus</td><td>Tól</td><td>Ig</td><td>PartNumber</td><td>Ok</td><td>Cella</td><td>Termék</td><td>Komment</td><td>Perc</td></tr>";
+        try {
+            pc.lekerdez(query);
+
+            while (pc.rs.next()) {
+
+                allasidok += "<tr><td>" + pc.rs.getString(1) + "</td><td>" + pc.rs.getString(2) + "</td><td>" + pc.rs.getString(3) + "</td><td>" + pc.rs.getString(4) + "</td><td>" + pc.rs.getString(5) + "</td><td>" + pc.rs.getString(6) + "</td><td>" + pc.rs.getString(7) + "</td><td>" + pc.rs.getString(8) + "</td><td>" + pc.rs.getString(9) + "</td></tr>";
+
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(Tc_Muszakjelentes.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Tc_Muszakjelentes.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
         pc.kinyir();
 
         ellenorzoadat = "Ezek az adatok kerülnek elküldésre! \nMódosításhoz változtasd meg az elmentett adatokat! \n \n" + ellenorzo + "\n\n" + "Műszakvezetői komment:\n";
@@ -339,6 +377,12 @@ public class Tc_Muszakjelentes extends javax.swing.JFrame {
                 + reszletes1
                 + reszletes
                 + "</table>"
+                //állásidők
+                + "<br><br>"
+                + "<div style=\"font-size:200%\">Rögzített állásidők:</div>"
+                + "<table border = \"5\">"
+                + allasidok
+                + "</table>"
                 //műszakvezetői komment
                 + "<br><br>"
                 + "<div style=\"font-size:200%\">Műszakvezetői komment:</div>"
@@ -352,13 +396,11 @@ public class Tc_Muszakjelentes extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         //kuldok egy levelet magamnak hogy mirol akartak jelentest kuldeni
 
-        
-        
         //peldanyositunk egy levelkuldot
         try {
             //stat.beir(System.getProperty("user.name"), Tc_Betervezo.Tervezotabbed.getTitleAt(Tc_Betervezo.Tervezotabbed.getSelectedIndex()), "Mjelenteskartlenni", "gabor.hanacsek@sanmina.com");
             Email += "<html><div>" + jTextArea2.getText().replace("\n", "<br>") + "</div></html>";
-            Tc_Levelkuldes l = new Tc_Levelkuldes(subject, Email,  jTextArea1.getText() ,"Muszakjelentes@sanmina.com");
+            Tc_Levelkuldes l = new Tc_Levelkuldes(subject, Email, jTextArea1.getText(), "Muszakjelentes@sanmina.com");
             l.start();
             DateFormat df = new SimpleDateFormat("HH:mm");
             Date dateobj = new Date();
@@ -367,7 +409,6 @@ public class Tc_Muszakjelentes extends javax.swing.JFrame {
         } catch (Exception e) {
 
             //stat.beir(System.getProperty("user.name"), Tc_Betervezo.Tervezotabbed.getTitleAt(Tc_Betervezo.Tervezotabbed.getSelectedIndex()), "Elhasaltunk a peldanyositasnal" + e, "gabor.hanacsek@sanmina.com");
-
         }
 
     }//GEN-LAST:event_jButton2ActionPerformed

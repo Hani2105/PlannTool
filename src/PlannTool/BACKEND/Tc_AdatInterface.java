@@ -94,7 +94,7 @@ public class Tc_AdatInterface {
 
                 for (int o = 0; o < temp[1].length; o++) {
 
-                    temp[r][o] = new Tc_CellClass("", 0, 0.0, 0, "", "");
+                    temp[r][o] = new Tc_CellClass("", 0, 0.0, 0, "", "",0);
 //mivel minden cella mögött kell h legyen class , nem szabadna hibára futnia  
 
                     temp[r][o] = b.tablaadat[r][o];
@@ -113,7 +113,7 @@ public class Tc_AdatInterface {
 
             for (int o = 0; o < b.tablaadat[1].length; o++) {
 
-                b.tablaadat[r][o] = new Tc_CellClass("", 0, 0.0, 0, "", "");
+                b.tablaadat[r][o] = new Tc_CellClass("", 0, 0.0, 0, "", "", 0);
 
                 try {
                     b.tablaadat[r][o].value = model.getValueAt(r + infsor, o).toString();
@@ -201,7 +201,7 @@ public class Tc_AdatInterface {
 
             for (int o = 0; o < temp[1].length; o++) {
 
-                temp[r][o] = new Tc_CellClass("", 0, 0.0, 0, "", "");
+                temp[r][o] = new Tc_CellClass("", 0, 0.0, 0, "", "",0);
 
                 if (r != ujsorszam1 && r != ujsorszam2) {
                     try {
@@ -303,7 +303,7 @@ public class Tc_AdatInterface {
 
                 for (int o = 0; o < temp[1].length; o++) {
 
-                    temp[r][o] = new Tc_CellClass("", 0, 0.0, 0, "", "");
+                    temp[r][o] = new Tc_CellClass("", 0, 0.0, 0, "", "",0);
 
                 }
 

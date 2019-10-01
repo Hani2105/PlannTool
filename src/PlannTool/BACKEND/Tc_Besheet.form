@@ -4,8 +4,7 @@
   <NonVisualComponents>
     <Container class="javax.swing.JPopupMenu" name="JPopupMenu1">
       <Events>
-        <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="JPopupMenu1FocusGained"/>
-        <EventHandler event="componentShown" listener="java.awt.event.ComponentListener" parameters="java.awt.event.ComponentEvent" handler="JPopupMenu1ComponentShown"/>
+        <EventHandler event="propertyChange" listener="java.beans.PropertyChangeListener" parameters="java.beans.PropertyChangeEvent" handler="JPopupMenu1PropertyChange"/>
       </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
@@ -140,14 +139,54 @@
             <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
           </AuxValues>
         </MenuItem>
-        <MenuItem class="javax.swing.JMenuItem" name="anyaghiany">
+        <Component class="javax.swing.JPopupMenu$Separator" name="jSeparator6">
+        </Component>
+        <Menu class="javax.swing.JMenu" name="jMenu1">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Anyaghi&#xe1;ny felv&#xe9;tele"/>
+            <Property name="text" type="java.lang.String" value="Anyaghi&#xe1;nyok kezel&#xe9;se"/>
           </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="anyaghianyActionPerformed"/>
-          </Events>
-        </MenuItem>
+          <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="anyaghianyfelv">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Anyaghi&#xe1;ny felv&#xe9;tele"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="anyaghianyfelvActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="ahkezel">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Anyaghi&#xe1;nyok lek&#xe9;rdez&#xe9;se , t&#xf6;rl&#xe9;se"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ahkezelActionPerformed"/>
+              </Events>
+            </MenuItem>
+          </SubComponents>
+        </Menu>
+        <Menu class="javax.swing.JMenu" name="jMenu2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="&#xc1;ll&#xe1;sid&#x151;k kezel&#xe9;se"/>
+          </Properties>
+          <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="allasidofelv">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="&#xc1;ll&#xe1;sid&#x151; felv&#xe9;tele"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="allasidofelvActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="allkezel">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="&#xc1;ll&#xe1;sid&#x151;k lek&#xe9;rdez&#xe9;se , t&#xf6;rl&#xe9;se"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="allkezelActionPerformed"/>
+              </Events>
+            </MenuItem>
+          </SubComponents>
+        </Menu>
       </SubComponents>
     </Container>
   </NonVisualComponents>

@@ -396,17 +396,27 @@ public class Tc_TervTooltipRenderer extends DefaultTableCellRenderer {
 
         } catch (Exception e) {
         }
-        //ha tény részen vagyunk beállítjuk az anyaghiányt
+        //ha tény részen vagyunk beállítjuk az anyaghiányt vagy az állásidőt vagy mindkettőt
 
         try {
 
-            //ha a tény részen vagyunk
+            //ha a tény részen vagyunk 
             if (column > 3 && !table.getValueAt(row, 3).toString().equals("Infó") && table.getValueAt(row, 3).toString().equals("Tény")) {
 
-                //beallitjuk az ah ikont is ha anyaghianyos
-                if (!b.tablaadat[row - infsor][column].ah.equals("") || !b.tablaadat[row - infsor - 1][column].ah.equals("")) {
+                //beallitjuk az ikont  ha anyaghianyos de nincs állásidő
+                if ((!b.tablaadat[row - infsor][column].ah.equals("") || !b.tablaadat[row - infsor - 1][column].ah.equals("")) && (b.tablaadat[row - infsor][column].all == 0 && b.tablaadat[row - infsor - 1][column].all == 0)) {
 
                     c.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/PICTURES/ah.jpg")));
+
+                } //ha van anyaghiány is és van állásidő is
+                else if ((!b.tablaadat[row - infsor][column].ah.equals("") || !b.tablaadat[row - infsor - 1][column].ah.equals("")) && (b.tablaadat[row - infsor][column].all != 0 || b.tablaadat[row - infsor - 1][column].all != 0)) {
+
+                    c.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/PICTURES/skullka.png")));
+
+                } //ha nincs anyaghiány de van állásidő 
+                else if ((b.tablaadat[row - infsor][column].ah.equals("") && b.tablaadat[row - infsor - 1][column].ah.equals("")) && (b.tablaadat[row - infsor][column].all != 0 || b.tablaadat[row - infsor - 1][column].all != 0)) {
+
+                    c.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/PICTURES/dtke.png")));
 
                 }
 

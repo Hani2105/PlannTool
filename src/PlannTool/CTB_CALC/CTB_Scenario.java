@@ -62,7 +62,7 @@ public class CTB_Scenario {
             bw.write("Kezdodik a file!");
             bw.newLine();
 
-            JTable[] tablakneve = new JTable[10];
+            JTable[] tablakneve = new JTable[11];
             tablakneve[0] = c.jTable1;
             tablakneve[1] = c.jTable2;
             tablakneve[2] = c.jTable3;
@@ -73,6 +73,7 @@ public class CTB_Scenario {
             tablakneve[7] = c.jTable8;
             tablakneve[8] = c.jTable11;
             tablakneve[9] = c.jTable10;
+            tablakneve[10] = c.jTable13;
 
             for (int i = 0; i < tablakneve.length; i++) {
 
@@ -143,7 +144,7 @@ public class CTB_Scenario {
 //kell egy bufferedreader is
 
             //kitöröljük az összes tábla adatát
-            JTable[] tablakneve = new JTable[10];
+            JTable[] tablakneve = new JTable[11];
             tablakneve[0] = c.jTable1;
             tablakneve[1] = c.jTable2;
             tablakneve[2] = c.jTable3;
@@ -154,6 +155,7 @@ public class CTB_Scenario {
             tablakneve[7] = c.jTable8;
             tablakneve[8] = c.jTable11;
             tablakneve[9] = c.jTable10;
+            tablakneve[10] = c.jTable13;
 
             outerloop:
             for (int i = 0; i < tablakneve.length; i++) {

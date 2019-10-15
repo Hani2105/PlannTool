@@ -53,6 +53,8 @@ public class Tc_Besheet extends javax.swing.JPanel {
     Tc_CellClass[][] tablaadat;
 
     public String adat;
+//ez a tömb fogja tartalmazni azt az adatot , hogy az adott partnumbereket mikor gyártottuk utoljára
+    public String[][]utsogyartasok = null;
 
     public Tc_Besheet(Tc_Betervezo b) throws SQLException, ClassNotFoundException {
 
@@ -639,7 +641,7 @@ public class Tc_Besheet extends javax.swing.JPanel {
 
         pc.lekerdez(query);
 
-        while (pc.rs.next()) {
+            while (pc.rs.next()) {
 
             String[] pnadatok = new String[3];
 

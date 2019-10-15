@@ -75,8 +75,21 @@ public class CTB_PartsToPlanTableRenderer extends DefaultTableCellRenderer {
 
         if (isSelected) {
 
-            c.setForeground(new Color(0, 0, 0));
-            c.setBorder(BorderFactory.createLineBorder(new Color(55, 52, 249), 2));
+            //ha nem egyezik a kijelölt oszlop fejléce azzal az adattal amivel kalkuláltunk legyen piros a kijelölés
+            if (CTB.jTable9.getColumnModel().getColumn(9).getHeaderValue().toString().contains(table.getColumnModel().getColumn(table.getSelectedColumn()).getHeaderValue().toString())) {
+
+                c.setForeground(new Color(0, 0, 0));
+                c.setBorder(BorderFactory.createLineBorder(new Color(55, 52, 249), 2));
+
+            } else {
+
+                c.setForeground(new Color(0, 0, 0));
+                c.setBorder(BorderFactory.createLineBorder(new Color(252, 3, 3), 2));
+
+            }
+
+//            c.setForeground(new Color(0, 0, 0));
+//            c.setBorder(BorderFactory.createLineBorder(new Color(55, 52, 249), 2));
         }
 
         return c;

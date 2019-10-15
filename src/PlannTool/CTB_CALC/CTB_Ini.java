@@ -26,7 +26,11 @@ public class CTB_Ini {
     JTable t;
 
     enum indit {
-        part, scenpath, riportpath
+        part, scenpath, riportpath, horizontals, workorders, ures, onhands, indentedbom, demand, allocations
+    }
+
+    public CTB_Ini() {
+
     }
 
     public CTB_Ini(JTable tervtabla) {
@@ -45,7 +49,9 @@ public class CTB_Ini {
         } catch (Exception e) {
 
             JOptionPane.showMessageDialog(t,
-                    "Nincs ini file, a következő kilépéskor mentjük a beállításokat!");
+                    "Nincs ini file, most létrehozunkegyet!");
+            CTB_Ini i = new CTB_Ini();
+            i.inikezel(indit.ures);
             return;
 
         }
@@ -53,6 +59,12 @@ public class CTB_Ini {
 
 //feldolgozzuk az ini filet
         String[] pnek = null;
+        String[] horizontals = null;
+        String[] Workorders = null;
+        String[] Onhands = null;
+        String[] Indentedbom = null;
+        String[] Demand = null;
+        String[] Allocation = null;
         DefaultTableModel model = new DefaultTableModel();
         model = (DefaultTableModel) t.getModel();
         model.setRowCount(0);
@@ -67,6 +79,18 @@ public class CTB_Ini {
 
                 CTB.riportpath = line.replace("Riportpath: ", "");
 
+            } else if (line.contains("Horizontals:")) {
+                horizontals = line.split(";");
+            } else if (line.contains("Workorders:")) {
+                Workorders = line.split(";");
+            } else if (line.contains("Onhands:")) {
+                Onhands = line.split(";");
+            } else if (line.contains("Indentedbom:")) {
+                Indentedbom = line.split(";");
+            } else if (line.contains("Demand:")) {
+                Demand = line.split(";");
+            } else if (line.contains("Allocations:")) {
+                Allocation = line.split(";");
             }
 
         }
@@ -81,10 +105,74 @@ public class CTB_Ini {
 
         }
 
+        if (horizontals != null) {
+            horizontals[0] = horizontals[0].replace("Horizontals: ", "");
+
+            for (int i = 0; i < horizontals.length; i++) {
+
+                CTB.Horizontals.add(horizontals[i]);
+
+            }
+
+        }
+
+        if (Workorders != null) {
+            Workorders[0] = Workorders[0].replace("Workorders: ", "");
+
+            for (int i = 0; i < Workorders.length; i++) {
+
+                CTB.Workorders.add(Workorders[i]);
+
+            }
+
+        }
+
+        if (Onhands != null) {
+            Onhands[0] = Onhands[0].replace("Onhands: ", "");
+
+            for (int i = 0; i < Onhands.length; i++) {
+
+                CTB.Onhands.add(Onhands[i]);
+
+            }
+
+        }
+        if (Indentedbom != null) {
+            Indentedbom[0] = Indentedbom[0].replace("Indentedbom: ", "");
+
+            for (int i = 0; i < Indentedbom.length; i++) {
+
+                CTB.Indentedbom.add(Indentedbom[i]);
+
+            }
+
+        }
+        if (Demand != null) {
+            Demand[0] = Demand[0].replace("Demand: ", "");
+
+            for (int i = 0; i < Demand.length; i++) {
+
+                CTB.Demand.add(Demand[i]);
+
+            }
+
+        }
+        if (Allocation != null) {
+            Allocation[0] = Allocation[0].replace("Allocations: ", "");
+
+            for (int i = 0; i < Allocation.length; i++) {
+
+                CTB.Allocations.add(Demand[i]);
+
+            }
+
+        }
+
     }
 
     public void inikezel(indit e) throws IOException {
-
+        //a fileok nevei lesznek itt
+        String nevek = "";
         //beolvassuk az ini file-t
         String filepath = "C:\\Users\\" + System.getProperty("user.name") + "\\";
         File file = new File(filepath + "CTB.ini");
@@ -126,8 +214,10 @@ public class CTB_Ini {
                     } catch (Exception ex) {
                     }
                 }
-
-                pnlist = pnlist.substring(0, pnlist.length() - 1);
+                try {
+                    pnlist = pnlist.substring(0, pnlist.length() - 1);
+                } catch (Exception ex) {
+                }
 
 //kicseréljük a sorok listben a pn sort az uj ra
                 for (int i = 0; i < sorok.size(); i++) {
@@ -168,6 +258,180 @@ public class CTB_Ini {
                 sorok.add("Riportpath: " + CTB.riportpath);
                 break;
 
+            case horizontals:
+
+//öszeállítjuk egy stringbe a fileneveket
+                for (int i = 0; i < CTB.Horizontals.size(); i++) {
+
+                    nevek += t.getValueAt(i, 0) + ";";
+
+                }
+                try {
+                    nevek = nevek.substring(0, nevek.length() - 1);
+                    //kicseréljük a horizontalok nevet a programban levore ha vannak beírva
+                    for (int i = 0; i < sorok.size(); i++) {
+
+                        if (sorok.get(i).contains("Horizontals:")) {
+
+                            sorok.remove(i);
+
+                        }
+
+                    }
+                    sorok.add("Horizontals: " + nevek);
+                    break;
+
+                } catch (Exception ex) {
+//ha nincs beírva semmi kitöröljük a sort
+                    for (int i = 0; i < sorok.size(); i++) {
+
+                        if (sorok.get(i).contains("Horizontals:")) {
+
+                            sorok.remove(i);
+
+                        }
+
+                    }
+
+                    break;
+
+                }
+            case workorders:
+                //öszeállítjuk egy stringbe a fileneveket
+                nevek = "";
+                for (int i = 0; i < CTB.Workorders.size(); i++) {
+
+                    nevek += t.getValueAt(i, 0) + ";";
+
+                }
+                try {
+                    nevek = nevek.substring(0, nevek.length() - 1);
+                    //kicseréljük a horizontalok nevet a programban levore ha vannak beírva
+                    for (int i = 0; i < sorok.size(); i++) {
+
+                        if (sorok.get(i).contains("Workorders:")) {
+
+                            sorok.remove(i);
+
+                        }
+
+                    }
+                    sorok.add("Workorders: " + nevek);
+                    break;
+
+                } catch (Exception ex) {
+
+                }
+
+            case ures:
+                break;
+
+            case onhands:
+                //öszeállítjuk egy stringbe a fileneveket
+                nevek = "";
+                for (int i = 0; i < CTB.Onhands.size(); i++) {
+
+                    nevek += t.getValueAt(i, 0) + ";";
+
+                }
+                try {
+                    nevek = nevek.substring(0, nevek.length() - 1);
+                    //kicseréljük a onhandek nevet a programban levore ha vannak beírva
+                    for (int i = 0; i < sorok.size(); i++) {
+
+                        if (sorok.get(i).contains("Onhands:")) {
+
+                            sorok.remove(i);
+
+                        }
+
+                    }
+                    sorok.add("Onhands: " + nevek);
+                    break;
+
+                } catch (Exception ex) {
+
+                }
+
+            case indentedbom:
+                //öszeállítjuk egy stringbe a fileneveket
+                nevek = "";
+                for (int i = 0; i < CTB.Indentedbom.size(); i++) {
+
+                    nevek += t.getValueAt(i, 0) + ";";
+
+                }
+                try {
+                    nevek = nevek.substring(0, nevek.length() - 1);
+                    //kicseréljük a onhandek nevet a programban levore ha vannak beírva
+                    for (int i = 0; i < sorok.size(); i++) {
+
+                        if (sorok.get(i).contains("Indentedbom:")) {
+
+                            sorok.remove(i);
+
+                        }
+
+                    }
+                    sorok.add("Indentedbom: " + nevek);
+                    break;
+
+                } catch (Exception ex) {
+
+                }
+
+            case demand:
+                //öszeállítjuk egy stringbe a fileneveket
+                nevek = "";
+                for (int i = 0; i < CTB.Demand.size(); i++) {
+
+                    nevek += t.getValueAt(i, 0) + ";";
+
+                }
+                try {
+                    nevek = nevek.substring(0, nevek.length() - 1);
+                    //kicseréljük a onhandek nevet a programban levore ha vannak beírva
+                    for (int i = 0; i < sorok.size(); i++) {
+
+                        if (sorok.get(i).contains("Demand:")) {
+
+                            sorok.remove(i);
+
+                        }
+
+                    }
+                    sorok.add("Demand: " + nevek);
+                    break;
+
+                } catch (Exception ex) {
+
+                }
+            case allocations:
+                //öszeállítjuk egy stringbe a fileneveket
+                nevek = "";
+                for (int i = 0; i < CTB.Allocations.size(); i++) {
+
+                    nevek += t.getValueAt(i, 0) + ";";
+
+                }
+                try {
+                    nevek = nevek.substring(0, nevek.length() - 1);
+                    //kicseréljük a onhandek nevet a programban levore ha vannak beírva
+                    for (int i = 0; i < sorok.size(); i++) {
+
+                        if (sorok.get(i).contains("Allocations:")) {
+
+                            sorok.remove(i);
+
+                        }
+
+                    }
+                    sorok.add("Allocations: " + nevek);
+                    break;
+
+                } catch (Exception ex) {
+
+                }
         }
 
 //kiirjuk a filet

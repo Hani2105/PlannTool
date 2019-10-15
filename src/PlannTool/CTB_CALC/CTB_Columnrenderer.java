@@ -86,6 +86,18 @@ public class CTB_Columnrenderer extends DefaultTableCellRenderer {
             //c.setBorder(BorderFactory.createLineBorder(Color.black));
             c.setFont(new Font("Sanserif", Font.BOLD, 10));
 
+        } else if (column == 8) {
+
+            c.setBackground(null);
+            //c.setBorder(BorderFactory.createLineBorder(Color.black));
+            c.setFont(new Font("Sanserif", Font.BOLD, 10));
+
+        } else if (column == 9) {
+
+            c.setBackground(null);
+            //c.setBorder(BorderFactory.createLineBorder(Color.black));
+            c.setFont(new Font("Sanserif", Font.BOLD, 10));
+
         } else {
 
             c.setBackground(null);

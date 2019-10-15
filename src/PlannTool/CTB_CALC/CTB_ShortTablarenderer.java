@@ -38,7 +38,7 @@ public class CTB_ShortTablarenderer extends DefaultTableCellRenderer {
         JLabel c = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
         c.setHorizontalAlignment(CENTER);
         c.setBorder(BorderFactory.createEtchedBorder());
-        if (column == 3 || column == 0) {
+        if (column == 3 || column == 0 || column == 8 ) {
 
             c.setBackground(new Color(167, 181, 204, 60));
 //ha nem üres a stockdata és egyezik a pn akkor beírjuk a tooltipet

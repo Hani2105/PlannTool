@@ -79,7 +79,7 @@ public class CTB_Tablarenderer extends DefaultTableCellRenderer {
                     tooltip += CTB.PnDatas.get(i)[2].toString() + "<br>";
                     c.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/PICTURES/comment.jpg")));
 
-                } 
+                }
 
             }
 
@@ -98,11 +98,24 @@ public class CTB_Tablarenderer extends DefaultTableCellRenderer {
 
         } else if (column == 1) {
 
-            c.setBackground(new Color(229, 246, 33, 80));
-            c.setBorder(BorderFactory.createEtchedBorder());
-            c.setToolTipText(null);
-            c.setIcon(null);
+            try {
+                if (Integer.parseInt(table.getValueAt(row, column).toString()) <= 0) {
 
+                    c.setBackground(Color.red);
+
+                } else {
+
+                    c.setBackground(new Color(229, 246, 33, 80));
+
+                }
+            } catch (Exception e) {
+                c.setBackground(new Color(229, 246, 33, 80));
+            }
+
+//            c.setBackground(new Color(229, 246, 33, 80));
+//            c.setBorder(BorderFactory.createEtchedBorder());
+//            c.setToolTipText(null);
+//            c.setIcon(null);
         } else if (column == 2) {
 
             c.setBackground(new Color(229, 246, 33, 60));
@@ -119,11 +132,24 @@ public class CTB_Tablarenderer extends DefaultTableCellRenderer {
 
         } else if (column == 4) {
 
-            c.setBackground(new Color(229, 246, 33, 20));
-            c.setBorder(BorderFactory.createEtchedBorder());
-            c.setToolTipText(null);
-            c.setIcon(null);
+            try {
+                if (Integer.parseInt(table.getValueAt(row, column).toString()) <= 0) {
 
+                    c.setBackground(Color.red);
+
+                } else {
+
+                    c.setBackground(new Color(229, 246, 33, 20));
+
+                }
+            } catch (Exception e) {
+                c.setBackground(new Color(229, 246, 33, 20));
+            }
+
+//            c.setBackground(new Color(229, 246, 33, 20));
+//            c.setBorder(BorderFactory.createEtchedBorder());
+//            c.setToolTipText(null);
+//            c.setIcon(null);
         } else if (column == 5) {
 
             try {

@@ -9,6 +9,7 @@ import PlannTool.ablak;
 import java.awt.Color;
 import java.awt.Component;
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.ToolTipManager;
@@ -210,6 +211,34 @@ public class Tc_TervTooltipRenderer extends DefaultTableCellRenderer {
 
             }
 
+//megnezzuk mikor gyartottuk utoljara ezt a pn-t
+            try {
+                for (int i = 0; i < b.utsogyartasok.length; i++) {
+                    try {
+                        if (table.getValueAt(row, 0).toString().equals(b.utsogyartasok[i][2].toString())) {
+                            tooltiptext = "<html>A terméket " + b.utsogyartasok[i][1] + " napja gyártottuk!";
+                            c.setToolTipText(tooltiptext);
+                            if (Integer.parseInt(b.utsogyartasok[i][1]) >= 90) {
+                                c.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/PICTURES/olds.png")));
+                            }
+                            break;
+
+                        }
+
+                    } catch (Exception e) {
+                    }
+
+                }
+//ha nincs tooltiptext akkor az azt jelenti h meg nem gyartottuk
+                if (tooltiptext.length() == 0) {
+                    tooltiptext = "<html>Nem gyártottuk még!";
+                    c.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/PICTURES/news.png")));
+                    c.setToolTipText(tooltiptext);
+                }
+
+            } catch (Exception ex) {
+            }
+
         }
 
         //jöhet a ws színezés
@@ -282,12 +311,24 @@ public class Tc_TervTooltipRenderer extends DefaultTableCellRenderer {
         if (column == 0 && table.getValueAt(row, 0) != null && !table.getValueAt(row, 0).toString().equals("")) {
 
             for (int i = 0; i < b.partnumbers.size(); i++) {
-
+                //System.out.println(b.partnumbers.get(i)[0]);
                 if (b.partnumbers.get(i)[0].equals(table.getValueAt(row, 0).toString()) && b.partnumbers.get(i)[2] != null && !b.partnumbers.get(i)[2].equals("") && ablak.planner) {
 
-                    tooltiptext = "Komment: " + b.partnumbers.get(i)[2];
-                    c.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/PICTURES/comment.jpg")));
+                    tooltiptext += "<br>Komment: " + b.partnumbers.get(i)[2] + "</html>";
+                    if (c.getIcon() == null) {
+                        c.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/PICTURES/comment.jpg")));
+                    } //ha be van állítva a régi icon
+                    else if (c.getIcon().toString().equals(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/PICTURES/olds.png")).toString())) {
+                        c.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/PICTURES/oldcomment.jpg")));
+
+                    } //ha be van állítva az uj icon
+                    else if (c.getIcon().toString().equals(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/PICTURES/news.png")).toString())) {
+                        c.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/PICTURES/newcomment.jpg")));
+
+                    }
+
                     c.setToolTipText(tooltiptext);
+                    break;
 
                 }
 

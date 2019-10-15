@@ -306,6 +306,9 @@ public class Tc_Leker {
 
         //visszaallitjuk a nezetvaltas figyelojet
         Tc_Betervezo.nezetvaltas = true;
+        Tc_Uccsogyartasok u = new Tc_Uccsogyartasok(Besheets.get(neve));
+        u.start();
+       
 
     }
 

@@ -961,7 +961,12 @@ public class CTB_ContolPanel extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        
+        if (jTable1.isEditing()) {
+            jTable1.getCellEditor().stopCellEditing();
+        }
 
+        
         setriports(CTB.Horizontals, jTable1, CTB_Ini.indit.horizontals);
 
 
@@ -998,26 +1003,41 @@ public class CTB_ContolPanel extends javax.swing.JFrame {
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
         // workorders mentése
+        if (jTable2.isEditing()) {
+            jTable2.getCellEditor().stopCellEditing();
+        }
         setriports(CTB.Workorders, jTable2, CTB_Ini.indit.workorders);
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
         // allocations mentese
-         setriports(CTB.Allocations, jTable3, CTB_Ini.indit.allocations);
+        if (jTable3.isEditing()) {
+            jTable3.getCellEditor().stopCellEditing();
+        }
+        setriports(CTB.Allocations, jTable3, CTB_Ini.indit.allocations);
     }//GEN-LAST:event_jButton9ActionPerformed
 
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
         // onhand riportnevek mentese
+        if (jTable5.isEditing()) {
+            jTable5.getCellEditor().stopCellEditing();
+        }
         setriports(CTB.Onhands, jTable5, CTB_Ini.indit.onhands);
     }//GEN-LAST:event_jButton10ActionPerformed
 
     private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
         // demand beállítása
+        if (jTable4.isEditing()) {
+            jTable4.getCellEditor().stopCellEditing();
+        }
         setriports(CTB.Demand, jTable4, CTB_Ini.indit.demand);
     }//GEN-LAST:event_jButton11ActionPerformed
 
     private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
         //indented bom beállítása
+        if (jTable6.isEditing()) {
+            jTable6.getCellEditor().stopCellEditing();
+        }
         setriports(CTB.Indentedbom, jTable6, CTB_Ini.indit.indentedbom);
     }//GEN-LAST:event_jButton12ActionPerformed
 

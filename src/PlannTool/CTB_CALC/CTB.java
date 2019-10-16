@@ -199,6 +199,7 @@ public class CTB extends javax.swing.JFrame {
                                 }
 
                             } catch (Exception e) {
+
                             }
 
                         }
@@ -2009,8 +2010,8 @@ public class CTB extends javax.swing.JFrame {
                         }
 
                     }
-//beallitjuk az oh modellbe az osszeget
-                    //ohtabla.setValueAt(osszeg, o, 8);
+//ha idáig eljutunk akkor legyen nulla!!! mert akkor nincs ilyen  horizontalban
+                    ohtabla.setValueAt(0, o, 8);
 
                 }
             }

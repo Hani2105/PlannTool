@@ -25,8 +25,8 @@ public class CTB_TabbedUI extends BasicTabbedPaneUI {
     private static final int ADDED_TAB_HEIGTH = 0;
     private static final int ADDED_TAB_WIDTH = 0;
     private static final int SPACE_BETWEEN_TAB = 0;
-    private static final Color TAB_COLOR = new Color(229, 246, 33, 40);
-    private static final Color SELECTED_TAB_COLOR = new Color(229, 246, 33, 100);
+    private static final Color TAB_COLOR = new Color(0, 122, 138, 40);
+    private static final Color SELECTED_TAB_COLOR = new Color(0, 122, 138, 100);
 
     public static ComponentUI createUI(JComponent c) {
         return new CTB_TabbedUI((JTabbedPane) c);

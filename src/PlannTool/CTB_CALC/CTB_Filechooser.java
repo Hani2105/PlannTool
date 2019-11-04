@@ -19,18 +19,22 @@ public class CTB_Filechooser {
     public static JFileChooser getFileChooserRiport() {
         if (!CTB.riportpath.equals("")) {
             JFileChooser fc = new JFileChooser(CTB.riportpath);
+            fc.setFont(new java.awt.Font("Segoe Script", 1, 12));
             return fc;
         } else {
             JFileChooser fc = new JFileChooser();
+            fc.setFont(new java.awt.Font("Segoe Script", 1, 12));
             return fc;
         }
     }
      public static JFileChooser getFileChooserScen() {
         if (!CTB.scenpath.equals("")) {
             JFileChooser fc = new JFileChooser(CTB.scenpath);
+            fc.setFont(new java.awt.Font("Segoe Script", 1, 12));
             return fc;
         } else {
             JFileChooser fc = new JFileChooser();
+            fc.setFont(new java.awt.Font("Segoe Script", 1, 12));
             return fc;
         }
     }

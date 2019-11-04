@@ -52,10 +52,6 @@ public class CTB_Wipquery extends Thread {
         } catch (MalformedURLException ex) {
             Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        
-        
-        
 
     }
 

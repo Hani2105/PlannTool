@@ -34,37 +34,47 @@ public class CTB_Columnrenderer extends DefaultTableCellRenderer {
 
         JLabel c = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 
-//        if (column > 6) {
-//            //c.setFont(new Font("Sanserif", Font.BOLD, 10));
-//            c.setForeground(Color.BLACK);
-//        }
+//ha a topshort táblát hekkeljük
+        if (table == CTB.jTable9 && !CTB_NEW_Variables.topshortthread) {
+              c.setForeground(Color.black);
+        }
+        else if(table == CTB.jTable9 && CTB_NEW_Variables.topshortthread){
+        
+           c.setForeground(Color.red);
+        }
+        
+        else{
+         c.setForeground(Color.black);
+        
+        }
+
         if (column == 0) {
 
-            c.setBackground(new Color(229, 246, 33, 100));
+            c.setBackground(new Color(0, 122, 138, 100));
             //c.setBorder(BorderFactory.createLineBorder(Color.black));
             c.setFont(new Font("Sanserif", Font.BOLD, 10));
 
         } else if (column == 1) {
 
-            c.setBackground(new Color(229, 246, 33, 80));
+            c.setBackground(new Color(0, 140, 158, 80));
             //c.setBorder(BorderFactory.createLineBorder(Color.black));
             c.setFont(new Font("Sanserif", Font.BOLD, 10));
 
         } else if (column == 2) {
 
-            c.setBackground(new Color(229, 246, 33, 60));
+            c.setBackground(new Color(0, 156, 176, 60));
             //c.setBorder(BorderFactory.createLineBorder(Color.black));
             c.setFont(new Font("Sanserif", Font.BOLD, 10));
 
         } else if (column == 3) {
 
-            c.setBackground(new Color(229, 246, 33, 40));
+            c.setBackground(new Color(0, 170, 191, 40));
             //c.setBorder(BorderFactory.createLineBorder(Color.black));
             c.setFont(new Font("Sanserif", Font.BOLD, 10));
 
         } else if (column == 4) {
 
-            c.setBackground(new Color(229, 246, 33, 20));
+            c.setBackground(new Color(0, 186, 209, 20));
             //c.setBorder(BorderFactory.createLineBorder(Color.black));
             c.setFont(new Font("Sanserif", Font.BOLD, 10));
 

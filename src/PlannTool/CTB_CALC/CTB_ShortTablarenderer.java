@@ -13,6 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.ToolTipManager;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -37,34 +38,49 @@ public class CTB_ShortTablarenderer extends DefaultTableCellRenderer {
 
         JLabel c = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
         c.setHorizontalAlignment(CENTER);
-        c.setBorder(BorderFactory.createEtchedBorder());
-        if (column == 3 || column == 0 || column == 8 ) {
+        c.setBorder(BorderFactory.createLoweredSoftBevelBorder());
+        if (column == 3 || column == 0 || column == 8) {
 
             c.setBackground(new Color(167, 181, 204, 60));
-//ha nem üres a stockdata és egyezik a pn akkor beírjuk a tooltipet
 
-//            if (CTB.WipStockData != null || CTB.OraStockData != null) {
-//                String tooltip = "<html>";
-//                for (int i = 0; i < CTB.WipStockData.length; i++) {
-//
-//                    tooltip += CTB.WipStockData[i][0] + " " + CTB.WipStockData[i][1] + "<br>";
-//
-//                }
-//                try {
-//                    for (int i = 0; i < CTB.OraStockData.length; i++) {
-//
-//                        tooltip += CTB.OraStockData[i][0] + " " + CTB.OraStockData[i][1] + " " + CTB.OraStockData[i][2] + "<br>";
-//
-//                    }
-//                } catch (Exception e) {
-//                }
-//
-//                tooltip += "</html>";
-//                c.setToolTipText(tooltip);
-//
-//            } else {
-//                c.setToolTipText(null);
-//            }
+        } else if (column == 9 && isSelected) {
+//kiszedjük , hogy melyik héten mennyi anyag jön 
+//felvesszük a horizontal modellt
+            String tooltiptext = "<html><body>";
+            DefaultTableModel model = new DefaultTableModel();
+            model = (DefaultTableModel) CTB.jTable13.getModel();
+
+//megnezzuk melyik pn re vagyunk kiváncsiak
+            String pn = table.getValueAt(row, 0).toString();
+
+//bepörgetjük a modellt a pn után kutatva és supply sor után kutatva
+            for (int i = 0; i < model.getRowCount(); i++) {
+                if (model.getValueAt(i, 1).toString().equals(pn) && model.getValueAt(i, 18).toString().contains("Supply")) {
+//bent vagyunk a megfelelő sorban
+//bejárjuk az oszlopokat a 18. tól elkezdve
+                    for (int o = 0; o < model.getColumnCount(); o++) {
+//minden oszlopban meg kell keresni a hetet
+                        for (int sor = i; sor >= 0; sor--) {
+//ha week cellába ütközünk akkor a hét száma egyel alatta lesz
+                            try {
+                                if (model.getValueAt(sor, o).toString().equals("Week")) {
+
+                                    tooltiptext += "Hét " + model.getValueAt(sor + 1, o).toString() + ": " + model.getValueAt(i, o).toString() + "DB <br>";
+                                    break;
+
+                                }
+                            } catch (Exception e) {
+                            }
+
+                        }
+
+                    }
+                    break;
+                }
+
+            }
+
+            c.setToolTipText(tooltiptext);
 
         } else {
 
@@ -80,6 +96,7 @@ public class CTB_ShortTablarenderer extends DefaultTableCellRenderer {
         } else {
 
             c.setForeground(Color.BLACK);
+            c.setToolTipText(null);
 
         }
 

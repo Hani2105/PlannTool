@@ -30,15 +30,15 @@ import static org.apache.poi.hssf.usermodel.HeaderFooter.file;
  * @author gabor_hanacsek
  */
 public class CTB_Scenario {
-
+    
     CTB c;
-
+    
     public CTB_Scenario(CTB c) {
-
+        
         this.c = c;
-
+        
     }
-
+    
     public void ScenarioSave() throws IOException {
 //gyakorlatilag azt szeretnenk csinalni , hogy vegigmegyünk a tabokon es elmentjuk egy textbe az adatokat.
 
@@ -46,9 +46,9 @@ public class CTB_Scenario {
         JFileChooser fileChooser = CTB_Filechooser.getFileChooserScen();
         fileChooser.setAcceptAllFileFilterUsed(true);
         fileChooser.setDialogTitle("Mentés helye!");
-
+        
         int userSelection = fileChooser.showSaveDialog(c);
-
+        
         if (userSelection == JFileChooser.APPROVE_OPTION) {
             CTB_Filechooser.setLastDirScen(fileChooser.getSelectedFile());
 //eltesszük fileba
@@ -61,8 +61,8 @@ public class CTB_Scenario {
             //beirunk valami faszssagot
             bw.write("Kezdodik a file!");
             bw.newLine();
-
-            JTable[] tablakneve = new JTable[11];
+            
+            JTable[] tablakneve = new JTable[10];
             tablakneve[0] = c.jTable1;
             tablakneve[1] = c.jTable2;
             tablakneve[2] = c.jTable3;
@@ -70,40 +70,40 @@ public class CTB_Scenario {
             tablakneve[4] = c.jTable5;
             tablakneve[5] = c.jTable6;
             tablakneve[6] = c.jTable7;
-            tablakneve[7] = c.jTable8;
-            tablakneve[8] = c.jTable11;
-            tablakneve[9] = c.jTable10;
-            tablakneve[10] = c.jTable13;
-
+            tablakneve[7] = c.jTable11;
+            tablakneve[8] = c.jTable10;
+            tablakneve[9] = c.jTable13;
+            
             for (int i = 0; i < tablakneve.length; i++) {
-
+                
                 TableToText(tablakneve[i], file, bw);
-
+                
             }
 
             //beirunk valami faszssagot
             bw.write("Vege a Filenak!");
             bw.newLine();
-
+            
             bw.close();
             fw.close();
             CTB.jLabel6.setText(fileToSave.getName().replace(".scen", ""));
         }
 
-        infobox info = new infobox();
-        info.infoBox("Mentés kész!", "Mentés!");
-
+//        infobox info = new infobox();
+//        info.infoBox("Mentés kész!", "Mentés!");
+        c.tick.SetMessage("Mentés kész!");
+        
     }
-
+    
     public static void TableToText(JTable j, File f, BufferedWriter bw) throws IOException {
 
 //beirjuk h kezdodik a columneve oszlop
         bw.write(j.getName() + ";" + "!!COLNAME" + ";");
 //beirjuk a column neveket 
         for (int i = 0; i < j.getColumnCount(); i++) {
-
+            
             bw.write(j.getColumnName(i).toString() + ";");
-
+            
         }
 //uj sorban kezdjuk az adatokat
 
@@ -113,7 +113,7 @@ public class CTB_Scenario {
         for (int r = 0; r < j.getRowCount(); r++) {//rows
 //a tábla neve           
             bw.write(j.getName() + ";");
-
+            
             for (int i = 0; i < j.getColumnCount(); i++) {//columns
                 try {
                     bw.write(j.getValueAt(r, i).toString() + ";");
@@ -123,12 +123,12 @@ public class CTB_Scenario {
             }
             bw.newLine();
         }
-
+        
         bw.write(j.getName() + ";" + "!!VEGE ");
         bw.newLine();
-
+        
     }
-
+    
     public void ScenarioLoad() throws FileNotFoundException, IOException {
 
 //be kell tallózni a text filet
@@ -136,7 +136,7 @@ public class CTB_Scenario {
         JFileChooser chooser = CTB_Filechooser.getFileChooserScen();
         chooser.setFileFilter(filter);
         int filename = chooser.showOpenDialog(null);
-
+        
         if (filename == JFileChooser.APPROVE_OPTION) {
             //et lesz a fileunk 
             CTB_Filechooser.setLastDirScen(chooser.getSelectedFile());
@@ -144,7 +144,7 @@ public class CTB_Scenario {
 //kell egy bufferedreader is
 
             //kitöröljük az összes tábla adatát
-            JTable[] tablakneve = new JTable[11];
+            JTable[] tablakneve = new JTable[10];
             tablakneve[0] = c.jTable1;
             tablakneve[1] = c.jTable2;
             tablakneve[2] = c.jTable3;
@@ -152,11 +152,10 @@ public class CTB_Scenario {
             tablakneve[4] = c.jTable5;
             tablakneve[5] = c.jTable6;
             tablakneve[6] = c.jTable7;
-            tablakneve[7] = c.jTable8;
-            tablakneve[8] = c.jTable11;
-            tablakneve[9] = c.jTable10;
-            tablakneve[10] = c.jTable13;
-
+            tablakneve[7] = c.jTable11;
+            tablakneve[8] = c.jTable10;
+            tablakneve[9] = c.jTable13;
+            
             outerloop:
             for (int i = 0; i < tablakneve.length; i++) {
                 BufferedReader in;
@@ -169,9 +168,9 @@ public class CTB_Scenario {
                 model.setColumnCount(0);
                 String line = in.readLine();
                 String tablaneve = tablakneve[i].getName();
-
+                
                 while ((line = in.readLine()) != null) {
-
+                    
                     String[] cells = line.split(";");
 
                     //ha a végéhez érünk , lépünk a következő táblához
@@ -182,33 +181,34 @@ public class CTB_Scenario {
                         continue outerloop;
                     } // ha a coname részhez érünk beszetteljük columnszámot és beírjuk a nevét is
                     else if (cells[0].contains(tablaneve) && cells[1].contains("!!COLNAME")) {
-
+                        
                         for (int col = 0; col < cells.length - 2; col++) {
-
+                            
                             model.addColumn(cells[col + 2]);
-
+                            
                         }
-
+                        
                     } else if (cells[0].contains(tablaneve)) {
-
+                        
                         String[] csokkentett = Arrays.copyOfRange(cells, 1, cells.length);
-
+                        
                         model.addRow(csokkentett);
-
+                        
                     }
-
+                    
                 }
-
+                
             }
             
-            CTB.jLabel6.setText(CTB.f.getName().replace(".scen",""));
-
+            CTB.jLabel6.setText(CTB.f.getName().replace(".scen", ""));
+            
         }
         CTB_Wipquery wip = new CTB_Wipquery(CTB.jTable1);
         wip.start();
-        infobox info = new infobox();
-        info.infoBox("Import kész!", "Betöltés!");
-
+//        infobox info = new infobox();
+//        info.infoBox("Import kész!", "Betöltés!");
+        c.tick.SetMessage("Import kész!");
+        
     }
-
+    
 }

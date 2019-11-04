@@ -38,6 +38,20 @@ public class CTB_PnDatas {
         }
 
         pc.kinyir();
+//beírjuk a megfelelő helyre az adatokat
+        outerloop:
+        for (int i = 0; i < CTB.jTable1.getRowCount(); i++) {
+            for (int a = 0; a < CTB.PnDatas.size(); a++) {
+                if (CTB.jTable1.getValueAt(i, 0).toString().equals(CTB.PnDatas.get(a)[1])) {
+                    CTB.jTable1.setValueAt(CTB.PnDatas.get(a)[2], i, 7);
+                    continue outerloop;
+                }
+//ha idáig eljutunk legyen üres
+                CTB.jTable1.setValueAt("", i, 7);
+            }
+
+        }
+
     }
 
 }

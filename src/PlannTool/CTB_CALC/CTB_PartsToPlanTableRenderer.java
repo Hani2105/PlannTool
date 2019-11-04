@@ -37,7 +37,7 @@ public class CTB_PartsToPlanTableRenderer extends DefaultTableCellRenderer {
 
         JLabel c = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
         c.setHorizontalAlignment(CENTER);
-        c.setBorder(BorderFactory.createEtchedBorder());
+        c.setBorder(BorderFactory.createLoweredSoftBevelBorder());
         c.setBackground(new Color(0, 0, 0, 10));
 
         if (column == 3) {
@@ -45,31 +45,31 @@ public class CTB_PartsToPlanTableRenderer extends DefaultTableCellRenderer {
             try {
                 if (Integer.parseInt(table.getValueAt(row, column).toString()) > 0) {
 
-                    c.setBackground(Color.red);
+                    c.setBackground(new Color(237, 2, 45, 60));
 
                 } else {
 
                     c.setBackground(new Color(38, 236, 28, 60));
                 }
             } catch (Exception e) {
-                // c.setBackground(new Color(38, 236, 28, 60));
+
             }
         } else if (column == 0) {
 
-            c.setBackground(new Color(229, 246, 33, 100));
+            c.setBackground(new Color(0, 122, 138, 100));
 
         } else if (column == 1) {
 
-            c.setBackground(new Color(229, 246, 33, 80));
+            c.setBackground(new Color(0, 140, 158, 80));
 
         } else if (column == 2) {
 
-            c.setBackground(new Color(229, 246, 33, 60));
+            c.setBackground(new Color(0, 156, 176, 60));
 
         } else {
 
-            c.setBorder(BorderFactory.createEtchedBorder());
-            c.setBackground(new Color(0, 0, 0, 10));
+            c.setBorder(BorderFactory.createLoweredSoftBevelBorder());
+            c.setBackground(new Color(0, 0, 0, 30));
 
         }
 
@@ -88,8 +88,6 @@ public class CTB_PartsToPlanTableRenderer extends DefaultTableCellRenderer {
 
             }
 
-//            c.setForeground(new Color(0, 0, 0));
-//            c.setBorder(BorderFactory.createLineBorder(new Color(55, 52, 249), 2));
         }
 
         return c;

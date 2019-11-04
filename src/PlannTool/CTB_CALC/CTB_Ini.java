@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -24,6 +25,7 @@ import javax.swing.table.DefaultTableModel;
 public class CTB_Ini {
 
     JTable t;
+    JTextField tx;
 
     enum indit {
         part, scenpath, riportpath, horizontals, workorders, ures, onhands, indentedbom, demand, allocations
@@ -36,6 +38,12 @@ public class CTB_Ini {
     public CTB_Ini(JTable tervtabla) {
 
         this.t = tervtabla;
+
+    }
+
+    public CTB_Ini(JTextField tx) {
+
+        this.tx = tx;
 
     }
 
@@ -162,7 +170,7 @@ public class CTB_Ini {
 
             for (int i = 0; i < Allocation.length; i++) {
 
-                CTB.Allocations.add(Demand[i]);
+                CTB.Allocations.add(Allocation[i]);
 
             }
 
@@ -263,7 +271,7 @@ public class CTB_Ini {
 //öszeállítjuk egy stringbe a fileneveket
                 for (int i = 0; i < CTB.Horizontals.size(); i++) {
 
-                    nevek += t.getValueAt(i, 0) + ";";
+                    nevek += tx.getText()+";";
 
                 }
                 try {
@@ -301,7 +309,7 @@ public class CTB_Ini {
                 nevek = "";
                 for (int i = 0; i < CTB.Workorders.size(); i++) {
 
-                    nevek += t.getValueAt(i, 0) + ";";
+                    nevek += tx.getText() + ";";
 
                 }
                 try {
@@ -331,7 +339,7 @@ public class CTB_Ini {
                 nevek = "";
                 for (int i = 0; i < CTB.Onhands.size(); i++) {
 
-                    nevek += t.getValueAt(i, 0) + ";";
+                    nevek += tx.getText()+";";
 
                 }
                 try {
@@ -358,7 +366,7 @@ public class CTB_Ini {
                 nevek = "";
                 for (int i = 0; i < CTB.Indentedbom.size(); i++) {
 
-                    nevek += t.getValueAt(i, 0) + ";";
+                    nevek += tx.getText() + ";";
 
                 }
                 try {
@@ -385,7 +393,7 @@ public class CTB_Ini {
                 nevek = "";
                 for (int i = 0; i < CTB.Demand.size(); i++) {
 
-                    nevek += t.getValueAt(i, 0) + ";";
+                    nevek += tx.getText()+ ";";
 
                 }
                 try {
@@ -411,7 +419,7 @@ public class CTB_Ini {
                 nevek = "";
                 for (int i = 0; i < CTB.Allocations.size(); i++) {
 
-                    nevek += t.getValueAt(i, 0) + ";";
+                    nevek += tx.getText()+ ";";
 
                 }
                 try {

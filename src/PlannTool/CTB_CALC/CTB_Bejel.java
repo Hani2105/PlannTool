@@ -20,8 +20,10 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.UnsupportedLookAndFeelException;
 
 /**
  *
@@ -74,6 +76,14 @@ public class CTB_Bejel extends javax.swing.JFrame {
                     jButton1ActionPerformed(evt);
                 } catch (IOException ex) {
                     Logger.getLogger(CTB_Bejel.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (UnsupportedLookAndFeelException ex) {
+                    Logger.getLogger(CTB_Bejel.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (InstantiationException ex) {
+                    Logger.getLogger(CTB_Bejel.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IllegalAccessException ex) {
+                    Logger.getLogger(CTB_Bejel.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ParseException ex) {
+                    Logger.getLogger(CTB_Bejel.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         });
@@ -87,6 +97,14 @@ public class CTB_Bejel extends javax.swing.JFrame {
                 try {
                     jPasswordField1KeyPressed(evt);
                 } catch (IOException ex) {
+                    Logger.getLogger(CTB_Bejel.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (UnsupportedLookAndFeelException ex) {
+                    Logger.getLogger(CTB_Bejel.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (InstantiationException ex) {
+                    Logger.getLogger(CTB_Bejel.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IllegalAccessException ex) {
+                    Logger.getLogger(CTB_Bejel.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ParseException ex) {
                     Logger.getLogger(CTB_Bejel.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
@@ -144,7 +162,7 @@ public class CTB_Bejel extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) throws IOException {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) throws IOException, UnsupportedLookAndFeelException, InstantiationException, IllegalAccessException, ParseException {//GEN-FIRST:event_jButton1ActionPerformed
 
         try {
             bejel();
@@ -154,7 +172,7 @@ public class CTB_Bejel extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jPasswordField1KeyPressed(java.awt.event.KeyEvent evt) throws IOException {//GEN-FIRST:event_jPasswordField1KeyPressed
+    private void jPasswordField1KeyPressed(java.awt.event.KeyEvent evt) throws IOException, UnsupportedLookAndFeelException, InstantiationException, IllegalAccessException, ParseException {//GEN-FIRST:event_jPasswordField1KeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
 
             try {
@@ -174,7 +192,7 @@ public class CTB_Bejel extends javax.swing.JFrame {
 
     }//GEN-LAST:event_formWindowClosing
 
-    public void bejel() throws ClassNotFoundException, IOException {
+    public void bejel() throws ClassNotFoundException, IOException, UnsupportedLookAndFeelException, InstantiationException, IllegalAccessException, ParseException {
 
 //csak ha valami van írva a felh nevhez es jelszohoz
         if (jTextField1.getText().length() > 0 && jPasswordField1.getText().length() > 0) {

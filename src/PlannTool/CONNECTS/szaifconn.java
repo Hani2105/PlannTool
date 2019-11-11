@@ -23,7 +23,7 @@ public class szaifconn {
     String url;
     String username;
     String password;
-    ResultSet rs;
+    public ResultSet rs;
     Connection conn;
 
     public szaifconn(String driver, String url, String username, String password) throws ClassNotFoundException {

@@ -71,7 +71,7 @@ public class Tc_TervTooltipRenderer extends DefaultTableCellRenderer {
 
         if (table.getValueAt(row, 3).toString().equals("Terv")) {
 
-            c.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createMatteBorder(1, 0, 0, 0, Color.orange), BorderFactory.createEtchedBorder(1)));
+            //c.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createMatteBorder(1, 0, 0, 0, Color.orange), BorderFactory.createEtchedBorder(1)));
             //c.setBorder(BorderFactory.createMatteBorder(1, 0, 0, 0, Color.black));
             c.setHorizontalAlignment(CENTER);
             c.setIcon(null);
@@ -81,7 +81,7 @@ public class Tc_TervTooltipRenderer extends DefaultTableCellRenderer {
 //ha tény sorban vagyunk
         if (table.getValueAt(row, 3).toString().equals("Tény")) {
 
-            c.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.orange), BorderFactory.createEtchedBorder(1)));
+            //c.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.orange), BorderFactory.createEtchedBorder(1)));
             //c.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.black));
             c.setHorizontalAlignment(CENTER);
             c.setIcon(null);

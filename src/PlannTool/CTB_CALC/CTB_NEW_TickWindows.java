@@ -6,6 +6,7 @@
 package PlannTool.CTB_CALC;
 
 import java.awt.Color;
+import javax.swing.JRootPane;
 
 /**
  *
@@ -18,6 +19,7 @@ public class CTB_NEW_TickWindows extends javax.swing.JDialog {
      */
     public CTB_NEW_TickWindows(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
+        getRootPane().setWindowDecorationStyle(JRootPane.NONE);
         initComponents();
         setBackground(new Color(0, 0, 0, 0));
        

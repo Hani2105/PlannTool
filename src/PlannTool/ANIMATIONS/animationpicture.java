@@ -8,6 +8,7 @@ package PlannTool.ANIMATIONS;
 import PlannTool.ablak;
 import java.awt.Color;
 import java.awt.Point;
+import javax.swing.JRootPane;
 import javax.swing.SwingConstants;
 
 /**
@@ -20,7 +21,7 @@ public class animationpicture extends javax.swing.JFrame {
      * Creates new form animationpicture
      */
     public animationpicture() {
-
+        getRootPane().setWindowDecorationStyle(JRootPane.NONE);
         initComponents();
         jLabel1.setIcon(ablak.defaulticon);
         jLabel1.setSize(ablak.defaulticon.getIconHeight(),ablak.defaulticon.getIconWidth());

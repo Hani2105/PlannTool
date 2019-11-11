@@ -37,18 +37,15 @@ public class CTB_NEW_Variables {
 //a horizontal modellje , a bomcalcnál vesszük fel                        jtable13
     public static DefaultTableModel horizontalmodel = new DefaultTableModel();
 //a terv tábla változója   , akkor állítjuk be amikor leütjük az entert a táblán  jtable11
-     public static DefaultTableModel tervtablemodel = new DefaultTableModel();
+    public static DefaultTableModel tervtablemodel = new DefaultTableModel();
 //a topshortmodel változója, a topshorttradeban állítjuk be           jtable9
     public static DefaultTableModel topshortmodel = new DefaultTableModel();
 //ship tábla modellje a control panelnál állítjuk be
     public static DefaultTableModel shipmodel = new DefaultTableModel();
-    
 
 //----------------------------------------------------------------------------------------//
 //                             globális változók   
 //itt tároljuk a tervtábla adatait
     public static String[][] adatok;
-//topshortszalbol csak egy peldany legyen
-    public static boolean topshortthread = false;
 
 }

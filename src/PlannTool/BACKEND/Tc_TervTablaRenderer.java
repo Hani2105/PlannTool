@@ -39,44 +39,44 @@ public class Tc_TervTablaRenderer extends DefaultTableCellRenderer {
             if (table.getColumnName(column).toLowerCase().contains("Sun".toLowerCase())) {
                 
                 c.setBackground(new Color(208, 14, 43));
-                c.setBorder(BorderFactory.createEtchedBorder(1));
+                //c.setBorder(BorderFactory.createEtchedBorder(1));
                 c.setForeground(Color.BLACK);
                 
             } else if (table.getColumnName(column).toLowerCase().contains("Sat".toLowerCase())) {
                 
                 c.setBackground(new Color(208, 14, 161));
-                c.setBorder(BorderFactory.createEtchedBorder(1));
+                //c.setBorder(BorderFactory.createEtchedBorder(1));
                 c.setForeground(Color.BLACK);
             } else if (table.getColumnName(column).toLowerCase().contains("Mon".toLowerCase())) {
                 
                 c.setBackground(new Color(239, 246, 7));
-                c.setBorder(BorderFactory.createEtchedBorder(1));
+                //c.setBorder(BorderFactory.createEtchedBorder(1));
                 c.setForeground(Color.BLACK);
             } else if (table.getColumnName(column).toLowerCase().contains("Tue".toLowerCase())) {
                 
                 c.setBackground(new Color(199, 208, 14));
-                c.setBorder(BorderFactory.createEtchedBorder(1));
+                //c.setBorder(BorderFactory.createEtchedBorder(1));
                 c.setForeground(Color.BLACK);
             } else if (table.getColumnName(column).toLowerCase().contains("Wed".toLowerCase())) {
                 
                 c.setBackground(new Color(14, 208, 164));
-                c.setBorder(BorderFactory.createEtchedBorder(1));
+                //c.setBorder(BorderFactory.createEtchedBorder(1));
                 c.setForeground(Color.BLACK);
             } else if (table.getColumnName(column).toLowerCase().contains("Thu".toLowerCase())) {
                 
                 c.setBackground(new Color(14, 105, 208));
-                c.setBorder(BorderFactory.createEtchedBorder(1));
+                //c.setBorder(BorderFactory.createEtchedBorder(1));
                 c.setForeground(Color.BLACK);
                 
             } else if (table.getColumnName(column).toLowerCase().contains("Fri".toLowerCase())) {
                 
                 c.setBackground(new Color(111, 14, 208));
-                c.setBorder(BorderFactory.createEtchedBorder(1));
+                //c.setBorder(BorderFactory.createEtchedBorder(1));
                 c.setForeground(Color.BLACK);
                 
             } else {
                 setBackground(null);
-                c.setBorder(BorderFactory.createEtchedBorder(1));
+                //c.setBorder(BorderFactory.createEtchedBorder(1));
                 c.setForeground(Color.BLACK);
                 
             }
@@ -88,7 +88,7 @@ public class Tc_TervTablaRenderer extends DefaultTableCellRenderer {
                 
                 c.setBackground(Color.LIGHT_GRAY);
                 c.setForeground(Color.BLACK);
-                c.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+                //c.setBorder(BorderFactory.createLineBorder(Color.BLACK));
                 
             }
         } catch (Exception e) {

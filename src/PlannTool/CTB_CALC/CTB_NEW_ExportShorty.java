@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
+import javax.swing.JRootPane;
 import javax.swing.table.DefaultTableModel;
 import jxl.Workbook;
 import jxl.write.Label;
@@ -32,10 +33,11 @@ public class CTB_NEW_ExportShorty extends javax.swing.JDialog {
     private static int xx = 0;
     private static int yy = 0;
     CTB ctb;
-    
+
     public CTB_NEW_ExportShorty(java.awt.Frame parent, boolean modal, CTB ctb) {
         super(parent, modal);
         this.ctb = ctb;
+        getRootPane().setWindowDecorationStyle(JRootPane.NONE);
         initComponents();
     }
 
@@ -49,16 +51,11 @@ public class CTB_NEW_ExportShorty extends javax.swing.JDialog {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jList2 = new javax.swing.JList<>();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
         jTextField1 = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
+        jProgressBar1 = new javax.swing.JProgressBar();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
@@ -77,34 +74,8 @@ public class CTB_NEW_ExportShorty extends javax.swing.JDialog {
         jPanel1.setBackground(new java.awt.Color(153, 153, 153));
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Export Shorty", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe Script", 1, 12))); // NOI18N
 
-        jList2.setBackground(new java.awt.Color(204, 204, 204));
-        jList2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
-        jList2.setFont(new java.awt.Font("Segoe Script", 1, 12)); // NOI18N
-        jList2.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "0", "10", "100", "200", "300", "400", "500", "600", "700", "800", "900", "1000" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane2.setViewportView(jList2);
-
-        jList1.setBackground(new java.awt.Color(204, 204, 204));
-        jList1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
-        jList1.setFont(new java.awt.Font("Segoe Script", 1, 12)); // NOI18N
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Operation Pull", "Push", "Bulk", "Phantom" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane1.setViewportView(jList1);
-
         jTextField1.setBackground(new java.awt.Color(204, 204, 204));
         jTextField1.setFont(new java.awt.Font("Segoe Script", 1, 12)); // NOI18N
-
-        jLabel3.setFont(new java.awt.Font("Segoe Script", 1, 12)); // NOI18N
-        jLabel3.setText("Export Opeqs:");
-
-        jLabel1.setFont(new java.awt.Font("Segoe Script", 1, 12)); // NOI18N
-        jLabel1.setText("Export Supply:");
 
         jLabel2.setFont(new java.awt.Font("Segoe Script", 1, 12)); // NOI18N
         jLabel2.setText("Qty less than:");
@@ -127,49 +98,38 @@ public class CTB_NEW_ExportShorty extends javax.swing.JDialog {
             }
         });
 
+        jProgressBar1.setStringPainted(true);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(145, 145, 145)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(jProgressBar1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                            .addComponent(jLabel2)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(0, 1, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(62, 62, 62)
                 .addComponent(jButton2)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField1))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addGap(29, 29, 29)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(54, 54, 54)
-                        .addComponent(jLabel2))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jLabel4)
-                .addGap(10, 10, 10)
+                .addGap(4, 4, 4)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
                     .addComponent(jLabel2)
-                    .addComponent(jLabel3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -178,7 +138,7 @@ public class CTB_NEW_ExportShorty extends javax.swing.JDialog {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 394, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -190,195 +150,12 @@ public class CTB_NEW_ExportShorty extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        //export shortys
-        //bekapcsoljuk a forgófánkot
-        Cursor hourglassCursor = new Cursor(Cursor.WAIT_CURSOR);
-        setCursor(hourglassCursor);
 
-        //ebben tároljuk a string tömböket melyek pn enként jönnek létre
-        ArrayList<String[][]> adatok = new ArrayList<>();
-
-        //a ctb táblán fogunk végigmenni és kijelölgetjük a sorokat
-        for (int i = 0; i < CTB.jTable1.getRowCount(); i++) {
-            //kijelöljük az i edik sort
-            CTB.jTable1.setRowSelectionInterval(i, i);
-            //lefuttatjuk a shorty osztályt
-            if (!CTB_NEW_Variables.topshortthread) {
-                CTB_NEW_TopShortThread t = new CTB_NEW_TopShortThread();
-                t.start();
-            }
-            
-            try {
-                //                várunk egy kicsit
-                Thread.sleep(500);
-                
-            } catch (InterruptedException ex) {
-                
-            }
-
-            //létrehozunk egy String tömböt
-            String[][] pnadatok = new String[CTB_NEW_Variables.topshortmodel.getRowCount()][8];
-            //bejárjuk a modellt és bepakolunk mindent is a tömbbe
-            for (int m = 0; m < CTB_NEW_Variables.topshortmodel.getRowCount(); m++) {
-                pnadatok[m][0] = CTB.jTable1.getValueAt(i, 0).toString();
-                for (int p = 0; p < 7; p++) {
-                    try {
-                        pnadatok[m][p + 1] = CTB_NEW_Variables.topshortmodel.getValueAt(m, p).toString();
-                    } catch (Exception e) {
-                        pnadatok[m][p + 1] = "";
-                    }
-                }
-                
-            }
-            
-            adatok.add(pnadatok);
-            
-        }
-        
-        this.dispose();
-        Cursor normalcursor = new Cursor(Cursor.DEFAULT_CURSOR);
-        setCursor(normalcursor);
-
-        //megvannak az adatok , be kell járni és ki kell szedni ami nem kell , és le kell írni ami kell
-        JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setAcceptAllFileFilterUsed(true);
-        fileChooser.setDialogTitle("Mentés helye:");
-        int userSelection = fileChooser.showSaveDialog(this);
-        if (userSelection == JFileChooser.APPROVE_OPTION) {
-            
-            File fileToSave = fileChooser.getSelectedFile();
-            try {
-                ExportToFile(adatok, new File(fileToSave.getAbsolutePath() + ".xls"));
-            } catch (IOException ex) {
-                Logger.getLogger(CTB_NEW_ExportShorty.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (WriteException ex) {
-                Logger.getLogger(CTB_NEW_ExportShorty.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            
-        }
+        CTB_NEW_ExportShortyThread e = new CTB_NEW_ExportShortyThread(ctb);
+        e.start();
 
     }//GEN-LAST:event_jButton2ActionPerformed
-    
-    public void ExportToFile(ArrayList<String[][]> lista, File file) throws IOException, WriteException {
 
-//kiszedjük a kijelölt jlist elemeket egy tömbbe opseq
-        String[] opseq = new String[jList2.getSelectedIndices().length];
-        int[] selectedIx = jList2.getSelectedIndices();
-        
-        for (int i = 0; i < selectedIx.length; i++) {
-            opseq[i] = jList2.getModel().getElementAt(selectedIx[i]).toString();
-        }
-
-        //kiszedjük a kijelölt jlist elemeket egy tömbbe supply
-        String[] supply = new String[jList1.getSelectedIndices().length];
-        selectedIx = jList1.getSelectedIndices();
-        
-        for (int i = 0; i < selectedIx.length; i++) {
-            supply[i] = jList1.getModel().getElementAt(selectedIx[i]).toString();
-        }
-        
-        WritableWorkbook workbook1 = Workbook.createWorkbook(file);
-        WritableSheet sheet1 = workbook1.createSheet("First Sheet", 0);
-        
-        Label column = new Label(0, 0, "Parent");
-        sheet1.addCell(column);
-        column = new Label(1, 0, "Partnumber");
-        sheet1.addCell(column);
-        column = new Label(2, 0, "Calculated QTY");
-        sheet1.addCell(column);
-        column = new Label(3, 0, "Description");
-        sheet1.addCell(column);
-        column = new Label(4, 0, "Raw OH");
-        sheet1.addCell(column);
-        column = new Label(5, 0, "Master comment");
-        sheet1.addCell(column);
-        column = new Label(6, 0, "OpSeq");
-        sheet1.addCell(column);
-        column = new Label(7, 0, "Supply");
-        sheet1.addCell(column);
-
-//feltöltjük sorokkal 
-//hányadik sorban vagyunk
-        int sorszama = 1;
-        for (int i = 0; i < lista.size(); i++) {
-            
-            for (int s = 0; s < lista.get(i).length; s++) {
-//meg kell viszgálni , hogy kell e ez az opseq
-                boolean tovabbmenni = false;
-                for (int o = 0; o < opseq.length; o++) {
-                    
-                    if (lista.get(i)[s][6].replace(",", "").equals(opseq[o])) {
-                        
-                        tovabbmenni = true;
-                        break;
-                    }
-                    
-                }
-//ha van ilyen opseq kiválasztva akkor továbbmegyünk
-                if (tovabbmenni) {
-
-//megvizsgáljuk a supplyt is
-//visszaállítjuk a továbbmennit hamisra először
-                    tovabbmenni = false;
-                    for (int o = 0; o < supply.length; o++) {
-                        
-                        if (lista.get(i)[s][7].equals(supply[o])) {
-                            
-                            tovabbmenni = true;
-                            break;
-                        }
-                        
-                    }
-                    
-                }
-
-//már csak a darabszám a kérdés
-                if (tovabbmenni) {
-//átállítjuk falsra
-                    tovabbmenni = false;
-//ha nincs megadva darab , sikítunk
-
-                    if (jTextField1.getText().equals("")) {
-                        
-                        ctb.warning.SetMessage("Nem adtál meg darabszámot!");
-
-//                        infobox info = new infobox();
-//                        info.infoBox("Nem adtál meg darabszámot!", "Figyelem!");
-                        return;
-                        
-                    }
-                    if (Integer.parseInt(lista.get(i)[s][2]) <= Integer.parseInt(jTextField1.getText())) {
-                        tovabbmenni = true;
-                    }
-                    
-                }
-//ha idáig megúsztuk akkor kiirjuk a sort
-                if (tovabbmenni) {
-//hozzáadjuk a parentet
-                    Label row = new Label(0, sorszama, lista.get(i)[s][0]);
-                    sheet1.addCell(row);
-                    
-                    for (int oszlopok = 0; oszlopok < 7; oszlopok++) {
-                        
-                        row = new Label(oszlopok + 1, sorszama, lista.get(i)[s][oszlopok + 1]);
-                        sheet1.addCell(row);
-                        
-                    }
-//hozzáadunk egyet a sorokhoz mert írtunk
-                    sorszama++;
-                    
-                }
-                
-            }
-            
-        }
-        
-        workbook1.write();
-        workbook1.close();
-        //  infobox.infoBox("Az exportálás megtörtént!", "Export");
-        ctb.tick.SetMessage("Az exportálás megtörtént!");
-        
-    }
 
     private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
         // TODO add your handling code here:
@@ -443,15 +220,10 @@ public class CTB_NEW_ExportShorty extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton2;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JList<String> jList1;
-    private javax.swing.JList<String> jList2;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextField jTextField1;
+    public static javax.swing.JProgressBar jProgressBar1;
+    public static javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }

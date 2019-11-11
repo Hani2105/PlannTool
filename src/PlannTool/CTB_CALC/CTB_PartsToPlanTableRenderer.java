@@ -37,7 +37,7 @@ public class CTB_PartsToPlanTableRenderer extends DefaultTableCellRenderer {
 
         JLabel c = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
         c.setHorizontalAlignment(CENTER);
-        c.setBorder(BorderFactory.createLoweredSoftBevelBorder());
+        //c.setBorder(BorderFactory.createLoweredSoftBevelBorder());
         c.setBackground(new Color(0, 0, 0, 10));
 
         if (column == 3) {
@@ -68,7 +68,7 @@ public class CTB_PartsToPlanTableRenderer extends DefaultTableCellRenderer {
 
         } else {
 
-            c.setBorder(BorderFactory.createLoweredSoftBevelBorder());
+           // c.setBorder(BorderFactory.createLoweredSoftBevelBorder());
             c.setBackground(new Color(0, 0, 0, 30));
 
         }

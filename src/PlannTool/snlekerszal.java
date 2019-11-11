@@ -160,6 +160,8 @@ public class snlekerszal extends Thread {
 
             }
 
+            con.kinyir();
+
             //betesszuk a tombot a listbe
             lista.clear();
             lista.add(listaelem);

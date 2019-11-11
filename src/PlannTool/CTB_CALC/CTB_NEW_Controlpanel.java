@@ -37,6 +37,7 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.JRootPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
@@ -56,6 +57,8 @@ public class CTB_NEW_Controlpanel extends javax.swing.JDialog {
 
     public CTB_NEW_Controlpanel(java.awt.Frame parent, boolean modal, CTB c) {
         super(parent, modal);
+        getRootPane().setWindowDecorationStyle(JRootPane.NONE);
+
         initComponents();
         this.ctb = c;
 
@@ -114,7 +117,7 @@ public class CTB_NEW_Controlpanel extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
-        setOpacity(0.8F);
+        setOpacity(0.9F);
         addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseDragged(java.awt.event.MouseEvent evt) {
                 formMouseDragged(evt);
@@ -963,7 +966,7 @@ public class CTB_NEW_Controlpanel extends javax.swing.JDialog {
 
         try {
             c.inikezel(k);
-       //     ctb.tick.SetMessage("Sikeres mentés!");
+            //     ctb.tick.SetMessage("Sikeres mentés!");
 //            infobox inf = new infobox();
 //            inf.infoBox("Sikeres mentés!", "Mentés");
 

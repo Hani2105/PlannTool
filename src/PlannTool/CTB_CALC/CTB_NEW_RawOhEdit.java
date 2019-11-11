@@ -5,7 +5,10 @@
  */
 package PlannTool.CTB_CALC;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.JRootPane;
 
 /**
  *
@@ -22,6 +25,8 @@ public class CTB_NEW_RawOhEdit extends javax.swing.JDialog {
 
     public CTB_NEW_RawOhEdit(java.awt.Frame parent, boolean modal, CTB ctb) {
         super(parent, modal);
+        getRootPane().setWindowDecorationStyle(JRootPane.NONE);
+
         initComponents();
     }
 
@@ -197,41 +202,30 @@ public class CTB_NEW_RawOhEdit extends javax.swing.JDialog {
         try {
             osszeg = Integer.parseInt(jTextField1.getText());
         } catch (Exception e) {
-            //custom title, error icon
-//            JOptionPane.showMessageDialog(this,
-//                    "Nem jó számot adtál meg!",
-//                    "Hiba",
-//                    JOptionPane.ERROR_MESSAGE);
 
             ctb.warning.SetMessage("Nem jó számot adtál meg!");
             jTextField1.setText("");
             jTextField1.requestFocus();
-            return;
+            //return;
         }
 //hozzáadunk egy sort az oh táblához
-        CTB_NEW_Variables.ohmodel.addRow(new Object[]{"STOCK1", "", jLabel2.getText(), "", "Net-Asset", "", String.valueOf(osszeg)});
+        CTB_NEW_Variables.ohmodel.addRow(new Object[]{"STOCK1", "", jLabel2.getText(), "", "Net-Asset", "", String.valueOf(osszeg),"","","",jTextArea1.getText()});
 //futtatunk egy bomcalc addoh-t meg egy total calcot
 //meg kell keresni,hogy hányadik sor ez a calcbomban és beállítjuk a master commentet
-
-        for (i = 0; i < CTB_NEW_Variables.calcbommodel.getRowCount(); i++) {
-
-            if (CTB_NEW_Variables.calcbommodel.getValueAt(i, 0).toString().equals(jLabel2.getText())) {
-                // jTextArea1.setText(CTB_NEW_Variables.calcbommodel.getValueAt(i, 7).toString());
-                break;
-            }
-        }
-        //a master comment hozzáadása a calcbom megfelelő oszlopához
-        CTB_NEW_Variables.calcbommodel.setValueAt(jTextArea1.getText(), i, 7);
+//
+//        for (i = 0; i < CTB_NEW_Variables.calcbommodel.getRowCount(); i++) {
+//
+//            if (CTB_NEW_Variables.calcbommodel.getValueAt(i, 0).toString().equals(jLabel2.getText())) {
+//                // jTextArea1.setText(CTB_NEW_Variables.calcbommodel.getValueAt(i, 7).toString());
+//                break;
+//            }
+//        }
+//        //a master comment hozzáadása a calcbom megfelelő oszlopához
+//        CTB_NEW_Variables.calcbommodel.setValueAt(jTextArea1.getText(), i, 7);
 
 //kell egy totaloh calc
-        CTB_NEW_FullCalc full = new CTB_NEW_FullCalc(true, new CTB_NEW_Variables());
-        full.AddOH(i, jLabel2.getText());
-        full.totalohcalc();
-//kell egy ctb kalk
-        full.ctbszamol();
-//futtatunk egy topshortot
-        CTB_NEW_TopShortThread t = new CTB_NEW_TopShortThread();
-        t.start();
+        CTB_NEW_FullCalc full = new CTB_NEW_FullCalc(true, CTB_NEW_FullCalc.calculations.CHANGEOH);
+        full.start();
 
         //kinullazzuk a szoveget
         jTextField1.setText("");

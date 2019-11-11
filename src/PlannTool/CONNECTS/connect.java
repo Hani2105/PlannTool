@@ -12,6 +12,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -20,6 +22,7 @@ import java.util.ArrayList;
 public class connect {
 
     public ResultSet rs;
+    Connection conn;
 
     public connect(String startQuery) {
 
@@ -30,7 +33,7 @@ public class connect {
             String password = "plpass";
             Class.forName("com.mysql.jdbc.Driver");
 
-            Connection conn = (Connection) DriverManager.getConnection(url, username, password);
+            conn = (Connection) DriverManager.getConnection(url, username, password);
             Statement st = conn.createStatement();
             String query = startQuery;
 
@@ -38,6 +41,20 @@ public class connect {
 
         } catch (ClassNotFoundException | SQLException e) {
             System.out.println(e);
+        }
+
+    }
+
+    public void kinyir() {
+
+        try {
+            if (conn != null) {
+                this.rs.close();
+                this.conn.close();
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(planconnect.class.getName()).log(Level.SEVERE, null, ex);
+
         }
 
     }

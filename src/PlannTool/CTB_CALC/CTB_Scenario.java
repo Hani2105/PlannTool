@@ -86,7 +86,7 @@ public class CTB_Scenario {
             
             bw.close();
             fw.close();
-            CTB.jLabel6.setText(fileToSave.getName().replace(".scen", ""));
+           
         }
 
 //        infobox info = new infobox();
@@ -200,7 +200,7 @@ public class CTB_Scenario {
                 
             }
             
-            CTB.jLabel6.setText(CTB.f.getName().replace(".scen", ""));
+            //CTB.jLabel6.setText(CTB.f.getName().replace(".scen", ""));
             
         }
         CTB_Wipquery wip = new CTB_Wipquery(CTB.jTable1);

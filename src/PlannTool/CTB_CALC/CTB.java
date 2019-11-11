@@ -9,11 +9,13 @@ import PlannTool.CTB_CALC.CTB_Tablarenderer;
 import PlannTool.CONNECTS.planconnect;
 import PlannTool.CONNECTS.postgreconnect;
 import static PlannTool.CTB_CALC.CTB_NEW_RawOhEdit.jLabel2;
+import static PlannTool.CTB_CALC.CTB_NEW_RawOhEdit.jTextArea1;
 import PlannTool.ExcelAdapter;
 import PlannTool.ExcelExporter;
 import PlannTool.ablak;
 import static PlannTool.ablak.jList2;
 import PlannTool.universalfilter;
+import de.javasoft.plaf.synthetica.SyntheticaBlackStarLookAndFeel;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Cursor;
@@ -44,11 +46,22 @@ import javax.swing.BoundedRangeModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.JProgressBar;
 import javax.swing.JTable;
+import javax.swing.RowSorter;
+import javax.swing.SortOrder;
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.plaf.metal.MetalLookAndFeel;
+import javax.swing.plaf.nimbus.NimbusLookAndFeel;
+import javax.swing.plaf.synth.SynthLookAndFeel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -63,7 +76,7 @@ public class CTB extends javax.swing.JFrame {
 
     //uj resz
     CTB_NEW_Variables v = new CTB_NEW_Variables();
-
+    
     public static String user = "";
     public static BoundedRangeModel buzimodel;
     public static File f;
@@ -110,19 +123,22 @@ public class CTB extends javax.swing.JFrame {
     public CTB_NEW_Controlpanel control = new CTB_NEW_Controlpanel(this, false, this);
     public CTB_NEW_WarningWindow warning = new CTB_NEW_WarningWindow(this, false);
     public CTB_NEW_TickWindows tick = new CTB_NEW_TickWindows(this, false);
-    //Thread waitt = new Thread(new CTB_NEW_WaitWindow(this, false));
-
-    public CTB(CTB_Bejel c) throws SQLException, ClassNotFoundException, IOException {
-
+    public CTB_NEW_Helper helper = new CTB_NEW_Helper(this, false);
+    
+    public CTB(CTB_Bejel c) throws SQLException, ClassNotFoundException, IOException, UnsupportedLookAndFeelException, InstantiationException, IllegalAccessException, ParseException {
+        
         this.c = c;
         setExtendedState(MAXIMIZED_BOTH);
+        // UIManager.setLookAndFeel(new SyntheticaBlackStarLookAndFeel());
         initComponents();
-
+        
         this.jTabbedPane1.setUI(new CTB_TabbedUI(jTabbedPane1));
         seticon();
 
 //beilleszthetővé tesszük az igények táblát
         new ExcelAdapter(jTable11);
+//az oh tablat is
+        new ExcelAdapter(jTable2);
         jTable1.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         jTable1.setDefaultRenderer(Object.class, new CTB_Tablarenderer());
         jTable9.setDefaultRenderer(Object.class, new CTB_ShortTablarenderer());
@@ -131,7 +147,7 @@ public class CTB extends javax.swing.JFrame {
         jTable1.getTableHeader().setDefaultRenderer(new CTB_Columnrenderer());
         jTable11.getTableHeader().setDefaultRenderer(new CTB_Columnrenderer());
         jTable9.getTableHeader().setDefaultRenderer(new CTB_Columnrenderer());
-
+        
         TablaOszlopSzelesseg(jTable1);
         TablaOszlopSzelesseg(jTable11);
         jTable1.setBackground(new Color(0, 0, 0, 0));
@@ -139,7 +155,7 @@ public class CTB extends javax.swing.JFrame {
         jScrollPane1.setOpaque(false);
         jTable1.setOpaque(false);
         jScrollPane1.getViewport().setOpaque(false);
-
+        
         jTable11.setBackground(new Color(0, 0, 0, 0));
         jScrollPane11.setBackground(new Color(0, 0, 0, 0));
         jScrollPane11.setOpaque(false);
@@ -159,7 +175,8 @@ public class CTB extends javax.swing.JFrame {
 //warning window és tick
         warning.setVisible(false);
         tick.setVisible(false);
-
+        helper.setVisible(false);
+        
         kiszallitasleker();
         becellsleker();
 
@@ -171,10 +188,19 @@ public class CTB extends javax.swing.JFrame {
         q.olvas();
 //lekerdezzük a control panel adatait
         kezdokitolt();
+//elinditjuk a waitwindows-t
+
+    }
+    
+    public static void updateBar(String method, int setmax, int increased) {
+        
+        jProgressBar1.setMaximum(setmax);
+        jProgressBar1.setValue(increased);
+        jProgressBar1.setString(String.valueOf(method + " " + increased) + " / " + String.valueOf(setmax));
         
     }
-//ez tölti ki a control panel adatait
 
+//ez tölti ki a control panel adatait
     public void kezdokitolt() {
         //lekerdezzuk a ctb horiotal valtozojat es beletesdzuk a tablaba
         for (int i = 0; i < CTB.Horizontals.size(); i++) {
@@ -201,7 +227,7 @@ public class CTB extends javax.swing.JFrame {
 
     //lekérjük a kiszállítások területének listáját és feltöltjük a jlistet
     public void kiszallitasleker() {
-
+        
         postgreconnect pc = new postgreconnect();
         try {
             pc.lekerdez("select distinct \"HBPackage\".customer_type.name from \"HBPackage\".customer_type");
@@ -209,27 +235,27 @@ public class CTB extends javax.swing.JFrame {
 
             //kiszallitasmodell.removeAllElements();
             while (pc.rs.next()) {
-
+                
                 kiszallitasmodell.addElement(pc.rs.getString(1));
-
+                
             }
             try {
                 control.jList1.setModel(kiszallitasmodell);
             } catch (Exception e) {
             }
             pc.kinyir();
-
+            
         } catch (SQLException ex) {
             Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        
     }
 
     //backend cellák lekérése  
     public void becellsleker() {
-
+        
         planconnect pc = new planconnect();
         try {
             pc.lekerdez("SELECT * FROM planningdb.tc_becells");
@@ -237,32 +263,32 @@ public class CTB extends javax.swing.JFrame {
 
             //becellsmodell.removeAllElements();
             while (pc.rs.next()) {
-
+                
                 becellsmodell.addElement(pc.rs.getString(2));
-
+                
             }
-
+            
             control.jList2.setModel(becellsmodell);
             pc.kinyir();
-
+            
         } catch (SQLException ex) {
             Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        
         pc.kinyir();
-
+        
     }
 
 //fileokbeolvasása
     public void FilesToTables() throws IOException, FileNotFoundException, ParseException {
-
+        
         JFileChooser chooser = CTB_Filechooser.getFileChooserRiport();
         chooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
         int returnVal = chooser.showOpenDialog(c);
         if (returnVal == JFileChooser.APPROVE_OPTION) {
-
+            
             File file = chooser.getSelectedFile();
             CTB_Filechooser.setLastDirRiports(chooser.getSelectedFile());
             //String path = chooser.getSelectedFile().getAbsolutePath();
@@ -307,52 +333,52 @@ public class CTB extends javax.swing.JFrame {
                 model.setRowCount(0);
                 // model.setColumnCount(0);
                 jTable13.setModel(model);
-
+                
                 List<String> result = walk.filter(Files::isRegularFile)
                         .map(x -> x.toString()).collect(Collectors.toList());
-
+                
                 for (int i = 0; i < result.size(); i++) {
                     //allocation behúzása
                     if (result.get(i).contains(control.jTextField15.getText())) {
-
+                        
                         BasefileToTableWalk(jTable3, result.get(i));
-
+                        
                     } //workorders behúzása                  
                     else if (result.get(i).contains(control.jTextField16.getText())) {
-
+                        
                         BasefileToTableWalk(jTable5, result.get(i));
-
+                        
                     }//onhands 
                     else if (result.get(i).contains(control.jTextField17.getText())) {
-
+                        
                         BasefileToTableWalk(jTable2, result.get(i));
-
+                        
                     } //independent demand
                     else if (result.get(i).contains(control.jTextField18.getText())) {
-
+                        
                         BasefileToTableWalk(jTable4, result.get(i));
-
+                        
                     } //indented bom
                     else if (result.get(i).contains(control.jTextField19.getText())) {
-
+                        
                         BasefileToTableWalk(jTable6, result.get(i));
-
+                        
                     } //horizontal
                     else if (result.get(i).contains(control.jTextField20.getText())) {
-
+                        
                         HorizontalsToTable(result.get(i));
-
+                        
                     }
                 }
-
+                
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
+            
         }
-
+        
     }
-
+    
     public void BasefileToTableWalk(JTable t, String riportname) {
 
         //felvesszük a tábla modelljét ahova a riportot be kell tenni
@@ -370,21 +396,21 @@ public class CTB extends javax.swing.JFrame {
             in = new BufferedReader(new FileReader(File));
             String line = in.readLine();
             while ((line = in.readLine()) != null) {
-
+                
                 String[] cells = line.split("\\t");
                 model.addRow(cells);
-
+                
             }
-
+            
         } catch (Exception e) {
             e.printStackTrace();
             warning.SetMessage("Nem találom a(z) " + riportname + " filet!");
             return;
             //JOptionPane.showMessageDialog(this, "Nem találom a(z) " + a + " filet!");
         }
-
+        
     }
-
+    
     public void BasefileToTable(String path, ArrayList a, JTable t, String riportname) {
 
         //felvesszük a tábla modelljét ahova a riportot be kell tenni
@@ -401,32 +427,32 @@ public class CTB extends javax.swing.JFrame {
             //JOptionPane.showMessageDialog(this, "Nem találom a(z) " + riportname + " filet!");
             warning.SetMessage("Nem találom a(z) " + riportname + " filet!");
             return;
-
+            
         }
 //most kell ciklust indítani
         for (int i = 0; i < a.size(); i++) {
-
+            
             String pathfile = path + "\\\\" + a.get(i) + ".tab";
             File File = new File(pathfile);
             try {
                 in = new BufferedReader(new FileReader(File));
                 String line = in.readLine();
                 while ((line = in.readLine()) != null) {
-
+                    
                     String[] cells = line.split("\\t");
                     model.addRow(cells);
-
+                    
                 }
-
+                
             } catch (Exception e) {
                 warning.SetMessage("Nem találom a(z) " + a + " filet!");
                 return;
                 //JOptionPane.showMessageDialog(this, "Nem találom a(z) " + a + " filet!");
             }
         }
-
+        
     }
-
+    
     public void HorizontalsToTable(String riportname) throws FileNotFoundException, ParseException {
 
         //felvesszük a tábla modelljét
@@ -446,12 +472,12 @@ public class CTB extends javax.swing.JFrame {
                 in = new BufferedReader(new FileReader(File));
                 String line = in.readLine();
                 while ((line = in.readLine()) != null) {
-
+                    
                     String[] cells = line.split("\\t");
                     model.addRow(cells);
-
+                    
                 }
-
+                
             } catch (Exception e) {
                 //JOptionPane.showMessageDialog(this, "Nem találom a(z) " + CTB.Horizontals.get(i) + " filet!");
                 warning.SetMessage("Nem találom a(z) " + CTB.Horizontals.get(i) + " filet!");
@@ -460,7 +486,7 @@ public class CTB extends javax.swing.JFrame {
 
 //át kéne alakítani a dátumokat hetekké a modellben
         for (int s = 0; s < model.getRowCount(); s++) {
-
+            
             for (int o = 0; o < model.getColumnCount(); o++) {
                 try {
                     if (model.getValueAt(s, o).toString().contains("Week")) {
@@ -476,25 +502,25 @@ public class CTB extends javax.swing.JFrame {
                             cal.add(Calendar.DATE, 4);
                         }
                         int yearplusz = cal.get(Calendar.YEAR);
-
+                        
                         if (year == yearplusz) {
                             model.setValueAt(String.valueOf(year).substring(2, 4) + String.format("%02d", week), s + 1, o);
-
+                            
                         } else {
-
+                            
                             model.setValueAt(String.valueOf(yearplusz).substring(2, 4) + String.format("%02d", week), s + 1, o);
-
+                            
                         }
-
+                        
                     }
                 } catch (Exception e) {
                 }
             }
         }
-
+        
         jTable13.setModel(model);
         CTB.TablaOszlopSzelesseg(jTable13);
-
+        
     }
 
     /**
@@ -528,18 +554,26 @@ public class CTB extends javax.swing.JFrame {
         jTextField10 = new javax.swing.JTextField();
         jScrollPane11 = new javax.swing.JScrollPane();
         jTable11 = new javax.swing.JTable();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
         jLabel20 = new javax.swing.JLabel();
         jTextField15 = new javax.swing.JTextField();
         jLabel21 = new javax.swing.JLabel();
         jTextField16 = new javax.swing.JTextField();
+        jProgressBar1 = new javax.swing.JProgressBar();
+        jProgressBar2 = new javax.swing.JProgressBar();
+        jPanel8 = new javax.swing.JPanel();
+        jScrollPane7 = new javax.swing.JScrollPane();
+        jTable7 = new javax.swing.JTable();
+        jLabel15 = new javax.swing.JLabel();
+        jTextField8 = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
         jLabel3 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        jTextField3 = new javax.swing.JTextField();
+        jButton2 = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTable3 = new javax.swing.JTable();
@@ -560,12 +594,6 @@ public class CTB extends javax.swing.JFrame {
         jTable6 = new javax.swing.JTable();
         jLabel14 = new javax.swing.JLabel();
         jTextField7 = new javax.swing.JTextField();
-        jPanel8 = new javax.swing.JPanel();
-        jScrollPane7 = new javax.swing.JScrollPane();
-        jTable7 = new javax.swing.JTable();
-        jLabel15 = new javax.swing.JLabel();
-        jTextField8 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
         jPanel10 = new javax.swing.JPanel();
         jScrollPane12 = new javax.swing.JScrollPane();
         jTable10 = new javax.swing.JTable();
@@ -583,14 +611,19 @@ public class CTB extends javax.swing.JFrame {
         jPanel12 = new javax.swing.JPanel();
         jScrollPane15 = new javax.swing.JScrollPane();
         jTable13 = new javax.swing.JTable();
+        jLabel24 = new javax.swing.JLabel();
+        jTextField19 = new javax.swing.JTextField();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem7 = new javax.swing.JMenuItem();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
-        jCheckBoxMenuItem4 = new javax.swing.JCheckBoxMenuItem();
+        jMenuItem5 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem6 = new javax.swing.JMenuItem();
+        jSeparator3 = new javax.swing.JPopupMenu.Separator();
+        jCheckBoxMenuItem9 = new javax.swing.JCheckBoxMenuItem();
+        jCheckBoxMenuItem10 = new javax.swing.JCheckBoxMenuItem();
         jMenu4 = new javax.swing.JMenu();
         jMenuItem13 = new javax.swing.JMenuItem();
         jMenuItem14 = new javax.swing.JMenuItem();
@@ -601,6 +634,7 @@ public class CTB extends javax.swing.JFrame {
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         jCheckBoxMenuItem3 = new javax.swing.JCheckBoxMenuItem();
         jCheckBoxMenuItem5 = new javax.swing.JCheckBoxMenuItem();
+        jCheckBoxMenuItem4 = new javax.swing.JCheckBoxMenuItem();
         jSeparator2 = new javax.swing.JPopupMenu.Separator();
         jCheckBoxMenuItem7 = new javax.swing.JCheckBoxMenuItem();
         jCheckBoxMenuItem8 = new javax.swing.JCheckBoxMenuItem();
@@ -694,7 +728,6 @@ public class CTB extends javax.swing.JFrame {
         jLabel9.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
         jLabel9.setText("Kereső:");
 
-        jTextField2.setBackground(new java.awt.Color(204, 204, 204));
         jTextField2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         jTextField2.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -714,7 +747,7 @@ public class CTB extends javax.swing.JFrame {
                 {null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "PartNumber", "Qty", "Description", "Raw OH", "Master Comment", "OpSeq", "Supply", "QTY/Board", "Lost", "Horizontals"
+                "Anyagszám", "Felhasználható mennyiség", "Leírása", "Jelenlegi készlet", "Master megjegyzése", "OpSeq", "Supply", "Beépülés", "Elhagyott mennyiség", "Horizontal adat"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -748,7 +781,6 @@ public class CTB extends javax.swing.JFrame {
         jLabel17.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
         jLabel17.setText("Kereső:");
 
-        jTextField10.setBackground(new java.awt.Color(204, 204, 204));
         jTextField10.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         jTextField10.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -800,20 +832,6 @@ public class CTB extends javax.swing.JFrame {
             jTable11.getColumnModel().getColumn(3).setMaxWidth(300);
         }
 
-        jLabel5.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
-        jLabel5.setText("Scenario:");
-
-        jLabel6.setFont(new java.awt.Font("Segoe Script", 0, 12)); // NOI18N
-
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/PICTURES/savement.png"))); // NOI18N
-        jButton2.setAlignmentY(0.0F);
-        jButton2.setIconTextGap(0);
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-
         jLabel20.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
         jLabel20.setText("Kijelölés összege:");
 
@@ -846,39 +864,38 @@ public class CTB extends javax.swing.JFrame {
             }
         });
 
+        jProgressBar1.setStringPainted(true);
+
+        jProgressBar2.setStringPainted(true);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(6, 6, 6)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addComponent(jLabel20)
+                                    .addGap(6, 6, 6)
+                                    .addComponent(jTextField15, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                    .addComponent(jLabel9)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel2)
-                                .addGap(39, 39, 39)
-                                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel5)
-                                .addGap(6, 6, 6)
-                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(9, 9, 9)
-                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel20)
-                                .addGap(6, 6, 6)
-                                .addComponent(jTextField15, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel9)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane9, javax.swing.GroupLayout.DEFAULT_SIZE, 706, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jProgressBar2, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(1038, 1038, 1038))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(181, 181, 181)
+                        .addComponent(jScrollPane9)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel21)
@@ -890,58 +907,108 @@ public class CTB extends javax.swing.JFrame {
                         .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(6, 6, 6))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 673, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 661, Short.MAX_VALUE)
+                    .addComponent(jProgressBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane11, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addComponent(jScrollPane11))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(2, 2, 2)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel21)
+                            .addComponent(jTextField16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel17)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(4, 4, 4)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGap(6, 6, 6)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(6, 6, 6)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jButton2))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(14, 14, 14)
+                                .addComponent(jProgressBar2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(28, 28, 28)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addGap(6, 6, 6)
                                         .addComponent(jLabel20))
                                     .addComponent(jTextField15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(4, 4, 4)
-                                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jLabel9))))
-                            .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel21)
-                            .addComponent(jTextField16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel17)
-                            .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGap(4, 4, 4)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel9)))
+                            .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane11, javax.swing.GroupLayout.DEFAULT_SIZE, 466, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1))
-                .addContainerGap())
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 518, Short.MAX_VALUE)
+                    .addComponent(jScrollPane11))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         jTabbedPane1.addTab("CTB", jPanel1);
+
+        jTable7.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Components", "Description", "Raw OH", "WO Variancia", "New Prod", "Lost", "Horizontal", "Master Comment", "Total OH"
+            }
+        ));
+        jTable7.setCellSelectionEnabled(true);
+        jTable7.setName("BOM_Table"); // NOI18N
+        jScrollPane7.setViewportView(jTable7);
+
+        jLabel15.setText("Kereső:");
+
+        jTextField8.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField8KeyReleased(evt);
+            }
+        });
+
+        jButton1.setText("Export to Excel");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
+        jPanel8.setLayout(jPanel8Layout);
+        jPanel8Layout.setHorizontalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 1417, Short.MAX_VALUE)
+        );
+        jPanel8Layout.setVerticalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
+                .addGap(7, 7, 7)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel15)
+                    .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 642, Short.MAX_VALUE))
+        );
+
+        jTabbedPane1.addTab("BOM + OH (Generated)", jPanel8);
 
         jTable2.setAutoCreateRowSorter(true);
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
@@ -964,6 +1031,21 @@ public class CTB extends javax.swing.JFrame {
             }
         });
 
+        jLabel4.setText("Sorok hozzáadása:");
+
+        jTextField3.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextField3KeyPressed(evt);
+            }
+        });
+
+        jButton2.setText("Felvitt adatok mentése");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -973,8 +1055,14 @@ public class CTB extends javax.swing.JFrame {
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(894, Short.MAX_VALUE))
-            .addComponent(jScrollPane2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton2)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 1417, Short.MAX_VALUE)
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -982,9 +1070,12 @@ public class CTB extends javax.swing.JFrame {
                 .addGap(5, 5, 5)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4)
+                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 575, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 644, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("OnHand", jPanel3);
@@ -1020,7 +1111,7 @@ public class CTB extends javax.swing.JFrame {
                 .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(894, Short.MAX_VALUE))
+                .addContainerGap(1214, Short.MAX_VALUE))
             .addComponent(jScrollPane3)
         );
         jPanel4Layout.setVerticalGroup(
@@ -1031,7 +1122,7 @@ public class CTB extends javax.swing.JFrame {
                     .addComponent(jLabel11)
                     .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 574, Short.MAX_VALUE))
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 643, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Allocation", jPanel4);
@@ -1066,7 +1157,7 @@ public class CTB extends javax.swing.JFrame {
                 .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(894, Short.MAX_VALUE))
+                .addContainerGap(1214, Short.MAX_VALUE))
             .addComponent(jScrollPane4)
         );
         jPanel5Layout.setVerticalGroup(
@@ -1077,7 +1168,7 @@ public class CTB extends javax.swing.JFrame {
                     .addComponent(jLabel12)
                     .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 574, Short.MAX_VALUE))
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 643, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Demand", jPanel5);
@@ -1125,7 +1216,7 @@ public class CTB extends javax.swing.JFrame {
                         .addComponent(jLabel13))
                     .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 574, Short.MAX_VALUE))
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 643, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Workorders", jPanel6);
@@ -1163,7 +1254,7 @@ public class CTB extends javax.swing.JFrame {
                 .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(900, Short.MAX_VALUE))
+                .addContainerGap(1220, Short.MAX_VALUE))
             .addComponent(jScrollPane6)
         );
         jPanel7Layout.setVerticalGroup(
@@ -1174,64 +1265,10 @@ public class CTB extends javax.swing.JFrame {
                     .addComponent(jLabel14)
                     .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 574, Short.MAX_VALUE))
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 643, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Indented BOM", jPanel7);
-
-        jTable7.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Components", "Description", "Raw OH", "WO Variancia", "New Prod", "Lost", "Horizontal", "Master Comment", "Total OH"
-            }
-        ));
-        jTable7.setCellSelectionEnabled(true);
-        jTable7.setName("BOM_Table"); // NOI18N
-        jScrollPane7.setViewportView(jTable7);
-
-        jLabel15.setText("Kereső:");
-
-        jTextField8.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                jTextField8KeyReleased(evt);
-            }
-        });
-
-        jButton1.setText("Export to Excel");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
-        jPanel8.setLayout(jPanel8Layout);
-        jPanel8Layout.setHorizontalGroup(
-            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel8Layout.createSequentialGroup()
-                .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 1097, Short.MAX_VALUE)
-        );
-        jPanel8Layout.setVerticalGroup(
-            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
-                .addGap(7, 7, 7)
-                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel15)
-                    .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 573, Short.MAX_VALUE))
-        );
-
-        jTabbedPane1.addTab("BOM + OH (Generated)", jPanel8);
 
         jTable10.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -1262,7 +1299,7 @@ public class CTB extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextField12, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
-            .addComponent(jScrollPane12, javax.swing.GroupLayout.DEFAULT_SIZE, 1097, Short.MAX_VALUE)
+            .addComponent(jScrollPane12, javax.swing.GroupLayout.DEFAULT_SIZE, 1417, Short.MAX_VALUE)
         );
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1272,7 +1309,7 @@ public class CTB extends javax.swing.JFrame {
                     .addComponent(jLabel16)
                     .addComponent(jTextField12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane12, javax.swing.GroupLayout.DEFAULT_SIZE, 574, Short.MAX_VALUE))
+                .addComponent(jScrollPane12, javax.swing.GroupLayout.DEFAULT_SIZE, 643, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Shipping", jPanel10);
@@ -1325,11 +1362,11 @@ public class CTB extends javax.swing.JFrame {
         jPanel11Layout.setHorizontalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel11Layout.createSequentialGroup()
-                .addGap(4, 4, 4)
+                .addContainerGap()
                 .addComponent(jLabel22)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextField17, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel23)
@@ -1337,7 +1374,7 @@ public class CTB extends javax.swing.JFrame {
                 .addComponent(jTextField18, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton7)
-                .addContainerGap(617, Short.MAX_VALUE))
+                .addContainerGap(929, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
                 .addComponent(jScrollPane14)
                 .addContainerGap())
@@ -1356,7 +1393,7 @@ public class CTB extends javax.swing.JFrame {
                         .addComponent(jLabel23)
                         .addComponent(jButton7)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane14, javax.swing.GroupLayout.DEFAULT_SIZE, 574, Short.MAX_VALUE))
+                .addComponent(jScrollPane14, javax.swing.GroupLayout.DEFAULT_SIZE, 643, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Lost", jPanel11);
@@ -1373,15 +1410,34 @@ public class CTB extends javax.swing.JFrame {
         jTable13.setName("Horizontal_Table"); // NOI18N
         jScrollPane15.setViewportView(jTable13);
 
+        jLabel24.setText("Kereső:");
+
+        jTextField19.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField19KeyReleased(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
         jPanel12.setLayout(jPanel12Layout);
         jPanel12Layout.setHorizontalGroup(
             jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane15, javax.swing.GroupLayout.DEFAULT_SIZE, 1097, Short.MAX_VALUE)
+            .addComponent(jScrollPane15, javax.swing.GroupLayout.DEFAULT_SIZE, 1417, Short.MAX_VALUE)
+            .addGroup(jPanel12Layout.createSequentialGroup()
+                .addComponent(jLabel24)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTextField19, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel12Layout.setVerticalGroup(
             jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane15, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 614, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel12Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel24)
+                    .addComponent(jTextField19, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane15, javax.swing.GroupLayout.DEFAULT_SIZE, 643, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Horizontal", jPanel12);
@@ -1415,7 +1471,7 @@ public class CTB extends javax.swing.JFrame {
         });
         jMenu3.add(jMenuItem1);
 
-        jMenuItem2.setText("Edit Lost Quantities");
+        jMenuItem2.setText("Elhagyott anyagok szerkesztése");
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem2ActionPerformed(evt);
@@ -1423,14 +1479,13 @@ public class CTB extends javax.swing.JFrame {
         });
         jMenu3.add(jMenuItem2);
 
-        buttonGroup2.add(jCheckBoxMenuItem4);
-        jCheckBoxMenuItem4.setText("OH Stage only");
-        jCheckBoxMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItem5.setText("Segítség ablak");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBoxMenuItem4ActionPerformed(evt);
+                jMenuItem5ActionPerformed(evt);
             }
         });
-        jMenu3.add(jCheckBoxMenuItem4);
+        jMenu3.add(jMenuItem5);
 
         jMenuBar1.add(jMenu3);
 
@@ -1443,6 +1498,25 @@ public class CTB extends javax.swing.JFrame {
             }
         });
         jMenu2.add(jMenuItem6);
+        jMenu2.add(jSeparator3);
+
+        jCheckBoxMenuItem9.setSelected(true);
+        jCheckBoxMenuItem9.setText("Horizontál adatok mutatása");
+        jCheckBoxMenuItem9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBoxMenuItem9ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jCheckBoxMenuItem9);
+
+        jCheckBoxMenuItem10.setSelected(true);
+        jCheckBoxMenuItem10.setText("Elhagyott anyagok mutatása");
+        jCheckBoxMenuItem10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBoxMenuItem10ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jCheckBoxMenuItem10);
 
         jMenuBar1.add(jMenu2);
 
@@ -1516,6 +1590,15 @@ public class CTB extends javax.swing.JFrame {
             }
         });
         jMenu1.add(jCheckBoxMenuItem5);
+
+        buttonGroup2.add(jCheckBoxMenuItem4);
+        jCheckBoxMenuItem4.setText("OH Stage only");
+        jCheckBoxMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBoxMenuItem4ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jCheckBoxMenuItem4);
         jMenu1.add(jSeparator2);
 
         jCheckBoxMenuItem7.setSelected(true);
@@ -1615,19 +1698,19 @@ public class CTB extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField2KeyReleased
 
     private void jTable11KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTable11KeyPressed
-
+        
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-
+            
             setCursor(new Cursor(Cursor.WAIT_CURSOR));
-            if (jTable11.isEditing()) {
-                jTable11.getCellEditor().stopCellEditing();
-            }
 //összehasonlítjuk a táblákat
             CTB_NEW_CompareTables c = new CTB_NEW_CompareTables(jTable11, jTable1);
-            CTB_NEW_FullCalc f = new CTB_NEW_FullCalc(c.compare(), v);
-            f.calc();
+            CTB_NEW_FullCalc f = new CTB_NEW_FullCalc(c.compare(), CTB_NEW_FullCalc.calculations.FULL);
+            try {
+                f.start();
+            } catch (Exception e) {
+            }
             setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-
+            
         }
 
     }//GEN-LAST:event_jTable11KeyPressed
@@ -1645,10 +1728,10 @@ public class CTB extends javax.swing.JFrame {
     private void jTable11MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable11MouseReleased
         // TODO add your handling code here:
         new CTB_NEW_LinkTables(jScrollPane1, jTable1, jScrollPane11, jTable11, 2);
-
+        
         CTB_NEW_TopShortThread t = new CTB_NEW_TopShortThread();
         t.start();
-
+        
 
     }//GEN-LAST:event_jTable11MouseReleased
 
@@ -1662,10 +1745,7 @@ public class CTB extends javax.swing.JFrame {
     private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
 //adatok betöltése lokális fileokból
 
-        
-
         setCursor(new Cursor(Cursor.WAIT_CURSOR));
-
 //a ...tab filekot betesszük a sheetekbe majd elvégezzük a számolásokat
         try {
             FilesToTables();
@@ -1675,91 +1755,20 @@ public class CTB extends javax.swing.JFrame {
             Logger.getLogger(CTB.class.getName()).log(Level.SEVERE, null, ex);
         }
         //indítunk egy fullcalcot
-        CTB_NEW_FullCalc full = new CTB_NEW_FullCalc(false, v);
-        full.calc();
+//        CTB_NEW_FullCalc full = new CTB_NEW_FullCalc(false, CTB_NEW_FullCalc.calculations.FULL);
+//        full.start();
+        CTB_NEW_FullCalc full = new CTB_NEW_FullCalc(false, CTB_NEW_FullCalc.calculations.FULL);
+        full.start();
 
-        jTable1.setModel(v.ctbmodel);
+        //jTable1.setModel(v.ctbmodel);
         setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-
+        
 
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 
     private void jTextField12KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField12KeyReleased
         universalfilter u = new universalfilter(jTextField12.getText().trim(), jTable10);
     }//GEN-LAST:event_jTextField12KeyReleased
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        //mentjük a scenariot (előtte meg kellett hogy legyen nyitva egy)
-        setCursor(new Cursor(Cursor.WAIT_CURSOR));
-        if (CTB.f != null) {
-
-            FileWriter fw = null;
-            try {
-                fw = new FileWriter(CTB.f);
-            } catch (IOException ex) {
-                Logger.getLogger(CTB.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            BufferedWriter bw = new BufferedWriter(fw);
-            try {
-                //beirunk valami faszssagot
-                bw.write("Kezdodik a file!");
-            } catch (IOException ex) {
-                Logger.getLogger(CTB.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            try {
-                bw.newLine();
-            } catch (IOException ex) {
-                Logger.getLogger(CTB.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
-            JTable[] tablakneve = new JTable[10];
-            tablakneve[0] = jTable1;
-            tablakneve[1] = jTable2;
-            tablakneve[2] = jTable3;
-            tablakneve[3] = jTable4;
-            tablakneve[4] = jTable5;
-            tablakneve[5] = jTable6;
-            tablakneve[6] = jTable7;
-            tablakneve[8] = jTable11;
-            tablakneve[9] = jTable10;
-
-            for (int i = 0; i < tablakneve.length; i++) {
-
-                try {
-                    CTB_Scenario.TableToText(tablakneve[i], CTB.f, bw);
-                } catch (IOException ex) {
-                    Logger.getLogger(CTB.class.getName()).log(Level.SEVERE, null, ex);
-                }
-
-            }
-
-            try {
-                //beirunk valami faszssagot
-                bw.write("Vege a Filenak!");
-            } catch (IOException ex) {
-                Logger.getLogger(CTB.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            try {
-                bw.newLine();
-            } catch (IOException ex) {
-                Logger.getLogger(CTB.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
-            try {
-                bw.close();
-            } catch (IOException ex) {
-                Logger.getLogger(CTB.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            try {
-                fw.close();
-            } catch (IOException ex) {
-                Logger.getLogger(CTB.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
-        }
-        setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-
-    }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jTable9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable9MouseClicked
         //ha a  rawoh-n klikelünk akkor jelenjen meg az ablak
@@ -1768,12 +1777,32 @@ public class CTB extends javax.swing.JFrame {
             rawedit.jTextArea1.setText(jTable9.getValueAt(jTable9.getSelectedRow(), 4).toString());
             rawedit.setVisible(true);
             rawedit.jTextField1.requestFocus();
+            //elhagyott anyagok szerkesztése
         } else if (CTB.jTable9.getSelectedColumn() == 8) {
             lostedit.jTextField2.setText(jTable9.getValueAt(jTable9.getSelectedRow(), 0).toString());
             lostedit.jTextField1.setText(jTable9.getValueAt(jTable9.getSelectedRow(), 8).toString());
+//a komment beírása 
+            for (int i = 0; i < jTable12.getRowCount(); i++) {
+                try {
+                    if (jTable12.getValueAt(i, 0).toString().equals(lostedit.jTextField2.getText())) {
+                        
+                        lostedit.jTextArea1.setText(jTable12.getValueAt(i, 2).toString());
+                    }
+                } catch (Exception e) {
+                }
+                
+            }
             lostedit.setVisible(true);
-
+            
+        } //ha a pn-en klikkelünk az oh tábla nyíljon meg lekeresve
+        else if (CTB.jTable9.getSelectedColumn() == 0) {
+            
+            jTabbedPane1.setSelectedIndex(2);
+            jTextField1.setText(jTable9.getValueAt(jTable9.getSelectedRow(), 0).toString());
+            universalfilter uf = new universalfilter(jTextField1.getText().trim(), jTable2);
+            
         }
+
     }//GEN-LAST:event_jTable9MouseClicked
 
     private void torlesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_torlesActionPerformed
@@ -1781,15 +1810,15 @@ public class CTB extends javax.swing.JFrame {
 
         int rows[] = this.jTable11.getSelectedRows();
         int columns[] = this.jTable11.getSelectedColumns();
-
+        
         for (int i = 0; i < rows.length; i++) {
-
+            
             for (int n = 0; n < columns.length; n++) {
-
+                
                 this.jTable11.setValueAt(null, rows[i], columns[n]);
-
+                
             }
-
+            
         }
 
     }//GEN-LAST:event_torlesActionPerformed
@@ -1803,8 +1832,9 @@ public class CTB extends javax.swing.JFrame {
     private void jCheckBoxMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxMenuItem1ActionPerformed
         // TODO add your handling code here:
 
-        CTB_NEW_FullCalc calc = new CTB_NEW_FullCalc(true, v);
-        calc.calc();
+        CTB_NEW_FullCalc calc = new CTB_NEW_FullCalc(true, CTB_NEW_FullCalc.calculations.FULL);
+        calc.start();
+        
 
     }//GEN-LAST:event_jCheckBoxMenuItem1ActionPerformed
 
@@ -1815,60 +1845,40 @@ public class CTB extends javax.swing.JFrame {
 
     private void jCheckBoxMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxMenuItem2ActionPerformed
         // TODO add your handling code here:
-        CTB_NEW_FullCalc calc = new CTB_NEW_FullCalc(true, v);
-        calc.calc();
+        CTB_NEW_FullCalc calc = new CTB_NEW_FullCalc(true, CTB_NEW_FullCalc.calculations.FULL);
+        calc.start();
     }//GEN-LAST:event_jCheckBoxMenuItem2ActionPerformed
 
     private void jCheckBoxMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxMenuItem3ActionPerformed
 
         // TODO add your handling code here:
         setCursor(new Cursor(Cursor.WAIT_CURSOR));
-
-        CTB_NEW_FullCalc f = new CTB_NEW_FullCalc(false, v);
-
-        f.AddOH();
-        f.stockcalc();
-        f.totalohcalc();
-        f.ctbszamol();
-        CTB_NEW_TopShortThread t = new CTB_NEW_TopShortThread();
-        t.start();
-
-        TablaOszlopSzelesseg(jTable1);
+        
+        CTB_NEW_FullCalc f = new CTB_NEW_FullCalc(false, CTB_NEW_FullCalc.calculations.CHANGEOH);
+        f.start();
+        
         setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 
     }//GEN-LAST:event_jCheckBoxMenuItem3ActionPerformed
 
     private void jCheckBoxMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxMenuItem4ActionPerformed
-
+        
         setCursor(new Cursor(Cursor.WAIT_CURSOR));
-
-        CTB_NEW_FullCalc f = new CTB_NEW_FullCalc(false, v);
-
-        f.AddOH();
-        f.stockcalc();
-        f.totalohcalc();
-        f.ctbszamol();
-        CTB_NEW_TopShortThread t = new CTB_NEW_TopShortThread();
-        t.start();
-
-        TablaOszlopSzelesseg(jTable1);
+        
+        CTB_NEW_FullCalc f = new CTB_NEW_FullCalc(false, CTB_NEW_FullCalc.calculations.CHANGEOH);
+        f.start();
+        
         setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-
+        
 
     }//GEN-LAST:event_jCheckBoxMenuItem4ActionPerformed
 
     private void jCheckBoxMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxMenuItem5ActionPerformed
         setCursor(new Cursor(Cursor.WAIT_CURSOR));
-
-        CTB_NEW_FullCalc f = new CTB_NEW_FullCalc(false, v);
-
-        f.AddOH();
-        f.totalohcalc();
-        f.ctbszamol();
-        CTB_NEW_TopShortThread t = new CTB_NEW_TopShortThread();
-        t.start();
-
-        TablaOszlopSzelesseg(jTable1);
+        
+        CTB_NEW_FullCalc f = new CTB_NEW_FullCalc(false, CTB_NEW_FullCalc.calculations.CHANGEOH);
+        f.start();
+        
         setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 
     }//GEN-LAST:event_jCheckBoxMenuItem5ActionPerformed
@@ -1896,17 +1906,17 @@ public class CTB extends javax.swing.JFrame {
         int[] selectedcolumn = jTable11.getSelectedColumns();
         int osszeg = 0;
         for (int r = 0; r < selectedrow.length; r++) {
-
+            
             for (int c = 0; c < selectedcolumn.length; c++) {
                 try {
                     osszeg += Integer.parseInt(jTable11.getValueAt(selectedrow[r], selectedcolumn[c]).toString());
                 } catch (Exception e) {
                 }
-
+                
             }
-
+            
         }
-
+        
         jTextField16.setText(String.valueOf(osszeg));
     }//GEN-LAST:event_jTable11MouseMoved
 
@@ -1923,8 +1933,8 @@ public class CTB extends javax.swing.JFrame {
     private void jCheckBoxMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxMenuItem6ActionPerformed
         // TODO add your handling code here:
 
-        CTB_NEW_FullCalc calc = new CTB_NEW_FullCalc(false, v);
-        calc.calc();
+        CTB_NEW_FullCalc calc = new CTB_NEW_FullCalc(false, CTB_NEW_FullCalc.calculations.FULL);
+        calc.start();
 
     }//GEN-LAST:event_jCheckBoxMenuItem6ActionPerformed
 
@@ -1952,11 +1962,11 @@ public class CTB extends javax.swing.JFrame {
         //megnézzük , hogy inté convertálató e a texfield adata
         int pluszsor = 0;
         try {
-
+            
             pluszsor = Integer.parseInt(jTextField18.getText());
-
+            
         } catch (Exception e) {
-
+            
             warning.SetMessage("Nem jó sor mennyiséget adtál meg!");
 //            JOptionPane.showMessageDialog(this,
 //                    cccccc,
@@ -1968,15 +1978,15 @@ public class CTB extends javax.swing.JFrame {
         //kiszedjük a modellt
         DefaultTableModel model = new DefaultTableModel();
         model = (DefaultTableModel) jTable12.getModel();
-
+        
         for (int i = 0; i < pluszsor; i++) {
-
+            
             model.addRow(new Object[]{"", "", " "});
-
+            
         }
-
+        
         jTable12.setModel(model);
-
+        
 
     }//GEN-LAST:event_jButton7ActionPerformed
 
@@ -1989,9 +1999,9 @@ public class CTB extends javax.swing.JFrame {
 
 //megprobáljuk számmá convertálni a qty -t ha nem sikerül kiirjuk és kiállunk
             for (int i = 0; i < model.getRowCount(); i++) {
-
+                
                 if (!model.getValueAt(i, 0).toString().equals("")) {
-
+                    
                     try {
                         Integer.parseInt(model.getValueAt(i, 1).toString());
                     } catch (Exception e) {
@@ -2005,7 +2015,7 @@ public class CTB extends javax.swing.JFrame {
                         r.olvas();
                         return;
                     }
-
+                    
                 }
             }
 
@@ -2015,22 +2025,22 @@ public class CTB extends javax.swing.JFrame {
             file.createNewFile();
             FileWriter writer = new FileWriter(file);
             BufferedWriter bw = new BufferedWriter(writer);
-
+            
             for (int i = 0; i < model.getRowCount(); i++) {
 //ha üres a pn nem irjuk ki azt a sort
                 if (model.getValueAt(i, 0).equals("")) {
-
+                    
                     continue;
-
+                    
                 }
-
+                
                 bw.write(model.getValueAt(i, 0) + ";" + model.getValueAt(i, 1) + ";" + model.getValueAt(i, 2));
                 bw.newLine();
-
+                
             }
-
+            
             bw.close();
-
+            
             tick.SetMessage("Sikeres mentés!");
 //            JOptionPane.showMessageDialog(this,
 //                    "Sikeres mentés!");
@@ -2038,11 +2048,11 @@ public class CTB extends javax.swing.JFrame {
 //visszaolvassuk
             CTB_LostRead r = new CTB_LostRead();
             r.olvas();
-
+            
         } catch (IOException ex) {
             Logger.getLogger(CTB.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        
 
     }//GEN-LAST:event_jButton6ActionPerformed
 
@@ -2056,15 +2066,15 @@ public class CTB extends javax.swing.JFrame {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setAcceptAllFileFilterUsed(true);
         fileChooser.setDialogTitle("Specify a file to save");
-
+        
         int userSelection = fileChooser.showSaveDialog(this);
-
+        
         if (userSelection == JFileChooser.APPROVE_OPTION) {
-
+            
             File fileToSave = fileChooser.getSelectedFile();
             ExcelExporter exp = new ExcelExporter();
             exp.fillData(jTable7, new File(fileToSave.getAbsolutePath() + ".xls"));
-
+            
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -2077,23 +2087,25 @@ public class CTB extends javax.swing.JFrame {
             komment.jLabel2.setText(jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString());
             //megkeressük a kommentet a pndatasban es beallítjuk a textareába
             for (int i = 0; i < PnDatas.size(); i++) {
-
+                
                 if (PnDatas.get(i)[1].equals(komment.jLabel2.getText())) {
-
+                    
                     komment.jTextArea1.setText(PnDatas.get(i)[2]);
                     break;
                 } else {
-
+                    
                     komment.jTextArea1.setText("");
-
+                    
                 }
-
+                
             }
 
             //megjelenítjük a komment ablakot
             komment.setVisible(true);
-
+            
         }
+
+        // new CTB_NEW_LinkTables(jScrollPane1, jTable1, jScrollPane11, jTable11, 1);
 
     }//GEN-LAST:event_jTable1MouseClicked
 
@@ -2104,24 +2116,115 @@ public class CTB extends javax.swing.JFrame {
 
     private void jCheckBoxMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxMenuItem8ActionPerformed
         //futtassuk le a kalkulációkat
-        CTB_NEW_FullCalc full = new CTB_NEW_FullCalc(true, v);
-        full.totalohcalc();
-        full.ctbszamol();
-        CTB_NEW_TopShortThread t = new CTB_NEW_TopShortThread();
-        t.start();
+        setCursor(new Cursor(Cursor.WAIT_CURSOR));
+        
+        CTB_NEW_FullCalc f = new CTB_NEW_FullCalc(false, CTB_NEW_FullCalc.calculations.CHANGEOH);
+        f.start();
+        
+        setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 
     }//GEN-LAST:event_jCheckBoxMenuItem8ActionPerformed
 
+    private void jTextField19KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField19KeyReleased
+        // TODO add your handling code here:
+        universalfilter u = new universalfilter(jTextField19.getText().trim(), jTable13);
+    }//GEN-LAST:event_jTextField19KeyReleased
+
+    private void jCheckBoxMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxMenuItem9ActionPerformed
+        // TODO add your handling code here:
+        CTB_NEW_FullCalc f = new CTB_NEW_FullCalc(true, CTB_NEW_FullCalc.calculations.FULL);
+        f.start();
+    }//GEN-LAST:event_jCheckBoxMenuItem9ActionPerformed
+
+    private void jCheckBoxMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxMenuItem10ActionPerformed
+        // TODO add your handling code here:
+        CTB_NEW_FullCalc f = new CTB_NEW_FullCalc(true, CTB_NEW_FullCalc.calculations.CHANGELOST);
+        f.start();
+    }//GEN-LAST:event_jCheckBoxMenuItem10ActionPerformed
+
+    private void jTextField3KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField3KeyPressed
+        //sorok hozzáadása
+        //ha enter
+
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+//megpróbáljuk integerré alakítani a beírt szöveget
+            try {
+                
+                for (int i = 0; i < Integer.parseInt(jTextField3.getText()); i++) {
+                    
+                    CTB_NEW_Variables.ohmodel.addRow(new Object[]{"STOCK1", "", "", "", "Net-Asset", "", "", "", "", "", ""});
+                    
+                }
+//beshortoljuk a táblát
+                TableRowSorter<TableModel> sorter = new TableRowSorter<>(jTable2.getModel());
+                jTable2.setRowSorter(sorter);
+                List<RowSorter.SortKey> sortKeys = new ArrayList<>();
+                int columnIndexToSort = 2;
+                sortKeys.add(new RowSorter.SortKey(columnIndexToSort, SortOrder.ASCENDING));
+                sorter.setSortKeys(sortKeys);
+                sorter.sort();
+                tick.SetMessage("Hozzáadtunk " + jTextField3.getText() + " sort!");
+                
+            } catch (Exception e) {
+                
+                warning.SetMessage("Valószínűleg nem számot adtál meg!");
+                jTextField3.setText("");
+                jTextField3.requestFocus();
+            }
+            
+        }
+
+    }//GEN-LAST:event_jTextField3KeyPressed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // az új oh adatok mentése
+        //megállítjuk a szerkesztést
+        if (jTable2.isEditing()) {
+            jTable2.getCellEditor().stopCellEditing();
+            
+        }
+        //végigjárjuk a táblát és kiszedjük azokat a sorokat amikben nincs pn
+        for (int i = 0; i < CTB_NEW_Variables.ohmodel.getRowCount(); i++) {
+            
+            if (CTB_NEW_Variables.ohmodel.getValueAt(i, 2).equals("")) {
+                
+                CTB_NEW_Variables.ohmodel.removeRow(i);
+                i--;
+                
+            }
+//ha nem számot adott meg darabnak
+            try {
+                if (!CTB_NEW_Variables.ohmodel.getValueAt(i, 2).toString().contains("Part")) {
+                    Integer.parseInt(CTB_NEW_Variables.ohmodel.getValueAt(i, 6).toString().replace(",", ""));
+                }
+                
+            } catch (Exception e) {
+                warning.SetMessage("Nem jó darabszámot adtál meg a " + CTB_NEW_Variables.ohmodel.getValueAt(i, 2).toString() + " esetében, töröljük!");
+            }
+            
+        }
+//vissza kell térni a ctb oldalra és indítani egy kalkulációt
+        jTabbedPane1.setSelectedIndex(0);
+        CTB_NEW_FullCalc f = new CTB_NEW_FullCalc(true, CTB_NEW_FullCalc.calculations.CHANGEOH);
+        f.start();
+
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        // segítség ablak
+        helper.setVisible(true);
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
+    
     private void seticon() {
-
+        
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/PlannTool/PICTURES/ctb1.jpg")));
-
+        
     }
-
+    
     public static void TablaOszlopSzelesseg(JTable table) {
-
+        
         table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-
+        
         final TableColumnModel columnModel = table.getColumnModel();
         for (int column = 0; column < table.getColumnCount(); column++) {
             int width = 15; // Min width
@@ -2147,7 +2250,7 @@ public class CTB extends javax.swing.JFrame {
             Object headerValue = column1.getHeaderValue();
             Component headerComp = headerRenderer.getTableCellRendererComponent(table, headerValue, false, false, 0, column);
             maxWidth = Math.max(maxWidth, headerComp.getPreferredSize().width);
-
+            
             if (width > maxWidth) {
                 columnModel.getColumn(column).setPreferredWidth(width);
             } else {
@@ -2174,21 +2277,21 @@ public class CTB extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
-
+                    
                 }
             }
         } catch (ClassNotFoundException ex) {
             java.util.logging.Logger.getLogger(CTB.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
-
+            
         } catch (InstantiationException ex) {
             java.util.logging.Logger.getLogger(CTB.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
-
+            
         } catch (IllegalAccessException ex) {
             java.util.logging.Logger.getLogger(CTB.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
-
+            
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(CTB.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
@@ -2211,6 +2314,7 @@ public class CTB extends javax.swing.JFrame {
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     public static javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
+    public static javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem10;
     public static javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem2;
     public static javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem3;
     public static javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem4;
@@ -2218,6 +2322,7 @@ public class CTB extends javax.swing.JFrame {
     public static javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem6;
     public static javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem7;
     public static javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem8;
+    public static javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem9;
     public static javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -2231,9 +2336,9 @@ public class CTB extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel3;
-    public static javax.swing.JLabel jLabel5;
-    public static javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
@@ -2246,6 +2351,7 @@ public class CTB extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JPanel jPanel1;
@@ -2261,6 +2367,8 @@ public class CTB extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JPopupMenu jPopupMenu3;
+    public static javax.swing.JProgressBar jProgressBar1;
+    public static javax.swing.JProgressBar jProgressBar2;
     public static javax.swing.JScrollPane jScrollPane1;
     public static javax.swing.JScrollPane jScrollPane11;
     private javax.swing.JScrollPane jScrollPane12;
@@ -2275,6 +2383,7 @@ public class CTB extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane9;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
+    private javax.swing.JPopupMenu.Separator jSeparator3;
     private javax.swing.JTabbedPane jTabbedPane1;
     public static javax.swing.JTable jTable1;
     public static javax.swing.JTable jTable10;
@@ -2295,7 +2404,9 @@ public class CTB extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField16;
     private javax.swing.JTextField jTextField17;
     private javax.swing.JTextField jTextField18;
+    private javax.swing.JTextField jTextField19;
     private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField5;
     private javax.swing.JTextField jTextField6;

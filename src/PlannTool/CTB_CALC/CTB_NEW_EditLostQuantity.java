@@ -17,6 +17,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.JRootPane;
 import javax.swing.table.DefaultTableModel;
 import jxl.Workbook;
 import jxl.write.Label;
@@ -40,6 +41,7 @@ public class CTB_NEW_EditLostQuantity extends javax.swing.JDialog {
     public CTB_NEW_EditLostQuantity(java.awt.Frame parent, boolean modal, CTB c) {
         super(parent, modal);
         this.c = c;
+        getRootPane().setWindowDecorationStyle(JRootPane.NONE);
         initComponents();
     }
 
@@ -234,10 +236,8 @@ public class CTB_NEW_EditLostQuantity extends javax.swing.JDialog {
                 } catch (Exception e) {
 
                     c.warning.SetMessage("Nem számot adtál meg mennyiségnek!");
-//                    JOptionPane.showMessageDialog(this,
-//                            "Nem számot adtál meg mennyiségnek!",
-//                            "Hiba",
-//                            JOptionPane.ERROR_MESSAGE);
+                    jTextField1.requestFocus();
+                    jTextField1.setText("");
 
                 }
 
@@ -248,7 +248,13 @@ public class CTB_NEW_EditLostQuantity extends javax.swing.JDialog {
         //ha false maradt a létezik akkor kell egy uj sort hozzáadni a modellhez
         if (!letezik) {
 
-            lostmodel.addRow(new Object[]{jTextField2.getText(), jTextField1.getText(), jTextArea1.getText()});
+            String comment = "";
+            try {
+                comment = jTextArea1.getText();
+            } catch (Exception e) {
+            }
+
+            lostmodel.addRow(new Object[]{jTextField2.getText(), jTextField1.getText(), comment});
             jTable12.setModel(lostmodel);
 
         }
@@ -269,10 +275,6 @@ public class CTB_NEW_EditLostQuantity extends javax.swing.JDialog {
                         Integer.parseInt(model.getValueAt(i, 1).toString());
                     } catch (Exception e) {
 
-//                        JOptionPane.showMessageDialog(this,
-//                                "Nem jó számot adtál meg a " + String.valueOf(i + 1) + ". sorban!",
-//                                "Adat hiba!",
-//                                JOptionPane.ERROR_MESSAGE);
                         c.warning.SetMessage("Nem jó számot adtál meg a " + String.valueOf(i + 1) + ". sorban!");
                         CTB_LostRead r = new CTB_LostRead();
                         r.olvas();
@@ -311,21 +313,9 @@ public class CTB_NEW_EditLostQuantity extends javax.swing.JDialog {
             Logger.getLogger(CTB.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        CTB_NEW_FullCalc calc = new CTB_NEW_FullCalc(true, new CTB_NEW_Variables());
-//megkeressük,hogy hányadik sor a bommatrixban ez a pn
-        for (int i = 0; i < CTB_NEW_Variables.calcbommodel.getRowCount(); i++) {
-            if (CTB_NEW_Variables.calcbommodel.getValueAt(i, 0).toString().equals(jTextField2.getText().trim())) {
-                calc.AddLost(i, jTextField2.getText().trim());
-                break;
-            }
-        }
+        CTB_NEW_FullCalc calc = new CTB_NEW_FullCalc(true, CTB_NEW_FullCalc.calculations.CHANGELOST);
+        calc.start();
 
-        calc.totalohcalc();
-        calc.ctbszamol();
-//topshort
-        CTB_NEW_TopShortThread t = new CTB_NEW_TopShortThread();
-        t.start();
-        CTB.jTable9.repaint();
         jTextArea1.setText("");
         jTextField1.setText("");
         jTextField2.setText("");

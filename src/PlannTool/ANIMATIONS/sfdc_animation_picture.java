@@ -7,6 +7,7 @@ package PlannTool.ANIMATIONS;
 
 import java.awt.Color;
 import java.awt.MouseInfo;
+import javax.swing.JRootPane;
 import javax.swing.SwingConstants;
 
 /**
@@ -19,6 +20,7 @@ public class sfdc_animation_picture extends javax.swing.JFrame {
      * Creates new form Tc_SFDCanimation
      */
     public sfdc_animation_picture() {
+        getRootPane().setWindowDecorationStyle(JRootPane.NONE);
         initComponents();
         setBackground(new Color(0, 0, 0, 0));
        // this.setLocation(MouseInfo.getPointerInfo().getLocation());

@@ -34,20 +34,6 @@ public class CTB_Columnrenderer extends DefaultTableCellRenderer {
 
         JLabel c = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 
-//ha a topshort táblát hekkeljük
-        if (table == CTB.jTable9 && !CTB_NEW_Variables.topshortthread) {
-              c.setForeground(Color.black);
-        }
-        else if(table == CTB.jTable9 && CTB_NEW_Variables.topshortthread){
-        
-           c.setForeground(Color.red);
-        }
-        
-        else{
-         c.setForeground(Color.black);
-        
-        }
-
         if (column == 0) {
 
             c.setBackground(new Color(0, 122, 138, 100));

@@ -38,12 +38,12 @@ public class CTB_Tablarenderer extends DefaultTableCellRenderer {
 
         JLabel c = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
         c.setHorizontalAlignment(CENTER);
-        c.setBorder(BorderFactory.createLoweredSoftBevelBorder()    );
+       // c.setBorder(BorderFactory.createLoweredSoftBevelBorder()    );
         c.setIcon(null);
         if (column == 0) {
 
             c.setBackground(new Color(0, 122, 138, 100));
-            c.setBorder(BorderFactory.createLoweredSoftBevelBorder()    );
+           // c.setBorder(BorderFactory.createLoweredSoftBevelBorder()    );
 
         } else if (column == 1) {
 
@@ -64,14 +64,14 @@ public class CTB_Tablarenderer extends DefaultTableCellRenderer {
         } else if (column == 2) {
 
             c.setBackground(new Color(0, 156, 176, 60));
-            c.setBorder(BorderFactory.createLoweredSoftBevelBorder()    );
+            //c.setBorder(BorderFactory.createLoweredSoftBevelBorder()    );
             c.setToolTipText(null);
             c.setIcon(null);
 
         } else if (column == 3) {
 
             c.setBackground(new Color(0, 170, 191, 40));
-            c.setBorder(BorderFactory.createLoweredSoftBevelBorder()    );
+           // c.setBorder(BorderFactory.createLoweredSoftBevelBorder()    );
             c.setToolTipText(null);
             c.setIcon(null);
 
@@ -150,7 +150,7 @@ public class CTB_Tablarenderer extends DefaultTableCellRenderer {
 
         } else {
 
-            c.setBorder(BorderFactory.createLoweredSoftBevelBorder()    );
+         //   c.setBorder(BorderFactory.createLoweredSoftBevelBorder()    );
             c.setBackground(new Color(0, 0, 0, 10));
             c.setToolTipText(null);
             c.setIcon(null);

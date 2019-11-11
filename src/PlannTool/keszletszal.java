@@ -108,6 +108,9 @@ public class keszletszal extends Thread {
                 exportdate = onhend.rs.getString(5);
 
             }
+            
+            onhend.kinyir();
+            
         } catch (SQLException ex) {
 
         }

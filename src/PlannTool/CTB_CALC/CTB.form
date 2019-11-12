@@ -488,7 +488,7 @@
                             <Column editable="false" title="Open JOB" type="java.lang.Object"/>
                             <Column editable="false" title="Need to build" type="java.lang.Object"/>
                             <Column editable="false" title="CTB" type="java.lang.Object"/>
-                            <Column editable="false" title="TERV" type="java.lang.Object"/>
+                            <Column editable="false" title="Plan" type="java.lang.Object"/>
                             <Column editable="true" title="Comment" type="java.lang.Object"/>
                           </Table>
                         </Property>

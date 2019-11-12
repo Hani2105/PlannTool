@@ -76,7 +76,7 @@ public class CTB extends javax.swing.JFrame {
 
     //uj resz
     CTB_NEW_Variables v = new CTB_NEW_Variables();
-    
+
     public static String user = "";
     public static BoundedRangeModel buzimodel;
     public static File f;
@@ -124,14 +124,14 @@ public class CTB extends javax.swing.JFrame {
     public CTB_NEW_WarningWindow warning = new CTB_NEW_WarningWindow(this, false);
     public CTB_NEW_TickWindows tick = new CTB_NEW_TickWindows(this, false);
     public CTB_NEW_Helper helper = new CTB_NEW_Helper(this, false);
-    
+
     public CTB(CTB_Bejel c) throws SQLException, ClassNotFoundException, IOException, UnsupportedLookAndFeelException, InstantiationException, IllegalAccessException, ParseException {
-        
+
         this.c = c;
         setExtendedState(MAXIMIZED_BOTH);
         // UIManager.setLookAndFeel(new SyntheticaBlackStarLookAndFeel());
         initComponents();
-        
+
         this.jTabbedPane1.setUI(new CTB_TabbedUI(jTabbedPane1));
         seticon();
 
@@ -147,7 +147,7 @@ public class CTB extends javax.swing.JFrame {
         jTable1.getTableHeader().setDefaultRenderer(new CTB_Columnrenderer());
         jTable11.getTableHeader().setDefaultRenderer(new CTB_Columnrenderer());
         jTable9.getTableHeader().setDefaultRenderer(new CTB_Columnrenderer());
-        
+
         TablaOszlopSzelesseg(jTable1);
         TablaOszlopSzelesseg(jTable11);
         jTable1.setBackground(new Color(0, 0, 0, 0));
@@ -155,7 +155,7 @@ public class CTB extends javax.swing.JFrame {
         jScrollPane1.setOpaque(false);
         jTable1.setOpaque(false);
         jScrollPane1.getViewport().setOpaque(false);
-        
+
         jTable11.setBackground(new Color(0, 0, 0, 0));
         jScrollPane11.setBackground(new Color(0, 0, 0, 0));
         jScrollPane11.setOpaque(false);
@@ -176,7 +176,7 @@ public class CTB extends javax.swing.JFrame {
         warning.setVisible(false);
         tick.setVisible(false);
         helper.setVisible(false);
-        
+
         kiszallitasleker();
         becellsleker();
 
@@ -191,13 +191,13 @@ public class CTB extends javax.swing.JFrame {
 //elinditjuk a waitwindows-t
 
     }
-    
+
     public static void updateBar(String method, int setmax, int increased) {
-        
+
         jProgressBar1.setMaximum(setmax);
         jProgressBar1.setValue(increased);
         jProgressBar1.setString(String.valueOf(method + " " + increased) + " / " + String.valueOf(setmax));
-        
+
     }
 
 //ez tölti ki a control panel adatait
@@ -227,7 +227,7 @@ public class CTB extends javax.swing.JFrame {
 
     //lekérjük a kiszállítások területének listáját és feltöltjük a jlistet
     public void kiszallitasleker() {
-        
+
         postgreconnect pc = new postgreconnect();
         try {
             pc.lekerdez("select distinct \"HBPackage\".customer_type.name from \"HBPackage\".customer_type");
@@ -235,27 +235,27 @@ public class CTB extends javax.swing.JFrame {
 
             //kiszallitasmodell.removeAllElements();
             while (pc.rs.next()) {
-                
+
                 kiszallitasmodell.addElement(pc.rs.getString(1));
-                
+
             }
             try {
                 control.jList1.setModel(kiszallitasmodell);
             } catch (Exception e) {
             }
             pc.kinyir();
-            
+
         } catch (SQLException ex) {
             Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }
 
     //backend cellák lekérése  
     public void becellsleker() {
-        
+
         planconnect pc = new planconnect();
         try {
             pc.lekerdez("SELECT * FROM planningdb.tc_becells");
@@ -263,32 +263,32 @@ public class CTB extends javax.swing.JFrame {
 
             //becellsmodell.removeAllElements();
             while (pc.rs.next()) {
-                
+
                 becellsmodell.addElement(pc.rs.getString(2));
-                
+
             }
-            
+
             control.jList2.setModel(becellsmodell);
             pc.kinyir();
-            
+
         } catch (SQLException ex) {
             Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         pc.kinyir();
-        
+
     }
 
 //fileokbeolvasása
     public void FilesToTables() throws IOException, FileNotFoundException, ParseException {
-        
+
         JFileChooser chooser = CTB_Filechooser.getFileChooserRiport();
         chooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
         int returnVal = chooser.showOpenDialog(c);
         if (returnVal == JFileChooser.APPROVE_OPTION) {
-            
+
             File file = chooser.getSelectedFile();
             CTB_Filechooser.setLastDirRiports(chooser.getSelectedFile());
             //String path = chooser.getSelectedFile().getAbsolutePath();
@@ -333,52 +333,52 @@ public class CTB extends javax.swing.JFrame {
                 model.setRowCount(0);
                 // model.setColumnCount(0);
                 jTable13.setModel(model);
-                
+
                 List<String> result = walk.filter(Files::isRegularFile)
                         .map(x -> x.toString()).collect(Collectors.toList());
-                
+
                 for (int i = 0; i < result.size(); i++) {
                     //allocation behúzása
                     if (result.get(i).contains(control.jTextField15.getText())) {
-                        
+
                         BasefileToTableWalk(jTable3, result.get(i));
-                        
+
                     } //workorders behúzása                  
                     else if (result.get(i).contains(control.jTextField16.getText())) {
-                        
+
                         BasefileToTableWalk(jTable5, result.get(i));
-                        
+
                     }//onhands 
                     else if (result.get(i).contains(control.jTextField17.getText())) {
-                        
+
                         BasefileToTableWalk(jTable2, result.get(i));
-                        
+
                     } //independent demand
                     else if (result.get(i).contains(control.jTextField18.getText())) {
-                        
+
                         BasefileToTableWalk(jTable4, result.get(i));
-                        
+
                     } //indented bom
                     else if (result.get(i).contains(control.jTextField19.getText())) {
-                        
+
                         BasefileToTableWalk(jTable6, result.get(i));
-                        
+
                     } //horizontal
                     else if (result.get(i).contains(control.jTextField20.getText())) {
-                        
+
                         HorizontalsToTable(result.get(i));
-                        
+
                     }
                 }
-                
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            
+
         }
-        
+
     }
-    
+
     public void BasefileToTableWalk(JTable t, String riportname) {
 
         //felvesszük a tábla modelljét ahova a riportot be kell tenni
@@ -396,21 +396,21 @@ public class CTB extends javax.swing.JFrame {
             in = new BufferedReader(new FileReader(File));
             String line = in.readLine();
             while ((line = in.readLine()) != null) {
-                
+
                 String[] cells = line.split("\\t");
                 model.addRow(cells);
-                
+
             }
-            
+
         } catch (Exception e) {
             e.printStackTrace();
             warning.SetMessage("Nem találom a(z) " + riportname + " filet!");
             return;
             //JOptionPane.showMessageDialog(this, "Nem találom a(z) " + a + " filet!");
         }
-        
+
     }
-    
+
     public void BasefileToTable(String path, ArrayList a, JTable t, String riportname) {
 
         //felvesszük a tábla modelljét ahova a riportot be kell tenni
@@ -427,32 +427,32 @@ public class CTB extends javax.swing.JFrame {
             //JOptionPane.showMessageDialog(this, "Nem találom a(z) " + riportname + " filet!");
             warning.SetMessage("Nem találom a(z) " + riportname + " filet!");
             return;
-            
+
         }
 //most kell ciklust indítani
         for (int i = 0; i < a.size(); i++) {
-            
+
             String pathfile = path + "\\\\" + a.get(i) + ".tab";
             File File = new File(pathfile);
             try {
                 in = new BufferedReader(new FileReader(File));
                 String line = in.readLine();
                 while ((line = in.readLine()) != null) {
-                    
+
                     String[] cells = line.split("\\t");
                     model.addRow(cells);
-                    
+
                 }
-                
+
             } catch (Exception e) {
                 warning.SetMessage("Nem találom a(z) " + a + " filet!");
                 return;
                 //JOptionPane.showMessageDialog(this, "Nem találom a(z) " + a + " filet!");
             }
         }
-        
+
     }
-    
+
     public void HorizontalsToTable(String riportname) throws FileNotFoundException, ParseException {
 
         //felvesszük a tábla modelljét
@@ -472,12 +472,12 @@ public class CTB extends javax.swing.JFrame {
                 in = new BufferedReader(new FileReader(File));
                 String line = in.readLine();
                 while ((line = in.readLine()) != null) {
-                    
+
                     String[] cells = line.split("\\t");
                     model.addRow(cells);
-                    
+
                 }
-                
+
             } catch (Exception e) {
                 //JOptionPane.showMessageDialog(this, "Nem találom a(z) " + CTB.Horizontals.get(i) + " filet!");
                 warning.SetMessage("Nem találom a(z) " + CTB.Horizontals.get(i) + " filet!");
@@ -486,7 +486,7 @@ public class CTB extends javax.swing.JFrame {
 
 //át kéne alakítani a dátumokat hetekké a modellben
         for (int s = 0; s < model.getRowCount(); s++) {
-            
+
             for (int o = 0; o < model.getColumnCount(); o++) {
                 try {
                     if (model.getValueAt(s, o).toString().contains("Week")) {
@@ -502,25 +502,25 @@ public class CTB extends javax.swing.JFrame {
                             cal.add(Calendar.DATE, 4);
                         }
                         int yearplusz = cal.get(Calendar.YEAR);
-                        
+
                         if (year == yearplusz) {
                             model.setValueAt(String.valueOf(year).substring(2, 4) + String.format("%02d", week), s + 1, o);
-                            
+
                         } else {
-                            
+
                             model.setValueAt(String.valueOf(yearplusz).substring(2, 4) + String.format("%02d", week), s + 1, o);
-                            
+
                         }
-                        
+
                     }
                 } catch (Exception e) {
                 }
             }
         }
-        
+
         jTable13.setModel(model);
         CTB.TablaOszlopSzelesseg(jTable13);
-        
+
     }
 
     /**
@@ -686,7 +686,7 @@ public class CTB extends javax.swing.JFrame {
 
             },
             new String [] {
-                "PartNumber", "Open PO", "Stock", "Open JOB", "Need to build", "CTB", "TERV", "Comment"
+                "PartNumber", "Open PO", "Stock", "Open JOB", "Need to build", "CTB", "Plan", "Comment"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -1698,9 +1698,9 @@ public class CTB extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField2KeyReleased
 
     private void jTable11KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTable11KeyPressed
-        
+
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            
+
             setCursor(new Cursor(Cursor.WAIT_CURSOR));
 //összehasonlítjuk a táblákat
             CTB_NEW_CompareTables c = new CTB_NEW_CompareTables(jTable11, jTable1);
@@ -1710,7 +1710,7 @@ public class CTB extends javax.swing.JFrame {
             } catch (Exception e) {
             }
             setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-            
+
         }
 
     }//GEN-LAST:event_jTable11KeyPressed
@@ -1728,10 +1728,10 @@ public class CTB extends javax.swing.JFrame {
     private void jTable11MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable11MouseReleased
         // TODO add your handling code here:
         new CTB_NEW_LinkTables(jScrollPane1, jTable1, jScrollPane11, jTable11, 2);
-        
+
         CTB_NEW_TopShortThread t = new CTB_NEW_TopShortThread();
         t.start();
-        
+
 
     }//GEN-LAST:event_jTable11MouseReleased
 
@@ -1762,7 +1762,7 @@ public class CTB extends javax.swing.JFrame {
 
         //jTable1.setModel(v.ctbmodel);
         setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-        
+
 
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 
@@ -1785,22 +1785,22 @@ public class CTB extends javax.swing.JFrame {
             for (int i = 0; i < jTable12.getRowCount(); i++) {
                 try {
                     if (jTable12.getValueAt(i, 0).toString().equals(lostedit.jTextField2.getText())) {
-                        
+
                         lostedit.jTextArea1.setText(jTable12.getValueAt(i, 2).toString());
                     }
                 } catch (Exception e) {
                 }
-                
+
             }
             lostedit.setVisible(true);
-            
+
         } //ha a pn-en klikkelünk az oh tábla nyíljon meg lekeresve
         else if (CTB.jTable9.getSelectedColumn() == 0) {
-            
+
             jTabbedPane1.setSelectedIndex(2);
             jTextField1.setText(jTable9.getValueAt(jTable9.getSelectedRow(), 0).toString());
             universalfilter uf = new universalfilter(jTextField1.getText().trim(), jTable2);
-            
+
         }
 
     }//GEN-LAST:event_jTable9MouseClicked
@@ -1810,15 +1810,15 @@ public class CTB extends javax.swing.JFrame {
 
         int rows[] = this.jTable11.getSelectedRows();
         int columns[] = this.jTable11.getSelectedColumns();
-        
+
         for (int i = 0; i < rows.length; i++) {
-            
+
             for (int n = 0; n < columns.length; n++) {
-                
+
                 this.jTable11.setValueAt(null, rows[i], columns[n]);
-                
+
             }
-            
+
         }
 
     }//GEN-LAST:event_torlesActionPerformed
@@ -1834,7 +1834,7 @@ public class CTB extends javax.swing.JFrame {
 
         CTB_NEW_FullCalc calc = new CTB_NEW_FullCalc(true, CTB_NEW_FullCalc.calculations.FULL);
         calc.start();
-        
+
 
     }//GEN-LAST:event_jCheckBoxMenuItem1ActionPerformed
 
@@ -1853,32 +1853,32 @@ public class CTB extends javax.swing.JFrame {
 
         // TODO add your handling code here:
         setCursor(new Cursor(Cursor.WAIT_CURSOR));
-        
+
         CTB_NEW_FullCalc f = new CTB_NEW_FullCalc(false, CTB_NEW_FullCalc.calculations.CHANGEOH);
         f.start();
-        
+
         setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 
     }//GEN-LAST:event_jCheckBoxMenuItem3ActionPerformed
 
     private void jCheckBoxMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxMenuItem4ActionPerformed
-        
+
         setCursor(new Cursor(Cursor.WAIT_CURSOR));
-        
+
         CTB_NEW_FullCalc f = new CTB_NEW_FullCalc(false, CTB_NEW_FullCalc.calculations.CHANGEOH);
         f.start();
-        
+
         setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-        
+
 
     }//GEN-LAST:event_jCheckBoxMenuItem4ActionPerformed
 
     private void jCheckBoxMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxMenuItem5ActionPerformed
         setCursor(new Cursor(Cursor.WAIT_CURSOR));
-        
+
         CTB_NEW_FullCalc f = new CTB_NEW_FullCalc(false, CTB_NEW_FullCalc.calculations.CHANGEOH);
         f.start();
-        
+
         setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 
     }//GEN-LAST:event_jCheckBoxMenuItem5ActionPerformed
@@ -1906,17 +1906,17 @@ public class CTB extends javax.swing.JFrame {
         int[] selectedcolumn = jTable11.getSelectedColumns();
         int osszeg = 0;
         for (int r = 0; r < selectedrow.length; r++) {
-            
+
             for (int c = 0; c < selectedcolumn.length; c++) {
                 try {
                     osszeg += Integer.parseInt(jTable11.getValueAt(selectedrow[r], selectedcolumn[c]).toString());
                 } catch (Exception e) {
                 }
-                
+
             }
-            
+
         }
-        
+
         jTextField16.setText(String.valueOf(osszeg));
     }//GEN-LAST:event_jTable11MouseMoved
 
@@ -1962,11 +1962,11 @@ public class CTB extends javax.swing.JFrame {
         //megnézzük , hogy inté convertálató e a texfield adata
         int pluszsor = 0;
         try {
-            
+
             pluszsor = Integer.parseInt(jTextField18.getText());
-            
+
         } catch (Exception e) {
-            
+
             warning.SetMessage("Nem jó sor mennyiséget adtál meg!");
 //            JOptionPane.showMessageDialog(this,
 //                    cccccc,
@@ -1978,15 +1978,15 @@ public class CTB extends javax.swing.JFrame {
         //kiszedjük a modellt
         DefaultTableModel model = new DefaultTableModel();
         model = (DefaultTableModel) jTable12.getModel();
-        
+
         for (int i = 0; i < pluszsor; i++) {
-            
+
             model.addRow(new Object[]{"", "", " "});
-            
+
         }
-        
+
         jTable12.setModel(model);
-        
+
 
     }//GEN-LAST:event_jButton7ActionPerformed
 
@@ -1999,9 +1999,9 @@ public class CTB extends javax.swing.JFrame {
 
 //megprobáljuk számmá convertálni a qty -t ha nem sikerül kiirjuk és kiállunk
             for (int i = 0; i < model.getRowCount(); i++) {
-                
+
                 if (!model.getValueAt(i, 0).toString().equals("")) {
-                    
+
                     try {
                         Integer.parseInt(model.getValueAt(i, 1).toString());
                     } catch (Exception e) {
@@ -2015,7 +2015,7 @@ public class CTB extends javax.swing.JFrame {
                         r.olvas();
                         return;
                     }
-                    
+
                 }
             }
 
@@ -2025,22 +2025,22 @@ public class CTB extends javax.swing.JFrame {
             file.createNewFile();
             FileWriter writer = new FileWriter(file);
             BufferedWriter bw = new BufferedWriter(writer);
-            
+
             for (int i = 0; i < model.getRowCount(); i++) {
 //ha üres a pn nem irjuk ki azt a sort
                 if (model.getValueAt(i, 0).equals("")) {
-                    
+
                     continue;
-                    
+
                 }
-                
+
                 bw.write(model.getValueAt(i, 0) + ";" + model.getValueAt(i, 1) + ";" + model.getValueAt(i, 2));
                 bw.newLine();
-                
+
             }
-            
+
             bw.close();
-            
+
             tick.SetMessage("Sikeres mentés!");
 //            JOptionPane.showMessageDialog(this,
 //                    "Sikeres mentés!");
@@ -2048,11 +2048,11 @@ public class CTB extends javax.swing.JFrame {
 //visszaolvassuk
             CTB_LostRead r = new CTB_LostRead();
             r.olvas();
-            
+
         } catch (IOException ex) {
             Logger.getLogger(CTB.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
 
     }//GEN-LAST:event_jButton6ActionPerformed
 
@@ -2066,15 +2066,15 @@ public class CTB extends javax.swing.JFrame {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setAcceptAllFileFilterUsed(true);
         fileChooser.setDialogTitle("Specify a file to save");
-        
+
         int userSelection = fileChooser.showSaveDialog(this);
-        
+
         if (userSelection == JFileChooser.APPROVE_OPTION) {
-            
+
             File fileToSave = fileChooser.getSelectedFile();
             ExcelExporter exp = new ExcelExporter();
             exp.fillData(jTable7, new File(fileToSave.getAbsolutePath() + ".xls"));
-            
+
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -2087,25 +2087,27 @@ public class CTB extends javax.swing.JFrame {
             komment.jLabel2.setText(jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString());
             //megkeressük a kommentet a pndatasban es beallítjuk a textareába
             for (int i = 0; i < PnDatas.size(); i++) {
-                
+
                 if (PnDatas.get(i)[1].equals(komment.jLabel2.getText())) {
-                    
+
                     komment.jTextArea1.setText(PnDatas.get(i)[2]);
                     break;
                 } else {
-                    
+
                     komment.jTextArea1.setText("");
-                    
+
                 }
-                
+
             }
 
             //megjelenítjük a komment ablakot
             komment.setVisible(true);
-            
+
         }
 
-        // new CTB_NEW_LinkTables(jScrollPane1, jTable1, jScrollPane11, jTable11, 1);
+        new CTB_NEW_LinkTables(jScrollPane1, jTable1, jScrollPane11, jTable11, 1);
+        CTB_NEW_TopShortThread t = new CTB_NEW_TopShortThread();
+        t.start();
 
     }//GEN-LAST:event_jTable1MouseClicked
 
@@ -2117,10 +2119,10 @@ public class CTB extends javax.swing.JFrame {
     private void jCheckBoxMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxMenuItem8ActionPerformed
         //futtassuk le a kalkulációkat
         setCursor(new Cursor(Cursor.WAIT_CURSOR));
-        
+
         CTB_NEW_FullCalc f = new CTB_NEW_FullCalc(false, CTB_NEW_FullCalc.calculations.CHANGEOH);
         f.start();
-        
+
         setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 
     }//GEN-LAST:event_jCheckBoxMenuItem8ActionPerformed
@@ -2149,11 +2151,11 @@ public class CTB extends javax.swing.JFrame {
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
 //megpróbáljuk integerré alakítani a beírt szöveget
             try {
-                
+
                 for (int i = 0; i < Integer.parseInt(jTextField3.getText()); i++) {
-                    
+
                     CTB_NEW_Variables.ohmodel.addRow(new Object[]{"STOCK1", "", "", "", "Net-Asset", "", "", "", "", "", ""});
-                    
+
                 }
 //beshortoljuk a táblát
                 TableRowSorter<TableModel> sorter = new TableRowSorter<>(jTable2.getModel());
@@ -2164,14 +2166,14 @@ public class CTB extends javax.swing.JFrame {
                 sorter.setSortKeys(sortKeys);
                 sorter.sort();
                 tick.SetMessage("Hozzáadtunk " + jTextField3.getText() + " sort!");
-                
+
             } catch (Exception e) {
-                
+
                 warning.SetMessage("Valószínűleg nem számot adtál meg!");
                 jTextField3.setText("");
                 jTextField3.requestFocus();
             }
-            
+
         }
 
     }//GEN-LAST:event_jTextField3KeyPressed
@@ -2181,27 +2183,27 @@ public class CTB extends javax.swing.JFrame {
         //megállítjuk a szerkesztést
         if (jTable2.isEditing()) {
             jTable2.getCellEditor().stopCellEditing();
-            
+
         }
         //végigjárjuk a táblát és kiszedjük azokat a sorokat amikben nincs pn
         for (int i = 0; i < CTB_NEW_Variables.ohmodel.getRowCount(); i++) {
-            
+
             if (CTB_NEW_Variables.ohmodel.getValueAt(i, 2).equals("")) {
-                
+
                 CTB_NEW_Variables.ohmodel.removeRow(i);
                 i--;
-                
+
             }
 //ha nem számot adott meg darabnak
             try {
                 if (!CTB_NEW_Variables.ohmodel.getValueAt(i, 2).toString().contains("Part")) {
                     Integer.parseInt(CTB_NEW_Variables.ohmodel.getValueAt(i, 6).toString().replace(",", ""));
                 }
-                
+
             } catch (Exception e) {
                 warning.SetMessage("Nem jó darabszámot adtál meg a " + CTB_NEW_Variables.ohmodel.getValueAt(i, 2).toString() + " esetében, töröljük!");
             }
-            
+
         }
 //vissza kell térni a ctb oldalra és indítani egy kalkulációt
         jTabbedPane1.setSelectedIndex(0);
@@ -2214,17 +2216,17 @@ public class CTB extends javax.swing.JFrame {
         // segítség ablak
         helper.setVisible(true);
     }//GEN-LAST:event_jMenuItem5ActionPerformed
-    
+
     private void seticon() {
-        
+
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/PlannTool/PICTURES/ctb1.jpg")));
-        
+
     }
-    
+
     public static void TablaOszlopSzelesseg(JTable table) {
-        
+
         table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-        
+
         final TableColumnModel columnModel = table.getColumnModel();
         for (int column = 0; column < table.getColumnCount(); column++) {
             int width = 15; // Min width
@@ -2250,7 +2252,7 @@ public class CTB extends javax.swing.JFrame {
             Object headerValue = column1.getHeaderValue();
             Component headerComp = headerRenderer.getTableCellRendererComponent(table, headerValue, false, false, 0, column);
             maxWidth = Math.max(maxWidth, headerComp.getPreferredSize().width);
-            
+
             if (width > maxWidth) {
                 columnModel.getColumn(column).setPreferredWidth(width);
             } else {
@@ -2277,21 +2279,21 @@ public class CTB extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
-                    
+
                 }
             }
         } catch (ClassNotFoundException ex) {
             java.util.logging.Logger.getLogger(CTB.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
-            
+
         } catch (InstantiationException ex) {
             java.util.logging.Logger.getLogger(CTB.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
-            
+
         } catch (IllegalAccessException ex) {
             java.util.logging.Logger.getLogger(CTB.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
-            
+
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(CTB.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);

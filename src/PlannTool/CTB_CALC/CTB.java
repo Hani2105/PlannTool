@@ -124,6 +124,7 @@ public class CTB extends javax.swing.JFrame {
     public CTB_NEW_WarningWindow warning = new CTB_NEW_WarningWindow(this, false);
     public CTB_NEW_TickWindows tick = new CTB_NEW_TickWindows(this, false);
     public CTB_NEW_Helper helper = new CTB_NEW_Helper(this, false);
+    public CTB_NEW_WhereUsed whereused = new CTB_NEW_WhereUsed(this, false);
 
     public CTB(CTB_Bejel c) throws SQLException, ClassNotFoundException, IOException, UnsupportedLookAndFeelException, InstantiationException, IllegalAccessException, ParseException {
 
@@ -176,6 +177,7 @@ public class CTB extends javax.swing.JFrame {
         warning.setVisible(false);
         tick.setVisible(false);
         helper.setVisible(false);
+        whereused.setVisible(false);
 
         kiszallitasleker();
         becellsleker();
@@ -339,32 +341,32 @@ public class CTB extends javax.swing.JFrame {
 
                 for (int i = 0; i < result.size(); i++) {
                     //allocation behúzása
-                    if (result.get(i).contains(control.jTextField15.getText())) {
+                    if (result.get(i).contains(control.jTextField15.getText()) && !control.jTextField15.getText().equals("")) {
 
                         BasefileToTableWalk(jTable3, result.get(i));
 
                     } //workorders behúzása                  
-                    else if (result.get(i).contains(control.jTextField16.getText())) {
+                    else if (result.get(i).contains(control.jTextField16.getText()) && !control.jTextField16.getText().equals("")) {
 
                         BasefileToTableWalk(jTable5, result.get(i));
 
                     }//onhands 
-                    else if (result.get(i).contains(control.jTextField17.getText())) {
+                    else if (result.get(i).contains(control.jTextField17.getText()) && !control.jTextField17.getText().equals("")) {
 
                         BasefileToTableWalk(jTable2, result.get(i));
 
                     } //independent demand
-                    else if (result.get(i).contains(control.jTextField18.getText())) {
+                    else if (result.get(i).contains(control.jTextField18.getText()) && !control.jTextField18.getText().equals("")) {
 
                         BasefileToTableWalk(jTable4, result.get(i));
 
                     } //indented bom
-                    else if (result.get(i).contains(control.jTextField19.getText())) {
+                    else if (result.get(i).contains(control.jTextField19.getText()) && !control.jTextField19.getText().equals("")) {
 
                         BasefileToTableWalk(jTable6, result.get(i));
 
                     } //horizontal
-                    else if (result.get(i).contains(control.jTextField20.getText())) {
+                    else if (result.get(i).contains(control.jTextField20.getText()) && !control.jTextField20.getText().equals("")) {
 
                         HorizontalsToTable(result.get(i));
 
@@ -463,25 +465,21 @@ public class CTB extends javax.swing.JFrame {
 //letrehozunk egy olvasot
         BufferedReader in;
 
-//most kell ciklust indítani
-        for (int i = 0; i < CTB.Horizontals.size(); i++) {
+        // String pathfile = path + "\\\\" + CTB.Horizontals.get(i) + ".tab";
+        File File = new File(riportname);
+        try {
+            in = new BufferedReader(new FileReader(File));
+            String line = in.readLine();
+            while ((line = in.readLine()) != null) {
 
-            // String pathfile = path + "\\\\" + CTB.Horizontals.get(i) + ".tab";
-            File File = new File(riportname);
-            try {
-                in = new BufferedReader(new FileReader(File));
-                String line = in.readLine();
-                while ((line = in.readLine()) != null) {
+                String[] cells = line.split("\\t");
+                model.addRow(cells);
 
-                    String[] cells = line.split("\\t");
-                    model.addRow(cells);
-
-                }
-
-            } catch (Exception e) {
-                //JOptionPane.showMessageDialog(this, "Nem találom a(z) " + CTB.Horizontals.get(i) + " filet!");
-                warning.SetMessage("Nem találom a(z) " + CTB.Horizontals.get(i) + " filet!");
             }
+
+        } catch (Exception e) {
+            //JOptionPane.showMessageDialog(this, "Nem találom a(z) " + CTB.Horizontals.get(i) + " filet!");
+            warning.SetMessage("Nem találom a(z) " + riportname + " filet!");
         }
 
 //át kéne alakítani a dátumokat hetekké a modellben
@@ -537,7 +535,6 @@ public class CTB extends javax.swing.JFrame {
         torles = new javax.swing.JMenuItem();
         buttonGroup2 = new javax.swing.ButtonGroup();
         jPopupMenu3 = new javax.swing.JPopupMenu();
-        jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
         jPanel2 = new javax.swing.JPanel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
@@ -647,14 +644,6 @@ public class CTB extends javax.swing.JFrame {
             }
         });
         jPopupMenu1.add(torles);
-
-        jMenuItem3.setText("Készlet infó");
-        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem3ActionPerformed(evt);
-            }
-        });
-        jPopupMenu3.add(jMenuItem3);
 
         jMenuItem4.setText("Mi használja");
         jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
@@ -803,7 +792,7 @@ public class CTB extends javax.swing.JFrame {
         ));
         jTable11.setCellSelectionEnabled(true);
         jTable11.setComponentPopupMenu(jPopupMenu1);
-        jTable11.setName("pofutable"); // NOI18N
+        jTable11.setName("Data_In_Table"); // NOI18N
         jTable11.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseMoved(java.awt.event.MouseEvent evt) {
                 jTable11MouseMoved(evt);
@@ -1795,7 +1784,7 @@ public class CTB extends javax.swing.JFrame {
             lostedit.setVisible(true);
 
         } //ha a pn-en klikkelünk az oh tábla nyíljon meg lekeresve
-        else if (CTB.jTable9.getSelectedColumn() == 0) {
+        else if (CTB.jTable9.getSelectedColumn() == 1) {
 
             jTabbedPane1.setSelectedIndex(2);
             jTextField1.setText(jTable9.getValueAt(jTable9.getSelectedRow(), 0).toString());
@@ -1832,7 +1821,7 @@ public class CTB extends javax.swing.JFrame {
     private void jCheckBoxMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxMenuItem1ActionPerformed
         // TODO add your handling code here:
 
-        CTB_NEW_FullCalc calc = new CTB_NEW_FullCalc(true, CTB_NEW_FullCalc.calculations.FULL);
+        CTB_NEW_FullCalc calc = new CTB_NEW_FullCalc(false, CTB_NEW_FullCalc.calculations.FULL);
         calc.start();
 
 
@@ -1845,7 +1834,7 @@ public class CTB extends javax.swing.JFrame {
 
     private void jCheckBoxMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxMenuItem2ActionPerformed
         // TODO add your handling code here:
-        CTB_NEW_FullCalc calc = new CTB_NEW_FullCalc(true, CTB_NEW_FullCalc.calculations.FULL);
+        CTB_NEW_FullCalc calc = new CTB_NEW_FullCalc(false, CTB_NEW_FullCalc.calculations.FULL);
         calc.start();
     }//GEN-LAST:event_jCheckBoxMenuItem2ActionPerformed
 
@@ -1938,16 +1927,12 @@ public class CTB extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jCheckBoxMenuItem6ActionPerformed
 
-    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-        // készlet infó a short táblából
-        CTB_StockInfo si = new CTB_StockInfo(jTable9.getValueAt(jTable9.getSelectedRow(), 0).toString());
-        si.setVisible(true);
-    }//GEN-LAST:event_jMenuItem3ActionPerformed
-
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
-        // mi használja az anyagot
-        CTB_WhereUsed w = new CTB_WhereUsed(jTable9.getValueAt(jTable9.getSelectedRow(), 0).toString());
-        w.setVisible(true);
+
+        whereused.setPn(jTable9.getValueAt(jTable9.getSelectedRow(), 0).toString().trim());
+        whereused.getData();
+        whereused.setVisible(true);
+
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void jTextField17KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField17KeyReleased
@@ -2351,7 +2336,6 @@ public class CTB extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem13;
     private javax.swing.JMenuItem jMenuItem14;
     private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;

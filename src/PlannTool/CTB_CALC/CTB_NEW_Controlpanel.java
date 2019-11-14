@@ -698,7 +698,16 @@ public class CTB_NEW_Controlpanel extends javax.swing.JDialog {
                 for (int i = 4; i < CTB.jTable11.getColumnCount(); i++) {
 
                     CTB.jTable11.getColumnModel().getColumn(i).setHeaderValue(String.valueOf(cal.get(Calendar.YEAR)).substring(2, 4) + String.format("%02d", cal.get(Calendar.WEEK_OF_YEAR)));
-                    //hetszama++;
+                    try {
+                        if (Integer.parseInt(CTB.jTable11.getColumnModel().getColumn(i).getHeaderValue().toString()) < Integer.parseInt(CTB.jTable11.getColumnModel().getColumn(i - 1).getHeaderValue().toString())) {
+
+                            cal.add(Calendar.YEAR, 1);
+                            CTB.jTable11.getColumnModel().getColumn(i).setHeaderValue(String.valueOf(cal.get(Calendar.YEAR)).substring(2, 4) + String.format("%02d", cal.get(Calendar.WEEK_OF_YEAR)));
+                            continue;
+                        }
+                    } catch (Exception e) {
+                    }
+
                     cal.add(Calendar.WEEK_OF_YEAR, 1);
 
                 }
@@ -708,8 +717,6 @@ public class CTB_NEW_Controlpanel extends javax.swing.JDialog {
 
             } catch (Exception e) {
 
-//                infobox info = new infobox();
-//                info.infoBox("Nem valid számot adtál meg!", "Figyelem!");
                 ctb.warning.SetMessage("Nem valid számot adtál meg!");
             }
 
@@ -966,10 +973,6 @@ public class CTB_NEW_Controlpanel extends javax.swing.JDialog {
 
         try {
             c.inikezel(k);
-            //     ctb.tick.SetMessage("Sikeres mentés!");
-//            infobox inf = new infobox();
-//            inf.infoBox("Sikeres mentés!", "Mentés");
-
         } catch (IOException ex) {
 
         }

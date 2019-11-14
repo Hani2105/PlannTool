@@ -39,7 +39,7 @@ public class CTB_ShortTablarenderer extends DefaultTableCellRenderer {
         JLabel c = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
         c.setHorizontalAlignment(CENTER);
         c.setBorder(BorderFactory.createLoweredSoftBevelBorder());
-        if (column == 3 || column == 0 || column == 8) {
+        if (column == 3 || column == 1 || column == 8) {
 
             c.setBackground(new Color(167, 181, 204, 60));
 

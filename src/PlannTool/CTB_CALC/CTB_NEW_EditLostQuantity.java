@@ -214,6 +214,12 @@ public class CTB_NEW_EditLostQuantity extends javax.swing.JDialog {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // mentés gomb
+
+        //megszuntetjuk a tabla szerkeszteset
+        if (CTB.jTable9.isEditing()) {
+
+            CTB.jTable9.getCellEditor().stopCellEditing();
+        }
         //be kell szettelni az adatokat a lost táblába
         DefaultTableModel lostmodel = new DefaultTableModel();
         lostmodel = (DefaultTableModel) CTB.jTable12.getModel();

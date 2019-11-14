@@ -269,13 +269,10 @@ public class CTB_Ini {
             case horizontals:
 
 //öszeállítjuk egy stringbe a fileneveket
-                for (int i = 0; i < CTB.Horizontals.size(); i++) {
+                nevek += tx.getText();
 
-                    nevek += tx.getText()+";";
-
-                }
                 try {
-                    nevek = nevek.substring(0, nevek.length() - 1);
+
                     //kicseréljük a horizontalok nevet a programban levore ha vannak beírva
                     for (int i = 0; i < sorok.size(); i++) {
 
@@ -307,13 +304,11 @@ public class CTB_Ini {
             case workorders:
                 //öszeállítjuk egy stringbe a fileneveket
                 nevek = "";
-                for (int i = 0; i < CTB.Workorders.size(); i++) {
 
-                    nevek += tx.getText() + ";";
+                nevek += tx.getText() + ";";
 
-                }
                 try {
-                    nevek = nevek.substring(0, nevek.length() - 1);
+
                     //kicseréljük a horizontalok nevet a programban levore ha vannak beírva
                     for (int i = 0; i < sorok.size(); i++) {
 
@@ -337,13 +332,11 @@ public class CTB_Ini {
             case onhands:
                 //öszeállítjuk egy stringbe a fileneveket
                 nevek = "";
-                for (int i = 0; i < CTB.Onhands.size(); i++) {
 
-                    nevek += tx.getText()+";";
+                nevek += tx.getText() + ";";
 
-                }
                 try {
-                    nevek = nevek.substring(0, nevek.length() - 1);
+
                     //kicseréljük a onhandek nevet a programban levore ha vannak beírva
                     for (int i = 0; i < sorok.size(); i++) {
 
@@ -364,13 +357,11 @@ public class CTB_Ini {
             case indentedbom:
                 //öszeállítjuk egy stringbe a fileneveket
                 nevek = "";
-                for (int i = 0; i < CTB.Indentedbom.size(); i++) {
 
-                    nevek += tx.getText() + ";";
+                nevek += tx.getText() + ";";
 
-                }
                 try {
-                    nevek = nevek.substring(0, nevek.length() - 1);
+
                     //kicseréljük a onhandek nevet a programban levore ha vannak beírva
                     for (int i = 0; i < sorok.size(); i++) {
 
@@ -391,13 +382,11 @@ public class CTB_Ini {
             case demand:
                 //öszeállítjuk egy stringbe a fileneveket
                 nevek = "";
-                for (int i = 0; i < CTB.Demand.size(); i++) {
 
-                    nevek += tx.getText()+ ";";
+                nevek += tx.getText() + ";";
 
-                }
                 try {
-                    nevek = nevek.substring(0, nevek.length() - 1);
+
                     //kicseréljük a onhandek nevet a programban levore ha vannak beírva
                     for (int i = 0; i < sorok.size(); i++) {
 
@@ -417,13 +406,11 @@ public class CTB_Ini {
             case allocations:
                 //öszeállítjuk egy stringbe a fileneveket
                 nevek = "";
-                for (int i = 0; i < CTB.Allocations.size(); i++) {
 
-                    nevek += tx.getText()+ ";";
+                nevek += tx.getText() + ";";
 
-                }
                 try {
-                    nevek = nevek.substring(0, nevek.length() - 1);
+
                     //kicseréljük a onhandek nevet a programban levore ha vannak beírva
                     for (int i = 0; i < sorok.size(); i++) {
 
@@ -456,8 +443,6 @@ public class CTB_Ini {
 
         }
 
-//        writer.flush();
-//        writer.close();
         bw.close();
 
     }

@@ -195,7 +195,13 @@ public class CTB_NEW_RawOhEdit extends javax.swing.JDialog {
     }//GEN-LAST:event_formMouseDragged
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        int i;
+
+        //megszuntetjuk a tabla szerkeszteset
+        if (CTB.jTable9.isEditing()) {
+
+            CTB.jTable9.getCellEditor().stopCellEditing();
+        }
+
         //mentjük az adatokat
         //hozzáadunk egy új sort az oh modellhez net assetkent es hozzáadjuk a bevitt adatot, amit előtte leellenőrzünk
         int osszeg = 0;
@@ -209,19 +215,7 @@ public class CTB_NEW_RawOhEdit extends javax.swing.JDialog {
             //return;
         }
 //hozzáadunk egy sort az oh táblához
-        CTB_NEW_Variables.ohmodel.addRow(new Object[]{"STOCK1", "", jLabel2.getText(), "", "Net-Asset", "", String.valueOf(osszeg),"","","",jTextArea1.getText()});
-//futtatunk egy bomcalc addoh-t meg egy total calcot
-//meg kell keresni,hogy hányadik sor ez a calcbomban és beállítjuk a master commentet
-//
-//        for (i = 0; i < CTB_NEW_Variables.calcbommodel.getRowCount(); i++) {
-//
-//            if (CTB_NEW_Variables.calcbommodel.getValueAt(i, 0).toString().equals(jLabel2.getText())) {
-//                // jTextArea1.setText(CTB_NEW_Variables.calcbommodel.getValueAt(i, 7).toString());
-//                break;
-//            }
-//        }
-//        //a master comment hozzáadása a calcbom megfelelő oszlopához
-//        CTB_NEW_Variables.calcbommodel.setValueAt(jTextArea1.getText(), i, 7);
+        CTB_NEW_Variables.ohmodel.addRow(new Object[]{"STOCK1", "", jLabel2.getText(), "", "Net-Asset", "", String.valueOf(osszeg), "", "", "", jTextArea1.getText()});
 
 //kell egy totaloh calc
         CTB_NEW_FullCalc full = new CTB_NEW_FullCalc(true, CTB_NEW_FullCalc.calculations.CHANGEOH);

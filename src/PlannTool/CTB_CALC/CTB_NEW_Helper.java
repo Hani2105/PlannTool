@@ -82,6 +82,7 @@ public class CTB_NEW_Helper extends javax.swing.JDialog {
                 "Anyagnév", "SubInv", "Locator", "Mennyiség"
             }
         ));
+        jTable1.setCellSelectionEnabled(true);
         jScrollPane1.setViewportView(jTable1);
 
         jLabel2.setFont(new java.awt.Font("Segoe Script", 1, 12)); // NOI18N

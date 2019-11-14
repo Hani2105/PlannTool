@@ -144,7 +144,7 @@ public class CTB_Tablarenderer extends DefaultTableCellRenderer {
             c.setToolTipText(null);
 
         } else if (column == 7) {
-            
+               c.setHorizontalAlignment(LEFT);
                c.setBackground(new Color(197, 198, 201));
                c.setFont(new java.awt.Font("Segoe Script", 1, 12));
 

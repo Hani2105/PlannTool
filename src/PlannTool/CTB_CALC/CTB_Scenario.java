@@ -24,6 +24,7 @@ import javax.swing.JTable;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import static org.apache.poi.hssf.usermodel.HeaderFooter.file;
+import javax.swing.RowFilter;
 
 /**
  *
@@ -86,7 +87,7 @@ public class CTB_Scenario {
             
             bw.close();
             fw.close();
-           
+            
         }
 
 //        infobox info = new infobox();
@@ -96,6 +97,8 @@ public class CTB_Scenario {
     }
     
     public static void TableToText(JTable j, File f, BufferedWriter bw) throws IOException {
+//feloldjuk a szűrőket
+        j.setRowSorter(null);
 
 //beirjuk h kezdodik a columneve oszlop
         bw.write(j.getName() + ";" + "!!COLNAME" + ";");
@@ -199,9 +202,8 @@ public class CTB_Scenario {
                 }
                 
             }
-            
+
             //CTB.jLabel6.setText(CTB.f.getName().replace(".scen", ""));
-            
         }
         CTB_Wipquery wip = new CTB_Wipquery(CTB.jTable1);
         wip.start();

@@ -703,7 +703,8 @@ public class CTB_NEW_Controlpanel extends javax.swing.JDialog {
 
                             cal.add(Calendar.YEAR, 1);
                             CTB.jTable11.getColumnModel().getColumn(i).setHeaderValue(String.valueOf(cal.get(Calendar.YEAR)).substring(2, 4) + String.format("%02d", cal.get(Calendar.WEEK_OF_YEAR)));
-                            continue;
+                            cal.add(Calendar.YEAR, -1);
+                            //continue;
                         }
                     } catch (Exception e) {
                     }

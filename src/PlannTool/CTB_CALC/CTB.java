@@ -635,6 +635,10 @@ public class CTB extends javax.swing.JFrame {
         jSeparator2 = new javax.swing.JPopupMenu.Separator();
         jCheckBoxMenuItem7 = new javax.swing.JCheckBoxMenuItem();
         jCheckBoxMenuItem8 = new javax.swing.JCheckBoxMenuItem();
+        jSeparator4 = new javax.swing.JPopupMenu.Separator();
+        jCheckBoxMenuItem11 = new javax.swing.JCheckBoxMenuItem();
+        jSeparator5 = new javax.swing.JPopupMenu.Separator();
+        jCheckBoxMenuItem12 = new javax.swing.JCheckBoxMenuItem();
 
         torles.setText("Kijelölés törlése!");
         torles.setName(""); // NOI18N
@@ -937,10 +941,11 @@ public class CTB extends javax.swing.JFrame {
                             .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 518, Short.MAX_VALUE)
-                    .addComponent(jScrollPane11))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 524, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane11)))
         );
 
         jTabbedPane1.addTab("CTB", jPanel1);
@@ -1601,6 +1606,25 @@ public class CTB extends javax.swing.JFrame {
             }
         });
         jMenu1.add(jCheckBoxMenuItem8);
+        jMenu1.add(jSeparator4);
+
+        jCheckBoxMenuItem11.setSelected(true);
+        jCheckBoxMenuItem11.setText("Calc with Entered PO");
+        jCheckBoxMenuItem11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBoxMenuItem11ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jCheckBoxMenuItem11);
+        jMenu1.add(jSeparator5);
+
+        jCheckBoxMenuItem12.setText("Calc with FGOODS (Stock calc)");
+        jCheckBoxMenuItem12.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBoxMenuItem12ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jCheckBoxMenuItem12);
 
         jMenuBar1.add(jMenu1);
 
@@ -2202,6 +2226,18 @@ public class CTB extends javax.swing.JFrame {
         helper.setVisible(true);
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
+    private void jCheckBoxMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxMenuItem11ActionPerformed
+        // entered po belevétele
+        CTB_NEW_FullCalc full = new CTB_NEW_FullCalc(false, CTB_NEW_FullCalc.calculations.FULL);
+        full.start();
+    }//GEN-LAST:event_jCheckBoxMenuItem11ActionPerformed
+
+    private void jCheckBoxMenuItem12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxMenuItem12ActionPerformed
+        // fgoods a stock esetében kell vagy nem
+        CTB_NEW_FullCalc full = new CTB_NEW_FullCalc(false, CTB_NEW_FullCalc.calculations.FULL);
+        full.start();
+    }//GEN-LAST:event_jCheckBoxMenuItem12ActionPerformed
+
     private void seticon() {
 
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/PlannTool/PICTURES/ctb1.jpg")));
@@ -2302,6 +2338,8 @@ public class CTB extends javax.swing.JFrame {
     private javax.swing.JButton jButton7;
     public static javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
     public static javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem10;
+    public static javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem11;
+    public static javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem12;
     public static javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem2;
     public static javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem3;
     public static javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem4;
@@ -2370,6 +2408,8 @@ public class CTB extends javax.swing.JFrame {
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JPopupMenu.Separator jSeparator3;
+    private javax.swing.JPopupMenu.Separator jSeparator4;
+    private javax.swing.JPopupMenu.Separator jSeparator5;
     private javax.swing.JTabbedPane jTabbedPane1;
     public static javax.swing.JTable jTable1;
     public static javax.swing.JTable jTable10;

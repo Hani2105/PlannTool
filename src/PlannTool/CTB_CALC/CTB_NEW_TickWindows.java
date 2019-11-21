@@ -65,7 +65,7 @@ public class CTB_NEW_TickWindows extends javax.swing.JDialog {
         jLabel2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 230, 770, 60));
 
-        setSize(new java.awt.Dimension(780, 308));
+        pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 

@@ -626,14 +626,29 @@ public class CTB_NEW_FullCalc extends Thread {
             int osszeg = 0;
 //és végigszaladunk a demand táblán
             for (int d = 0; d < CTB_NEW_Variables.demandmodel.getRowCount(); d++) {
-//ha egyezik a ctb tábla pn e a demand tábla pn-el és booked a státusz hozzáadjuk a darabot a darabhoz
-                try {
-                    if ((CTB_NEW_Variables.ctbmodel.getValueAt(i, 0).toString().equals(CTB_NEW_Variables.demandmodel.getValueAt(d, 7).toString()) && (CTB_NEW_Variables.demandmodel.getValueAt(d, 12).toString().equals("Booked")))) {
+//ha egyezik a ctb tábla pn e a demand tábla pn-el és booked a státusz hozzáadjuk a darabot a darabhoz, ha nincs kipipálva az entered po-s cucc
 
-                        osszeg += Integer.parseInt(CTB_NEW_Variables.demandmodel.getValueAt(d, 17).toString());
+                if (!CTB.jCheckBoxMenuItem11.isSelected()) {
+                    try {
+                        if ((CTB_NEW_Variables.ctbmodel.getValueAt(i, 0).toString().equals(CTB_NEW_Variables.demandmodel.getValueAt(d, 7).toString()) && (CTB_NEW_Variables.demandmodel.getValueAt(d, 12).toString().equals("Booked")))) {
 
+                            osszeg += Integer.parseInt(CTB_NEW_Variables.demandmodel.getValueAt(d, 17).toString());
+
+                        }
+                    } catch (Exception e) {
                     }
-                } catch (Exception e) {
+                } //ha kell az entered po is        
+                else {
+
+                    try {
+                        if ((CTB_NEW_Variables.ctbmodel.getValueAt(i, 0).toString().equals(CTB_NEW_Variables.demandmodel.getValueAt(d, 7).toString())) && (CTB_NEW_Variables.demandmodel.getValueAt(d, 12).toString().equals("Booked") || CTB_NEW_Variables.demandmodel.getValueAt(d, 12).toString().equals("Entered"))) {
+
+                            osszeg += Integer.parseInt(CTB_NEW_Variables.demandmodel.getValueAt(d, 17).toString());
+
+                        }
+                    } catch (Exception e) {
+                    }
+
                 }
 
             }
@@ -653,17 +668,31 @@ public class CTB_NEW_FullCalc extends Thread {
             int osszeg = 0;
 //és végigszaladunk az OH táblán
             for (int d = 0; d < CTB_NEW_Variables.ohmodel.getRowCount(); d++) {
-//ha egyezik a ctb tábla pn e az OH tábla pn-el 
-                try {
-                    if ((CTB_NEW_Variables.ctbmodel.getValueAt(i, 0).toString().equals(CTB_NEW_Variables.ohmodel.getValueAt(d, 2).toString()) && (CTB_NEW_Variables.ohmodel.getValueAt(d, 4).toString().equals("Net-Asset")))) {
+//ha egyezik a ctb tábla pn e az OH tábla pn-el és ki kell venni az fgoodsot
+                if (!CTB.jCheckBoxMenuItem12.isSelected()) {
+                    try {
+                        if ((CTB_NEW_Variables.ctbmodel.getValueAt(i, 0).toString().equals(CTB_NEW_Variables.ohmodel.getValueAt(d, 2).toString()) && (CTB_NEW_Variables.ohmodel.getValueAt(d, 4).toString().equals("Net-Asset"))) && !CTB_NEW_Variables.ohmodel.getValueAt(d, 0).toString().equals("FGOODS")) {
 
-                        osszeg += Integer.parseInt(CTB_NEW_Variables.ohmodel.getValueAt(d, 6).toString());
+                            osszeg += Integer.parseInt(CTB_NEW_Variables.ohmodel.getValueAt(d, 6).toString());
+
+                        }
+                    } catch (Exception e) {
 
                     }
-                } catch (Exception e) {
+
+                } //ha kell az fgoods is bele
+                else {
+                    try {
+                        if ((CTB_NEW_Variables.ctbmodel.getValueAt(i, 0).toString().equals(CTB_NEW_Variables.ohmodel.getValueAt(d, 2).toString()) && (CTB_NEW_Variables.ohmodel.getValueAt(d, 4).toString().equals("Net-Asset")))) {
+
+                            osszeg += Integer.parseInt(CTB_NEW_Variables.ohmodel.getValueAt(d, 6).toString());
+
+                        }
+                    } catch (Exception e) {
+
+                    }
 
                 }
-
             }
 
             CTB_NEW_Variables.ctbmodel.setValueAt(osszeg, i, 2);

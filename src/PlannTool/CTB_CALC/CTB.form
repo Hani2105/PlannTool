@@ -78,6 +78,14 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem5ActionPerformed"/>
               </Events>
             </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem3">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Pivot&#xe1;l&#xe1;s"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem3ActionPerformed"/>
+              </Events>
+            </MenuItem>
           </SubComponents>
         </Menu>
         <Menu class="javax.swing.JMenu" name="jMenu2">
@@ -492,7 +500,6 @@
                   <SubComponents>
                     <Component class="javax.swing.JTable" name="jTable1">
                       <Properties>
-                        <Property name="autoCreateRowSorter" type="boolean" value="true"/>
                         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                           <Border info="org.netbeans.modules.form.compat2.border.SoftBevelBorderInfo">
                             <BevelBorder bevelType="1"/>
@@ -759,7 +766,6 @@
                   <SubComponents>
                     <Component class="javax.swing.JTable" name="jTable11">
                       <Properties>
-                        <Property name="autoCreateRowSorter" type="boolean" value="true"/>
                         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                           <Border info="org.netbeans.modules.form.compat2.border.SoftBevelBorderInfo">
                             <BevelBorder bevelType="1"/>

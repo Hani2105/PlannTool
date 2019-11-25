@@ -616,6 +616,7 @@ public class CTB extends javax.swing.JFrame {
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem6 = new javax.swing.JMenuItem();
         jSeparator3 = new javax.swing.JPopupMenu.Separator();
@@ -671,7 +672,6 @@ public class CTB extends javax.swing.JFrame {
         jScrollPane1.setBackground(new java.awt.Color(0, 0, 0));
         jScrollPane1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
 
-        jTable1.setAutoCreateRowSorter(true);
         jTable1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         jTable1.setFont(new java.awt.Font("sansserif", 0, 10)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -783,7 +783,6 @@ public class CTB extends javax.swing.JFrame {
 
         jScrollPane11.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
 
-        jTable11.setAutoCreateRowSorter(true);
         jTable11.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         jTable11.setFont(new java.awt.Font("sansserif", 0, 10)); // NOI18N
         jTable11.setModel(new javax.swing.table.DefaultTableModel(
@@ -1480,6 +1479,14 @@ public class CTB extends javax.swing.JFrame {
             }
         });
         jMenu3.add(jMenuItem5);
+
+        jMenuItem3.setText("Pivotálás");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem3);
 
         jMenuBar1.add(jMenu3);
 
@@ -2238,6 +2245,57 @@ public class CTB extends javax.swing.JFrame {
         full.start();
     }//GEN-LAST:event_jCheckBoxMenuItem12ActionPerformed
 
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        // pivot csinálás
+        makePivot();
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    public void makePivot() {
+
+        //elindulunk bejárjuk az adatbeviteli táblát
+        for (int i = 0; i < CTB_NEW_Variables.tervtablemodel.getRowCount(); i++) {
+//ha nem üres a sor
+            if (!CTB_NEW_Variables.tervtablemodel.getValueAt(i, 0).toString().equals("")) {
+//felvesszük a pn-t
+                String pn = CTB_NEW_Variables.tervtablemodel.getValueAt(i, 0).toString().trim();
+//továbbmegyünk a táblában és keresünk még ilyen pn-eket
+                for (int n = i + 1; n < CTB_NEW_Variables.tervtablemodel.getRowCount(); n++) {
+//ha egyezik a pn
+                    if (pn.equals(CTB_NEW_Variables.tervtablemodel.getValueAt(n, 0).toString().trim())) {
+//bejárjuk az oszlopokat és ahol van szám, azt hozzáadjuk az i edik sorban szereplő összeghez
+                        for (int c = 4; c < CTB_NEW_Variables.tervtablemodel.getColumnCount(); c++) {
+//ha van benne szám       
+                            try {
+                                if (!CTB_NEW_Variables.tervtablemodel.getValueAt(n, c).toString().equals("")) {
+
+//az első számnak léteznie kell!!
+                                    int elso = 0;
+                                    try {
+                                        elso = Integer.parseInt(CTB_NEW_Variables.tervtablemodel.getValueAt(i, c).toString().trim());
+                                    } catch (Exception e) {
+                                    }
+
+//akkor összeadjuk az i -edik oszlopba
+                                    CTB_NEW_Variables.tervtablemodel.setValueAt(elso + Integer.parseInt(CTB_NEW_Variables.tervtablemodel.getValueAt(n, c).toString().trim()), i, c);
+
+                                }
+                            } catch (Exception e) {
+                            }
+                        }
+//kitöröljük az n edik sort és visszaugrunk egyet az i vel
+                        CTB_NEW_Variables.tervtablemodel.removeRow(n);
+                        //i--;
+
+                    }
+
+                }
+
+            }
+
+        }
+
+    }
+
     private void seticon() {
 
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/PlannTool/PICTURES/ctb1.jpg")));
@@ -2374,6 +2432,7 @@ public class CTB extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem13;
     private javax.swing.JMenuItem jMenuItem14;
     private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;

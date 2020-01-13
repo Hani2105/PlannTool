@@ -346,6 +346,9 @@
       </Layout>
       <SubComponents>
         <Container class="javax.swing.JTabbedPane" name="Tervezotabbed">
+          <Events>
+            <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="TervezotabbedStateChanged"/>
+          </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new PlannTool.BACKEND.Tc_JTabbedPaneWithCloseIcons()"/>
             <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>

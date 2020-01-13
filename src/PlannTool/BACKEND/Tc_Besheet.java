@@ -34,6 +34,7 @@ import javax.print.attribute.HashPrintRequestAttributeSet;
 import javax.print.attribute.PrintRequestAttributeSet;
 import java.awt.Font;
 import static java.awt.Frame.MAXIMIZED_BOTH;
+import javax.swing.table.DefaultTableCellRenderer;
 import org.joda.time.format.DateTimeFormat;
 
 /**
@@ -158,6 +159,7 @@ public class Tc_Besheet extends javax.swing.JPanel {
         jButton10 = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
+        jCheckBox5 = new javax.swing.JCheckBox();
 
         JPopupMenu1.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
@@ -542,6 +544,16 @@ public class Tc_Besheet extends javax.swing.JPanel {
         jLabel7.setFont(new java.awt.Font("sansserif", 0, 10)); // NOI18N
         jLabel7.setText("Ismeretlen");
 
+        jCheckBox5.setFont(new java.awt.Font("sansserif", 0, 10)); // NOI18N
+        jCheckBox5.setForeground(new java.awt.Color(51, 153, 0));
+        jCheckBox5.setText("Boost");
+        jCheckBox5.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        jCheckBox5.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jCheckBox5StateChanged(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -592,6 +604,8 @@ public class Tc_Besheet extends javax.swing.JPanel {
                 .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jCheckBox5)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -617,7 +631,9 @@ public class Tc_Besheet extends javax.swing.JPanel {
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jCheckBox5, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1500,6 +1516,19 @@ public class Tc_Besheet extends javax.swing.JPanel {
 
     }//GEN-LAST:event_JPopupMenu1PropertyChange
 
+    private void jCheckBox5StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jCheckBox5StateChanged
+        // TODO add your handling code here:
+        if (jCheckBox5.isSelected()) {
+
+            this.jTable2.setDefaultRenderer(Object.class, new DefaultTableCellRenderer());
+
+        } else {
+            this.jTable2.setDefaultRenderer(Object.class, new Tc_TervTooltipRenderer(this));
+        }
+        
+        jTable2.repaint();
+    }//GEN-LAST:event_jCheckBox5StateChanged
+
     private void filter(String query, Tc_Besheet b) {
 
         DefaultTableModel model = new DefaultTableModel();
@@ -1537,6 +1566,7 @@ public class Tc_Besheet extends javax.swing.JPanel {
     public javax.swing.JCheckBox jCheckBox2;
     public javax.swing.JCheckBox jCheckBox3;
     public javax.swing.JCheckBox jCheckBox4;
+    public javax.swing.JCheckBox jCheckBox5;
     public javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

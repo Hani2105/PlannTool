@@ -57,6 +57,11 @@ public class Tc_Adatkitolto extends javax.swing.JDialog {
             }
         ));
         jTable1.setCellSelectionEnabled(true);
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
         if (jTable1.getColumnModel().getColumnCount() > 0) {
             jTable1.getColumnModel().getColumn(1).setHeaderValue("Desc");
@@ -74,6 +79,11 @@ public class Tc_Adatkitolto extends javax.swing.JDialog {
                 "Workstations"
             }
         ));
+        jTable2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable2MouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(jTable2);
 
         jLabel3.setFont(new java.awt.Font("sansserif", 0, 10)); // NOI18N
@@ -139,26 +149,33 @@ public class Tc_Adatkitolto extends javax.swing.JDialog {
     @Override
     public void setVisible(boolean b) {
         super.setVisible(b);
-        List<String[]> partnumberss = new ArrayList<String[]>();
-        List<String> workstationss = new ArrayList<String>();
-        partnumberss = Tc_Betervezo.Besheets.get(Tc_Betervezo.Tervezotabbed.getTitleAt(Tc_Betervezo.Tervezotabbed.getSelectedIndex())).partnumbers;
-        workstationss = Tc_Betervezo.Besheets.get(Tc_Betervezo.Tervezotabbed.getTitleAt(Tc_Betervezo.Tervezotabbed.getSelectedIndex())).workstations;
-        DefaultTableModel model = new DefaultTableModel();
-        DefaultTableModel modelw = new DefaultTableModel();
-        model = (DefaultTableModel) jTable1.getModel();
-        modelw = (DefaultTableModel) jTable2.getModel();
-        model.setRowCount(0);
-        modelw.setRowCount(0);
-        for (int i = 0; i < partnumberss.size(); i++) {
+        adatfrissit();
+    }
 
-            model.addRow(new Object[]{partnumberss.get(i)[0],partnumberss.get(i)[1],partnumberss.get(i)[2]});
-            
-        }
-        
-        for (int i = 0; i < workstationss.size(); i++) {
+    public void adatfrissit() {
+        try {
+            List<String[]> partnumberss = new ArrayList<String[]>();
+            List<String> workstationss = new ArrayList<String>();
+            partnumberss = Tc_Betervezo.Besheets.get(Tc_Betervezo.Tervezotabbed.getTitleAt(Tc_Betervezo.Tervezotabbed.getSelectedIndex())).partnumbers;
+            workstationss = Tc_Betervezo.Besheets.get(Tc_Betervezo.Tervezotabbed.getTitleAt(Tc_Betervezo.Tervezotabbed.getSelectedIndex())).workstations;
+            DefaultTableModel model = new DefaultTableModel();
+            DefaultTableModel modelw = new DefaultTableModel();
+            model = (DefaultTableModel) jTable1.getModel();
+            modelw = (DefaultTableModel) jTable2.getModel();
+            model.setRowCount(0);
+            modelw.setRowCount(0);
+            for (int i = 0; i < partnumberss.size(); i++) {
 
-            modelw.addRow(new Object[]{workstationss.get(i)});
-            
+                model.addRow(new Object[]{partnumberss.get(i)[0], partnumberss.get(i)[1], partnumberss.get(i)[2]});
+
+            }
+
+            for (int i = 0; i < workstationss.size(); i++) {
+
+                modelw.addRow(new Object[]{workstationss.get(i)});
+
+            }
+        } catch (Exception e) {
         }
 
     }
@@ -169,9 +186,8 @@ public class Tc_Adatkitolto extends javax.swing.JDialog {
         //felvesszük a modellt
 
         //bejárjuk a kijelölt sortól a modellt
-        
         Tc_Besheet b = Tc_Betervezo.Besheets.get(Tc_Betervezo.Tervezotabbed.getTitleAt(Tc_Betervezo.Tervezotabbed.getSelectedIndex()));
-        
+
         for (int i = 0; i < b.jTable2.getRowCount(); i++) {
 
             String pn = "";
@@ -224,15 +240,15 @@ public class Tc_Adatkitolto extends javax.swing.JDialog {
 
                 //jLabel5.setText(jTextField1.getText() + String.valueOf(maxertek + 1));
                 //betesszük az aktuális cellába
-                b.jTable2.setValueAt(jTextField1.getText()+(maxertek + 1), i, 1);
+                b.jTable2.setValueAt(jTextField1.getText() + (maxertek + 1), i, 1);
                 //beírjuk a ws -t is
                 try {
                     b.jTable2.setValueAt(jTable2.getValueAt(jTable2.getSelectedRow(), 0).toString(), i, 2);
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(this,
-                        "Nem adtál meg állomást",
-                        "Hiba",
-                        JOptionPane.ERROR_MESSAGE);
+                            "Nem adtál meg állomást",
+                            "Hiba",
+                            JOptionPane.ERROR_MESSAGE);
                     return;
 
                 }
@@ -242,6 +258,23 @@ public class Tc_Adatkitolto extends javax.swing.JDialog {
         }
         //b.jTable2.setModel(model);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        // ha kiválasztjuk a pn-t
+        Tc_Besheet b = Tc_Betervezo.Besheets.get(Tc_Betervezo.Tervezotabbed.getTitleAt(Tc_Betervezo.Tervezotabbed.getSelectedIndex()));
+
+        b.jTable2.setValueAt(jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString().trim(), b.jTable2.getSelectedRow(), 0);
+
+
+    }//GEN-LAST:event_jTable1MouseClicked
+
+    private void jTable2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable2MouseClicked
+        // ws kitolto
+        Tc_Besheet b = Tc_Betervezo.Besheets.get(Tc_Betervezo.Tervezotabbed.getTitleAt(Tc_Betervezo.Tervezotabbed.getSelectedIndex()));
+        b.jTable2.setValueAt(jTable2.getValueAt(jTable2.getSelectedRow(), 0).toString().trim(), b.jTable2.getSelectedRow(), 2);
+
+
+    }//GEN-LAST:event_jTable2MouseClicked
 
     /**
      * @param args the command line arguments

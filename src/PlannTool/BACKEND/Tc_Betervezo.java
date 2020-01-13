@@ -215,6 +215,12 @@ public class Tc_Betervezo extends javax.swing.JFrame {
 
         jPanel1.setForeground(new java.awt.Color(0, 153, 153));
 
+        Tervezotabbed.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                TervezotabbedStateChanged(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -855,6 +861,11 @@ public class Tc_Betervezo extends javax.swing.JFrame {
         }
         d.setVisible(true);
     }//GEN-LAST:event_jMenuItem15ActionPerformed
+
+    private void TervezotabbedStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_TervezotabbedStateChanged
+        //ha tabot váltunk 
+        adatkitolto.adatfrissit();
+    }//GEN-LAST:event_TervezotabbedStateChanged
 
     /**
      * @param args the command line arguments

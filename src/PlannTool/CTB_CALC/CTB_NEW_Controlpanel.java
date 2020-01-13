@@ -54,14 +54,14 @@ public class CTB_NEW_Controlpanel extends javax.swing.JDialog {
     private static int xx = 0;
     private static int yy = 0;
     CTB ctb;
-
+    
     public CTB_NEW_Controlpanel(java.awt.Frame parent, boolean modal, CTB c) {
         super(parent, modal);
         getRootPane().setWindowDecorationStyle(JRootPane.NONE);
-
+        
         initComponents();
         this.ctb = c;
-
+        
     }
 
     /**
@@ -637,40 +637,42 @@ public class CTB_NEW_Controlpanel extends javax.swing.JDialog {
         //kiszedjük a textboxból a számot
         try {
             int sorszam = Integer.parseInt(jTextField9.getText());
-
+            
             for (int i = 0; i < sorszam; i++) {
-
+                
                 CTB_NEW_Variables.tervtablemodel.addRow(new Object[CTB_NEW_Variables.tervtablemodel.getColumnCount()]);
-
+                
             }
-
+            
         } catch (Exception e) {
 
 //            infobox info = new infobox();
 //            info.infoBox("Nem adtál meg számot!", "Hiba$");
             ctb.warning.SetMessage("Nem adtál meg számot!");
-
+            
         }
-
+        
         CTB.jTable11.setModel(CTB_NEW_Variables.tervtablemodel);
         new CTB_NEW_LinkTables(CTB.jScrollPane1, CTB.jTable1, CTB.jScrollPane11, CTB.jTable11, 1);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         //plusz sorok hozzáadása a meglévőkhöz
+        CTB_NEW_Variables.tervtablemodel = (DefaultTableModel) CTB.jTable11.getModel();
 
         int sor = 0;
         try {
             sor = Integer.parseInt(jTextField9.getText());
-
+            
             for (int i = 0; i < sor; i++) {
 
+                //CTB_NEW_Variables.tervtablemodel.addRow(new Object[]{"anyádpicsája"});
                 CTB_NEW_Variables.tervtablemodel.addRow(new Object[CTB_NEW_Variables.tervtablemodel.getColumnCount()]);
-
+                
             }
-
-            CTB.jTable11.setModel(CTB_NEW_Variables.tervtablemodel);
-
+            
+           
+            
         } catch (Exception e) {
 //            JOptionPane.showMessageDialog(this,
 //                    "Nem adtál meg , vagy nem jó sor számot adtál meg!",
@@ -678,7 +680,9 @@ public class CTB_NEW_Controlpanel extends javax.swing.JDialog {
 //                    JOptionPane.ERROR_MESSAGE);
             ctb.warning.SetMessage("Nem adtál meg , vagy nem jó sor számot adtál meg!");
         }
-        new CTB_NEW_LinkTables(CTB.jScrollPane1, CTB.jTable1, CTB.jScrollPane11, CTB.jTable11, 1);
+        
+         CTB.jTable11.setModel(CTB_NEW_Variables.tervtablemodel);
+         new CTB_NEW_LinkTables(CTB.jScrollPane1, CTB.jTable1, CTB.jScrollPane11, CTB.jTable11, 1);
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -696,11 +700,11 @@ public class CTB_NEW_Controlpanel extends javax.swing.JDialog {
 
                 //hetszama = Integer.parseInt(jTextField13.getText());
                 for (int i = 4; i < CTB.jTable11.getColumnCount(); i++) {
-
+                    
                     CTB.jTable11.getColumnModel().getColumn(i).setHeaderValue(String.valueOf(cal.get(Calendar.YEAR)).substring(2, 4) + String.format("%02d", cal.get(Calendar.WEEK_OF_YEAR)));
                     try {
                         if (Integer.parseInt(CTB.jTable11.getColumnModel().getColumn(i).getHeaderValue().toString()) < Integer.parseInt(CTB.jTable11.getColumnModel().getColumn(i - 1).getHeaderValue().toString())) {
-
+                            
                             cal.add(Calendar.YEAR, 1);
                             CTB.jTable11.getColumnModel().getColumn(i).setHeaderValue(String.valueOf(cal.get(Calendar.YEAR)).substring(2, 4) + String.format("%02d", cal.get(Calendar.WEEK_OF_YEAR)));
                             cal.add(Calendar.YEAR, -1);
@@ -708,21 +712,21 @@ public class CTB_NEW_Controlpanel extends javax.swing.JDialog {
                         }
                     } catch (Exception e) {
                     }
-
+                    
                     cal.add(Calendar.WEEK_OF_YEAR, 1);
-
+                    
                 }
-
+                
                 CTB.jTable11.repaint();
                 CTB.TablaOszlopSzelesseg(CTB.jTable11);
-
+                
             } catch (Exception e) {
-
+                
                 ctb.warning.SetMessage("Nem valid számot adtál meg!");
             }
-
+            
         } catch (ParseException ex) {
-
+            
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 
@@ -733,9 +737,9 @@ public class CTB_NEW_Controlpanel extends javax.swing.JDialog {
         CTB.SelectedBecells.clear();
         //ArrayList<String> selecteditems = new ArrayList<>();
         for (int i = 0; i < selectedindex.length; i++) {
-
+            
             CTB.SelectedBecells.add(jList2.getModel().getElementAt(selectedindex[i]));
-
+            
         }
         //beállítjuk az időt is
         CTB.tervido = jTextField14.getText().trim();
@@ -751,29 +755,29 @@ public class CTB_NEW_Controlpanel extends javax.swing.JDialog {
         //felvesszük a plantáblát is egy modellbe
         CTB_NEW_Variables.tervtablemodel = (DefaultTableModel) CTB.jTable11.getModel();
         CTB_NEW_Variables.shipmodel = (DefaultTableModel) CTB.jTable10.getModel();
-
+        
         String termekek = "";
         for (int i = 0; i < jList1.getModel().getSize(); i++) {
-
+            
             if (jList1.isSelectedIndex(i)) {
-
+                
                 termekek += "'" + jList1.getModel().getElementAt(i).toString() + "',";
-
+                
             }
-
+            
         }
-
+        
         if (termekek.equals("")) {
 
 //            infobox inf = new infobox();
 //            inf.infoBox("Nem választottál ki termékcsaládot!", "Hiba!");
             ctb.warning.SetMessage("Nem választottál ki termékcsaládot!");
             return;
-
+            
         }
-
+        
         termekek = termekek.substring(0, termekek.length() - 1);
-
+        
         String query = "select partnumber.partnumber, sum(containers.quantity) , shipping_content.po , customer_address.city , customer_address.company FROM \"HBPackage\".containers \n"
                 + "left join \"HBPackage\".partnumber on containers.partnumber_id=partnumber.id \n"
                 + "left join \"HBPackage\".second_containers on second_containers.id = containers.second_ctn_id \n"
@@ -782,34 +786,34 @@ public class CTB_NEW_Controlpanel extends javax.swing.JDialog {
                 + "where containers.second_ctn_id in (SELECT id FROM \"HBPackage\".second_containers where shipping_id in\n"
                 + "(SELECT \"HBPackage\".shipping.id FROM \"HBPackage\".shipping left join \"HBPackage\".customer_type on customer_type.id = shipping.customer_type \n"
                 + "where targetdate >= '" + jTextField11.getText().trim() + "'\n"
-                + "and customer_type.name in (" + termekek + ") )) \n"
+                + "and customer_type.name in (" + termekek + ") )) and shipping.invoiced = true \n"
                 + "group by partnumber.partnumber , shipping_content.po , customer_address.city , customer_address.company";
-
+        
         postgreconnect pc = new postgreconnect();
         try {
             pc.lekerdez(query);
-
+            
             CTB_NEW_Variables.shipmodel.setRowCount(0);
-
+            
             while (pc.rs.next()) {
-
+                
                 CTB_NEW_Variables.shipmodel.addRow(new Object[]{pc.rs.getString(1), pc.rs.getString(2), pc.rs.getString(3), pc.rs.getString(4), pc.rs.getString(5),});
-
+                
             }
-
+            
             CTB.jTable10.setModel(CTB_NEW_Variables.shipmodel);
-
+            
         } catch (SQLException ex) {
             Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        
         pc.kinyir();
 
         //ki kell tölteni a plantábla adatait is a kiszállítási mennyiségekkel
         for (int i = 0; i < CTB_NEW_Variables.tervtablemodel.getRowCount(); i++) {
-
+            
             String pn = "";
             try {
                 pn = CTB_NEW_Variables.tervtablemodel.getValueAt(i, 0).toString();
@@ -817,33 +821,33 @@ public class CTB_NEW_Controlpanel extends javax.swing.JDialog {
                 continue;
             }
             int osszeg = 0;
-
+            
             for (int s = 0; s < CTB_NEW_Variables.shipmodel.getRowCount(); s++) {
-
+                
                 if (CTB_NEW_Variables.shipmodel.getValueAt(s, 0).equals(pn)) {
-
+                    
                     osszeg += Integer.parseInt(CTB_NEW_Variables.shipmodel.getValueAt(s, 1).toString());
-
+                    
                 }
-
+                
             }
-
+            
             CTB_NEW_Variables.tervtablemodel.setValueAt(osszeg, i, 2);
-
+            
         }
-
+        
         CTB.jTable11.setModel(CTB_NEW_Variables.tervtablemodel);
         setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-
+        
 
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-
+        
         if (jTable1.isEditing()) {
             jTable1.getCellEditor().stopCellEditing();
         }
-
+        
         setriports(jTextField20, CTB_Ini.indit.horizontals);
         ctb.tick.SetMessage("Sikeres mentés!");
     }//GEN-LAST:event_jButton7ActionPerformed
@@ -863,13 +867,13 @@ public class CTB_NEW_Controlpanel extends javax.swing.JDialog {
 
         //felvesszük a modellt
         CTB_NEW_Variables.tervtablemodel.setColumnCount(4);
-
+        
         for (int i = 0; i < hetszam; i++) {
-
+            
             CTB_NEW_Variables.tervtablemodel.addColumn("XX");
-
+            
         }
-
+        
         CTB.jTable11.setModel(CTB_NEW_Variables.tervtablemodel);
 
     }//GEN-LAST:event_jButton6ActionPerformed
@@ -883,25 +887,25 @@ public class CTB_NEW_Controlpanel extends javax.swing.JDialog {
             //felvesszük a plantáblát is egy modellbe
             String termekek = "";
             for (int i = 0; i < jList1.getModel().getSize(); i++) {
-
+                
                 if (jList1.isSelectedIndex(i)) {
-
+                    
                     termekek += "'" + jList1.getModel().getElementAt(i).toString() + "',";
-
+                    
                 }
-
+                
             }
-
+            
             if (termekek.equals("")) {
                 ctb.warning.SetMessage("Nem választottál ki termékcsaládot!");
 //                infobox inf = new infobox();
 //                inf.infoBox("Nem választottál ki termékcsaládot!", "Hiba!");
                 return;
-
+                
             }
-
+            
             termekek = termekek.substring(0, termekek.length() - 1);
-
+            
             String query = "select partnumber.partnumber, sum(containers.quantity) , shipping_content.po , customer_address.city , customer_address.company FROM \"HBPackage\".containers \n"
                     + "left join \"HBPackage\".partnumber on containers.partnumber_id=partnumber.id \n"
                     + "left join \"HBPackage\".second_containers on second_containers.id = containers.second_ctn_id \n"
@@ -912,7 +916,7 @@ public class CTB_NEW_Controlpanel extends javax.swing.JDialog {
                     + "where targetdate >= '" + jTextField11.getText().trim() + "'\n"
                     + "and customer_type.name in (" + termekek + ") )) \n"
                     + "group by partnumber.partnumber , shipping_content.po , customer_address.city , customer_address.company";
-
+            
             postgreconnect pc = new postgreconnect();
             try {
                 pc.lekerdez(query);
@@ -926,20 +930,20 @@ public class CTB_NEW_Controlpanel extends javax.swing.JDialog {
             model.setRowCount(0);
             try {
                 while (pc.rs.next()) {
-
+                    
                     model.addRow(new Object[]{pc.rs.getString(1), pc.rs.getString(2), pc.rs.getString(3), pc.rs.getString(4), pc.rs.getString(5),});
-
+                    
                 }
             } catch (SQLException ex) {
                 Logger.getLogger(CTB_NEW_Controlpanel.class.getName()).log(Level.SEVERE, null, ex);
             }
             CTB.jTable10.setModel(model);
-
+            
             pc.kinyir();
 
             //ki kell tölteni a plantábla adatait is a kiszállítási mennyiségekkel
             for (int i = 0; i < CTB_NEW_Variables.tervtablemodel.getRowCount(); i++) {
-
+                
                 String pn = "";
                 try {
                     pn = CTB_NEW_Variables.tervtablemodel.getValueAt(i, 0).toString();
@@ -947,37 +951,37 @@ public class CTB_NEW_Controlpanel extends javax.swing.JDialog {
                     continue;
                 }
                 int osszeg = 0;
-
+                
                 for (int s = 0; s < CTB_NEW_Variables.shipmodel.getRowCount(); s++) {
-
+                    
                     if (CTB_NEW_Variables.shipmodel.getValueAt(s, 0).equals(pn)) {
-
+                        
                         osszeg += Integer.parseInt(CTB_NEW_Variables.shipmodel.getValueAt(s, 1).toString());
-
+                        
                     }
-
+                    
                 }
-
+                
                 CTB_NEW_Variables.tervtablemodel.setValueAt(osszeg, i, 2);
-
+                
             }
-
+            
             CTB.jTable11.setModel(CTB_NEW_Variables.tervtablemodel);
             setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-
+            
         }
     }//GEN-LAST:event_jTextField11KeyPressed
-
+    
     public void setriports(JTextField tx, CTB_Ini.indit k) {
-
+        
         CTB_Ini c = new CTB_Ini(tx);
-
+        
         try {
             c.inikezel(k);
         } catch (IOException ex) {
-
+            
         }
-
+        
     }
 
     private void jTextField14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField14ActionPerformed

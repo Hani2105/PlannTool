@@ -17,33 +17,38 @@ import javax.swing.table.DefaultTableModel;
  * @author gabor_hanacsek
  */
 public class CTB_NEW_TopShortThread extends Thread {
-
+    
     int i = -1;
-
+    String pn = "";
+    
     public CTB_NEW_TopShortThread() {
-
+        
     }
-
+    
     public CTB_NEW_TopShortThread(int i) {
-
+        
         this.i = i;
-
+        
     }
-
+    
+    public CTB_NEW_TopShortThread(String pn) {
+        
+        this.pn = pn;
+    }
+    
     @Override
     public void run() {
 
-        String pn = "";
 //addig csináljuk míg a kijelölés nem egyezik azzal a pn-el amit felvettünk, do while mert egyszer le kő futnyi
-
         //felvesszük a pn-t
-        if (i > -1) {
-
+        //ha a keresőből indítottunk es onnan van a pn akkor mindekepp azt hasznaljuk       
+        if (i > -1 && pn.equals("")) {
+            
             try {
                 pn = CTB.jTable11.getValueAt(i, 0).toString();
             } catch (Exception e) {
             }
-        } else {
+        } else if (pn.equals("")) {
             try {
                 pn = CTB.jTable11.getValueAt(CTB.jTable11.getSelectedRow(), 0).toString();
             } catch (Exception e) {
@@ -58,7 +63,7 @@ public class CTB_NEW_TopShortThread extends Thread {
 
 //megkeressük a pn-t és ha egyezik akkor bejárjuk a sorokat
             if (CTB_NEW_Variables.calcbommodel.getColumnName(o).equals(pn)) {
-
+                
                 for (int s = 0; s < CTB_NEW_Variables.calcbommodel.getRowCount(); s++) {
                     //frissítjük a progressbart
                     CTB.jProgressBar2.setMaximum(CTB_NEW_Variables.calcbommodel.getRowCount() - 1);
@@ -93,7 +98,7 @@ public class CTB_NEW_TopShortThread extends Thread {
                             for (int i = 0; i < CTB_NEW_Variables.indentedbommodel.getRowCount(); i++) {
 //ha egyezik a comp és a pn az indented bom adataival akkor hozzáadjuk a stringhez az opseqet
                                 if (pn.equals(CTB_NEW_Variables.indentedbommodel.getValueAt(i, 0).toString()) && comp.equals(CTB_NEW_Variables.indentedbommodel.getValueAt(i, 7).toString())) {
-
+                                    
                                     opseq += CTB_NEW_Variables.indentedbommodel.getValueAt(i, 6).toString() + ",";
                                     supply = CTB_NEW_Variables.indentedbommodel.getValueAt(i, 11).toString();
                                 }
@@ -115,11 +120,11 @@ public class CTB_NEW_TopShortThread extends Thread {
 
                             //betesszük a listbe
                             pnadatokarray.add(pnadatok);
-
+                            
                         }
                     } catch (Exception e) {
                     }
-
+                    
                 }
                 break outerloop;
             }
@@ -142,10 +147,10 @@ public class CTB_NEW_TopShortThread extends Thread {
                     tempstring[8] = pnadatokarray.get(j)[8];
                     tempstring[9] = pnadatokarray.get(j)[9];
                     tempstring[10] = pnadatokarray.get(j)[10];
-
+                    
                     pnadatokarray.set(j, pnadatokarray.get(j + 1));
                     pnadatokarray.set(j + 1, tempstring);
-
+                    
                 }
             }
         }
@@ -153,11 +158,11 @@ public class CTB_NEW_TopShortThread extends Thread {
 //bellítjuk a shortmodellbe ezt az adathalmazt
         CTB_NEW_Variables.topshortmodel = (DefaultTableModel) CTB.jTable9.getModel();
         CTB_NEW_Variables.topshortmodel.setRowCount(0);
-
+        
         for (int i = 0; i < pnadatokarray.size(); i++) {
-
+            
             CTB_NEW_Variables.topshortmodel.addRow(new Object[]{pnadatokarray.get(i)[0], pnadatokarray.get(i)[1], pnadatokarray.get(i)[2], pnadatokarray.get(i)[3], pnadatokarray.get(i)[4], pnadatokarray.get(i)[5], pnadatokarray.get(i)[6], pnadatokarray.get(i)[7], pnadatokarray.get(i)[8], pnadatokarray.get(i)[9]});
-
+            
         }
 
         //false ra allitjuk a globalis valtozot , hogy most epp nem fut szal
@@ -166,7 +171,7 @@ public class CTB_NEW_TopShortThread extends Thread {
         CTB.jProgressBar2.setMaximum(0);
         CTB.jProgressBar2.setValue(0);
         CTB.jProgressBar2.setString("Finish!");
-
+        
     }
-
+    
 }

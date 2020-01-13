@@ -54,13 +54,18 @@ public class Jobfigyeloszal extends Thread {
 
             allomasokquerybe = allomasokquerybe.substring(0, allomasokquerybe.length() - 1);
 
-            //kiszedjuk a datumot
+            //kiszedjuk a datumot a tolt
             Date tol = ablak.jDateChooser5.getDate();
             DateFormat df = new SimpleDateFormat("yyyy-MM-dd 06:00:00");
             String stol = df.format(tol);
 
+            //kiszedjuk a datumot a ig
+            Date ig = ablak.jDateChooser12.getDate();
+            df = new SimpleDateFormat("yyyy-MM-dd 06:00:00");
+            String sig = df.format(ig);
+
             //smt lekérdezés sor , job , pn  a megadott dátumtól
-            String Query = "select distinct stations.name , terv.partnumber , terv.job , terv.startdate , terv.qty_full from stations left join terv on terv.stationid = stations.id where terv.active = 1 and terv.startdate >= '" + stol + "' and stations.name in (" + allomasokquerybe + ") group by terv.job order by stations.name asc , terv.startdate asc";
+            String Query = "select distinct stations.name , terv.partnumber , terv.job , terv.startdate , terv.qty_full from stations left join terv on terv.stationid = stations.id where terv.active = 1 and terv.startdate >= '" + stol + "' and terv.startdate <= '" + sig + "' and stations.name in (" + allomasokquerybe + ") group by terv.job order by stations.name asc , terv.startdate asc";
             //vegrehajtjuk
 
             planconnect pc = new planconnect();
@@ -90,7 +95,7 @@ public class Jobfigyeloszal extends Thread {
             Query = "Select distinct tc_becells.cellname , tc_bepns.partnumber , tc_terv.job ,tc_terv.date , sum(tc_terv.qty) from tc_becells\n"
                     + "left join tc_terv on tc_terv.idtc_becells = tc_becells.idtc_cells\n"
                     + "left join tc_bepns on tc_bepns.idtc_bepns = tc_terv.idtc_bepns\n"
-                    + "where tc_terv.date >= '" + stol + "' and tc_terv.active = 2 and tc_becells.cellname in (" + allomasokquerybe + ") group by tc_terv.job , tc_bepns.partnumber order by tc_becells.cellname asc , tc_terv.date asc;";
+                    + "where tc_terv.date >= '" + stol + "' and tc_terv.date <= '" + sig + "' and tc_terv.active = 2 and tc_becells.cellname in (" + allomasokquerybe + ") group by tc_terv.job , tc_bepns.partnumber order by tc_becells.cellname asc , tc_terv.date asc;";
             try {
                 pc.lekerdez(Query);
             } catch (SQLException ex) {
@@ -197,8 +202,14 @@ public class Jobfigyeloszal extends Thread {
             Date tol = ablak.jDateChooser5.getDate();
             DateFormat df = new SimpleDateFormat("yyyy-MM-dd 06:00:00");
             String stol = df.format(tol);
+            
+            //kiszedjuk a datumot ig
+            Date ig = ablak.jDateChooser12.getDate();
+            df = new SimpleDateFormat("yyyy-MM-dd 06:00:00");
+            String sig = df.format(ig);
+            
 //smt adatok keresése
-            String query = "select * from (select stations.name, terv.partnumber, terv.job as job , terv.startdate, terv.qty_full , sum(terv.active) as feltetel from terv left join stations on stations.id = terv.stationid where terv.startdate >= '" + stol + "' group by terv.job) as t1 where feltetel = 0";
+            String query = "select * from (select stations.name, terv.partnumber, terv.job as job , terv.startdate, terv.qty_full , sum(terv.active) as feltetel from terv left join stations on stations.id = terv.stationid where terv.startdate >= '" + stol + "' and terv.startdate <= '" + sig + "' group by terv.job) as t1 where feltetel = 0";
             planconnect pc = new planconnect();
             DefaultTableModel model = new DefaultTableModel();
             model = (DefaultTableModel) ablak.jTable14.getModel();
@@ -221,8 +232,7 @@ public class Jobfigyeloszal extends Thread {
             }
 
 //backend adatok keresése
-
-            query = "select b.cellname , b.partnumber , b.job2 , b.date , b.qty from (SELECT distinct  tc_terv.job as job1 FROM planningdb.tc_terv  where active=2 and tc_terv.date >= '" + stol + "') a right join  (SELECT distinct tc_becells.cellname , tc_bepns.partnumber  , tc_terv.date  , tc_terv.qty , tc_terv.job as job2 FROM planningdb.tc_terv left join tc_becells on tc_becells.idtc_cells = tc_terv.idtc_becells left join tc_bepns on tc_bepns.idtc_bepns = tc_terv.idtc_bepns  where active<2 and tc_terv.date >= '" + stol + "') b on a.job1=b.job2\n"
+            query = "select b.cellname , b.partnumber , b.job2 , b.date , b.qty from (SELECT distinct  tc_terv.job as job1 FROM planningdb.tc_terv  where active=2 and tc_terv.date >= '" + stol + "' and tc_terv.date  <= '"+sig+"') a right join  (SELECT distinct tc_becells.cellname , tc_bepns.partnumber  , tc_terv.date  , tc_terv.qty , tc_terv.job as job2 FROM planningdb.tc_terv left join tc_becells on tc_becells.idtc_cells = tc_terv.idtc_becells left join tc_bepns on tc_bepns.idtc_bepns = tc_terv.idtc_bepns  where active<2 and tc_terv.date >= '" + stol + "' and tc_terv.date <= '"+sig+"') b on a.job1=b.job2\n"
                     + "where job1 is null  group by job2";
 
             try {
@@ -307,7 +317,7 @@ public class Jobfigyeloszal extends Thread {
 
                             model.setValueAt("JOB Cancelled!", i, 5);
                             irtunke = true;
-                            
+
                         } else if (ablak.jTable14.getValueAt(i, 2).toString().equals(rowdata[n][0]) && irtunke == false) {
 
                             model.setValueAt("Minden elindult!", i, 5);

@@ -90,6 +90,10 @@ public class Tc_Betervezo extends javax.swing.JFrame {
 
     //az ablak
     public static ablak a;
+    //adatkitolto peldanya
+    public Tc_Adatkitolto adatkitolto = new Tc_Adatkitolto(this, false);
+    //dataloader példánya
+    public Tc_DataLoaderDialog dataloader = new Tc_DataLoaderDialog(this, false);
     
     public Tc_Betervezo(ablak a) throws SQLException, ClassNotFoundException {
         setExtendedState(MAXIMIZED_BOTH);
@@ -814,8 +818,9 @@ public class Tc_Betervezo extends javax.swing.JFrame {
 
     private void jMenuItem13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem13ActionPerformed
         // dataloader
-        Tc_DataLoader d = new Tc_DataLoader(Tc_Betervezo.Besheets.get(Tc_Betervezo.Tervezotabbed.getTitleAt(Tc_Betervezo.Tervezotabbed.getSelectedIndex())));
-        d.setVisible(true);
+//        Tc_DataLoader d = new Tc_DataLoader(Tc_Betervezo.Besheets.get(Tc_Betervezo.Tervezotabbed.getTitleAt(Tc_Betervezo.Tervezotabbed.getSelectedIndex())));
+//        d.setVisible(true);
+        dataloader.setVisible(true);
     }//GEN-LAST:event_jMenuItem13ActionPerformed
 
     private void jMenuItem14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem14ActionPerformed

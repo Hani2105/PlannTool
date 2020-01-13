@@ -173,7 +173,7 @@ public class CTB_NEW_FullCalc extends Thread {
 
         }
 
-//beallitjuk a valtozot , hogy csak az aktualis szintre nezzunk e ctb-t vagy vilagitsuk e at az egeszet
+//beallitjuk a valtozot , hogy csak az aktualis szintre nezzunk e ctb-t vagy vilagitsuk e at az egeszet, de ha ki van pipálva a +sa akkor mehet bele az is
 //ha az egeszet nezzük , ki kell venni az sa-kat!!! , ha nem , akkor maradhatnak de csak level 1 kell!!
         int lvl = 100;
         String sa = "SA";
@@ -195,7 +195,7 @@ public class CTB_NEW_FullCalc extends Thread {
             for (int r = 0; r < CTB_NEW_Variables.indentedbommodel.getRowCount(); r++) {
 
 //ha egyezik a pn az intended bom pn -ével és van ora type
-                if (pn.equals(CTB_NEW_Variables.indentedbommodel.getValueAt(r, 0).toString().trim()) && !CTB_NEW_Variables.indentedbommodel.getValueAt(r, 8).toString().equals(sa) && !CTB_NEW_Variables.indentedbommodel.getValueAt(r, 5).toString().equals("0") && Integer.parseInt(CTB_NEW_Variables.indentedbommodel.getValueAt(r, 5).toString()) <= lvl) {
+                if ((pn.equals(CTB_NEW_Variables.indentedbommodel.getValueAt(r, 0).toString().trim()) && !CTB_NEW_Variables.indentedbommodel.getValueAt(r, 8).toString().equals(sa) && !CTB_NEW_Variables.indentedbommodel.getValueAt(r, 5).toString().equals("0") && Integer.parseInt(CTB_NEW_Variables.indentedbommodel.getValueAt(r, 5).toString()) <= lvl) || (CTB.jCheckBoxMenuItem13.isSelected() && pn.equals(CTB_NEW_Variables.indentedbommodel.getValueAt(r, 0).toString().trim())) && !CTB_NEW_Variables.indentedbommodel.getValueAt(r, 5).toString().equals("0") && Integer.parseInt(CTB_NEW_Variables.indentedbommodel.getValueAt(r, 5).toString()) <= lvl) {
 
 //itt megvizsgáljuk , hogy kell a a phantom item vagy nem
 //ha nincs kipipálva az azt jelenti , hogy nem kell beletenni , ergo ha az akkor ugrunk a ciklusban
@@ -212,6 +212,7 @@ public class CTB_NEW_FullCalc extends Thread {
                         continue;
 
                     }
+
 //ha eddig eljutunk
 //felvesszük a componentet stringnek
                     comp = CTB_NEW_Variables.indentedbommodel.getValueAt(r, 7).toString().trim();

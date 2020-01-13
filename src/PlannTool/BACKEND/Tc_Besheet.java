@@ -54,10 +54,11 @@ public class Tc_Besheet extends javax.swing.JPanel {
 
     public String adat;
 //ez a tömb fogja tartalmazni azt az adatot , hogy az adott partnumbereket mikor gyártottuk utoljára
-    public String[][]utsogyartasok = null;
+    public String[][] utsogyartasok = null;
+    Tc_Betervezo b;
 
     public Tc_Besheet(Tc_Betervezo b) throws SQLException, ClassNotFoundException {
-
+        this.b = b;
         initComponents();
 
         jTable2.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
@@ -641,7 +642,7 @@ public class Tc_Besheet extends javax.swing.JPanel {
 
         pc.lekerdez(query);
 
-            while (pc.rs.next()) {
+        while (pc.rs.next()) {
 
             String[] pnadatok = new String[3];
 
@@ -738,8 +739,9 @@ public class Tc_Besheet extends javax.swing.JPanel {
 
     private void CellaAdatokActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CellaAdatokActionPerformed
 
-        Tc_PartsOfCells p = new Tc_PartsOfCells(this);
-        p.setVisible(true);
+//        Tc_PartsOfCells p = new Tc_PartsOfCells(this);
+//        p.setVisible(true);
+        b.adatkitolto.setVisible(true);
 
     }//GEN-LAST:event_CellaAdatokActionPerformed
 
@@ -1221,14 +1223,16 @@ public class Tc_Besheet extends javax.swing.JPanel {
         // kalkulátort lefuttatjuk
         try {
             if ((jTable2.getValueAt(jTable2.getSelectedRow(), 3).toString().equals("Terv") || jTable2.getValueAt(jTable2.getSelectedRow(), 3).toString().equals("Tény")) && jTable2.getValueAt(jTable2.getSelectedRow() - 1, 3).toString().equals("Infó") && jTable2.getSelectedColumn() > 3) {
-
-                Tc_Calculator c = new Tc_Calculator(this, true, jTable2.getSelectedRow());
-                c.run();
+                if (jTable2.isEditing() == false) {
+                    Tc_Calculator c = new Tc_Calculator(this, true, jTable2.getSelectedRow());
+                    c.run();
+                }
 
             } else if (jTable2.getSelectedColumn() > 3) {
-
-                Tc_Calculator c = new Tc_Calculator(this, false, jTable2.getSelectedRow());
-                c.run();
+                if (jTable2.isEditing() == false) {
+                    Tc_Calculator c = new Tc_Calculator(this, false, jTable2.getSelectedRow());
+                    c.run();
+                }
 
             }
         } catch (Exception e) {
@@ -1254,8 +1258,10 @@ public class Tc_Besheet extends javax.swing.JPanel {
         // TODO add your handling code here:
 
         Tc_Betervezo.csuk = false;
-        Tc_Calculator c = new Tc_Calculator(this, false, 0);
-        c.run();
+        if (jTable2.isEditing() == false) {
+            Tc_Calculator c = new Tc_Calculator(this, false, 0);
+            c.run();
+        }
 
     }//GEN-LAST:event_jTable2KeyPressed
 

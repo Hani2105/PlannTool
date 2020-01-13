@@ -46,31 +46,34 @@ public class CTB_NEW_ExportShortyThread extends Thread {
 
         //a ctb táblán fogunk végigmenni és kijelölgetjük a sorokat
         for (int i = 0; i < CTB.jTable11.getRowCount(); i++) {
-            c.exportshorty.jProgressBar1.setMaximum(c.jTable11.getRowCount() - 1);
-            c.exportshorty.jProgressBar1.setValue(i);
-            c.exportshorty.jProgressBar1.setString(i + " / " + c.jTable11.getRowCount());
+//akkor foglalkozunk vele, ha a need to plan nyagobb mint a megadott
+            if (Integer.parseInt(CTB.jTable11.getValueAt(i, 3).toString()) > Integer.parseInt(c.exportshorty.jTextField2.getText())) {
+                c.exportshorty.jProgressBar1.setMaximum(c.jTable11.getRowCount() - 1);
+                c.exportshorty.jProgressBar1.setValue(i);
+                c.exportshorty.jProgressBar1.setString(i + " / " + c.jTable11.getRowCount());
 
-            //lefuttatjuk a shorty osztályt
-            CTB_NEW_TopShortThread t = new CTB_NEW_TopShortThread(i);
-            t.start();
-            t.join();
-            //létrehozunk egy String tömböt
-            String[][] pnadatok = new String[CTB_NEW_Variables.topshortmodel.getRowCount()][8];
-            //bejárjuk a modellt és bepakolunk mindent is a tömbbe
-            for (int m = 0; m < CTB_NEW_Variables.topshortmodel.getRowCount(); m++) {
-                pnadatok[m][0] = CTB.jTable1.getValueAt(i, 0).toString();
-                for (int p = 0; p < 7; p++) {
-                    try {
-                        pnadatok[m][p + 1] = CTB_NEW_Variables.topshortmodel.getValueAt(m, p).toString();
-                    } catch (Exception e) {
-                        pnadatok[m][p + 1] = "";
+                //lefuttatjuk a shorty osztályt
+                CTB_NEW_TopShortThread t = new CTB_NEW_TopShortThread(i);
+                t.start();
+                t.join();
+                //létrehozunk egy String tömböt
+                String[][] pnadatok = new String[CTB_NEW_Variables.topshortmodel.getRowCount()][8];
+                //bejárjuk a modellt és bepakolunk mindent is a tömbbe
+                for (int m = 0; m < CTB_NEW_Variables.topshortmodel.getRowCount(); m++) {
+                    pnadatok[m][0] = CTB.jTable1.getValueAt(i, 0).toString();
+                    for (int p = 0; p < 7; p++) {
+                        try {
+                            pnadatok[m][p + 1] = CTB_NEW_Variables.topshortmodel.getValueAt(m, p).toString();
+                        } catch (Exception e) {
+                            pnadatok[m][p + 1] = "";
+                        }
                     }
+
                 }
 
+                adatok.add(pnadatok);
+
             }
-
-            adatok.add(pnadatok);
-
         }
 
         c.exportshorty.setVisible(false);

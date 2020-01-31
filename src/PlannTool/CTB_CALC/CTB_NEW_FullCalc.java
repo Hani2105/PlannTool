@@ -220,10 +220,17 @@ public class CTB_NEW_FullCalc extends Thread {
 //kell egy boolean , hogy kell e uj sort létrehozni
                     boolean ujsor = true;
                     for (int i = 0; i < CTB_NEW_Variables.calcbommodel.getRowCount(); i++) {
-//ha találunk olyan sort akkor oda írunk
+//ha találunk olyan sort akkor oda írunk, de úgy, hogy hozzáadjuk a mennyiséget a már meglévőhöz!!!
                         if (CTB_NEW_Variables.calcbommodel.getValueAt(i, 0).toString().equals(comp)) {
+//ez a változója az eddig felvett emnnyiségeknek
 
-                            CTB_NEW_Variables.calcbommodel.setValueAt(CTB_NEW_Variables.indentedbommodel.getValueAt(r, 13).toString(), i, o);
+                            double osszeg = 0;
+                            try {
+                                osszeg = Double.parseDouble(CTB_NEW_Variables.calcbommodel.getValueAt(i, o).toString());
+                            } catch (Exception e) {
+                            }
+
+                            CTB_NEW_Variables.calcbommodel.setValueAt(Double.parseDouble(CTB_NEW_Variables.indentedbommodel.getValueAt(r, 13).toString()) + osszeg, i, o);
                             CTB_NEW_Variables.calcbommodel.setValueAt(CTB_NEW_Variables.indentedbommodel.getValueAt(r, 9).toString(), i, 1);
                             ujsor = false;
 

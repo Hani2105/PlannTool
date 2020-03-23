@@ -2224,7 +2224,7 @@ public class CTB extends javax.swing.JFrame {
 //ha nem számot adott meg darabnak
             try {
                 if (!CTB_NEW_Variables.ohmodel.getValueAt(i, 2).toString().contains("Part")) {
-                    Integer.parseInt(CTB_NEW_Variables.ohmodel.getValueAt(i, 6).toString().replace(",", ""));
+                    Integer.parseInt(CTB_NEW_Variables.ohmodel.getValueAt(i, 6).toString().replaceAll("[^0-9]",""));
                 }
 
             } catch (Exception e) {

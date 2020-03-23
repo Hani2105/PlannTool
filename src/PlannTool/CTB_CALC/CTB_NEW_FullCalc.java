@@ -751,7 +751,7 @@ public class CTB_NEW_FullCalc extends Thread {
 
                     if (CTB_NEW_Variables.ohmodel.getValueAt(o, 2).toString().trim().equals(comp.trim()) && (CTB_NEW_Variables.ohmodel.getValueAt(o, 0).toString().contains("STOCK") || CTB_NEW_Variables.ohmodel.getValueAt(o, 0).toString().trim().contains("HIGH"))) {
 //kiszedjuk a vesszot a szambol majd integerre alakitjuk es hozzaadjuk az osszeghez
-                        osszeg += Integer.parseInt(CTB_NEW_Variables.ohmodel.getValueAt(o, 6).toString().trim().replace(",", ""));
+                        osszeg += Integer.parseInt(CTB_NEW_Variables.ohmodel.getValueAt(o, 6).toString().trim().replaceAll("[^0-9]",""));
 
                     }
                 }
@@ -767,7 +767,7 @@ public class CTB_NEW_FullCalc extends Thread {
 
                     if (CTB_NEW_Variables.ohmodel.getValueAt(o, 2).toString().trim().equals(comp.trim())) {
 //kiszedjuk a vesszot a szambol majd integerre alakitjuk es hozzaadjuk az osszeghez
-                        osszeg += Integer.parseInt(CTB_NEW_Variables.ohmodel.getValueAt(o, 6).toString().trim().replace(",", ""));
+                        osszeg += Integer.parseInt(CTB_NEW_Variables.ohmodel.getValueAt(o, 6).toString().trim().replaceAll("[^0-9]",""));
 
                     }
                 }
@@ -790,7 +790,7 @@ public class CTB_NEW_FullCalc extends Thread {
 //ha egyezik a pn akkor összeadjuk
                 if (CTB_NEW_Variables.allocmodel.getValueAt(a, 4).toString().equals(comp)) {
 
-                    osszeg += Integer.parseInt(CTB_NEW_Variables.allocmodel.getValueAt(a, 11).toString().trim().replace(",", ""));
+                    osszeg += Integer.parseInt(CTB_NEW_Variables.allocmodel.getValueAt(a, 11).toString().trim().replaceAll("[^0-9]",""));
 
                 }
 
@@ -877,7 +877,7 @@ public class CTB_NEW_FullCalc extends Thread {
 //ha megvan a hét és az nagyobb nulla akkor hozzáadjuk az összeghez
                                     if (horihet <= hetig && horihet > 0) {
 
-                                        osszeg += Integer.parseInt(CTB_NEW_Variables.horizontalmodel.getValueAt(h, oszlop).toString().replace(",", ""));
+                                        osszeg += Integer.parseInt(CTB_NEW_Variables.horizontalmodel.getValueAt(h, oszlop).toString().replaceAll("[^0-9]",""));
 
                                     } else if (horihet > hetig) {
 

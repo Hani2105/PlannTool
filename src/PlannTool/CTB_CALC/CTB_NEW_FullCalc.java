@@ -727,7 +727,7 @@ public class CTB_NEW_FullCalc extends Thread {
 
                     if (CTB_NEW_Variables.ohmodel.getValueAt(o, 2).toString().trim().equals(comp.trim()) && CTB_NEW_Variables.ohmodel.getValueAt(o, 4).toString().trim().equals("Net-Asset")) {
 //kiszedjuk a vesszot a szambol majd integerre alakitjuk es hozzaadjuk az osszeghez
-                        osszeg += Integer.parseInt(CTB_NEW_Variables.ohmodel.getValueAt(o, 6).toString().replace(",", ""));
+                        osszeg += Integer.parseInt(CTB_NEW_Variables.ohmodel.getValueAt(o, 6).toString().replaceAll("[^0-9]",""));
                         try {
                             comment += CTB_NEW_Variables.ohmodel.getValueAt(o, 10).toString() + ", ";
                         } catch (Exception e) {

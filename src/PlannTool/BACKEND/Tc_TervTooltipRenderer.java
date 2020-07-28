@@ -427,7 +427,7 @@ public class Tc_TervTooltipRenderer extends DefaultTableCellRenderer {
             //ha a terv részen vagyunk
             if (column > 3 && !table.getValueAt(row, 3).toString().equals("Infó") && table.getValueAt(row, 3).toString().equals("Terv")) {
 
-                if (b.tablaadat[row - infsor][column].eng == 1) {
+                if (b.tablaadat[row - infsor][column].engtime > 0) {
 
                     c.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PlannTool/PICTURES/eng1.png")));
 

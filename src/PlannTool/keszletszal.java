@@ -5,7 +5,6 @@
  */
 package PlannTool;
 
-
 import PlannTool.ANIMATIONS.animation;
 import PlannTool.CONNECTS.connect;
 import java.net.MalformedURLException;
@@ -68,19 +67,17 @@ public class keszletszal extends Thread {
         }
 
         //betesszuk a wiplistbe a rowdata adatait , de előtte kiürítjük
-        
         ablak.wiplist.clear();
-        
+
         for (int i = 0; i < rowdata.length; i++) {
             String[] wiplista = new String[3];
-            
+
             wiplista[0] = rowdata[i][0].toString();
             wiplista[1] = rowdata[i][1].toString();
             wiplista[2] = rowdata[i][2].toString();
-            
+
             ablak.wiplist.add(wiplista);
         }
-
 
         //lefuttatjuk a szűrőt
         wipszuro w = new wipszuro(ablak.jTable1);
@@ -94,7 +91,7 @@ public class keszletszal extends Thread {
 
         ablak.model1 = (DefaultTableModel) ablak.jTable2.getModel();
         ablak.model1.setRowCount(0);
-        
+
         String exportdate = "";
 
         try {
@@ -108,17 +105,15 @@ public class keszletszal extends Thread {
                 exportdate = onhend.rs.getString(5);
 
             }
-            
-            onhend.kinyir();
-            
+
         } catch (SQLException ex) {
 
+        } finally {
+            onhend.kinyir();
         }
 
         a.jLabel21.setText("Az oracle export parserer futott: " + exportdate);
         ablak.jTable2.setModel(ablak.model1);
-
-      
 
         animation.rajzol = false;
 

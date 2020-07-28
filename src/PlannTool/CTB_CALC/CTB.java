@@ -126,7 +126,7 @@ public class CTB extends javax.swing.JFrame {
     public CTB_NEW_Helper helper = new CTB_NEW_Helper(this, false);
     public CTB_NEW_WhereUsed whereused = new CTB_NEW_WhereUsed(this, false);
 
-    public CTB(CTB_Bejel c) throws SQLException, ClassNotFoundException, IOException, UnsupportedLookAndFeelException, InstantiationException, IllegalAccessException, ParseException {
+    public CTB() throws SQLException, ClassNotFoundException, IOException, UnsupportedLookAndFeelException, InstantiationException, IllegalAccessException, ParseException {
 
         this.c = c;
         setExtendedState(MAXIMIZED_BOTH);
@@ -536,6 +536,7 @@ public class CTB extends javax.swing.JFrame {
         buttonGroup2 = new javax.swing.ButtonGroup();
         jPopupMenu3 = new javax.swing.JPopupMenu();
         jMenuItem4 = new javax.swing.JMenuItem();
+        buttonGroup3 = new javax.swing.ButtonGroup();
         jPanel2 = new javax.swing.JPanel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
@@ -557,6 +558,7 @@ public class CTB extends javax.swing.JFrame {
         jTextField16 = new javax.swing.JTextField();
         jProgressBar1 = new javax.swing.JProgressBar();
         jProgressBar2 = new javax.swing.JProgressBar();
+        jCheckBox1 = new javax.swing.JCheckBox();
         jPanel8 = new javax.swing.JPanel();
         jScrollPane7 = new javax.swing.JScrollPane();
         jTable7 = new javax.swing.JTable();
@@ -630,6 +632,12 @@ public class CTB extends javax.swing.JFrame {
         jCheckBoxMenuItem1 = new javax.swing.JCheckBoxMenuItem();
         jCheckBoxMenuItem2 = new javax.swing.JCheckBoxMenuItem();
         jCheckBoxMenuItem13 = new javax.swing.JCheckBoxMenuItem();
+        jMenu5 = new javax.swing.JMenu();
+        jRadioButtonMenuItem3 = new javax.swing.JRadioButtonMenuItem();
+        jRadioButtonMenuItem1 = new javax.swing.JRadioButtonMenuItem();
+        jRadioButtonMenuItem2 = new javax.swing.JRadioButtonMenuItem();
+        jRadioButtonMenuItem4 = new javax.swing.JRadioButtonMenuItem();
+        jRadioButtonMenuItem5 = new javax.swing.JRadioButtonMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         jCheckBoxMenuItem3 = new javax.swing.JCheckBoxMenuItem();
         jCheckBoxMenuItem5 = new javax.swing.JCheckBoxMenuItem();
@@ -863,6 +871,8 @@ public class CTB extends javax.swing.JFrame {
 
         jProgressBar2.setStringPainted(true);
 
+        jCheckBox1.setText("Kereso link");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -872,20 +882,25 @@ public class CTB extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addComponent(jLabel20)
-                                    .addGap(6, 6, 6)
-                                    .addComponent(jTextField15, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                     .addComponent(jLabel9)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addComponent(jLabel2)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jProgressBar2, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jProgressBar2, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel20)
+                                        .addGap(6, 6, 6))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jCheckBox1)
+                                        .addGap(18, 18, 18)))
+                                .addComponent(jTextField15, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(1038, 1038, 1038))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(181, 181, 181)
@@ -927,12 +942,15 @@ public class CTB extends javax.swing.JFrame {
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(14, 14, 14)
                         .addComponent(jProgressBar2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(28, 28, 28)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(6, 6, 6)
-                                .addComponent(jLabel20))
-                            .addComponent(jTextField15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(28, 28, 28)
+                                .addComponent(jTextField15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(8, 8, 8)
+                                .addComponent(jCheckBox1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel20)))
                         .addGap(4, 4, 4)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1579,6 +1597,56 @@ public class CTB extends javax.swing.JFrame {
             }
         });
         jMenu1.add(jCheckBoxMenuItem13);
+
+        jMenu5.setText("Remove OP-seqs");
+
+        buttonGroup3.add(jRadioButtonMenuItem3);
+        jRadioButtonMenuItem3.setSelected(true);
+        jRadioButtonMenuItem3.setText("No remove");
+        jRadioButtonMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButtonMenuItem3ActionPerformed(evt);
+            }
+        });
+        jMenu5.add(jRadioButtonMenuItem3);
+
+        buttonGroup3.add(jRadioButtonMenuItem1);
+        jRadioButtonMenuItem1.setText("Remove <=10");
+        jRadioButtonMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButtonMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu5.add(jRadioButtonMenuItem1);
+
+        buttonGroup3.add(jRadioButtonMenuItem2);
+        jRadioButtonMenuItem2.setText("Remove <=100");
+        jRadioButtonMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButtonMenuItem2ActionPerformed(evt);
+            }
+        });
+        jMenu5.add(jRadioButtonMenuItem2);
+
+        buttonGroup3.add(jRadioButtonMenuItem4);
+        jRadioButtonMenuItem4.setText("Remove <=200");
+        jRadioButtonMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButtonMenuItem4ActionPerformed(evt);
+            }
+        });
+        jMenu5.add(jRadioButtonMenuItem4);
+
+        buttonGroup3.add(jRadioButtonMenuItem5);
+        jRadioButtonMenuItem5.setText("Remove <=300");
+        jRadioButtonMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButtonMenuItem5ActionPerformed(evt);
+            }
+        });
+        jMenu5.add(jRadioButtonMenuItem5);
+
+        jMenu1.add(jMenu5);
         jMenu1.add(jSeparator1);
 
         buttonGroup2.add(jCheckBoxMenuItem3);
@@ -1722,7 +1790,9 @@ public class CTB extends javax.swing.JFrame {
         // TODO add your handling code here:
         jTable1.revalidate();
         universalfilter uf = new universalfilter(jTextField2.getText().trim(), this.jTable1);
-        //universalfilter um = new universalfilter(jTextField2.getText().trim(), this.jTable11);
+        if (jCheckBox1.isSelected()) {
+            universalfilter um = new universalfilter(jTextField2.getText().trim(), this.jTable11);
+        }
         //indítunk egy topshortot is ugy hogy megadjuk a pn-t trimelve
         CTB_NEW_TopShortThread t = new CTB_NEW_TopShortThread(jTextField2.getText().trim());
         t.start();
@@ -2224,7 +2294,7 @@ public class CTB extends javax.swing.JFrame {
 //ha nem számot adott meg darabnak
             try {
                 if (!CTB_NEW_Variables.ohmodel.getValueAt(i, 2).toString().contains("Part")) {
-                    Integer.parseInt(CTB_NEW_Variables.ohmodel.getValueAt(i, 6).toString().replaceAll("[^0-9]",""));
+                    Integer.parseInt(CTB_NEW_Variables.ohmodel.getValueAt(i, 6).toString().replaceAll("[^0-9]", ""));
                 }
 
             } catch (Exception e) {
@@ -2267,6 +2337,37 @@ public class CTB extends javax.swing.JFrame {
         full.start();
 
     }//GEN-LAST:event_jCheckBoxMenuItem13ActionPerformed
+
+    private void jRadioButtonMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonMenuItem1ActionPerformed
+        // TODO add your handling code here:
+        // TODO add your handling code here:
+        CTB_NEW_FullCalc calc = new CTB_NEW_FullCalc(false, CTB_NEW_FullCalc.calculations.FULL);
+        calc.start();
+    }//GEN-LAST:event_jRadioButtonMenuItem1ActionPerformed
+
+    private void jRadioButtonMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonMenuItem3ActionPerformed
+        // TODO add your handling code here:
+        CTB_NEW_FullCalc calc = new CTB_NEW_FullCalc(false, CTB_NEW_FullCalc.calculations.FULL);
+        calc.start();
+    }//GEN-LAST:event_jRadioButtonMenuItem3ActionPerformed
+
+    private void jRadioButtonMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonMenuItem2ActionPerformed
+        // TODO add your handling code here:
+        CTB_NEW_FullCalc calc = new CTB_NEW_FullCalc(false, CTB_NEW_FullCalc.calculations.FULL);
+        calc.start();
+    }//GEN-LAST:event_jRadioButtonMenuItem2ActionPerformed
+
+    private void jRadioButtonMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonMenuItem4ActionPerformed
+        // TODO add your handling code here:
+        CTB_NEW_FullCalc calc = new CTB_NEW_FullCalc(false, CTB_NEW_FullCalc.calculations.FULL);
+        calc.start();
+    }//GEN-LAST:event_jRadioButtonMenuItem4ActionPerformed
+
+    private void jRadioButtonMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonMenuItem5ActionPerformed
+        // TODO add your handling code here:
+        CTB_NEW_FullCalc calc = new CTB_NEW_FullCalc(false, CTB_NEW_FullCalc.calculations.FULL);
+        calc.start();
+    }//GEN-LAST:event_jRadioButtonMenuItem5ActionPerformed
 
     public void makePivot() {
 
@@ -2408,10 +2509,12 @@ public class CTB extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
+    private javax.swing.ButtonGroup buttonGroup3;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
+    private javax.swing.JCheckBox jCheckBox1;
     public static javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
     public static javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem10;
     public static javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem11;
@@ -2446,6 +2549,7 @@ public class CTB extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
+    private javax.swing.JMenu jMenu5;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem13;
@@ -2471,6 +2575,11 @@ public class CTB extends javax.swing.JFrame {
     private javax.swing.JPopupMenu jPopupMenu3;
     public static javax.swing.JProgressBar jProgressBar1;
     public static javax.swing.JProgressBar jProgressBar2;
+    public static javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem1;
+    public static javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem2;
+    private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem3;
+    public static javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem4;
+    public static javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem5;
     public static javax.swing.JScrollPane jScrollPane1;
     public static javax.swing.JScrollPane jScrollPane11;
     private javax.swing.JScrollPane jScrollPane12;

@@ -20,6 +20,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -166,6 +167,37 @@ public class Tc_Bejelentkezes extends javax.swing.JFrame {
 
     public void bejel() {
 
+//lekérdezzük, hogy le van e már tiltva a régiből
+        planconnect pcx = new planconnect();
+        String query1 = "select tc_users.username from tc_users where tc_users.deniedinplanntool = 1";
+        try {
+            pcx.lekerdez(query1);
+            while (pcx.rs.next()) {
+
+                if (jTextField1.getText().equals(pcx.rs.getString(1))) {
+
+                    //custom title, warning icon
+                    JOptionPane.showMessageDialog(this,
+                            jTextField1.getText() + ", te már csak az új tervezőt használhatod! \n Az elérési útvonala: \n S:\\SiteData\\BUD1\\EMS\\planning\\[DEV_CENTER] vagy \n S:\\SiteData\\BUD1\\EMS\\Manufacturing\\Gyártástervek\\Report\\BackendTervezo",
+                            "Figyelem!",
+                            JOptionPane.WARNING_MESSAGE);
+                    return;
+
+                }
+
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(Tc_Bejelentkezes.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Tc_Bejelentkezes.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                pcx.kinyir();
+            } catch (Exception e) {
+            }
+        }
+
 //csak ha valami van írva a felh nevhez es jelszohoz
         if (jTextField1.getText().length() > 0 && jPasswordField1.getText().length() > 0) {
 
@@ -269,7 +301,7 @@ public class Tc_Bejelentkezes extends javax.swing.JFrame {
                         ablak.muvez = false;
                         ablak.user = jTextField1.getText();
                         infobox info = new infobox();
-                        info.infoBox("Csak olvasási joggal engedlek be!","Figyelem!");
+                        info.infoBox("Csak olvasási joggal engedlek be!", "Figyelem!");
                         if (nyit == true) {
                             Tc_Betervezo b = new Tc_Betervezo(az);
                             b.setVisible(true);

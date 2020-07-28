@@ -24,6 +24,7 @@ import PlannTool.ablak;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JRadioButtonMenuItem;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -208,6 +209,34 @@ public class CTB_NEW_FullCalc extends Thread {
 //itt megvizsgaljuk , hogy kell e a bulk
 //ha nincs kipipálva az azt jelenti , hogy nem kell vele számolni , ergo ha az akkor ugrunk a ciklusban
                     if (!jCheckBoxMenuItem2.isSelected() && CTB_NEW_Variables.indentedbommodel.getValueAt(r, 11).toString().equals("Bulk")) {
+
+                        continue;
+
+                    }
+
+//itt jönnek az opseq vizsgálatok
+                    //ha nem kell a 10 és kisebb
+                    if (CTB.jRadioButtonMenuItem1.isSelected() && Integer.parseInt(CTB_NEW_Variables.indentedbommodel.getValueAt(r, 6).toString().replaceAll("[^0-9]", "")) <= 10) {
+
+                        continue;
+
+                    }
+
+                    //ha nem kell a 100 és kisebb
+                    if (CTB.jRadioButtonMenuItem2.isSelected() && Integer.parseInt(CTB_NEW_Variables.indentedbommodel.getValueAt(r, 6).toString().replaceAll("[^0-9]", "")) <= 100) {
+
+                        continue;
+
+                    }
+                    
+                                        //ha nem kell a 200 és kisebb
+                    if (CTB.jRadioButtonMenuItem4.isSelected() && Integer.parseInt(CTB_NEW_Variables.indentedbommodel.getValueAt(r, 6).toString().replaceAll("[^0-9]", "")) <= 200) {
+
+                        continue;
+
+                    }
+                                        //ha nem kell a 300 és kisebb
+                    if (CTB.jRadioButtonMenuItem5.isSelected() && Integer.parseInt(CTB_NEW_Variables.indentedbommodel.getValueAt(r, 6).toString().replaceAll("[^0-9]", "")) <= 300) {
 
                         continue;
 
@@ -727,7 +756,7 @@ public class CTB_NEW_FullCalc extends Thread {
 
                     if (CTB_NEW_Variables.ohmodel.getValueAt(o, 2).toString().trim().equals(comp.trim()) && CTB_NEW_Variables.ohmodel.getValueAt(o, 4).toString().trim().equals("Net-Asset")) {
 //kiszedjuk a vesszot a szambol majd integerre alakitjuk es hozzaadjuk az osszeghez
-                        osszeg += Integer.parseInt(CTB_NEW_Variables.ohmodel.getValueAt(o, 6).toString().replaceAll("[^0-9]",""));
+                        osszeg += Integer.parseInt(CTB_NEW_Variables.ohmodel.getValueAt(o, 6).toString().replaceAll("[^0-9]", ""));
                         try {
                             comment += CTB_NEW_Variables.ohmodel.getValueAt(o, 10).toString() + ", ";
                         } catch (Exception e) {
@@ -751,7 +780,7 @@ public class CTB_NEW_FullCalc extends Thread {
 
                     if (CTB_NEW_Variables.ohmodel.getValueAt(o, 2).toString().trim().equals(comp.trim()) && (CTB_NEW_Variables.ohmodel.getValueAt(o, 0).toString().contains("STOCK") || CTB_NEW_Variables.ohmodel.getValueAt(o, 0).toString().trim().contains("HIGH"))) {
 //kiszedjuk a vesszot a szambol majd integerre alakitjuk es hozzaadjuk az osszeghez
-                        osszeg += Integer.parseInt(CTB_NEW_Variables.ohmodel.getValueAt(o, 6).toString().trim().replaceAll("[^0-9]",""));
+                        osszeg += Integer.parseInt(CTB_NEW_Variables.ohmodel.getValueAt(o, 6).toString().trim().replaceAll("[^0-9]", ""));
 
                     }
                 }
@@ -767,7 +796,7 @@ public class CTB_NEW_FullCalc extends Thread {
 
                     if (CTB_NEW_Variables.ohmodel.getValueAt(o, 2).toString().trim().equals(comp.trim())) {
 //kiszedjuk a vesszot a szambol majd integerre alakitjuk es hozzaadjuk az osszeghez
-                        osszeg += Integer.parseInt(CTB_NEW_Variables.ohmodel.getValueAt(o, 6).toString().trim().replaceAll("[^0-9]",""));
+                        osszeg += Integer.parseInt(CTB_NEW_Variables.ohmodel.getValueAt(o, 6).toString().trim().replaceAll("[^0-9]", ""));
 
                     }
                 }
@@ -790,7 +819,7 @@ public class CTB_NEW_FullCalc extends Thread {
 //ha egyezik a pn akkor összeadjuk
                 if (CTB_NEW_Variables.allocmodel.getValueAt(a, 4).toString().equals(comp)) {
 
-                    osszeg += Integer.parseInt(CTB_NEW_Variables.allocmodel.getValueAt(a, 11).toString().trim().replaceAll("[^0-9]",""));
+                    osszeg += Integer.parseInt(CTB_NEW_Variables.allocmodel.getValueAt(a, 11).toString().trim().replaceAll("[^0-9]", ""));
 
                 }
 
@@ -877,7 +906,7 @@ public class CTB_NEW_FullCalc extends Thread {
 //ha megvan a hét és az nagyobb nulla akkor hozzáadjuk az összeghez
                                     if (horihet <= hetig && horihet > 0) {
 
-                                        osszeg += Integer.parseInt(CTB_NEW_Variables.horizontalmodel.getValueAt(h, oszlop).toString().replaceAll("[^0-9]",""));
+                                        osszeg += Integer.parseInt(CTB_NEW_Variables.horizontalmodel.getValueAt(h, oszlop).toString().replaceAll("[^0-9]", ""));
 
                                     } else if (horihet > hetig) {
 

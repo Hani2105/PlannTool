@@ -26,7 +26,7 @@ public class postgreconnect {
 
     public Object lekerdez(String startQuery) throws SQLException, ClassNotFoundException {
 
-        String url = "jdbc:postgresql://143.116.140.120/postgres";
+        String url = "jdbc:postgresql://143.116.140.158/appu05";
         Properties props = new Properties();
         props.setProperty("user", "hbpackage_readonly");
         props.setProperty("password", "Sanmina1");

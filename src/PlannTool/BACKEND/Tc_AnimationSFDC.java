@@ -21,7 +21,7 @@ public class Tc_AnimationSFDC extends Thread {
 
     public void run() {
 
-        if (ablak.user.equals("alexandra_havelda") || ablak.user.equals("miklos_bosnyakovics")) {
+        if (ablak.user.equals("alexandra_havelda") || ablak.user.equals("miklos_bosnyakovics") || ablak.user.equals("gabor_hanacsek")) {
 
             pony a = new pony();
             a.setVisible(true);

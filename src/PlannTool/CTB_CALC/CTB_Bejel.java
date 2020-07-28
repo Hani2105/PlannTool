@@ -264,7 +264,7 @@ public class CTB_Bejel extends javax.swing.JFrame {
                     if (truee.equals("true") && (Integer.parseInt(poz) == 1 || Integer.parseInt(poz) == 2 || Integer.parseInt(poz) == 4)) {
 
                         
-                        CTB c = new CTB(this);
+                        CTB c = new CTB();
                         c.jLabel1.setText(this.jTextField1.getText());
                         CTB.user = this.jTextField1.getText();
                         c.setVisible(true);

@@ -307,8 +307,8 @@ public class Tc_Keszletfromterv extends javax.swing.JFrame {
         // TODO add your handling code here:
         //elindítjuk az animációt
 
-        animation a = new animation();
-        a.start();
+        //animation a = new animation();
+        //a.start();
         Tc_KeszletfromTervszal k = new Tc_KeszletfromTervszal(this);
         k.start();
 

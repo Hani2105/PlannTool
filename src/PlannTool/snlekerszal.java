@@ -7,6 +7,7 @@ package PlannTool;
 
 import PlannTool.ANIMATIONS.animation;
 import PlannTool.CONNECTS.connect;
+import PlannTool.CONNECTS.postgretraxmon;
 import static PlannTool.ablak.jTabbedPane1;
 import static PlannTool.ablak.lista;
 import static PlannTool.ablak.modelstatus;
@@ -139,11 +140,9 @@ public class snlekerszal extends Thread {
 
         String Query = "SELECT oracle_backup_subinv.item , oracle_backup_subinv.subinv , oracle_backup_subinv.quantity FROM trax_mon.oracle_backup_subinv where oracle_backup_subinv.item in (" + adatok + ")";
 
-        connect con = new connect(Query);
-
-        // betesszuk tombbe
+        connect con = null;
         try {
-
+            con = new connect(Query);
             int utsosor;
             con.rs.last();
             utsosor = con.rs.getRow();
@@ -166,8 +165,42 @@ public class snlekerszal extends Thread {
             lista.clear();
             lista.add(listaelem);
 
-        } catch (SQLException ex) {
-            Logger.getLogger(ablak.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception e) {
+
+            //ide kell tenni az uj kapcsolatot ha a régi hibát dob------------------------------------------------------------------------------
+            Query = "SELECT ois.subinventory_quantities_report.item , ois.subinventory_quantities_report.subinv , ois.subinventory_quantities_report.quantity FROM ois.subinventory_quantities_report where ois.subinventory_quantities_report.item in (" + adatok + ")";
+            postgretraxmon ptm = new postgretraxmon();
+            try {
+                ptm.lekerdez(Query);
+                int utsosor;
+                ptm.rs.last();
+                utsosor = ptm.rs.getRow();
+                ptm.rs.beforeFirst();
+                String[][] listaelem = new String[utsosor][3];
+                int i = 0;
+
+                while (ptm.rs.next()) {
+
+                    listaelem[i][0] = ptm.rs.getString(1);
+                    listaelem[i][1] = ptm.rs.getString(2);
+                    listaelem[i][2] = ptm.rs.getString(3);
+
+                    i++;
+
+                }
+
+                //betesszuk a tombot a listbe
+                lista.clear();
+                lista.add(listaelem);
+
+            } catch (SQLException ex) {
+                Logger.getLogger(keszletszal.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(keszletszal.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            ptm.kinyir();
+
         }
 
         animation.rajzol = false;

@@ -5,8 +5,6 @@
  */
 package PlannTool.BACKEND;
 
-
-
 import PlannTool.ablak;
 import PlannTool.ANIMATIONS.animation;
 import PlannTool.CONNECTS.connect;
@@ -14,6 +12,8 @@ import PlannTool.xmlfeldolg;
 import static PlannTool.BACKEND.Tc_Keszletfromterv.jTable1;
 import static PlannTool.BACKEND.Tc_Keszletfromterv.jTable2;
 import static PlannTool.BACKEND.Tc_Keszletfromterv.jTextField2;
+import PlannTool.CONNECTS.postgretraxmon;
+import PlannTool.keszletszal;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -80,12 +80,11 @@ public class Tc_KeszletfromTervszal extends Thread {
         String mitkeres = k.jTextField2.getText().trim();
 
         String query = "SELECT oracle_backup_subinv.item as partnumber , oracle_backup_subinv.subinv , oracle_backup_subinv.locator , oracle_backup_subinv.quantity FROM trax_mon.oracle_backup_subinv where item like '%" + mitkeres + "%'";
-        connect onhend = new connect((query));
-
+        connect onhend = null;
         model1 = (DefaultTableModel) k.jTable2.getModel();
         model1.setRowCount(0);
-
         try {
+            onhend = new connect((query));
             while (onhend.rs.next()) {
 
                 String pn = onhend.rs.getString(1);
@@ -95,14 +94,35 @@ public class Tc_KeszletfromTervszal extends Thread {
                 model1.addRow(new Object[]{pn, subinv, locator, qty});
 
             }
-        } catch (SQLException ex) {
+        } catch (Exception e) {
+
+            //ide kell tenni az uj kapcsolatot ha a régi hibát dob------------------------------------------------------------------------------
+            query = "SELECT * FROM ois.subinventory_quantities_report where item like '%" + mitkeres + "%'";
+            postgretraxmon ptm = new postgretraxmon();
+            try {
+                ptm.lekerdez(query);
+                while (ptm.rs.next()) {
+                    String pn = ptm.rs.getString(3);
+                    String subinv = ptm.rs.getString(1);
+                    String locator = ptm.rs.getString(6);
+                    String qty = ptm.rs.getString(8);
+                    model1.addRow(new Object[]{pn, subinv, locator, qty});
+                    //exportdate = "Postgre adatbázis használva! Export dátum nem elérhető!";
+
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(keszletszal.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(keszletszal.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            ptm.kinyir();
 
         }
 
         k.jTable2.setModel(model1);
 
         //fun
-      
         animation.rajzol = false;
 
         ablak.stat.beir(System.getProperty("user.name"), ablak.jTabbedPane1.getTitleAt(ablak.jTabbedPane1.getSelectedIndex()), "", "gabor.hanacsek@sanmina.com");

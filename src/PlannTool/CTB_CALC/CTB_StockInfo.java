@@ -26,13 +26,13 @@ public class CTB_StockInfo extends javax.swing.JFrame {
      */
     String pn;
 
-    public CTB_StockInfo(String pn) {
+    public CTB_StockInfo(String pn) throws SQLException, ClassNotFoundException {
         this.pn = pn;
         initComponents();
         leker();
     }
 
-    public void leker() {
+    public void leker() throws SQLException, ClassNotFoundException {
 
         DefaultListModel model = new DefaultListModel();
         model.clear();

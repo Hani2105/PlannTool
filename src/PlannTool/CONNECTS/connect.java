@@ -6,6 +6,7 @@
 package PlannTool.CONNECTS;
 
 import com.mysql.jdbc.RowData;
+import com.mysql.jdbc.exceptions.MySQLSyntaxErrorException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -24,24 +25,19 @@ public class connect {
     public ResultSet rs;
     Connection conn;
 
-    public connect(String startQuery) {
+    public connect(String startQuery) throws SQLException, ClassNotFoundException {
 
-        try {
-            String driver = "com.mysql.jdbc.driver";
-            String url = "jdbc:mysql://143.116.140.120/trax_mon";
-            String username = "pluser";
-            String password = "plpass";
-            Class.forName("com.mysql.jdbc.Driver");
+        String driver = "com.mysql.jdbc.driver";
+        String url = "jdbc:mysql://143.116.140.120/trax_mon";
+        String username = "pluser";
+        String password = "plpass";
+        Class.forName("com.mysql.jdbc.Driver");
 
-            conn = (Connection) DriverManager.getConnection(url, username, password);
-            Statement st = conn.createStatement();
-            String query = startQuery;
+        conn = (Connection) DriverManager.getConnection(url, username, password);
+        Statement st = conn.createStatement();
+        String query = startQuery;
 
-            rs = st.executeQuery(query);
-
-        } catch (ClassNotFoundException | SQLException e) {
-            System.out.println(e);
-        }
+        rs = st.executeQuery(query);
 
     }
 

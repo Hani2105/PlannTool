@@ -7,6 +7,7 @@ package PlannTool;
 
 import PlannTool.ANIMATIONS.animation;
 import PlannTool.CONNECTS.connect;
+import PlannTool.CONNECTS.postgretraxmon;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -85,16 +86,13 @@ public class keszletszal extends Thread {
 
         // OH tábla
         String mitkeres = ablak.jTextField2.getText().trim();
-
-        String query = "SELECT oracle_backup_subinv.item as partnumber , oracle_backup_subinv.subinv , oracle_backup_subinv.locator , oracle_backup_subinv.quantity , oracle_backup_subinv.exported FROM trax_mon.oracle_backup_subinv where item like '%" + mitkeres + "%'";
-        connect onhend = new connect((query));
-
         ablak.model1 = (DefaultTableModel) ablak.jTable2.getModel();
         ablak.model1.setRowCount(0);
-
+        String query = "SELECT oracle_backup_subinv.item as partnumber , oracle_backup_subinv.subinv , oracle_backup_subinv.locator , oracle_backup_subinv.quantity , oracle_backup_subinv.exported FROM trax_mon.oracle_backup_subinv where item like '%" + mitkeres + "%'";
+        connect onhend = null;
         String exportdate = "";
-
         try {
+            onhend = new connect((query));
             while (onhend.rs.next()) {
 
                 String pn = onhend.rs.getString(1);
@@ -102,17 +100,40 @@ public class keszletszal extends Thread {
                 String locator = onhend.rs.getString(3);
                 String qty = onhend.rs.getString(4);
                 ablak.model1.addRow(new Object[]{pn, subinv, locator, qty});
-                exportdate = onhend.rs.getString(5);
+                exportdate = "Az oracle export parserer futott: " + onhend.rs.getString(5);
 
             }
+        } catch (Exception e) {
 
-        } catch (SQLException ex) {
+            //ide kell tenni az uj kapcsolatot ha a régi hibát dob------------------------------------------------------------------------------
+            query = "SELECT * FROM ois.subinventory_quantities_report where item like '%" + mitkeres + "%'";
+            postgretraxmon ptm = new postgretraxmon();
+            try {
+                ptm.lekerdez(query);
+                while (ptm.rs.next()) {
+                    String pn = ptm.rs.getString(3);
+                    String subinv = ptm.rs.getString(1);
+                    String locator = ptm.rs.getString(6);
+                    String qty = ptm.rs.getString(8);
+                    ablak.model1.addRow(new Object[]{pn, subinv, locator, qty});
+                    exportdate = "Postgre adatbázis használva! Export dátum nem elérhető!";
 
-        } finally {
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(keszletszal.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(keszletszal.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            ptm.kinyir();
+
+        }
+        try {
             onhend.kinyir();
+        } catch (Exception e) {
         }
 
-        a.jLabel21.setText("Az oracle export parserer futott: " + exportdate);
+        a.jLabel21.setText(exportdate);
         ablak.jTable2.setModel(ablak.model1);
 
         animation.rajzol = false;

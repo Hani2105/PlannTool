@@ -63,7 +63,7 @@ public class planconnect {
             String value = "Nincs találat";
 
             if (rs.next()) {
-                value = rs.getNString("Board_PN");
+                value = rs.getString("Board_PN");
             }
 
             szerkeszt.setValueAt(value, 0, colnum);

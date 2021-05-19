@@ -7,6 +7,7 @@ package PlannTool;
 
 import PlannTool.ANIMATIONS.animation;
 import PlannTool.CONNECTS.connect;
+import PlannTool.CONNECTS.postgreconnect;
 import PlannTool.CONNECTS.postgretraxmon;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -30,13 +31,16 @@ public class keszletszal extends Thread {
         ablak.jTextField6.setText("");
         ablak.jTable1.setRowSorter(null);
         ablak.jTable2.setRowSorter(null);
+        ablak.jTable29.setRowSorter(null);
 
         ablak.model = (DefaultTableModel) ablak.jTable1.getModel();
+        ablak.model2 = (DefaultTableModel) ablak.jTable29.getModel();
 
         URL url = null;
 
         ablak.model.setRowCount(0);
         ablak.model1.setRowCount(0);
+        ablak.model2.setRowCount(0);
 
         xmlfeldolg xxx = new xmlfeldolg();
         Object rowdata[][] = null;
@@ -83,18 +87,6 @@ public class keszletszal extends Thread {
             connect onhend = null;
             String exportdate = "";
             try {
-                onhend = new connect((query));
-                while (onhend.rs.next()) {
-
-                    String pn = onhend.rs.getString(1);
-                    String subinv = onhend.rs.getString(2);
-                    String locator = onhend.rs.getString(3);
-                    String qty = onhend.rs.getString(4);
-                    ablak.model1.addRow(new Object[]{pn, subinv, locator, qty});
-                    exportdate = "Az oracle export parserer futott: " + onhend.rs.getString(5);
-
-                }
-            } catch (Exception e) {
 
                 //ide kell tenni az uj kapcsolatot ha a régi hibát dob------------------------------------------------------------------------------
                 query = "SELECT  item, subinv, locator, quantity, exported FROM ois.subinventory_quantities_report where item like '%" + mitkeres.toUpperCase() + "%'";
@@ -110,6 +102,23 @@ public class keszletszal extends Thread {
                         exportdate = ptm.rs.getString("exported").substring(0, 16);
 
                     }
+
+                    ptm.kinyir();
+                    //raktárban tárolt mennyiség
+                    postgreconnect pc = new postgreconnect();
+                    query = "SELECT * from \"HBPackage\".stored_in_wh('%" + mitkeres.toUpperCase() + "%')";
+                    pc.lekerdez(query);
+                    while (pc.rs.next()) {
+                        String pn = pc.rs.getString("partnumber");
+                        String rev = pc.rs.getString("revision");
+                        String doboz = pc.rs.getString("doboz");
+                        String qty = pc.rs.getString("qty");
+                        String blokkolt = pc.rs.getString("blokkolt");
+                        ablak.model2.addRow(new Object[]{pn, rev, doboz, qty, blokkolt});
+
+                    }
+                    
+                    pc.kinyir();
                 } catch (SQLException ex) {
                     Logger.getLogger(keszletszal.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (ClassNotFoundException ex) {
@@ -118,6 +127,7 @@ public class keszletszal extends Thread {
 
                 ptm.kinyir();
 
+            } catch (Exception e) {
             }
             try {
                 onhend.kinyir();
@@ -131,11 +141,6 @@ public class keszletszal extends Thread {
 
             ablak.stat.beir(System.getProperty("user.name"), ablak.jTabbedPane1.getTitleAt(ablak.jTabbedPane1.getSelectedIndex()), "", "gabor.hanacsek@sanmina.com");
 
-//        try {
-//            warning wg = new warning();
-//            wg.keszlet(a);
-//        } catch (Exception e) {
-//        }
         }
     }
 

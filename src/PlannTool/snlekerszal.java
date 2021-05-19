@@ -138,7 +138,7 @@ public class snlekerszal extends Thread {
 
         adatok = adatok.substring(0, adatok.length() - 1);
 
-        String Query = "SELECT oracle_backup_subinv.item , oracle_backup_subinv.subinv , oracle_backup_subinv.quantity FROM trax_mon.oracle_backup_subinv where oracle_backup_subinv.item in (" + adatok + ")";
+        String Query = "SELECT oracle_backu_subinv.item , oracle_backup_subinv.subinv , oracle_backup_subinv.quantity FROM trax_mon.oracle_backup_subinv where oracle_backup_subinv.item in (" + adatok + ")";
 
         connect con = null;
         try {

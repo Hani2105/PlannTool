@@ -22,16 +22,6 @@ import javax.swing.table.DefaultTableModel;
  */
 public class keszletszal extends Thread {
 
-    ablak a;
-
-    keszletszal(ablak a) {
-
-        this.a = a;
-
-    }
-
-    ;
-
     public void run() {
 
 //kitoroljuk a szűrő ablakokat
@@ -85,67 +75,68 @@ public class keszletszal extends Thread {
         ablak.jTable1.setModel(w.smtkiszed());
 
         // OH tábla
-        String mitkeres = ablak.jTextField2.getText().trim();
-        ablak.model1 = (DefaultTableModel) ablak.jTable2.getModel();
-        ablak.model1.setRowCount(0);
-        String query = "SELECT oracle_backup_subinv.item as partnumber , oracle_backup_subinv.subinv , oracle_backup_subinv.locator , oracle_backup_subinv.quantity , oracle_backup_subinv.exported FROM trax_mon.oracle_backup_subinv where item like '%" + mitkeres + "%'";
-        connect onhend = null;
-        String exportdate = "";
-        try {
-            onhend = new connect((query));
-            while (onhend.rs.next()) {
-
-                String pn = onhend.rs.getString(1);
-                String subinv = onhend.rs.getString(2);
-                String locator = onhend.rs.getString(3);
-                String qty = onhend.rs.getString(4);
-                ablak.model1.addRow(new Object[]{pn, subinv, locator, qty});
-                exportdate = "Az oracle export parserer futott: " + onhend.rs.getString(5);
-
-            }
-        } catch (Exception e) {
-
-            //ide kell tenni az uj kapcsolatot ha a régi hibát dob------------------------------------------------------------------------------
-            query = "SELECT * FROM ois.subinventory_quantities_report where item like '%" + mitkeres + "%'";
-            postgretraxmon ptm = new postgretraxmon();
+        synchronized (ablak.jTable2) {
+            String mitkeres = ablak.jTextField2.getText().trim();
+            ablak.model1 = (DefaultTableModel) ablak.jTable2.getModel();
+            ablak.model1.setRowCount(0);
+            String query = "SELECT oracle_backu_subinv.item as partnumber , oracle_backup_subinv.subinv , oracle_backup_subinv.locator , oracle_backup_subinv.quantity , oracle_backup_subinv.exported FROM trax_mon.oracle_backup_subinv where item like '%" + mitkeres + "%'";
+            connect onhend = null;
+            String exportdate = "";
             try {
-                ptm.lekerdez(query);
-                while (ptm.rs.next()) {
-                    String pn = ptm.rs.getString(3);
-                    String subinv = ptm.rs.getString(1);
-                    String locator = ptm.rs.getString(6);
-                    String qty = ptm.rs.getString(8);
+                onhend = new connect((query));
+                while (onhend.rs.next()) {
+
+                    String pn = onhend.rs.getString(1);
+                    String subinv = onhend.rs.getString(2);
+                    String locator = onhend.rs.getString(3);
+                    String qty = onhend.rs.getString(4);
                     ablak.model1.addRow(new Object[]{pn, subinv, locator, qty});
-                    exportdate = "Postgre adatbázis használva! Export dátum nem elérhető!";
+                    exportdate = "Az oracle export parserer futott: " + onhend.rs.getString(5);
 
                 }
-            } catch (SQLException ex) {
-                Logger.getLogger(keszletszal.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(keszletszal.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (Exception e) {
+
+                //ide kell tenni az uj kapcsolatot ha a régi hibát dob------------------------------------------------------------------------------
+                query = "SELECT  item, subinv, locator, quantity, exported FROM ois.subinventory_quantities_report where item like '%" + mitkeres.toUpperCase() + "%'";
+                postgretraxmon ptm = new postgretraxmon();
+                try {
+                    ptm.lekerdez(query);
+                    while (ptm.rs.next()) {
+                        String pn = ptm.rs.getString("item");
+                        String subinv = ptm.rs.getString("subinv");
+                        String locator = ptm.rs.getString("locator");
+                        String qty = ptm.rs.getString("quantity");
+                        ablak.model1.addRow(new Object[]{pn, subinv, locator, qty});
+                        exportdate = ptm.rs.getString("exported").substring(0, 16);
+
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(keszletszal.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(keszletszal.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+                ptm.kinyir();
+
+            }
+            try {
+                onhend.kinyir();
+            } catch (Exception e) {
             }
 
-            ptm.kinyir();
+            ablak.jLabel21.setText(exportdate);
+            ablak.jTable2.setModel(ablak.model1);
 
+            animation.rajzol = false;
+
+            ablak.stat.beir(System.getProperty("user.name"), ablak.jTabbedPane1.getTitleAt(ablak.jTabbedPane1.getSelectedIndex()), "", "gabor.hanacsek@sanmina.com");
+
+//        try {
+//            warning wg = new warning();
+//            wg.keszlet(a);
+//        } catch (Exception e) {
+//        }
         }
-        try {
-            onhend.kinyir();
-        } catch (Exception e) {
-        }
-
-        a.jLabel21.setText(exportdate);
-        ablak.jTable2.setModel(ablak.model1);
-
-        animation.rajzol = false;
-
-        ablak.stat.beir(System.getProperty("user.name"), ablak.jTabbedPane1.getTitleAt(ablak.jTabbedPane1.getSelectedIndex()), "", "gabor.hanacsek@sanmina.com");
-
-        try {
-            warning wg = new warning();
-            wg.keszlet(a);
-        } catch (Exception e) {
-        }
-
     }
 
 }

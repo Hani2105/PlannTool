@@ -59,7 +59,7 @@ public class CTB_StockInfo extends javax.swing.JFrame {
         }
 
 //oracle készlet
-        String query = "SELECT oracle_backup_subinv.item as partnumber , oracle_backup_subinv.subinv , oracle_backup_subinv.locator , oracle_backup_subinv.quantity , oracle_backup_subinv.exported FROM trax_mon.oracle_backup_subinv where item like '%" + pn + "%'";
+        String query = "SELECT oracle_backu_subinv.item as partnumber , oracle_backup_subinv.subinv , oracle_backup_subinv.locator , oracle_backup_subinv.quantity , oracle_backup_subinv.exported FROM trax_mon.oracle_backup_subinv where item like '%" + pn + "%'";
         connect c = new connect(query);
 
         try {

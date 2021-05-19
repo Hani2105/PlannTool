@@ -79,7 +79,7 @@ public class Tc_KeszletfromTervszal extends Thread {
         // OH tábla
         String mitkeres = k.jTextField2.getText().trim();
 
-        String query = "SELECT oracle_backup_subinv.item as partnumber , oracle_backup_subinv.subinv , oracle_backup_subinv.locator , oracle_backup_subinv.quantity FROM trax_mon.oracle_backup_subinv where item like '%" + mitkeres + "%'";
+        String query = "SELECT oracle_backu_subinv.item as partnumber , oracle_backup_subinv.subinv , oracle_backup_subinv.locator , oracle_backup_subinv.quantity FROM trax_mon.oracle_backup_subinv where item like '%" + mitkeres + "%'";
         connect onhend = null;
         model1 = (DefaultTableModel) k.jTable2.getModel();
         model1.setRowCount(0);

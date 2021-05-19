@@ -4660,7 +4660,7 @@ public class ablak extends javax.swing.JFrame {
                 }
 
                 pc.kinyir();
-                query = "SELECT ifnull(sum(oracle_backup_subinv.quantity),0) as qty from oracle_backup_subinv where oracle_backup_subinv.item ='" + pcbtabla.getValueAt(0, 1).toString().trim() + "'";
+                query = "SELECT ifnull(sum(oracle_backu_subinv.quantity),0) as qty from oracle_backup_subinv where oracle_backup_subinv.item ='" + pcbtabla.getValueAt(0, 1).toString().trim() + "'";
 
                 connect con = null;
                 try {
@@ -4707,7 +4707,7 @@ public class ablak extends javax.swing.JFrame {
                 planconnect con = new planconnect();
                 try {
                     ResultSet rs = (ResultSet) con.lekerdez(query);
-                    
+
                     pcbtabla.setValueAt(jTextField11.getText(), 0, 1);
                     if (rs.next()) {
                         pcbtabla.setValueAt(rs.getString("Part"), 0, 0);
@@ -4733,7 +4733,7 @@ public class ablak extends javax.swing.JFrame {
                 } catch (Exception e) {
 
                     //ide kell tenni az uj kapcsolatot ha a régi hibát dob------------------------------------------------------------------------------
-                    query =  "SELECT coalesce(sum(cast(ois.subinventory_quantities_report.quantity as decimal)),0) as qty from ois.subinventory_quantities_report where ois.subinventory_quantities_report.item ='" + pcbtabla.getValueAt(0, 1).toString().trim() + "'";
+                    query = "SELECT coalesce(sum(cast(ois.subinventory_quantities_report.quantity as decimal)),0) as qty from ois.subinventory_quantities_report where ois.subinventory_quantities_report.item ='" + pcbtabla.getValueAt(0, 1).toString().trim() + "'";
                     postgretraxmon ptm = new postgretraxmon();
                     try {
                         ptm.lekerdez(query);
@@ -5023,8 +5023,11 @@ public class ablak extends javax.swing.JFrame {
         } else {
 //            animation a = new animation();
 //            a.start();
-            keszletszal k = new keszletszal(this);
-            k.start();
+            keszletszal k = new keszletszal();
+            try {
+                k.start();
+            } catch (Exception e) {
+            }
         }
 
 
@@ -5674,10 +5677,14 @@ public class ablak extends javax.swing.JFrame {
                 MainForm m = new MainForm();
                 m.setVisible(true);
             } else {
-                animation a = new animation();
-                a.start();
-                keszletszal k = new keszletszal(this);
-                k.start();
+//                animation a = new animation();
+//                a.start();
+                keszletszal k = new keszletszal();
+                try {
+                    k.start();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
 
         }
@@ -6050,7 +6057,7 @@ public class ablak extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
-    private javax.swing.JButton jButton1;
+    public javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton11;
     private javax.swing.JButton jButton12;

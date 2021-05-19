@@ -125,8 +125,6 @@ public class keszletszal extends Thread {
                     Logger.getLogger(keszletszal.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
-                ptm.kinyir();
-
             } catch (Exception e) {
             }
             try {
